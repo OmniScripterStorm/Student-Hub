@@ -1,4 +1,4 @@
-# Taguig Science High School (TagSci) — Grade 11 STEM Study Hub
+# Taguig Science High School (TagSci) — Grade 11 Student Hub
 > *"Leading the Road to Excellence"*
 
 A unified, offline-first, single-file study web application and OTA distribution system designed for the Grade 11 STEM cohort at Taguig Science High School.
@@ -10,10 +10,8 @@ A unified, offline-first, single-file study web application and OTA distribution
 - **100% Offline Single-File WebApp**: Runs on any phone, tablet, or PC without needing an internet connection.
 - **Academic Calendar & Deadlines**: Offline-computed monthly calendar highlighting quizzes, problem set submissions, and lab practicals.
 - **STEM Reviewer Vault**: Dedicated reviewer decks for **Pre-Calculus, General Physics 1, General Chemistry 1, General Biology 1, and Research 1**.
-- **Embedded Offline Math Engine**: Zero-dependency LaTeX-style math rendering for formulas, fractions, square roots, and Greek symbols (e.g. `$\Delta x = v_0 t + \frac{1}{2}at^2$`).
 - **Over-The-Air (OTA) Cloud Sync**: 1-click sync button in the navigation header that fetches fresh reviewers and calendar updates from this repository (`updates.json`) directly into browser cache without erasing personal notes.
 - **Personal Task Checklist**: Ticked tasks and personal study to-dos persist across updates via browser `localStorage`.
-- **Editorial Council Application Form**: Directly sends reviewer submissions and applicant details to the Editorial Council via Discord Webhook.
 
 ---
 
@@ -83,6 +81,6 @@ A unified, offline-first, single-file study web application and OTA distribution
 
 ## 🎓 Credits
 
-- **Project Lead**: Grade 11 SSLG Representative
-- **Curators & Content Writers**: TagSci G11 STEM Academic Committee & Editorial Council
+- **Project Lead**: JV REJUSO, G11 REPRESENTATIVE
+- **Curators & Content Writers**: TagSci G11 Editorial Council
 - **Institution**: Taguig Science High School
