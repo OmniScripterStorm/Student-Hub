@@ -1,0 +1,134 @@
+{
+  "version": "1.4.0",
+  "updatedAt": "2026-09-22T22:00:00Z",
+  "announcement": "Refreshed 2 Reviewers, 3 Deadlines, and 1 Quiz Banks.",
+  "calendarEvents": [
+    {
+      "id": 1,
+      "date": "2026-09-24",
+      "subject": "Gen Chem 1",
+      "title": "Gen Chemistry 1 - Stoichiometry Laboratory",
+      "type": "lab",
+      "badge": "Lab Report",
+      "desc": "Pre-lab calculation check & reagent safety protocol."
+    },
+    {
+      "id": 2,
+      "date": "2026-09-26",
+      "subject": "Pre-Calculus",
+      "title": "Pre-Calculus - Conic Sections Problem Set #3",
+      "type": "exam",
+      "badge": "P-Set #3",
+      "desc": "Standard form graphing and vertex-focus derivations."
+    },
+    {
+      "id": 3,
+      "date": "2026-09-29",
+      "subject": "Gen Physics 1",
+      "title": "Gen Physics 1 - 2D Kinematics & Vectors Quiz",
+      "type": "quiz",
+      "badge": "Quiz",
+      "desc": "Projectile range, max height, and vector components."
+    }
+  ],
+  "stemReviewers": [
+    {
+      "id": "physics_kinematics_2d",
+      "subject": "General Physics 1",
+      "tag": "Physics",
+      "color": "border-l-4 border-tagsci-600",
+      "title": "Kinematics in 1D & 2D (Projectile Motion)",
+      "summary": "Uniform acceleration equations, trajectory formulas, and vector decomposition.",
+      "content": "<h4 class=\"text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-3.5 mb-1.5\">Key Kinematics Formulas:</h4>\n<div class=\"h-1.5\"></div>\n<p class=\"text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-1\">For uniform accelerated linear motion:</p>\n<ul class=\"list-disc pl-5 space-y-1.5 text-xs sm:text-sm\">\n<li>Final Velocity: $ v = v_0 + at $</li>\n<li>Position: $ \\Delta x = v_0 t + \\frac{1}{2}at^2 $</li>\n<li>Timeless Equation: $ v^2 = v_0^2 + 2a\\Delta x $</li>\n</ul>\n<div class=\"h-1.5\"></div>\n<h4 class=\"text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-3.5 mb-1.5\">2D Projectile Motion:</h4>\n<p class=\"text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-1\">Horizontal component (constant velocity):</p>\n<p class=\"text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-1\">$$ v_x = v_0 \\cdot \\cos\\theta $$</p>\n<div class=\"h-1.5\"></div>\n<p class=\"text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-1\">Vertical component (accelerated by gravity $g = 9.8 \\text{ m/s}^2$):</p>\n<p class=\"text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-1\">$$ v_y = v_0 \\cdot \\sin\\theta - gt $$</p>\n<div class=\"h-1.5\"></div>\n<h4 class=\"text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-3.5 mb-1.5\">Projectile Range & Max Height:</h4>\n<ul class=\"list-disc pl-5 space-y-1.5 text-xs sm:text-sm\">\n<li><strong>Maximum Range:</strong> $$ R = \\frac{v_0^2 \\cdot \\sin(2\\theta)}{g} $$</li>\n<li><strong>Maximum Height:</strong> $$ H = \\frac{v_0^2 \\cdot \\sin^2\\theta}{2g} $$</li>\n</ul>"
+    },
+    {
+      "id": "precal_conics",
+      "subject": "Pre-Calculus",
+      "tag": "Math",
+      "color": "border-l-4 border-tagsci-600",
+      "title": "Conic Sections & Standard Forms",
+      "summary": "Equations, vertices, foci, directrix, and eccentricity of circles, parabolas, ellipses, and hyperbolas.",
+      "content": "<h4 class=\"text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-3.5 mb-1.5\">Conic Sections Standard Equations</h4>\n<div class=\"h-1.5\"></div>\n<h5 class=\"text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 mt-3 mb-1\">1. Circle:</h5>\n<p class=\"text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-1\">$$ (x - h)^2 + (y - k)^2 = r^2 $$</p>\n<ul class=\"list-disc pl-5 space-y-1.5 text-xs sm:text-sm\">\n<li>Center at $(h, k)$ with radius $r$.</li>\n</ul>\n<div class=\"h-1.5\"></div>\n<h5 class=\"text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 mt-3 mb-1\">2. Parabola:</h5>\n<ul class=\"list-disc pl-5 space-y-1.5 text-xs sm:text-sm\">\n<li><strong>Vertical Axis:</strong> $(x - h)^2 = 4p(y - k)$, Focus at $(h, k + p)$</li>\n<li><strong>Horizontal Axis:</strong> $(y - k)^2 = 4p(x - h)$, Focus at $(h + p, k)$</li>\n</ul>\n<div class=\"h-1.5\"></div>\n<h5 class=\"text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 mt-3 mb-1\">3. Ellipse (Horizontal Major Axis):</h5>\n<p class=\"text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-1\">$$ \\frac{(x - h)^2}{a^2} + \\frac{(y - k)^2}{b^2} = 1 $$</p>\n<ul class=\"list-disc pl-5 space-y-1.5 text-xs sm:text-sm\">\n<li>Where $c^2 = a^2 - b^2$, and foci located at $(h \\pm c, k)$.</li>\n</ul>\n<div class=\"h-1.5\"></div>\n<h5 class=\"text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 mt-3 mb-1\">4. Hyperbola (Horizontal Transverse Axis):</h5>\n<p class=\"text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-1\">$$ \\frac{(x - h)^2}{a^2} - \\frac{(y - k)^2}{b^2} = 1 $$</p>\n<ul class=\"list-disc pl-5 space-y-1.5 text-xs sm:text-sm\">\n<li>Where $c^2 = a^2 + b^2$, and asymptotes given by:</li>\n</ul>\n<p class=\"text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-1\">$$ y - k = \\pm \\frac{b}{a}(x - h) $$</p>"
+    }
+  ],
+  "studyMaterials": [],
+  "problemSets": [],
+  "quizSets": [
+    {
+      "id": "precal_conics_quiz",
+      "subject": "Pre-Calculus",
+      "tag": "Math",
+      "title": "Conic Sections & Analytical Geometry Drill",
+      "desc": "Practice circles, parabolas, ellipses, hyperbolas, and foci coordinates.",
+      "timeLimitMinutes": 10,
+      "questions": [
+        {
+          "type": "mcq",
+          "topic": "Question 1",
+          "prompt": "What is the radius and center of the circle with standard equation $(x - 3)^2 + (y + 5)^2 = 49$?",
+          "options": [
+            "Center $(3, -5)$, Radius $r = 7$",
+            "Center $(-3, 5)$, Radius $r = 7$",
+            "Center $(3, -5)$, Radius $r = 49$",
+            "Center $(-3, 5)$, Radius $r = 49$"
+          ],
+          "answerIndex": 0,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "front": "",
+          "back": "",
+          "explanation": "The standard circle equation is $(x - h)^2 + (y - k)^2 = r^2$. Comparing values: $h = 3$, $k = -5$, and $r = \\sqrt{49} = 7$.",
+          "answerIndices": [
+            0
+          ]
+        },
+        {
+          "type": "mcq",
+          "topic": "Question 2",
+          "prompt": "Find the foci of the hyperbola:\n$$ \\frac{(x - 2)^2}{16} - \\frac{(y + 1)^2}{9} = 1 $$",
+          "options": [
+            "$(2 \\pm \\sqrt{7}, -1)$",
+            "$(2 \\pm 5, -1)$",
+            "$(2, -1 \\pm 5)$",
+            "$(2 \\pm 25, -1)$"
+          ],
+          "answerIndex": 1,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "front": "",
+          "back": "",
+          "explanation": "For a horizontal hyperbola, $c^2 = a^2 + b^2$. Here $a^2 = 16$ and $b^2 = 9$, so $c^2 = 25 \\implies c = 5$. The foci are $(h \\pm c, k) = (2 \\pm 5, -1)$.",
+          "answerIndices": [
+            1
+          ]
+        },
+        {
+          "type": "numerical",
+          "topic": "Question 3",
+          "prompt": "A horizontal parabola has equation $(y - 2)^2 = 16(x + 1)$. What is the focal distance parameter $p$?",
+          "options": [],
+          "answerIndex": 0,
+          "correctValue": "4",
+          "tolerance": "0.01",
+          "front": "",
+          "back": "",
+          "explanation": "The standard form is $(y - k)^2 = 4p(x - h)$. Matching $4p = 16 \\implies p = 4$.",
+          "answerIndices": []
+        },
+        {
+          "type": "flashcard",
+          "topic": "Question 4",
+          "prompt": "Hyperbola Asymptote Formula (Horizontal Transverse Axis)",
+          "options": [],
+          "answerIndex": 0,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "front": "Hyperbola Asymptote Formula (Horizontal Transverse Axis)",
+          "back": "$$ y - k = \\pm \\frac{b}{a}(x - h) $$",
+          "explanation": "For horizontal hyperbolas centered at $(h,k)$, slopes are $\\pm \\frac{b}{a}$.",
+          "answerIndices": []
+        }
+      ]
+    }
+  ]
+}

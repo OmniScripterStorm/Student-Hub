@@ -1,0 +1,19 @@
+{
+  "name": "TagSci Grade 11 Student Hub",
+  "short_name": "TagSci G11",
+  "description": "Taguig Science High School Grade 11 Unified Student Hub, Reviewers, Deadlines & Quiz Engine",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#072416",
+  "theme_color": "#0e3a24",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./tagsci logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

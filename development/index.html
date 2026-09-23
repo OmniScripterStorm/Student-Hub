@@ -1,0 +1,2820 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TagSci G11 STEM • Visual Content Studio & Material Builder</title>
+  <link rel="icon" href="../tagsci logo.png" type="image/png">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            tagsci: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#0e3a24',
+              950: '#052e16',
+            },
+            g11pink: {
+              50: '#fdf2f8',
+              100: '#fce7f3',
+              200: '#fbcfe8',
+              300: '#f9a8d4',
+              400: '#f472b6',
+              500: '#ec4899',
+              600: '#db2777',
+              700: '#be185d',
+              800: '#9d174d',
+              900: '#831843',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+            'mono-math': ['KaTeX_Math', 'Cambria Math', 'STIX Two Math', 'Consolas', 'Courier New', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.25); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.45); }
+    .dark ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.2); }
+    .dark ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.35); }
+
+    .block-card:hover .block-actions {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased h-full flex flex-col transition-colors duration-200">
+
+  <!-- ================= TOP APP BAR ================= -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 border-b border-slate-200 dark:border-slate-800 backdrop-blur-md px-4 py-2.5 flex items-center justify-between shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-tagsci-900 flex items-center justify-center p-1.5 shadow-md shadow-tagsci-900/20 ring-1 ring-tagsci-700/50">
+        <img src="../tagsci logo.png" alt="TagSci" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/100x100/0e3a24/ffffff?text=TS'">
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="font-black text-sm sm:text-base tracking-tight text-tagsci-900 dark:text-white flex items-center gap-1.5">
+            TagSci Content Studio
+            <span class="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded-full bg-tagsci-100 dark:bg-tagsci-950 text-tagsci-800 dark:text-tagsci-300 border border-tagsci-300 dark:border-tagsci-800">
+              Visual Builder
+            </span>
+          </h1>
+        </div>
+        <p class="text-[10.5px] text-slate-500 dark:text-slate-400 font-medium">Editorial Council WYSIWYG Authoring & Quiz Suite</p>
+      </div>
+    </div>
+
+    <!-- Right Controls -->
+    <div class="flex items-center gap-2">
+      <button id="btn-quick-export" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-tagsci-700 hover:bg-tagsci-800 text-white text-xs font-semibold shadow-sm shadow-tagsci-900/20 transition-all">
+        <i data-lucide="download" class="w-3.5 h-3.5"></i>
+        <span class="hidden sm:inline">Export updates.json</span>
+        <span class="sm:hidden">Export</span>
+      </button>
+
+      <button id="btn-copy-json" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold border border-slate-200 dark:border-slate-700 transition-all">
+        <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+        <span class="hidden sm:inline">Copy JSON</span>
+      </button>
+
+      <button id="btn-theme-toggle" class="p-2 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+        <i data-lucide="moon" class="w-4 h-4 hidden dark:block"></i>
+        <i data-lucide="sun" class="w-4 h-4 block dark:hidden"></i>
+      </button>
+
+      <a href="../hompage_test.html" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-g11pink-50 hover:bg-g11pink-100 dark:bg-g11pink-950/60 dark:hover:bg-g11pink-900/60 text-g11pink-700 dark:text-g11pink-300 text-xs font-bold border border-g11pink-200 dark:border-g11pink-900/60 transition-all">
+        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        <span class="hidden md:inline">Student App</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ================= SUB HEADER / MAIN NAVIGATION TABS ================= -->
+  <nav class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 flex items-center justify-between overflow-x-auto">
+    <div class="flex space-x-1 sm:space-x-2 py-1.5 min-w-max" id="studio-tabs">
+      <button data-tab="reviewers" class="studio-tab-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 bg-tagsci-50 dark:bg-tagsci-950/80 text-tagsci-800 dark:text-tagsci-300 border border-tagsci-200 dark:border-tagsci-800 shadow-sm">
+        <i data-lucide="layout-grid" class="w-4 h-4 text-tagsci-600"></i>
+        Visual Reviewer Builder
+        <span id="badge-count-rev" class="px-1.5 py-0.2 rounded-full text-[10px] bg-tagsci-200 dark:bg-tagsci-900 text-tagsci-900 dark:text-tagsci-200 font-black">2</span>
+      </button>
+
+      <button data-tab="quizzes" class="studio-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-2">
+        <i data-lucide="brain-circuit" class="w-4 h-4 text-g11pink-500"></i>
+        Quiz & Drill Banks
+        <span id="badge-count-quiz" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold">1</span>
+      </button>
+
+      <button data-tab="calendar" class="studio-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-2">
+        <i data-lucide="calendar" class="w-4 h-4 text-emerald-500"></i>
+        Calendar & Deadlines
+        <span id="badge-count-cal" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold">3</span>
+      </button>
+
+      <button data-tab="json-hub" class="studio-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-2">
+        <i data-lucide="code-2" class="w-4 h-4 text-purple-500"></i>
+        JSON & Sync Hub
+      </button>
+
+      <button data-tab="guide" class="studio-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-2">
+        <i data-lucide="help-circle" class="w-4 h-4 text-blue-500"></i>
+        Curriculum Guidelines
+      </button>
+    </div>
+
+    <!-- Quick Import Trigger -->
+    <div class="flex items-center gap-2 py-1 pl-2">
+      <label class="cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700">
+        <i data-lucide="upload-cloud" class="w-3.5 h-3.5"></i>
+        <span>Import updates.json</span>
+        <input type="file" id="file-import-input" accept=".json,.md" class="hidden">
+      </label>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN STUDIO VIEWPORT ================= -->
+  <main class="flex-1 flex overflow-hidden relative">
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- VIEW 1: VISUAL BLOCK REVIEWER & STUDY NOTE BUILDER                -->
+    <!-- ----------------------------------------------------------------- -->
+    <section id="view-reviewers" class="studio-view flex-1 flex flex-col md:flex-row h-full overflow-hidden">
+      <!-- Left Column: Reviewer List & Articles -->
+      <aside class="w-full md:w-72 lg:w-80 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col h-1/3 md:h-full shrink-0">
+        <div class="p-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">Drafts Vault</span>
+            <span id="rev-list-count" class="text-[11px] font-bold text-slate-400">(2 items)</span>
+          </div>
+          <button id="btn-add-reviewer" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-tagsci-700 hover:bg-tagsci-800 text-white text-xs font-bold shadow-sm transition-all">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            New Note
+          </button>
+        </div>
+
+        <div class="p-2 border-b border-slate-100 dark:border-slate-800">
+          <div class="relative">
+            <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-slate-400"></i>
+            <input type="text" id="rev-search" placeholder="Search drafted notes..." class="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-tagsci-600">
+          </div>
+        </div>
+
+        <div id="rev-cards-container" class="flex-1 overflow-y-auto p-2 space-y-2">
+          <!-- Dynamic Items Injected Here -->
+        </div>
+
+        <div class="p-2.5 border-t border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 flex items-center justify-between text-xs">
+          <button id="btn-download-md-rev" class="inline-flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-tagsci-700 dark:hover:text-tagsci-400 font-semibold">
+            <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
+            Export .MD
+          </button>
+          <button id="btn-delete-rev" class="inline-flex items-center gap-1 text-red-600 hover:text-red-700 font-semibold">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            Delete
+          </button>
+        </div>
+      </aside>
+
+      <!-- Right Area: Visual Section Builder & Preview -->
+      <div class="flex-1 flex flex-col h-2/3 md:h-full overflow-hidden bg-slate-50 dark:bg-slate-950">
+        <!-- Reviewer Form Meta Bar -->
+        <div class="p-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-12 gap-2.5 items-center">
+          <div class="sm:col-span-3">
+            <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Subject</label>
+            <select id="rev-input-subject" class="w-full px-2.5 py-1.5 text-xs font-semibold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-tagsci-600">
+              <optgroup label="Main Subjects">
+                <option value="Effective Communications">Effective Communications</option>
+                <option value="Mabisang Komunikasyon">Mabisang Komunikasyon</option>
+                <option value="Life and Career Skills">Life and Career Skills</option>
+                <option value="General Math">General Math</option>
+                <option value="General Science">General Science</option>
+              </optgroup>
+              <optgroup label="Elective Subjects">
+                <option value="Finite Math">Finite Math</option>
+                <option value="Physics">Physics</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Biology">Biology</option>
+              </optgroup>
+              <option value="Custom">Custom Subject...</option>
+            </select>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Classification Tag</label>
+            <select id="rev-input-tag" class="w-full px-2.5 py-1.5 text-xs font-semibold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-tagsci-600">
+              <option value="Main">Main</option>
+              <option value="Elective">Elective</option>
+            </select>
+          </div>
+
+          <div class="sm:col-span-4">
+            <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Article Title</label>
+            <input type="text" id="rev-input-title" placeholder="e.g. Kinematics in 1D & 2D Motion" class="w-full px-2.5 py-1.5 text-xs font-bold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-tagsci-600">
+          </div>
+
+          <div class="sm:col-span-3">
+            <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Editor Mode</label>
+            <div class="flex rounded-lg bg-slate-100 dark:bg-slate-800 p-0.5 border border-slate-200 dark:border-slate-700">
+              <button id="btn-mode-visual" class="flex-1 py-1 text-[11px] font-bold rounded-md bg-white dark:bg-slate-900 text-tagsci-800 dark:text-tagsci-300 shadow-sm transition-all flex items-center justify-center gap-1">
+                <i data-lucide="layout-template" class="w-3 h-3"></i> Visual Blocks
+              </button>
+              <button id="btn-mode-source" class="flex-1 py-1 text-[11px] font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center justify-center gap-1">
+                <i data-lucide="code" class="w-3 h-3"></i> Source
+              </button>
+            </div>
+          </div>
+
+          <div class="sm:col-span-12">
+            <input type="text" id="rev-input-summary" placeholder="Short preview summary (1-2 sentences shown on card)..." class="w-full px-2.5 py-1 text-xs bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-tagsci-600">
+          </div>
+        </div>
+
+        <!-- Visual Block Toolbar & Templates Bar -->
+        <div id="visual-builder-toolbar" class="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-3 py-1.5 flex items-center justify-between gap-2 overflow-visible relative z-30 flex-wrap sm:flex-nowrap">
+          <!-- Single Add Block Dropdown Button -->
+          <div class="relative z-50 inline-block text-left" id="add-block-dropdown-wrapper">
+            <button id="btn-add-block-dropdown" onclick="toggleAddBlockDropdown(event)" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-tagsci-700 hover:bg-tagsci-800 text-white text-xs font-bold shadow-sm shadow-tagsci-900/20 transition-all">
+              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+              <span>Add Block</span>
+              <i data-lucide="chevron-down" class="w-3 h-3 text-tagsci-200"></i>
+            </button>
+            <div id="add-block-menu" class="hidden absolute left-0 mt-1.5 w-52 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-2xl ring-1 ring-black/10 dark:ring-white/10 z-50 py-1 text-xs">
+              <button onclick="handleAddBlockSelect('heading')" class="w-full px-3 py-2 text-left text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700/70 flex items-center gap-2.5 font-medium transition-colors">
+                <i data-lucide="heading" class="w-4 h-4 text-blue-500 shrink-0"></i>
+                <div>
+                  <div class="font-bold text-slate-900 dark:text-white">Heading</div>
+                  <div class="text-[10px] text-slate-400">Section or subtopic header</div>
+                </div>
+              </button>
+              <button onclick="handleAddBlockSelect('paragraph')" class="w-full px-3 py-2 text-left text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700/70 flex items-center gap-2.5 font-medium transition-colors">
+                <i data-lucide="align-left" class="w-4 h-4 text-slate-500 shrink-0"></i>
+                <div>
+                  <div class="font-bold text-slate-900 dark:text-white">Concept Text</div>
+                  <div class="text-[10px] text-slate-400">Explanation & definitions</div>
+                </div>
+              </button>
+              <button onclick="handleAddBlockSelect('formula')" class="w-full px-3 py-2 text-left text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700/70 flex items-center gap-2.5 font-medium transition-colors">
+                <i data-lucide="sigma" class="w-4 h-4 text-tagsci-600 shrink-0"></i>
+                <div>
+                  <div class="font-bold text-slate-900 dark:text-white">Formula Card</div>
+                  <div class="text-[10px] text-slate-400">Centered equation card</div>
+                </div>
+              </button>
+              <button onclick="handleAddBlockSelect('bullets')" class="w-full px-3 py-2 text-left text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700/70 flex items-center gap-2.5 font-medium transition-colors">
+                <i data-lucide="list" class="w-4 h-4 text-g11pink-500 shrink-0"></i>
+                <div>
+                  <div class="font-bold text-slate-900 dark:text-white">Bullet Points</div>
+                  <div class="text-[10px] text-slate-400">Key takeaway list</div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Word Formatting Tools (Bold, Italic, Underline, Math) -->
+          <div class="flex items-center gap-1 bg-white dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200 dark:border-slate-700 min-w-max shadow-sm">
+            <span class="text-[9.5px] uppercase font-bold text-slate-400 px-1.5 hidden sm:inline">Format:</span>
+            <button onclick="applyTextFormatting('bold')" title="Bold (Ctrl+B)" class="p-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs flex items-center justify-center w-7 h-7">
+              <span class="font-black text-xs">B</span>
+            </button>
+            <button onclick="applyTextFormatting('italic')" title="Italic (Ctrl+I)" class="p-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 italic font-serif text-xs flex items-center justify-center w-7 h-7">
+              <span class="italic font-bold text-xs">I</span>
+            </button>
+            <button onclick="applyTextFormatting('underline')" title="Underline (Ctrl+U)" class="p-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 underline text-xs flex items-center justify-center w-7 h-7">
+              <span class="underline font-bold text-xs">U</span>
+            </button>
+            <button onclick="applyTextFormatting('math')" title="Inline Math $...$ (Ctrl+M)" class="px-2 py-0.5 rounded hover:bg-slate-100 dark:hover:bg-slate-700 text-tagsci-700 dark:text-tagsci-300 font-mono font-bold text-xs h-7 flex items-center">
+              $x$
+            </button>
+          </div>
+
+          <!-- Formula Assistant Trigger & Template Loader -->
+          <div class="flex items-center gap-2 min-w-max">
+            <button onclick="openMathBuilderModal()" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-tagsci-700 hover:bg-tagsci-800 text-white text-xs font-bold shadow-sm shadow-tagsci-900/20">
+              <i data-lucide="function-square" class="w-3.5 h-3.5"></i>
+              Visual Equation Studio
+            </button>
+            <select id="template-select" onchange="loadLessonTemplate(this.value); this.value='';" class="px-2.5 py-1 text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-600 dark:text-slate-300 font-semibold">
+              <option value="">Insert Starter Template...</option>
+              <option value="stem_law">Principle & Formula Card</option>
+              <option value="derivation">Derivation Walkthrough</option>
+              <option value="key_takeaways">Summary & Key Points</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Split Pane: Visual Block Canvas Left vs Live Rendered View Right -->
+        <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+          
+          <!-- LEFT: Dynamic Visual Block Canvas / Markdown Source -->
+          <div class="lg:col-span-7 flex flex-col border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 overflow-hidden">
+            
+            <!-- Visual Block Builder Viewport -->
+            <div id="pane-visual-blocks" class="flex-1 p-4 overflow-y-auto space-y-3.5">
+              <div id="blocks-container" class="space-y-3">
+                <!-- Visual cards rendered here dynamically -->
+              </div>
+
+              <div class="p-3.5 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl text-center">
+                <p class="text-xs text-slate-400 mb-2">Click any button above or insert a starter template to structure this lesson</p>
+                <button onclick="addContentBlock('paragraph')" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-tagsci-700 hover:bg-tagsci-800 text-white text-xs font-bold shadow-sm">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add First Section
+                </button>
+              </div>
+            </div>
+
+            <!-- Raw Markdown Fallback (When toggled to source mode) -->
+            <div id="pane-markdown-source" class="hidden flex-1 flex flex-col bg-white dark:bg-slate-900/40">
+              <div class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between text-[11px] font-bold text-slate-500">
+                <span class="flex items-center gap-1"><i data-lucide="code" class="w-3.5 h-3.5"></i> Raw Markdown Source</span>
+                <span id="editor-char-count" class="text-slate-400">0 characters</span>
+              </div>
+              <textarea id="rev-input-body" class="flex-1 p-4 text-xs font-mono leading-relaxed bg-transparent resize-none focus:outline-none text-slate-800 dark:text-slate-100 overflow-y-auto" placeholder="Markdown source code..."></textarea>
+            </div>
+          </div>
+
+          <!-- RIGHT: Live Rendered Output -->
+          <div class="lg:col-span-5 flex flex-col bg-white dark:bg-slate-950 overflow-hidden">
+            <div class="px-3 py-2 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-300">
+              <span class="flex items-center gap-1.5 text-tagsci-800 dark:text-tagsci-300">
+                <i data-lucide="eye" class="w-4 h-4"></i> Live Student Preview
+              </span>
+              <span class="text-[10.5px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Synchronized
+              </span>
+            </div>
+            <div id="rev-live-preview" class="flex-1 p-5 overflow-y-auto prose dark:prose-invert max-w-none text-xs sm:text-sm">
+              <!-- Rendered preview output -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- VIEW 2: QUIZ & DRILL BANK CREATOR STUDIO                         -->
+    <!-- ----------------------------------------------------------------- -->
+    <section id="view-quizzes" class="studio-view hidden flex-1 flex flex-col md:flex-row h-full overflow-hidden">
+      <!-- Left Column: Quiz Sets List -->
+      <aside class="w-full md:w-72 lg:w-80 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col h-1/3 md:h-full shrink-0">
+        <div class="p-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">Quiz Sets</span>
+            <span id="quiz-list-count" class="text-[11px] font-bold text-slate-400">(1 bank)</span>
+          </div>
+          <button id="btn-add-quiz-set" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-g11pink-600 hover:bg-g11pink-700 text-white text-xs font-bold shadow-sm transition-all">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            New Quiz Set
+          </button>
+        </div>
+
+        <div id="quiz-sets-container" class="flex-1 overflow-y-auto p-2 space-y-2">
+          <!-- Quiz sets cards injected here -->
+        </div>
+
+        <div class="p-2.5 border-t border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 flex items-center justify-between text-xs">
+          <button id="btn-download-md-quiz" class="inline-flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-g11pink-600 font-semibold">
+            <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
+            Download .MD
+          </button>
+          <button id="btn-delete-quiz-set" class="inline-flex items-center gap-1 text-red-600 hover:text-red-700 font-semibold">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            Delete Set
+          </button>
+        </div>
+      </aside>
+
+      <!-- Right Area: Quiz Questions Builder -->
+      <div class="flex-1 flex flex-col h-2/3 md:h-full overflow-hidden bg-slate-50 dark:bg-slate-950">
+        <!-- Quiz Set Meta Config -->
+        <div class="p-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-12 gap-2.5 items-center">
+          <div class="sm:col-span-3">
+            <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Subject</label>
+            <select id="quiz-input-subject" class="w-full px-2.5 py-1.5 text-xs font-semibold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-g11pink-500">
+              <optgroup label="Main Subjects">
+                <option value="Effective Communications">Effective Communications</option>
+                <option value="Mabisang Komunikasyon">Mabisang Komunikasyon</option>
+                <option value="Life and Career Skills">Life and Career Skills</option>
+                <option value="General Math">General Math</option>
+                <option value="General Science">General Science</option>
+              </optgroup>
+              <optgroup label="Elective Subjects">
+                <option value="Finite Math">Finite Math</option>
+                <option value="Physics">Physics</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Biology">Biology</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="sm:col-span-5">
+            <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Quiz Bank Title</label>
+            <input type="text" id="quiz-input-title" placeholder="Enter quiz bank title..." class="w-full px-2.5 py-1.5 text-xs font-bold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-g11pink-500">
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Time Limit (Min)</label>
+            <input type="number" id="quiz-input-timelimit" value="15" min="1" max="180" class="w-full px-2.5 py-1.5 text-xs font-bold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-g11pink-500">
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Action</label>
+            <button id="btn-add-question" class="w-full py-1.5 rounded-lg bg-g11pink-600 hover:bg-g11pink-700 text-white text-xs font-bold shadow-sm transition-all flex items-center justify-center gap-1">
+              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+              Add Question
+            </button>
+          </div>
+        </div>
+
+        <!-- Quiz Question Type Toolbar & Visual Equation Studio Trigger -->
+        <div id="quiz-builder-toolbar" class="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-3 py-1.5 flex items-center justify-between gap-2 overflow-visible relative z-30 flex-wrap sm:flex-nowrap">
+          <div class="flex items-center gap-1.5 flex-wrap min-w-max">
+            <span class="text-[10px] uppercase font-black text-slate-400 mr-1">Add Question:</span>
+            <button onclick="addQuestionBlock('mcq')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-g11pink-600 hover:bg-g11pink-700 text-white text-xs font-bold shadow-sm transition-all">
+              <i data-lucide="list" class="w-3.5 h-3.5"></i>
+              <span>Multiple Choice</span>
+            </button>
+            <button onclick="addQuestionBlock('true_false')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs font-semibold shadow-sm transition-all">
+              <i data-lucide="check-square" class="w-3.5 h-3.5 text-amber-500"></i>
+              <span>True / False</span>
+            </button>
+            <button onclick="addQuestionBlock('identification')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs font-semibold shadow-sm transition-all">
+              <i data-lucide="type" class="w-3.5 h-3.5 text-purple-500"></i>
+              <span>Identification</span>
+            </button>
+            <button onclick="addQuestionBlock('numerical')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs font-semibold shadow-sm transition-all">
+              <i data-lucide="hash" class="w-3.5 h-3.5 text-blue-500"></i>
+              <span>Numerical</span>
+            </button>
+            <button onclick="addQuestionBlock('multi_select')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs font-semibold shadow-sm transition-all">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-teal-500"></i>
+              <span>Multi-Select</span>
+            </button>
+            <button onclick="addQuestionBlock('flashcard')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs font-semibold shadow-sm transition-all">
+              <i data-lucide="layers" class="w-3.5 h-3.5 text-emerald-500"></i>
+              <span>Flashcard</span>
+            </button>
+          </div>
+
+          <!-- Equation Studio Modal Trigger -->
+          <div class="flex items-center gap-2 min-w-max ml-auto">
+            <button onclick="openMathBuilderModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-tagsci-700 hover:bg-tagsci-800 text-white text-xs font-bold shadow-sm shadow-tagsci-900/20">
+              <i data-lucide="function-square" class="w-3.5 h-3.5"></i>
+              Visual Equation Studio
+            </button>
+          </div>
+        </div>
+
+        <!-- Questions List Manager & Interactive Test -->
+        <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+          <div class="lg:col-span-7 flex flex-col border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 overflow-y-auto p-4 space-y-4 bg-white dark:bg-slate-900/30">
+            <div class="flex items-center justify-between">
+              <h2 class="text-xs font-black uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
+                <i data-lucide="list-ordered" class="w-4 h-4 text-g11pink-500"></i>
+                Questions in this Bank
+              </h2>
+              <span id="question-count-badge" class="text-xs font-bold text-g11pink-600 dark:text-g11pink-400">0 Questions</span>
+            </div>
+
+            <div id="questions-builder-container" class="space-y-4">
+              <!-- Question blocks rendered here -->
+            </div>
+          </div>
+
+          <!-- Right: Interactive Live Drill Tester -->
+          <div class="lg:col-span-5 flex flex-col bg-slate-50 dark:bg-slate-950 overflow-hidden">
+            <div class="p-3 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                <i data-lucide="play-circle" class="w-4 h-4 text-emerald-500"></i>
+                Live Quiz Player Test
+              </span>
+              <button id="btn-reset-quiz-preview" class="text-[11px] font-semibold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+                Restart Test
+              </button>
+            </div>
+
+            <div id="quiz-interactive-preview" class="flex-1 p-4 overflow-y-auto flex flex-col justify-center items-center text-center">
+              <!-- Live preview player mounted here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- VIEW 3: CALENDAR & DEADLINES AUTHORING                           -->
+    <!-- ----------------------------------------------------------------- -->
+    <section id="view-calendar" class="studio-view hidden flex-1 flex flex-col lg:flex-row h-full overflow-hidden">
+      <div class="w-full lg:w-96 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 overflow-y-auto">
+        <h2 class="text-sm font-black text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+          <i data-lucide="calendar-plus" class="w-4 h-4 text-emerald-500"></i>
+          Schedule New Deadline / Exam
+        </h2>
+
+        <form id="calendar-event-form" class="space-y-3.5 text-xs">
+          <div>
+            <label class="block font-bold text-slate-500 uppercase tracking-wider mb-1">Event Date (YYYY-MM-DD)</label>
+            <input type="date" id="cal-input-date" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg font-bold text-xs focus:ring-1 focus:ring-tagsci-600">
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-500 uppercase tracking-wider mb-1">Subject / Tag Category</label>
+            <select id="cal-input-subject" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg font-semibold text-xs focus:ring-1 focus:ring-tagsci-600">
+              <optgroup label="General / School-wide">
+                <option value="TagSci">TagSci (Institutional / Foundation Day / School Activities)</option>
+                <option value="DepEd">DepEd (DepEd Calendar / Term Exams / Sem Breaks)</option>
+              </optgroup>
+              <optgroup label="Main Subjects">
+                <option value="Effective Communications">Effective Communications</option>
+                <option value="Mabisang Komunikasyon">Mabisang Komunikasyon</option>
+                <option value="Life and Career Skills">Life and Career Skills</option>
+                <option value="General Math">General Math</option>
+                <option value="General Science">General Science</option>
+              </optgroup>
+              <optgroup label="Elective Subjects">
+                <option value="Finite Math">Finite Math</option>
+                <option value="Physics">Physics</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Biology">Biology</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-500 uppercase tracking-wider mb-1">Title / Milestone</label>
+            <input type="text" id="cal-input-title" placeholder="e.g. Periodical Exam - Kinematics" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg font-bold text-xs focus:ring-1 focus:ring-tagsci-600">
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block font-bold text-slate-500 uppercase tracking-wider mb-1">Type</label>
+              <select id="cal-input-type" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg font-semibold text-xs focus:ring-1 focus:ring-tagsci-600">
+                <option value="exam">Major Exam</option>
+                <option value="quiz">Quiz / Drill</option>
+                <option value="peta">PETA / Project</option>
+                <option value="deadline">Submission Deadline</option>
+                <option value="event">School Activity</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-500 uppercase tracking-wider mb-1">Badge Tag</label>
+              <input type="text" id="cal-input-badge" placeholder="e.g. Exam / 60 pts" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg font-semibold text-xs focus:ring-1 focus:ring-tagsci-600">
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-500 uppercase tracking-wider mb-1">Description / Instructions</label>
+            <textarea id="cal-input-desc" rows="3" placeholder="Coverage, formulas allowed, room assignments, etc." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-xs focus:ring-1 focus:ring-tagsci-600"></textarea>
+          </div>
+
+          <button type="submit" class="w-full py-2.5 rounded-lg bg-tagsci-700 hover:bg-tagsci-800 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-1.5">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            Save Event to Timeline
+          </button>
+        </form>
+      </div>
+
+      <div class="flex-1 flex flex-col bg-slate-50 dark:bg-slate-950 p-4 overflow-y-auto">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">
+            Active Published Deadlines
+          </h3>
+          <span id="cal-events-count" class="text-xs text-slate-400 font-bold">3 events scheduled</span>
+        </div>
+
+        <div id="cal-events-list-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          <!-- Calendar event cards rendered here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- VIEW 4: JSON & OVER-THE-AIR SYNC HUB                            -->
+    <!-- ----------------------------------------------------------------- -->
+    <section id="view-json-hub" class="studio-view hidden flex-1 flex flex-col lg:flex-row h-full overflow-hidden bg-slate-50 dark:bg-slate-950">
+      <div class="flex-1 flex flex-col border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+        <div class="p-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
+          <div>
+            <h2 class="text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200 flex items-center gap-2">
+              <i data-lucide="file-json" class="w-4 h-4 text-purple-500"></i>
+              Compiled updates.json Schema
+            </h2>
+            <p class="text-[10px] text-slate-400">Exact payload consumed by Google Apps Script & the Student WebApp</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button id="btn-hub-copy-json" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 flex items-center gap-1">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy
+            </button>
+            <button id="btn-hub-download-json" class="px-3 py-1 rounded bg-tagsci-700 hover:bg-tagsci-800 text-xs font-bold text-white flex items-center gap-1">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> Download updates.json
+            </button>
+          </div>
+        </div>
+
+        <div class="flex-1 relative overflow-hidden bg-slate-950 text-slate-200">
+          <textarea id="hub-json-viewer" readonly class="w-full h-full p-4 font-mono text-xs leading-relaxed bg-transparent resize-none focus:outline-none overflow-y-auto text-emerald-400"></textarea>
+        </div>
+      </div>
+
+      <div class="w-full lg:w-96 flex flex-col p-4 bg-white dark:bg-slate-900 overflow-y-auto space-y-4">
+        <div>
+          <h3 class="text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-1 flex items-center gap-1.5">
+            <i data-lucide="radio" class="w-4 h-4 text-tagsci-600"></i>
+            OTA Deployment Pipeline
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Publishing new reviewers, quiz banks, and deadlines directly to students' devices without republishing the website.
+          </p>
+        </div>
+
+        <div class="space-y-3 text-xs">
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+            <div class="font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-1">
+              <span class="w-4 h-4 rounded-full bg-tagsci-700 text-white text-[10px] flex items-center justify-center font-black">1</span>
+              Download / Copy JSON
+            </div>
+            <p class="text-slate-600 dark:text-slate-300 text-[11px]">Click "Export updates.json" above or copy the raw JSON payload.</p>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+            <div class="font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-1">
+              <span class="w-4 h-4 rounded-full bg-tagsci-700 text-white text-[10px] flex items-center justify-center font-black">2</span>
+              Upload to Google Drive
+            </div>
+            <p class="text-slate-600 dark:text-slate-300 text-[11px]">Overwrite your `updates.json` in your designated Google Drive folder.</p>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+            <div class="font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-1">
+              <span class="w-4 h-4 rounded-full bg-tagsci-700 text-white text-[10px] flex items-center justify-center font-black">3</span>
+              Automatic Student Sync
+            </div>
+            <p class="text-slate-600 dark:text-slate-300 text-[11px]">When students open their WebApp, it automatically downloads and caches your updates locally!</p>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-tagsci-50 dark:bg-tagsci-950/60 border border-tagsci-200 dark:border-tagsci-800">
+          <label class="block text-[11px] font-bold text-tagsci-900 dark:text-tagsci-200 mb-1.5">
+            Test Over-The-Air Endpoint:
+          </label>
+          <input type="url" id="hub-ota-endpoint-input" value="https://script.google.com/macros/s/AKfycbyJbM_8Ln41glBWb6cDmzu0XYQmbImYLO0UHJIr6TKS37aZhNoz9Eubmir1FpQ_DlPvWA/exec" class="w-full px-2.5 py-1.5 text-xs bg-white dark:bg-slate-900 border border-tagsci-300 dark:border-tagsci-700 rounded-lg text-slate-800 dark:text-slate-200 font-mono mb-2">
+          <button id="btn-test-ota-hub" class="w-full py-1.5 rounded-lg bg-tagsci-700 hover:bg-tagsci-800 text-white font-bold text-xs flex items-center justify-center gap-1.5">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            Ping OTA Endpoint
+          </button>
+          <div id="hub-ota-status" class="mt-2 text-[11px] text-slate-500 hidden"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- VIEW 5: FORMAT & SUBJECT GUIDE                                   -->
+    <!-- ----------------------------------------------------------------- -->
+    <section id="view-guide" class="studio-view hidden flex-1 p-6 overflow-y-auto bg-slate-50 dark:bg-slate-950">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <div>
+          <h2 class="text-lg font-black text-tagsci-900 dark:text-white flex items-center gap-2">
+            <i data-lucide="book" class="w-5 h-5 text-tagsci-600"></i>
+            Editorial Council Curriculum Taxonomy & Guidelines
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Grade 11 curriculum taxonomy and formatting standards for single-file offline distribution.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+            <h3 class="font-bold text-sm text-tagsci-800 dark:text-tagsci-300 flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-tagsci-600"></i>
+              Main Subjects (Universal)
+            </h3>
+            <ul class="space-y-1.5 text-slate-600 dark:text-slate-300">
+              <li>&bull; <strong>Effective Communications</strong></li>
+              <li>&bull; <strong>Mabisang Komunikasyon</strong></li>
+              <li>&bull; <strong>Life and Career Skills</strong></li>
+              <li>&bull; <strong>General Math</strong></li>
+              <li>&bull; <strong>General Science</strong></li>
+            </ul>
+          </div>
+
+          <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+            <h3 class="font-bold text-sm text-purple-700 dark:text-purple-300 flex items-center gap-2">
+              <i data-lucide="sparkles" class="w-4 h-4 text-purple-600"></i>
+              Elective Subjects
+            </h3>
+            <ul class="space-y-1.5 text-slate-600 dark:text-slate-300">
+              <li>&bull; <strong>Finite Math</strong></li>
+              <li>&bull; <strong>Physics</strong></li>
+              <li>&bull; <strong>Chemistry</strong></li>
+              <li>&bull; <strong>Biology</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= IMPROVED ADVANCED VISUAL MATH STUDIO MODAL ================= -->
+  <div id="modal-math-builder" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-2xl w-full p-5 shadow-2xl space-y-4 max-h-[92vh] flex flex-col">
+      <!-- Header -->
+      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 shrink-0">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg bg-tagsci-100 dark:bg-tagsci-950 text-tagsci-800 dark:text-tagsci-300 flex items-center justify-center font-bold">
+            &Sigma;
+          </div>
+          <div>
+            <h3 class="font-black text-sm text-slate-900 dark:text-white">Visual Equation Studio</h3>
+            <p class="text-[10.5px] text-slate-400">Click symbols and templates to build math without writing raw LaTeX</p>
+          </div>
+        </div>
+        <button onclick="closeMathBuilderModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto space-y-4 pr-1 text-xs">
+        
+        <!-- Category Tabs -->
+        <div class="flex space-x-1.5 border-b border-slate-100 dark:border-slate-800 pb-1.5">
+          <button id="tab-math-templates" onclick="switchMathSubTab('templates')" class="px-3 py-1 rounded-md text-xs font-bold bg-tagsci-50 dark:bg-tagsci-950 text-tagsci-800 dark:text-tagsci-300 border border-tagsci-200 dark:border-tagsci-800">
+            Structure Templates
+          </button>
+          <button id="tab-math-symbols" onclick="switchMathSubTab('symbols')" class="px-3 py-1 rounded-md text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+            Greek & Operators
+          </button>
+          <button id="tab-math-presets" onclick="switchMathSubTab('presets')" class="px-3 py-1 rounded-md text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+            Standard STEM Formulas
+          </button>
+        </div>
+
+        <!-- TAB 1: STRUCTURE TEMPLATES (Fractions, Roots, Powers, Subscripts, Vectors) -->
+        <div id="math-subtab-templates" class="space-y-3">
+          <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+            <button onclick="insertFormulaSnippet('\\frac{a}{b}')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 hover:border-tagsci-500 text-center font-bold">
+              <span class="block text-sm">&frac12;</span>
+              <span class="text-[10px] text-slate-400">Fraction</span>
+            </button>
+            <button onclick="insertFormulaSnippet('\\sqrt{x}')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 hover:border-tagsci-500 text-center font-bold">
+              <span class="block text-sm">&radic;x</span>
+              <span class="text-[10px] text-slate-400">Square Root</span>
+            </button>
+            <button onclick="insertFormulaSnippet('x^{2}')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 hover:border-tagsci-500 text-center font-bold">
+              <span class="block text-sm">x<sup>n</sup></span>
+              <span class="text-[10px] text-slate-400">Exponent</span>
+            </button>
+            <button onclick="insertFormulaSnippet('v_{0}')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 hover:border-tagsci-500 text-center font-bold">
+              <span class="block text-sm">v<sub>0</sub></span>
+              <span class="text-[10px] text-slate-400">Subscript</span>
+            </button>
+            <button onclick="insertFormulaSnippet('\\vec{v}')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 hover:border-tagsci-500 text-center font-bold">
+              <span class="block text-sm">&rarr;v</span>
+              <span class="text-[10px] text-slate-400">Vector</span>
+            </button>
+            <button onclick="insertFormulaSnippet('\\left( x + y \\right)')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 hover:border-tagsci-500 text-center font-bold">
+              <span class="block text-sm">( &hellip; )</span>
+              <span class="text-[10px] text-slate-400">Parentheses</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 2: GREEK & OPERATORS -->
+        <div id="math-subtab-symbols" class="hidden space-y-3">
+          <div>
+            <span class="text-[10px] font-black uppercase text-slate-400 block mb-1">Greek Alphabet:</span>
+            <div class="flex flex-wrap gap-1.5 p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 font-mono font-bold text-xs">
+              <button onclick="insertFormulaSnippet('\\theta')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&theta; (theta)</button>
+              <button onclick="insertFormulaSnippet('\\pi')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&pi; (pi)</button>
+              <button onclick="insertFormulaSnippet('\\Delta')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&Delta; (delta)</button>
+              <button onclick="insertFormulaSnippet('\\alpha')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&alpha; (alpha)</button>
+              <button onclick="insertFormulaSnippet('\\beta')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&beta; (beta)</button>
+              <button onclick="insertFormulaSnippet('\\gamma')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&gamma; (gamma)</button>
+              <button onclick="insertFormulaSnippet('\\lambda')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&lambda; (lambda)</button>
+              <button onclick="insertFormulaSnippet('\\mu')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&mu; (mu)</button>
+              <button onclick="insertFormulaSnippet('\\omega')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&omega; (omega)</button>
+              <button onclick="insertFormulaSnippet('\\Omega')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&Omega; (Ohm)</button>
+              <button onclick="insertFormulaSnippet('\\rho')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&rho; (rho)</button>
+              <button onclick="insertFormulaSnippet('\\sigma')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&sigma; (sigma)</button>
+            </div>
+          </div>
+
+          <div>
+            <span class="text-[10px] font-black uppercase text-slate-400 block mb-1">Mathematical Operators:</span>
+            <div class="flex flex-wrap gap-1.5 p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 font-mono font-bold text-xs">
+              <button onclick="insertFormulaSnippet('\\pm')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&plusmn;</button>
+              <button onclick="insertFormulaSnippet('\\mp')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&#x2213;</button>
+              <button onclick="insertFormulaSnippet('\\times')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&times;</button>
+              <button onclick="insertFormulaSnippet('\\cdot')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&middot;</button>
+              <button onclick="insertFormulaSnippet('\\approx')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&asymp;</button>
+              <button onclick="insertFormulaSnippet('\\neq')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&ne;</button>
+              <button onclick="insertFormulaSnippet('\\le')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&le;</button>
+              <button onclick="insertFormulaSnippet('\\ge')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&ge;</button>
+              <button onclick="insertFormulaSnippet('\\infty')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&infin;</button>
+              <button onclick="insertFormulaSnippet('\\rightarrow')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&rarr;</button>
+              <button onclick="insertFormulaSnippet('\\partial')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&part;</button>
+              <button onclick="insertFormulaSnippet('\\sum')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&sum;</button>
+              <button onclick="insertFormulaSnippet('\\int')" class="px-2 py-1 rounded bg-white dark:bg-slate-700 hover:bg-tagsci-100">&int;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: STANDARD STEM FORMULAS -->
+        <div id="math-subtab-presets" class="hidden space-y-2">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <button onclick="setFullEquation('v_f = v_0 + at')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-left border border-slate-200 dark:border-slate-700 hover:border-tagsci-500">
+              <span class="font-bold text-tagsci-700 dark:text-tagsci-300 block">Kinematics Velocity</span>
+              <span class="text-xs font-mono text-slate-500">v_f = v_0 + at</span>
+            </button>
+            <button onclick="setFullEquation('\\Delta x = v_0 t + \\frac{1}{2}at^2')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-left border border-slate-200 dark:border-slate-700 hover:border-tagsci-500">
+              <span class="font-bold text-tagsci-700 dark:text-tagsci-300 block">Position Displacement</span>
+              <span class="text-xs font-mono text-slate-500">&Delta;x = v_0 t + &frac12;at^2</span>
+            </button>
+            <button onclick="setFullEquation('v_f^2 = v_0^2 + 2a\\Delta x')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-left border border-slate-200 dark:border-slate-700 hover:border-tagsci-500">
+              <span class="font-bold text-tagsci-700 dark:text-tagsci-300 block">Torricelli Velocity Relation</span>
+              <span class="text-xs font-mono text-slate-500">v_f^2 = v_0^2 + 2a&Delta;x</span>
+            </button>
+            <button onclick="setFullEquation('x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-left border border-slate-200 dark:border-slate-700 hover:border-tagsci-500">
+              <span class="font-bold text-tagsci-700 dark:text-tagsci-300 block">Quadratic Formula</span>
+              <span class="text-xs font-mono text-slate-500">x = (-b &plusmn; &radic;(b^2-4ac)) / 2a</span>
+            </button>
+            <button onclick="setFullEquation('F_{net} = ma')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-left border border-slate-200 dark:border-slate-700 hover:border-tagsci-500">
+              <span class="font-bold text-tagsci-700 dark:text-tagsci-300 block">Newton 2nd Law</span>
+              <span class="text-xs font-mono text-slate-500">F_{net} = ma</span>
+            </button>
+            <button onclick="setFullEquation('PV = nRT')" class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-left border border-slate-200 dark:border-slate-700 hover:border-tagsci-500">
+              <span class="font-bold text-tagsci-700 dark:text-tagsci-300 block">Ideal Gas Law</span>
+              <span class="text-xs font-mono text-slate-500">PV = nRT</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Math Editor Input & Live Preview -->
+        <div class="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+          <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider">
+            Equation Canvas (Supports direct typing or clicking buttons above):
+          </label>
+          <input type="text" id="math-studio-input" oninput="updateMathStudioPreview()" placeholder="Type formula e.g. v_f = v_0 + at" class="w-full px-3 py-2 text-xs sm:text-sm font-mono font-bold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-1 focus:ring-tagsci-500 text-tagsci-800 dark:text-emerald-400">
+
+          <!-- Live Rendered Result -->
+          <div class="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center min-h-[60px] flex flex-col justify-center items-center">
+            <span class="text-[9.5px] text-slate-400 font-bold uppercase mb-1">Live Render:</span>
+            <div id="math-studio-preview" class="text-base font-bold text-tagsci-900 dark:text-emerald-300">$...$</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Buttons -->
+      <div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-3 shrink-0">
+        <button onclick="closeMathBuilderModal()" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+          Cancel
+        </button>
+        <div class="flex items-center gap-2">
+          <button onclick="confirmMathInsert('inline')" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold border border-slate-200 dark:border-slate-700 transition-all">
+            Insert Inline ($...$)
+          </button>
+          <button onclick="confirmMathInsert('card')" class="px-3.5 py-1.5 rounded-lg bg-tagsci-700 hover:bg-tagsci-800 text-white text-xs font-bold shadow-md">
+            Insert as Card
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= NOTIFICATION TOAST ================= -->
+  <div id="toast-msg" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-semibold shadow-2xl flex items-center gap-2 border border-slate-700">
+    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toast-text">Success!</span>
+  </div>
+
+  <!-- ================= EMBEDDED JAVASCRIPT LOGIC ================= -->
+  <script>
+    /* =========================================================================
+       TagSci Material Studio - Core State & Offline Math Engine
+       ========================================================================= */
+
+    const GREEK_SYMBOLS = {
+      '\\alpha': '&alpha;', '\\beta': '&beta;', '\\gamma': '&gamma;', '\\delta': '&delta;',
+      '\\Delta': '&Delta;', '\\epsilon': '&epsilon;', '\\varepsilon': '&#x03B5;', '\\theta': '&theta;',
+      '\\Theta': '&Theta;', '\\lambda': '&lambda;', '\\Lambda': '&Lambda;', '\\mu': '&mu;',
+      '\\pi': '&pi;', '\\Pi': '&Pi;', '\\rho': '&rho;', '\\sigma': '&sigma;', '\\Sigma': '&Sigma;',
+      '\\tau': '&tau;', '\\phi': '&phi;', '\\Phi': '&Phi;', '\\omega': '&omega;', '\\Omega': '&Omega;'
+    };
+
+    const MATH_OPERATORS = {
+      '\\cdot': '&middot;', '\\times': '&times;', '\\pm': '&plusmn;', '\\mp': '&#x2213;',
+      '\\approx': '&asymp;', '\\neq': '&ne;', '\\le': '&le;', '\\ge': '&ge;', '\\infty': '&infin;',
+      '\\partial': '&part;', '\\nabla': '&nabla;', '\\forall': '&forall;', '\\exists': '&exist;',
+      '\\in': '&isin;', '\\notin': '&notin;', '\\rightarrow': '&rarr;', '\\leftarrow': '&larr;',
+      '\\Rightarrow': '&rArr;', '\\Leftarrow': '&lArr;', '\\leftrightarrow': '&harr;',
+      '\\int': '<span class="text-lg leading-none italic font-serif font-bold">&int;</span>',
+      '\\sum': '<span class="text-lg leading-none font-bold">&sum;</span>',
+      '\\sqrt': '&radic;'
+    };
+
+    function parseMathSyntax(tex) {
+      let s = (tex || '').trim();
+      s = s.replace(/\\frac\s*\{([^{}]+)\}\s*\{([^{}]+)\}/g, (match, num, den) => {
+        return `<span class="inline-flex flex-col text-center align-middle mx-1 text-xs sm:text-sm font-mono-math"><span class="border-b border-current pb-0.5 px-1">${parseMathSyntax(num)}</span><span class="pt-0.5 px-1">${parseMathSyntax(den)}</span></span>`;
+      });
+      s = s.replace(/\\sqrt\[([^{}]+)\]\{([^{}]+)\}/g, (match, n, inner) => {
+        return `<span class="inline-flex items-center align-middle font-mono-math"><sup class="text-[9px] -mr-1">${parseMathSyntax(n)}</sup><span class="text-base leading-none">&radic;</span><span class="border-t border-current px-0.5 ml-0.5">${parseMathSyntax(inner)}</span></span>`;
+      });
+      s = s.replace(/\\sqrt\{([^{}]+)\}/g, (match, inner) => {
+        return `<span class="inline-flex items-center align-middle font-mono-math"><span class="text-base leading-none">&radic;</span><span class="border-t border-current px-0.5 ml-0.5">${parseMathSyntax(inner)}</span></span>`;
+      });
+      s = s.replace(/\\vec\{([^{}]+)\}/g, (match, inner) => `<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&rarr;</span><span>${inner}</span></span>`);
+      s = s.replace(/\^\{([^{}]+)\}/g, '<sup>$1</sup>');
+      s = s.replace(/\^([a-zA-Z0-9+\-&;]+)/g, '<sup>$1</sup>');
+      s = s.replace(/_\{([^{}]+)\}/g, '<sub>$1</sub>');
+      s = s.replace(/_([a-zA-Z0-9+\-&;]+)/g, '<sub>$1</sub>');
+      for (const [key, val] of Object.entries(GREEK_SYMBOLS)) s = s.split(key).join(val);
+      for (const [key, val] of Object.entries(MATH_OPERATORS)) s = s.split(key).join(val);
+      s = s.replace(/\\text\{([^{}]+)\}/g, '<span class="font-sans font-normal">$1</span>');
+      return s;
+    }
+
+    function renderMathInHtml(htmlString) {
+      if (!htmlString) return '';
+      let res = htmlString.replace(/\$\$([\s\S]*?)\$\$/g, (match, tex) => {
+        return `<div class="my-3 py-2 px-3 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center font-mono-math text-sm text-tagsci-900 dark:text-emerald-300 shadow-sm overflow-x-auto">${parseMathSyntax(tex)}</div>`;
+      });
+      res = res.replace(/\$([^\$\n]+?)\$/g, (match, tex) => {
+        return `<span class="inline-block font-mono-math text-tagsci-800 dark:text-emerald-300 px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs font-semibold">${parseMathSyntax(tex)}</span>`;
+      });
+      return res;
+    }
+
+    function formatRichText(str) {
+      if (!str) return '';
+      let res = str;
+      // 1. Bold: **text**
+      res = res.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      // 2. Underline: <u>text</u> or __text__
+      res = res.replace(/<u>(.*?)<\/u>/gi, '<u class="underline underline-offset-2">$1</u>');
+      res = res.replace(/__(.*?)__/g, '<u class="underline underline-offset-2">$1</u>');
+      // 3. Italic: *text* (when not part of **)
+      res = res.replace(/(?<!\*)\*(?!\*)([^\*]+?)(?<!\*)\*(?!\*)/g, '<em class="italic">$1</em>');
+      return res;
+    }
+
+    function parseMarkdownToHtml(md) {
+      if (!md) return '';
+      const lines = md.trim().split('\n');
+      const htmlLines = [];
+      let inList = false;
+
+      for (let line of lines) {
+        let stripped = line.trim();
+        if (stripped.startsWith('#### ')) {
+          if (inList) { htmlLines.push('</ul>'); inList = false; }
+          htmlLines.push(`<h5 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 mt-3 mb-1">${formatRichText(stripped.substring(5))}</h5>`);
+        } else if (stripped.startsWith('### ')) {
+          if (inList) { htmlLines.push('</ul>'); inList = false; }
+          htmlLines.push(`<h4 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-3.5 mb-1.5">${formatRichText(stripped.substring(4))}</h4>`);
+        } else if (stripped.startsWith('## ')) {
+          if (inList) { htmlLines.push('</ul>'); inList = false; }
+          htmlLines.push(`<h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-4 mb-2">${formatRichText(stripped.substring(3))}</h3>`);
+        } else if (stripped.startsWith('# ')) {
+          if (inList) { htmlLines.push('</ul>'); inList = false; }
+          htmlLines.push(`<h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-4 mb-2">${formatRichText(stripped.substring(2))}</h2>`);
+        } else if (stripped.startsWith('- ') || stripped.startsWith('* ')) {
+          if (!inList) {
+            htmlLines.push('<ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">');
+            inList = true;
+          }
+          let itemText = formatRichText(stripped.substring(2));
+          htmlLines.push(`<li>${itemText}</li>`);
+        } else if (stripped === '') {
+          if (inList) { htmlLines.push('</ul>'); inList = false; }
+          htmlLines.push('<div class="h-2"></div>');
+        } else {
+          if (inList) { htmlLines.push('</ul>'); inList = false; }
+          let pText = formatRichText(line);
+          htmlLines.push(`<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-1">${pText}</p>`);
+        }
+      }
+      if (inList) htmlLines.push('</ul>');
+      return renderMathInHtml(htmlLines.join('\n'));
+    }
+
+    /* =========================================================================
+       INITIAL DEFAULT DATASETS & SUBJECT TAXONOMY
+       ========================================================================= */
+
+    const OFFICIAL_SUBJECTS = {
+      'TagSci': { type: 'Institutional', color: 'border-l-4 border-tagsci-700' },
+      'DepEd': { type: 'DepEd', color: 'border-l-4 border-blue-600' },
+      'Effective Communications': { type: 'Main', color: 'border-l-4 border-blue-500' },
+      'Mabisang Komunikasyon': { type: 'Main', color: 'border-l-4 border-amber-500' },
+      'Life and Career Skills': { type: 'Main', color: 'border-l-4 border-emerald-500' },
+      'General Math': { type: 'Main', color: 'border-l-4 border-g11pink-500' },
+      'General Science': { type: 'Main', color: 'border-l-4 border-teal-500' },
+      'Finite Math': { type: 'Elective', color: 'border-l-4 border-purple-500' },
+      'Physics': { type: 'Elective', color: 'border-l-4 border-tagsci-600' },
+      'Chemistry': { type: 'Elective', color: 'border-l-4 border-indigo-500' },
+      'Biology': { type: 'Elective', color: 'border-l-4 border-green-600' }
+    };
+
+    function getSubjectClassification(subj) {
+      return OFFICIAL_SUBJECTS[subj] || { type: 'Main', color: 'border-l-4 border-tagsci-600' };
+    }
+
+    const STUDIO_DATA = {
+      version: "1.4.0",
+      updatedAt: new Date().toISOString(),
+      announcement: "Materials authored via TagSci G11 Visual Studio.",
+      calendarEvents: [
+        {
+          id: 1,
+          date: "2026-09-25",
+          subject: "Physics",
+          title: "Periodical Exam - Kinematics & Dynamics",
+          type: "exam",
+          badge: "Exam / 60 pts",
+          desc: "Coverage: 1D & 2D Motion, Projectile Motion, Newton's Laws. Scientific calculators allowed."
+        },
+        {
+          id: 2,
+          date: "2026-09-28",
+          subject: "Finite Math",
+          title: "PETA 1 Submission - Mathematical Modeling",
+          type: "peta",
+          badge: "Performance Task",
+          desc: "Matrix operations, linear programming, and real-world system optimization."
+        },
+        {
+          id: 3,
+          date: "2026-10-02",
+          subject: "Chemistry",
+          title: "Long Quiz #2 - Stoichiometry & Gas Laws",
+          type: "quiz",
+          badge: "Quiz / 30 pts",
+          desc: "Ideal Gas Law, Dalton's Law, Limiting Reactants."
+        }
+      ],
+      stemReviewers: [
+        {
+          id: "physics_kinematics",
+          subject: "Physics",
+          tag: "Elective",
+          color: "border-l-4 border-tagsci-600",
+          title: "Kinematics in 1D & 2D Motion",
+          summary: "Master velocity, acceleration, free fall, and projectile trajectories with derivations.",
+          blocks: [
+            { type: 'heading', level: 'h3', text: '1. Fundamental Kinematic Equations' },
+            { type: 'paragraph', text: 'For linear particle motion with constant acceleration $a$:' },
+            { type: 'formula', title: 'Torricelli Velocity Relation', formula: 'v_f^2 = v_0^2 + 2a\\Delta x', note: 'Relates initial and final velocities to displacement without time dependence.' },
+            { type: 'formula', title: 'Position-Time Equation', formula: '\\Delta x = v_0 t + \\frac{1}{2}at^2', note: 'Calculates total distance traveled under constant acceleration.' },
+            { type: 'bullets', items: ['Horizontal velocity $v_x = v_0\\cos\\theta$ is strictly constant.', 'Vertical motion is influenced by downward gravitational acceleration $g = 9.8\\text{ m/s}^2$.'] }
+          ],
+          rawMarkdown: "",
+          content: ""
+        },
+        {
+          id: "gen_math_functions",
+          subject: "General Math",
+          tag: "Main",
+          color: "border-l-4 border-g11pink-500",
+          title: "Functions, Rational Equations & Inverses",
+          summary: "Domain, range, rational functions, asymptotes, and inverse function properties.",
+          blocks: [
+            { type: 'heading', level: 'h3', text: '1. Rational Functions & Asymptotes' },
+            { type: 'paragraph', text: 'A rational function is defined as a fraction of polynomials $f(x) = \\frac{P(x)}{Q(x)}$ where $Q(x) \\neq 0$.' },
+            { type: 'formula', title: 'Standard Rational Form', formula: 'f(x) = \\frac{a_n x^n + \\dots}{b_m x^m + \\dots}', note: 'Compare degree n and degree m to find horizontal asymptotes.' },
+            { type: 'bullets', items: ['Vertical Asymptote: Values of x where denominator Q(x) = 0.', 'Horizontal Asymptote: If n < m, y = 0. If n = m, y = a_n / b_m.'] }
+          ],
+          rawMarkdown: "",
+          content: ""
+        }
+      ],
+      studyMaterials: [],
+      problemSets: [],
+      quizSets: [
+        {
+          id: "quiz_set_1",
+          subject: "Effective Communications",
+          tag: "Main",
+          title: "Untitled Quiz Set",
+          desc: "",
+          timeLimitMinutes: 15,
+          questions: []
+        }
+      ]
+    };
+
+    let currentRevIndex = 0;
+    let currentQuizSetIndex = 0;
+    let currentEditorMode = 'visual';
+
+    function showToast(message) {
+      const toast = document.getElementById('toast-msg');
+      const text = document.getElementById('toast-text');
+      text.innerText = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    /* =========================================================================
+       BLOCK CONVERTER: BLOCKS <-> MARKDOWN SYNC
+       ========================================================================= */
+
+    function compileBlocksToMarkdown(blocks) {
+      if (!blocks || blocks.length === 0) return '';
+      let md = '';
+      blocks.forEach(b => {
+        if (b.type === 'heading') {
+          const prefix = b.level === 'h2' ? '## ' : '### ';
+          md += `${prefix}${b.text || 'Heading'}\n\n`;
+        } else if (b.type === 'paragraph') {
+          md += `${b.text || ''}\n\n`;
+        } else if (b.type === 'formula') {
+          if (b.title) md += `**${b.title}**\n`;
+          md += `$$ ${b.formula || ''} $$\n`;
+          if (b.note) md += `> *Note: ${b.note}*\n\n`;
+        } else if (b.type === 'bullets') {
+          if (b.items && b.items.length > 0) {
+            b.items.forEach(it => { md += `- ${it}\n`; });
+            md += '\n';
+          }
+        }
+      });
+      return md.trim();
+    }
+
+    function parseMarkdownIntoBlocks(md) {
+      if (!md) return [];
+      const lines = md.split('\n');
+      const blocks = [];
+      let currentBulletBlock = null;
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) {
+          if (currentBulletBlock) {
+            blocks.push(currentBulletBlock);
+            currentBulletBlock = null;
+          }
+          continue;
+        }
+
+        if (line.startsWith('### ') || line.startsWith('## ')) {
+          if (currentBulletBlock) { blocks.push(currentBulletBlock); currentBulletBlock = null; }
+          const level = line.startsWith('## ') ? 'h2' : 'h3';
+          blocks.push({ type: 'heading', level, text: line.replace(/^#+\s*/, '') });
+        } else if (line.startsWith('$$') && line.endsWith('$$')) {
+          if (currentBulletBlock) { blocks.push(currentBulletBlock); currentBulletBlock = null; }
+          blocks.push({ type: 'formula', title: 'Formula', formula: line.replace(/\$\$/g, '').trim(), note: '' });
+        } else if (line.startsWith('- ') || line.startsWith('* ')) {
+          if (!currentBulletBlock) {
+            currentBulletBlock = { type: 'bullets', items: [] };
+          }
+          currentBulletBlock.items.push(line.substring(2));
+        } else {
+          if (currentBulletBlock) { blocks.push(currentBulletBlock); currentBulletBlock = null; }
+          blocks.push({ type: 'paragraph', text: line });
+        }
+      }
+      if (currentBulletBlock) blocks.push(currentBulletBlock);
+      return blocks;
+    }
+
+    /* =========================================================================
+       VISUAL BLOCK CANVAS RENDERER
+       ========================================================================= */
+
+    function renderBlockCanvas() {
+      const rev = STUDIO_DATA.stemReviewers[currentRevIndex];
+      const container = document.getElementById('blocks-container');
+      if (!rev) return;
+
+      if (!rev.blocks) {
+        rev.blocks = parseMarkdownIntoBlocks(rev.rawMarkdown || '');
+      }
+
+      container.innerHTML = '';
+      rev.blocks.forEach((b, bIdx) => {
+        const card = document.createElement('div');
+        card.className = 'block-card p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:border-tagsci-400 dark:hover:border-tagsci-700 space-y-2.5';
+
+        // Unified Card Header: Left Badge/Controls + Right Reorder/Delete Actions
+        let headerLeft = '';
+        let bodyHtml = '';
+
+        if (b.type === 'heading') {
+          headerLeft = `
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300">
+                Heading
+              </span>
+              <select onchange="updateBlockField(${bIdx}, 'level', this.value)" class="text-[11px] font-bold bg-slate-100 dark:bg-slate-800 rounded-md px-2 py-0.5 border border-slate-200 dark:border-slate-700">
+                <option value="h2" ${b.level === 'h2' ? 'selected' : ''}>H2 Section</option>
+                <option value="h3" ${b.level === 'h3' ? 'selected' : ''}>H3 Sub-topic</option>
+              </select>
+            </div>
+          `;
+          bodyHtml = `
+            <input type="text" value="${b.text || ''}" oninput="updateBlockField(${bIdx}, 'text', this.value)" placeholder="Type section title..." class="w-full px-2.5 py-1.5 text-xs font-black bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
+          `;
+        } else if (b.type === 'paragraph') {
+          headerLeft = `
+            <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+              Concept Text
+            </span>
+          `;
+          bodyHtml = `
+            <textarea rows="2" oninput="updateBlockField(${bIdx}, 'text', this.value)" placeholder="Explain concept or rule here (use $formula$ for inline math)..." class="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">${b.text || ''}</textarea>
+          `;
+        } else if (b.type === 'formula') {
+          headerLeft = `
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-tagsci-100 dark:bg-tagsci-950 text-tagsci-800 dark:text-tagsci-300 flex items-center gap-1">
+                <i data-lucide="sigma" class="w-3 h-3"></i> Formula Card
+              </span>
+              <button onclick="openMathBuilderForBlock(${bIdx})" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10.5px] font-bold bg-tagsci-50 dark:bg-tagsci-950/80 hover:bg-tagsci-100 text-tagsci-800 dark:text-tagsci-300 border border-tagsci-300 dark:border-tagsci-800">
+                <i data-lucide="edit-2" class="w-3 h-3"></i> Open Equation Studio
+              </button>
+            </div>
+          `;
+          bodyHtml = `
+            <div class="space-y-2">
+              <input type="text" value="${b.title || ''}" oninput="updateBlockField(${bIdx}, 'title', this.value)" placeholder="Formula Name (e.g. Velocity Equation)" class="w-full px-2.5 py-1 text-xs font-bold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
+              <div class="p-2 rounded-lg bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-xs">
+                <input type="text" value="${b.formula || ''}" oninput="updateBlockField(${bIdx}, 'formula', this.value)" placeholder="Formula math: e.g. v_f = v_0 + at" class="w-full px-2 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded text-tagsci-800 dark:text-emerald-400 font-bold">
+              </div>
+              <input type="text" value="${b.note || ''}" oninput="updateBlockField(${bIdx}, 'note', this.value)" placeholder="Short note / when to use this formula..." class="w-full px-2.5 py-1 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
+            </div>
+          `;
+        } else if (b.type === 'bullets') {
+          headerLeft = `
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                Bullet Points List
+              </span>
+              <button onclick="addBulletItem(${bIdx})" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10.5px] font-bold text-tagsci-700 dark:text-tagsci-400 hover:bg-tagsci-50 dark:hover:bg-tagsci-950">
+                + Add Point
+              </button>
+            </div>
+          `;
+          bodyHtml = `
+            <div class="space-y-1.5">
+              ${(b.items || []).map((it, itIdx) => `
+                <div class="flex items-center gap-2">
+                  <span class="text-slate-400 font-bold text-xs">&bull;</span>
+                  <input type="text" value="${it}" oninput="updateBulletItem(${bIdx}, ${itIdx}, this.value)" placeholder="Key takeaway point..." class="flex-1 px-2.5 py-1 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
+                  <button onclick="removeBulletItem(${bIdx}, ${itIdx})" class="text-slate-400 hover:text-red-500 p-1"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }
+
+        const headerActions = `
+          <div class="flex items-center gap-1 shrink-0">
+            <button onclick="moveBlock(${bIdx}, -1)" ${bIdx === 0 ? 'disabled' : ''} title="Move Up" class="p-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 transition-colors">
+              <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+            </button>
+            <button onclick="moveBlock(${bIdx}, 1)" ${bIdx === rev.blocks.length - 1 ? 'disabled' : ''} title="Move Down" class="p-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 transition-colors">
+              <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+            </button>
+            <button onclick="duplicateBlock(${bIdx})" title="Duplicate Block" class="p-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            </button>
+            <button onclick="deleteBlock(${bIdx})" title="Delete Block" class="p-1 rounded-md bg-slate-100 dark:bg-slate-800 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/60 transition-colors">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        `;
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
+            <div class="min-w-0">${headerLeft}</div>
+            ${headerActions}
+          </div>
+          ${bodyHtml}
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    window.updateBlockField = function(bIdx, field, val) {
+      const rev = STUDIO_DATA.stemReviewers[currentRevIndex];
+      rev.blocks[bIdx][field] = val;
+      syncBlocksToPreview();
+    };
+
+    window.moveBlock = function(bIdx, dir) {
+      const rev = STUDIO_DATA.stemReviewers[currentRevIndex];
+      const target = bIdx + dir;
+      if (target < 0 || target >= rev.blocks.length) return;
+      const temp = rev.blocks[bIdx];
+      rev.blocks[bIdx] = rev.blocks[target];
+      rev.blocks[target] = temp;
+      renderBlockCanvas();
+      syncBlocksToPreview();
+    };
+
+    window.duplicateBlock = function(bIdx) {
+      const rev = STUDIO_DATA.stemReviewers[currentRevIndex];
+      const clone = JSON.parse(JSON.stringify(rev.blocks[bIdx]));
+      rev.blocks.splice(bIdx + 1, 0, clone);
+      renderBlockCanvas();
+      syncBlocksToPreview();
+      showToast('Block duplicated!');
+    };
+
+    window.deleteBlock = function(bIdx) {
+      const rev = STUDIO_DATA.stemReviewers[currentRevIndex];
+      rev.blocks.splice(bIdx, 1);
+      renderBlockCanvas();
+      syncBlocksToPreview();
+    };
+
+    window.addBulletItem = function(bIdx) {
+      const rev = STUDIO_DATA.stemReviewers[currentRevIndex];
+      if (!rev.blocks[bIdx].items) rev.blocks[bIdx].items = [];
+      rev.blocks[bIdx].items.push('New key point');
+      renderBlockCanvas();
+      syncBlocksToPreview();
+    };
+
+    window.updateBulletItem = function(bIdx, itIdx, val) {
+      const rev = STUDIO_DATA.stemReviewers[currentRevIndex];
+      rev.blocks[bIdx].items[itIdx] = val;
+      syncBlocksToPreview();
+    };
+
+    window.removeBulletItem = function(bIdx, itIdx) {
+      const rev = STUDIO_DATA.stemReviewers[currentRevIndex];
+      rev.blocks[bIdx].items.splice(itIdx, 1);
+      renderBlockCanvas();
+      syncBlocksToPreview();
+    };
+
+    window.toggleAddBlockDropdown = function(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById('add-block-menu');
+      if (menu) {
+        menu.classList.toggle('hidden');
+        if (!menu.classList.contains('hidden')) {
+          lucide.createIcons();
+        }
+      }
+    };
+
+    window.handleAddBlockSelect = function(type) {
+      addContentBlock(type);
+      const menu = document.getElementById('add-block-menu');
+      if (menu) menu.classList.add('hidden');
+    };
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('add-block-menu');
+      const btn = document.getElementById('btn-add-block-dropdown');
+      if (menu && !menu.classList.contains('hidden')) {
+        if (!menu.contains(e.target) && !btn?.contains(e.target)) {
+          menu.classList.add('hidden');
+        }
+      }
+    });
+
+    window.addContentBlock = function(type) {
+      const rev = STUDIO_DATA.stemReviewers[currentRevIndex];
+      if (!rev) return;
+      if (!rev.blocks) rev.blocks = [];
+      if (type === 'heading') {
+        rev.blocks.push({ type: 'heading', level: 'h3', text: 'New Topic Title' });
+      } else if (type === 'paragraph') {
+        rev.blocks.push({ type: 'paragraph', text: 'Explain concepts, definitions, and key takeaways here.' });
+      } else if (type === 'formula') {
+        rev.blocks.push({ type: 'formula', title: 'Formula Card', formula: 'v = \\frac{d}{t}', note: 'Standard constant velocity equation.' });
+      } else if (type === 'bullets') {
+        rev.blocks.push({ type: 'bullets', items: ['First key point', 'Second key point'] });
+      }
+      renderBlockCanvas();
+      syncBlocksToPreview();
+      showToast('Block added to canvas!');
+    };
+
+    window.loadLessonTemplate = function(templateType) {
+      const rev = STUDIO_DATA.stemReviewers[currentRevIndex];
+      if (!templateType) return;
+      if (templateType === 'stem_law') {
+        rev.blocks = [
+          { type: 'heading', level: 'h3', text: 'Theoretical Principle' },
+          { type: 'paragraph', text: 'State the formal definition or physical law clearly here.' },
+          { type: 'formula', title: 'Governing Formula', formula: 'F_{net} = ma', note: 'Applies to all classical mechanics systems.' },
+          { type: 'bullets', items: ['Force and acceleration are directly proportional.', 'Mass is the measure of inertia in kilograms.'] }
+        ];
+      } else if (templateType === 'derivation') {
+        rev.blocks = [
+          { type: 'heading', level: 'h3', text: 'Mathematical Derivation Walkthrough' },
+          { type: 'paragraph', text: 'Starting from initial fundamental relations:' },
+          { type: 'formula', title: 'Step 1: Base Equation', formula: 'v_f = v_0 + at', note: 'Isolate time variable t.' },
+          { type: 'formula', title: 'Step 2: Substitution & Expansion', formula: '\\Delta x = v_0\\left(\\frac{v_f - v_0}{a}\\right) + \\frac{1}{2}a\\left(\\frac{v_f - v_0}{a}\\right)^2', note: 'Expand and multiply through by 2a.' },
+          { type: 'formula', title: 'Final Result', formula: 'v_f^2 = v_0^2 + 2a\\Delta x', note: 'Torricelli relation achieved.' }
+        ];
+      } else if (templateType === 'key_takeaways') {
+        rev.blocks = [
+          { type: 'heading', level: 'h3', text: 'Summary & Core Takeaways' },
+          { type: 'bullets', items: ['Know standard SI units (meters, seconds, kilograms)', 'Sign conventions: upwards is positive, downwards is negative', 'Free fall acceleration g = 9.8 m/s^2'] }
+        ];
+      }
+      renderBlockCanvas();
+      syncBlocksToPreview();
+      showToast('Loaded starter template!');
+    };
+
+    function syncBlocksToPreview() {
+      const rev = STUDIO_DATA.stemReviewers[currentRevIndex];
+      if (!rev) return;
+
+      const compiledMd = compileBlocksToMarkdown(rev.blocks);
+      rev.rawMarkdown = compiledMd;
+      document.getElementById('rev-input-body').value = compiledMd;
+      document.getElementById('editor-char-count').innerText = `${compiledMd.length} chars`;
+
+      rev.subject = document.getElementById('rev-input-subject').value;
+      rev.tag = document.getElementById('rev-input-tag').value;
+      rev.title = document.getElementById('rev-input-title').value;
+      rev.summary = document.getElementById('rev-input-summary').value;
+      rev.content = parseMarkdownToHtml(compiledMd);
+
+      const previewPane = document.getElementById('rev-live-preview');
+      previewPane.innerHTML = `
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-3 mb-3">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-tagsci-100 dark:bg-tagsci-950 text-tagsci-800 dark:text-tagsci-300">${rev.subject}</span>
+            <span class="text-[10px] font-bold text-slate-400">&bull; ${rev.tag}</span>
+          </div>
+          <h1 class="text-base sm:text-lg font-black text-slate-900 dark:text-white">${rev.title || 'Untitled Article'}</h1>
+          <p class="text-xs text-slate-500 italic mt-1">${rev.summary || ''}</p>
+        </div>
+        <div class="mt-3 text-slate-800 dark:text-slate-100">${rev.content || '<span class="text-slate-400 italic">No content blocks added yet...</span>'}</div>
+      `;
+    }
+
+    /* Mode Switcher: Visual vs Source */
+    document.getElementById('btn-mode-visual').addEventListener('click', () => {
+      currentEditorMode = 'visual';
+      document.getElementById('btn-mode-visual').classList.add('bg-white', 'dark:bg-slate-900', 'text-tagsci-800', 'dark:text-tagsci-300', 'shadow-sm');
+      document.getElementById('btn-mode-source').classList.remove('bg-white', 'dark:bg-slate-900', 'text-tagsci-800', 'dark:text-tagsci-300', 'shadow-sm');
+      document.getElementById('pane-visual-blocks').classList.remove('hidden');
+      document.getElementById('pane-markdown-source').classList.add('hidden');
+      document.getElementById('visual-builder-toolbar').classList.remove('hidden');
+
+      const rawMd = document.getElementById('rev-input-body').value;
+      STUDIO_DATA.stemReviewers[currentRevIndex].blocks = parseMarkdownIntoBlocks(rawMd);
+      renderBlockCanvas();
+    });
+
+    document.getElementById('btn-mode-source').addEventListener('click', () => {
+      currentEditorMode = 'source';
+      document.getElementById('btn-mode-source').classList.add('bg-white', 'dark:bg-slate-900', 'text-tagsci-800', 'dark:text-tagsci-300', 'shadow-sm');
+      document.getElementById('btn-mode-visual').classList.remove('bg-white', 'dark:bg-slate-900', 'text-tagsci-800', 'dark:text-tagsci-300', 'shadow-sm');
+      document.getElementById('pane-markdown-source').classList.remove('hidden');
+      document.getElementById('pane-visual-blocks').classList.add('hidden');
+      document.getElementById('visual-builder-toolbar').classList.add('hidden');
+    });
+
+    document.getElementById('rev-input-body').addEventListener('input', () => {
+      const raw = document.getElementById('rev-input-body').value;
+      STUDIO_DATA.stemReviewers[currentRevIndex].rawMarkdown = raw;
+      syncBlocksToPreview();
+    });
+
+    /* =========================================================================
+       WORD FORMATTING & KEYBOARD SHORTCUT ENGINE
+       ========================================================================= */
+
+    let lastFocusedInput = null;
+
+    document.addEventListener('focusin', (e) => {
+      if (e.target && (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT')) {
+        lastFocusedInput = e.target;
+      }
+    });
+
+    window.applyTextFormatting = function(type) {
+      let activeElem = document.activeElement;
+      if (!activeElem || (activeElem.tagName !== 'TEXTAREA' && activeElem.tagName !== 'INPUT')) {
+        if (lastFocusedInput && document.body.contains(lastFocusedInput)) {
+          activeElem = lastFocusedInput;
+        } else {
+          const firstArea = document.querySelector('#pane-visual-blocks textarea, #pane-visual-blocks input[type="text"], #rev-input-body');
+          if (firstArea) activeElem = firstArea;
+        }
+      }
+
+      if (!activeElem) return;
+
+      const start = activeElem.selectionStart ?? activeElem.value.length;
+      const end = activeElem.selectionEnd ?? activeElem.value.length;
+      const selected = activeElem.value.substring(start, end);
+      const fullVal = activeElem.value;
+
+      let prefix = '';
+      let suffix = '';
+      let defaultText = '';
+
+      if (type === 'bold') {
+        prefix = '**';
+        suffix = '**';
+        defaultText = 'bold text';
+      } else if (type === 'italic') {
+        prefix = '*';
+        suffix = '*';
+        defaultText = 'italic text';
+      } else if (type === 'underline') {
+        prefix = '<u>';
+        suffix = '</u>';
+        defaultText = 'underlined text';
+      } else if (type === 'math') {
+        prefix = '$';
+        suffix = '$';
+        defaultText = 'x';
+      }
+
+      let newText = '';
+      let newSelectionStart = start;
+      let newSelectionEnd = end;
+
+      if (selected.length > 0) {
+        if (selected.startsWith(prefix) && selected.endsWith(suffix) && selected.length >= (prefix.length + suffix.length)) {
+          const unwrapped = selected.substring(prefix.length, selected.length - suffix.length);
+          newText = fullVal.substring(0, start) + unwrapped + fullVal.substring(end);
+          newSelectionStart = start;
+          newSelectionEnd = start + unwrapped.length;
+        } else {
+          newText = fullVal.substring(0, start) + prefix + selected + suffix + fullVal.substring(end);
+          newSelectionStart = start + prefix.length;
+          newSelectionEnd = start + prefix.length + selected.length;
+        }
+      } else {
+        newText = fullVal.substring(0, start) + prefix + defaultText + suffix + fullVal.substring(end);
+        newSelectionStart = start + prefix.length;
+        newSelectionEnd = start + prefix.length + defaultText.length;
+      }
+
+      activeElem.value = newText;
+      activeElem.focus();
+      activeElem.setSelectionRange(newSelectionStart, newSelectionEnd);
+
+      activeElem.dispatchEvent(new Event('input', { bubbles: true }));
+    };
+
+    document.addEventListener('keydown', (e) => {
+      if (!(e.ctrlKey || e.metaKey)) return;
+      const key = e.key.toLowerCase();
+      if (key === 'b') {
+        e.preventDefault();
+        applyTextFormatting('bold');
+      } else if (key === 'i') {
+        e.preventDefault();
+        applyTextFormatting('italic');
+      } else if (key === 'u') {
+        e.preventDefault();
+        applyTextFormatting('underline');
+      } else if (key === 'm') {
+        e.preventDefault();
+        applyTextFormatting('math');
+      }
+    });
+
+    /* =========================================================================
+       IMPROVED VISUAL EQUATION STUDIO LOGIC
+       ========================================================================= */
+
+    let activeMathTargetBlockIdx = null;
+
+    window.openMathBuilderModal = function() {
+      activeMathTargetBlockIdx = null;
+      document.getElementById('modal-math-builder').classList.remove('hidden');
+      document.getElementById('modal-math-builder').classList.add('flex');
+      document.getElementById('math-studio-input').value = 'v_f^2 = v_0^2 + 2a\\Delta x';
+      updateMathStudioPreview();
+      switchMathSubTab('templates');
+    };
+
+    window.openMathBuilderForBlock = function(bIdx) {
+      activeMathTargetBlockIdx = bIdx;
+      document.getElementById('modal-math-builder').classList.remove('hidden');
+      document.getElementById('modal-math-builder').classList.add('flex');
+      const currentFormula = STUDIO_DATA.stemReviewers[currentRevIndex].blocks[bIdx]?.formula || 'v = \\frac{d}{t}';
+      document.getElementById('math-studio-input').value = currentFormula;
+      updateMathStudioPreview();
+      switchMathSubTab('templates');
+    };
+
+    window.closeMathBuilderModal = function() {
+      document.getElementById('modal-math-builder').classList.add('hidden');
+      document.getElementById('modal-math-builder').classList.remove('flex');
+    };
+
+    window.switchMathSubTab = function(subtab) {
+      ['templates', 'symbols', 'presets'].forEach(t => {
+        const pane = document.getElementById(`math-subtab-${t}`);
+        const btn = document.getElementById(`tab-math-${t}`);
+        if (t === subtab) {
+          pane.classList.remove('hidden');
+          btn.classList.add('bg-tagsci-50', 'dark:bg-tagsci-950', 'text-tagsci-800', 'dark:text-tagsci-300', 'border', 'border-tagsci-200', 'dark:border-tagsci-800', 'font-bold');
+          btn.classList.remove('text-slate-600', 'dark:text-slate-400');
+        } else {
+          pane.classList.add('hidden');
+          btn.classList.remove('bg-tagsci-50', 'dark:bg-tagsci-950', 'text-tagsci-800', 'dark:text-tagsci-300', 'border', 'border-tagsci-200', 'dark:border-tagsci-800', 'font-bold');
+          btn.classList.add('text-slate-600', 'dark:text-slate-400');
+        }
+      });
+    };
+
+    window.insertFormulaSnippet = function(snippet) {
+      const input = document.getElementById('math-studio-input');
+      const start = input.selectionStart || input.value.length;
+      const end = input.selectionEnd || input.value.length;
+      input.value = input.value.substring(0, start) + snippet + input.value.substring(end);
+      input.focus();
+      input.selectionStart = input.selectionEnd = start + snippet.length;
+      updateMathStudioPreview();
+    };
+
+    window.setFullEquation = function(eq) {
+      const input = document.getElementById('math-studio-input');
+      input.value = eq;
+      updateMathStudioPreview();
+    };
+
+    window.updateMathStudioPreview = function() {
+      const input = document.getElementById('math-studio-input');
+      const preview = document.getElementById('math-studio-preview');
+      const tex = input.value.trim() || '...';
+      preview.innerHTML = renderMathInHtml(`$$ ${tex} $$`);
+    };
+
+    window.confirmMathInsert = function(mode) {
+      const tex = document.getElementById('math-studio-input').value.trim();
+      if (!tex) {
+        showToast('Please enter a formula.');
+        return;
+      }
+
+      if (mode === 'inline' || (lastFocusedInput && document.body.contains(lastFocusedInput) && mode !== 'card')) {
+        if (lastFocusedInput) {
+          const start = lastFocusedInput.selectionStart ?? lastFocusedInput.value.length;
+          const end = lastFocusedInput.selectionEnd ?? lastFocusedInput.value.length;
+          const snippet = `$${tex}$`;
+          lastFocusedInput.value = lastFocusedInput.value.substring(0, start) + snippet + lastFocusedInput.value.substring(end);
+          lastFocusedInput.focus();
+          lastFocusedInput.setSelectionRange(start + snippet.length, start + snippet.length);
+          lastFocusedInput.dispatchEvent(new Event('input', { bubbles: true }));
+          closeMathBuilderModal();
+          showToast('Equation inserted into active field!');
+          return;
+        }
+      }
+
+      const rev = STUDIO_DATA.stemReviewers[currentRevIndex];
+      if (activeMathTargetBlockIdx !== null && rev && rev.blocks && rev.blocks[activeMathTargetBlockIdx]) {
+        rev.blocks[activeMathTargetBlockIdx].formula = tex;
+      } else if (rev) {
+        if (!rev.blocks) rev.blocks = [];
+        rev.blocks.push({
+          type: 'formula',
+          title: 'Formula Card',
+          formula: tex,
+          note: ''
+        });
+      }
+
+      renderBlockCanvas();
+      syncBlocksToPreview();
+      closeMathBuilderModal();
+      showToast('Formula card added to reviewer!');
+    };
+
+    /* =========================================================================
+       REVIEWERS CONTROLLER
+       ========================================================================= */
+
+    function renderReviewersList() {
+      const container = document.getElementById('rev-cards-container');
+      const badgeCount = document.getElementById('badge-count-rev');
+      const countLabel = document.getElementById('rev-list-count');
+      const search = document.getElementById('rev-search').value.toLowerCase();
+
+      badgeCount.innerText = STUDIO_DATA.stemReviewers.length;
+      countLabel.innerText = `(${STUDIO_DATA.stemReviewers.length} items)`;
+
+      container.innerHTML = '';
+      STUDIO_DATA.stemReviewers.forEach((rev, idx) => {
+        if (search && !rev.title.toLowerCase().includes(search) && !rev.subject.toLowerCase().includes(search)) {
+          return;
+        }
+        const isActive = idx === currentRevIndex;
+        const card = document.createElement('div');
+        card.className = `p-3 rounded-xl border cursor-pointer transition-all ${
+          isActive
+            ? 'bg-tagsci-50/80 dark:bg-tagsci-950/70 border-tagsci-500 shadow-sm'
+            : 'bg-white dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/80 hover:border-slate-300'
+        }`;
+        card.innerHTML = `
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[10px] font-black uppercase tracking-wider text-tagsci-700 dark:text-tagsci-400">${rev.subject}</span>
+            <span class="text-[9.5px] px-1.5 py-0.5 rounded font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">${rev.tag}</span>
+          </div>
+          <h4 class="text-xs font-bold text-slate-900 dark:text-white line-clamp-1 mb-1">${rev.title || 'Untitled'}</h4>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2">${rev.summary || 'No summary entered...'}</p>
+        `;
+        card.onclick = () => {
+          currentRevIndex = idx;
+          loadReviewerToEditor();
+          renderReviewersList();
+        };
+        container.appendChild(card);
+      });
+    }
+
+    function loadReviewerToEditor() {
+      const rev = STUDIO_DATA.stemReviewers[currentRevIndex];
+      if (!rev) return;
+
+      document.getElementById('rev-input-subject').value = rev.subject;
+      document.getElementById('rev-input-tag').value = rev.tag || 'Main';
+      document.getElementById('rev-input-title').value = rev.title || '';
+      document.getElementById('rev-input-summary').value = rev.summary || '';
+
+      if (!rev.blocks || rev.blocks.length === 0) {
+        rev.blocks = parseMarkdownIntoBlocks(rev.rawMarkdown || '');
+      }
+
+      renderBlockCanvas();
+      syncBlocksToPreview();
+    }
+
+    document.getElementById('rev-input-title').addEventListener('input', syncBlocksToPreview);
+    document.getElementById('rev-input-summary').addEventListener('input', syncBlocksToPreview);
+    document.getElementById('rev-input-subject').addEventListener('change', () => {
+      const subj = document.getElementById('rev-input-subject').value;
+      const meta = getSubjectClassification(subj);
+      document.getElementById('rev-input-tag').value = meta.type;
+      if (STUDIO_DATA.stemReviewers[currentRevIndex]) {
+        STUDIO_DATA.stemReviewers[currentRevIndex].color = meta.color;
+      }
+      syncBlocksToPreview();
+      renderReviewersList();
+    });
+    document.getElementById('rev-input-tag').addEventListener('change', syncBlocksToPreview);
+    document.getElementById('rev-search').addEventListener('input', renderReviewersList);
+
+    document.getElementById('btn-add-reviewer').addEventListener('click', () => {
+      const newRev = {
+        id: `reviewer_${Date.now()}`,
+        subject: "Physics",
+        tag: "Elective",
+        color: "border-l-4 border-tagsci-600",
+        title: "New Reviewer Draft",
+        summary: "Enter short summary...",
+        blocks: [
+          { type: 'heading', level: 'h3', text: 'Topic Introduction' },
+          { type: 'paragraph', text: 'Start typing concepts or insert a template from the toolbar.' }
+        ],
+        rawMarkdown: "",
+        content: ""
+      };
+      STUDIO_DATA.stemReviewers.unshift(newRev);
+      currentRevIndex = 0;
+      renderReviewersList();
+      loadReviewerToEditor();
+      showToast('New reviewer draft created!');
+    });
+
+    document.getElementById('btn-delete-rev').addEventListener('click', () => {
+      if (STUDIO_DATA.stemReviewers.length <= 1) {
+        showToast('At least 1 reviewer must remain in session.');
+        return;
+      }
+      STUDIO_DATA.stemReviewers.splice(currentRevIndex, 1);
+      currentRevIndex = 0;
+      renderReviewersList();
+      loadReviewerToEditor();
+      showToast('Reviewer draft removed.');
+    });
+
+    /* =========================================================================
+       TAB ROUTING CONTROLLER
+       ========================================================================= */
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.studio-tab-btn').forEach(btn => {
+        if (btn.dataset.tab === tabId) {
+          btn.classList.add('active', 'bg-tagsci-50', 'dark:bg-tagsci-950/80', 'text-tagsci-800', 'dark:text-tagsci-300', 'border', 'border-tagsci-200', 'dark:border-tagsci-800', 'shadow-sm');
+          btn.classList.remove('text-slate-600', 'dark:text-slate-400');
+        } else {
+          btn.classList.remove('active', 'bg-tagsci-50', 'dark:bg-tagsci-950/80', 'text-tagsci-800', 'dark:text-tagsci-300', 'border', 'border-tagsci-200', 'dark:border-tagsci-800', 'shadow-sm');
+          btn.classList.add('text-slate-600', 'dark:text-slate-400');
+        }
+      });
+
+      document.querySelectorAll('.studio-view').forEach(view => {
+        if (view.id === `view-${tabId}`) {
+          view.classList.remove('hidden');
+        } else {
+          view.classList.add('hidden');
+        }
+      });
+
+      if (tabId === 'json-hub') {
+        renderJsonHub();
+      }
+    }
+
+    document.getElementById('studio-tabs').addEventListener('click', (e) => {
+      const btn = e.target.closest('.studio-tab-btn');
+      if (btn) switchTab(btn.dataset.tab);
+    });
+
+    /* =========================================================================
+       QUIZ BUILDER & LIVE PLAYER CONTROLLER
+       ========================================================================= */
+
+    function renderQuizSetsList() {
+      const container = document.getElementById('quiz-sets-container');
+      const badgeCount = document.getElementById('badge-count-quiz');
+      const countLabel = document.getElementById('quiz-list-count');
+
+      badgeCount.innerText = STUDIO_DATA.quizSets.length;
+      countLabel.innerText = `(${STUDIO_DATA.quizSets.length} sets)`;
+
+      container.innerHTML = '';
+      STUDIO_DATA.quizSets.forEach((set, idx) => {
+        const isActive = idx === currentQuizSetIndex;
+        const card = document.createElement('div');
+        card.className = `p-3 rounded-xl border cursor-pointer transition-all ${
+          isActive
+            ? 'bg-g11pink-50/80 dark:bg-g11pink-950/70 border-g11pink-500 shadow-sm'
+            : 'bg-white dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/80 hover:border-slate-300'
+        }`;
+        card.innerHTML = `
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[10px] font-black uppercase tracking-wider text-g11pink-600 dark:text-g11pink-400">${set.subject}</span>
+            <span class="text-[9.5px] px-1.5 py-0.5 rounded font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">${set.questions.length} Qs</span>
+          </div>
+          <h4 class="text-xs font-bold text-slate-900 dark:text-white line-clamp-1 mb-1">${set.title || 'Untitled Quiz'}</h4>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2">${set.desc || 'No description...'}</p>
+        `;
+        card.onclick = () => {
+          currentQuizSetIndex = idx;
+          loadQuizSetToEditor();
+          renderQuizSetsList();
+        };
+        container.appendChild(card);
+      });
+    }
+
+    function loadQuizSetToEditor() {
+      const set = STUDIO_DATA.quizSets[currentQuizSetIndex];
+      if (!set) return;
+
+      document.getElementById('quiz-input-subject').value = set.subject || 'Finite Math';
+      document.getElementById('quiz-input-title').value = set.title || '';
+      document.getElementById('quiz-input-timelimit').value = set.timeLimitMinutes || 15;
+
+      renderQuestionsBuilder();
+      renderLiveQuizTester();
+    }
+
+    function renderQuestionsBuilder() {
+      const set = STUDIO_DATA.quizSets[currentQuizSetIndex];
+      const container = document.getElementById('questions-builder-container');
+      document.getElementById('question-count-badge').innerText = `${set.questions.length} Questions`;
+
+      container.innerHTML = '';
+      set.questions.forEach((q, qIdx) => {
+        const qCard = document.createElement('div');
+        qCard.className = 'p-4 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-3 shadow-sm hover:border-g11pink-300 dark:hover:border-g11pink-800 transition-all';
+        
+        let typeSpecificHtml = '';
+        if (q.type === 'mcq') {
+          typeSpecificHtml = `
+            <div class="space-y-2">
+              <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider">Choices (Select correct answer radio):</label>
+              ${q.options.map((opt, oIdx) => `
+                <div class="flex items-center gap-2">
+                  <input type="radio" name="q_correct_${qIdx}" ${q.answerIndex === oIdx ? 'checked' : ''} onchange="updateCorrectMcq(${qIdx}, ${oIdx})" class="text-g11pink-600 focus:ring-g11pink-500">
+                  <input type="text" value="${opt}" oninput="updateMcqOption(${qIdx}, ${oIdx}, this.value)" placeholder="Option ${oIdx + 1}" class="flex-1 px-2.5 py-1 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg">
+                  <button onclick="removeMcqOption(${qIdx}, ${oIdx})" class="text-slate-400 hover:text-red-500 p-1"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+                </div>
+              `).join('')}
+              <button onclick="addMcqOption(${qIdx})" class="text-[11px] font-bold text-g11pink-600 dark:text-g11pink-400 hover:underline inline-flex items-center gap-1 mt-1">
+                + Add Option
+              </button>
+            </div>
+          `;
+        } else if (q.type === 'true_false') {
+          const isTrue = q.answerBoolean === true || q.answerBoolean === 'true';
+          typeSpecificHtml = `
+            <div class="space-y-1.5">
+              <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider">Correct Answer:</label>
+              <div class="flex items-center gap-3">
+                <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border cursor-pointer font-bold text-xs ${isTrue ? 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-500 text-emerald-700 dark:text-emerald-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'}">
+                  <input type="radio" name="tf_${qIdx}" value="true" ${isTrue ? 'checked' : ''} onchange="updateTrueFalse(${qIdx}, true)" class="hidden">
+                  <span>✓ TRUE</span>
+                </label>
+                <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border cursor-pointer font-bold text-xs ${!isTrue ? 'bg-red-50 dark:bg-red-950/60 border-red-500 text-red-700 dark:text-red-300' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'}">
+                  <input type="radio" name="tf_${qIdx}" value="false" ${!isTrue ? 'checked' : ''} onchange="updateTrueFalse(${qIdx}, false)" class="hidden">
+                  <span>✕ FALSE</span>
+                </label>
+              </div>
+            </div>
+          `;
+        } else if (q.type === 'identification') {
+          typeSpecificHtml = `
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Target Answer (Exact Match)</label>
+                <input type="text" value="${q.correctText || ''}" oninput="updateQuestionField(${qIdx}, 'correctText', this.value)" placeholder="e.g. Mitochondria" class="w-full px-2.5 py-1 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg font-bold">
+              </div>
+              <div>
+                <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Acceptable Aliases (Comma separated)</label>
+                <input type="text" value="${q.aliases || ''}" oninput="updateQuestionField(${qIdx}, 'aliases', this.value)" placeholder="e.g. mitochondrion, powerhouse" class="w-full px-2.5 py-1 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg">
+              </div>
+            </div>
+          `;
+        } else if (q.type === 'numerical') {
+          typeSpecificHtml = `
+            <div class="grid grid-cols-3 gap-2">
+              <div>
+                <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Correct Value</label>
+                <input type="text" value="${q.correctValue || ''}" oninput="updateQuestionField(${qIdx}, 'correctValue', this.value)" placeholder="e.g. 9.8" class="w-full px-2.5 py-1 text-xs font-mono bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg">
+              </div>
+              <div>
+                <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Tolerance (±)</label>
+                <input type="text" value="${q.tolerance || '0.05'}" oninput="updateQuestionField(${qIdx}, 'tolerance', this.value)" placeholder="e.g. 0.05" class="w-full px-2.5 py-1 text-xs font-mono bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg">
+              </div>
+              <div>
+                <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Unit (Optional)</label>
+                <input type="text" value="${q.unit || ''}" oninput="updateQuestionField(${qIdx}, 'unit', this.value)" placeholder="e.g. m/s^2" class="w-full px-2.5 py-1 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg">
+              </div>
+            </div>
+          `;
+        } else if (q.type === 'multi_select') {
+          if (!q.options) q.options = ['Option A', 'Option B', 'Option C', 'Option D'];
+          if (!q.answerIndices) q.answerIndices = [0];
+          typeSpecificHtml = `
+            <div class="space-y-2">
+              <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider">Multi-Select Choices (Check all correct answers):</label>
+              ${q.options.map((opt, oIdx) => {
+                const isChecked = q.answerIndices.includes(oIdx);
+                return `
+                  <div class="flex items-center gap-2">
+                    <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleMultiSelectOption(${qIdx}, ${oIdx})" class="rounded text-teal-600 focus:ring-teal-500">
+                    <input type="text" value="${opt}" oninput="updateMcqOption(${qIdx}, ${oIdx}, this.value)" placeholder="Option ${oIdx + 1}" class="flex-1 px-2.5 py-1 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg">
+                    <button onclick="removeMcqOption(${qIdx}, ${oIdx})" class="text-slate-400 hover:text-red-500 p-1"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+                  </div>
+                `;
+              }).join('')}
+              <button onclick="addMcqOption(${qIdx})" class="text-[11px] font-bold text-teal-600 dark:text-teal-400 hover:underline inline-flex items-center gap-1 mt-1">
+                + Add Option
+              </button>
+            </div>
+          `;
+        } else if (q.type === 'flashcard') {
+          typeSpecificHtml = `
+            <div class="space-y-2">
+              <div>
+                <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Card Front (Term / Concept Prompt)</label>
+                <input type="text" value="${q.front || ''}" oninput="updateQuestionField(${qIdx}, 'front', this.value)" placeholder="e.g. State Newton's Second Law" class="w-full px-2.5 py-1 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg">
+              </div>
+              <div>
+                <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider mb-1">Card Back (Answer / Solution)</label>
+                <textarea oninput="updateQuestionField(${qIdx}, 'back', this.value)" rows="2" placeholder="e.g. F = ma" class="w-full px-2.5 py-1 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg">${q.back || ''}</textarea>
+              </div>
+            </div>
+          `;
+        }
+
+        const isFirst = qIdx === 0;
+        const isLast = qIdx === set.questions.length - 1;
+
+        qCard.innerHTML = `
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-2 gap-2 flex-wrap sm:flex-nowrap">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[11px] font-black flex items-center justify-center shrink-0">${qIdx + 1}</span>
+              <input type="text" value="${q.topic || ''}" oninput="updateQuestionField(${qIdx}, 'topic', this.value)" placeholder="Topic (e.g. Projectiles)" class="px-2 py-0.5 text-xs font-bold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded">
+              <select onchange="changeQuestionType(${qIdx}, this.value)" class="text-[11px] font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded px-2 py-0.5">
+                <option value="mcq" ${q.type === 'mcq' ? 'selected' : ''}>Multiple Choice</option>
+                <option value="true_false" ${q.type === 'true_false' ? 'selected' : ''}>True / False</option>
+                <option value="identification" ${q.type === 'identification' ? 'selected' : ''}>Identification</option>
+                <option value="numerical" ${q.type === 'numerical' ? 'selected' : ''}>Numerical Answer</option>
+                <option value="multi_select" ${q.type === 'multi_select' ? 'selected' : ''}>Multi-Select</option>
+                <option value="flashcard" ${q.type === 'flashcard' ? 'selected' : ''}>Flashcard Drill</option>
+              </select>
+            </div>
+            <div class="flex items-center gap-1 shrink-0 ml-auto">
+              <button onclick="moveQuestion(${qIdx}, -1)" ${isFirst ? 'disabled' : ''} title="Move Up" class="p-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 transition-colors">
+                <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+              </button>
+              <button onclick="moveQuestion(${qIdx}, 1)" ${isLast ? 'disabled' : ''} title="Move Down" class="p-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 transition-colors">
+                <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+              </button>
+              <button onclick="duplicateQuestion(${qIdx})" title="Duplicate Question" class="p-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              </button>
+              <button onclick="deleteQuestion(${qIdx})" title="Delete Question" class="p-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/60 transition-colors">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider">Question Prompt (Supports $LaTeX$):</label>
+              <button onclick="openMathBuilderModal()" class="text-[10px] text-tagsci-700 dark:text-tagsci-400 hover:underline inline-flex items-center gap-0.5 font-bold">
+                <i data-lucide="function-square" class="w-3 h-3"></i> Insert Math
+              </button>
+            </div>
+            <textarea rows="2" oninput="updateQuestionField(${qIdx}, 'prompt', this.value)" placeholder="Enter question..." class="w-full px-2.5 py-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg">${q.prompt || ''}</textarea>
+          </div>
+
+          ${typeSpecificHtml}
+
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-[10.5px] font-bold text-slate-500 uppercase tracking-wider">Solution / Step-by-Step Explanation:</label>
+              <button onclick="openMathBuilderModal()" class="text-[10px] text-tagsci-700 dark:text-tagsci-400 hover:underline inline-flex items-center gap-0.5 font-bold">
+                <i data-lucide="function-square" class="w-3 h-3"></i> Insert Math
+              </button>
+            </div>
+            <textarea rows="2" oninput="updateQuestionField(${qIdx}, 'explanation', this.value)" placeholder="Explanation shown to student after answering..." class="w-full px-2.5 py-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg">${q.explanation || ''}</textarea>
+          </div>
+        `;
+        container.appendChild(qCard);
+      });
+      lucide.createIcons();
+    }
+
+    window.updateQuestionField = function(qIdx, field, val) {
+      STUDIO_DATA.quizSets[currentQuizSetIndex].questions[qIdx][field] = val;
+      renderLiveQuizTester();
+    };
+
+    window.changeQuestionType = function(qIdx, type) {
+      const q = STUDIO_DATA.quizSets[currentQuizSetIndex].questions[qIdx];
+      q.type = type;
+      if ((type === 'mcq' || type === 'multi_select') && (!q.options || q.options.length === 0)) {
+        q.options = ['Option A', 'Option B', 'Option C', 'Option D'];
+        q.answerIndex = 0;
+        q.answerIndices = [0];
+      }
+      if (type === 'true_false' && q.answerBoolean === undefined) {
+        q.answerBoolean = true;
+      }
+      renderQuestionsBuilder();
+      renderLiveQuizTester();
+    };
+
+    window.updateTrueFalse = function(qIdx, boolVal) {
+      STUDIO_DATA.quizSets[currentQuizSetIndex].questions[qIdx].answerBoolean = boolVal;
+      renderQuestionsBuilder();
+      renderLiveQuizTester();
+    };
+
+    window.toggleMultiSelectOption = function(qIdx, oIdx) {
+      const q = STUDIO_DATA.quizSets[currentQuizSetIndex].questions[qIdx];
+      if (!q.answerIndices) q.answerIndices = [];
+      const pos = q.answerIndices.indexOf(oIdx);
+      if (pos > -1) {
+        q.answerIndices.splice(pos, 1);
+      } else {
+        q.answerIndices.push(oIdx);
+      }
+      renderLiveQuizTester();
+    };
+
+    window.moveQuestion = function(qIdx, dir) {
+      const set = STUDIO_DATA.quizSets[currentQuizSetIndex];
+      const target = qIdx + dir;
+      if (target < 0 || target >= set.questions.length) return;
+      const temp = set.questions[qIdx];
+      set.questions[qIdx] = set.questions[target];
+      set.questions[target] = temp;
+      renderQuestionsBuilder();
+      renderLiveQuizTester();
+    };
+
+    window.duplicateQuestion = function(qIdx) {
+      const set = STUDIO_DATA.quizSets[currentQuizSetIndex];
+      const clone = JSON.parse(JSON.stringify(set.questions[qIdx]));
+      set.questions.splice(qIdx + 1, 0, clone);
+      renderQuestionsBuilder();
+      renderLiveQuizTester();
+      showToast('Question duplicated!');
+    };
+
+    window.addQuestionBlock = function(type) {
+      let newQ = null;
+      if (type === 'mcq') {
+        newQ = {
+          type: 'mcq',
+          topic: 'Multiple Choice',
+          prompt: '',
+          options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
+          answerIndex: 0,
+          correctValue: '',
+          tolerance: '0.05',
+          front: '',
+          back: '',
+          explanation: ''
+        };
+      } else if (type === 'true_false') {
+        newQ = {
+          type: 'true_false',
+          topic: 'True or False',
+          prompt: '',
+          answerBoolean: true,
+          explanation: ''
+        };
+      } else if (type === 'identification') {
+        newQ = {
+          type: 'identification',
+          topic: 'Identification',
+          prompt: '',
+          correctText: '',
+          aliases: '',
+          explanation: ''
+        };
+      } else if (type === 'numerical') {
+        newQ = {
+          type: 'numerical',
+          topic: 'Numerical Calculation',
+          prompt: '',
+          options: [],
+          answerIndex: 0,
+          correctValue: '',
+          tolerance: '0.05',
+          unit: '',
+          front: '',
+          back: '',
+          explanation: ''
+        };
+      } else if (type === 'multi_select') {
+        newQ = {
+          type: 'multi_select',
+          topic: 'Multi-Select',
+          prompt: '',
+          options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
+          answerIndices: [0],
+          explanation: ''
+        };
+      } else if (type === 'flashcard') {
+        newQ = {
+          type: 'flashcard',
+          topic: 'Flashcard',
+          prompt: '',
+          options: [],
+          answerIndex: 0,
+          correctValue: '',
+          tolerance: '0.05',
+          front: '',
+          back: '',
+          explanation: ''
+        };
+      }
+      if (newQ) {
+        if (!STUDIO_DATA.quizSets[currentQuizSetIndex]) {
+          STUDIO_DATA.quizSets.push({
+            id: `quiz_${Date.now()}`,
+            subject: 'Effective Communications',
+            tag: 'Main',
+            title: '',
+            desc: '',
+            timeLimitMinutes: 15,
+            questions: []
+          });
+          currentQuizSetIndex = 0;
+        }
+        STUDIO_DATA.quizSets[currentQuizSetIndex].questions.push(newQ);
+        renderQuestionsBuilder();
+        renderLiveQuizTester();
+        renderQuizSetsList();
+        showToast(`Added ${type.toUpperCase().replace('_', ' ')} question!`);
+      }
+    };
+
+    window.updateCorrectMcq = function(qIdx, oIdx) {
+      STUDIO_DATA.quizSets[currentQuizSetIndex].questions[qIdx].answerIndex = oIdx;
+      renderLiveQuizTester();
+    };
+
+    window.updateMcqOption = function(qIdx, oIdx, val) {
+      STUDIO_DATA.quizSets[currentQuizSetIndex].questions[qIdx].options[oIdx] = val;
+      renderLiveQuizTester();
+    };
+
+    window.removeMcqOption = function(qIdx, oIdx) {
+      const q = STUDIO_DATA.quizSets[currentQuizSetIndex].questions[qIdx];
+      if (q.options.length <= 2) {
+        showToast('At least 2 options required.');
+        return;
+      }
+      q.options.splice(oIdx, 1);
+      if (q.answerIndex >= q.options.length) q.answerIndex = 0;
+      if (q.answerIndices) {
+        q.answerIndices = q.answerIndices.filter(i => i !== oIdx).map(i => i > oIdx ? i - 1 : i);
+      }
+      renderQuestionsBuilder();
+      renderLiveQuizTester();
+    };
+
+    window.addMcqOption = function(qIdx) {
+      const q = STUDIO_DATA.quizSets[currentQuizSetIndex].questions[qIdx];
+      q.options.push(`Option ${q.options.length + 1}`);
+      renderQuestionsBuilder();
+      renderLiveQuizTester();
+    };
+
+    window.deleteQuestion = function(qIdx) {
+      STUDIO_DATA.quizSets[currentQuizSetIndex].questions.splice(qIdx, 1);
+      renderQuestionsBuilder();
+      renderLiveQuizTester();
+      renderQuizSetsList();
+    };
+
+    document.getElementById('btn-add-question').addEventListener('click', () => {
+      addQuestionBlock('mcq');
+    });
+
+    document.getElementById('quiz-input-title').addEventListener('input', (e) => {
+      if (!STUDIO_DATA.quizSets[currentQuizSetIndex]) return;
+      STUDIO_DATA.quizSets[currentQuizSetIndex].title = e.target.value;
+      renderQuizSetsList();
+    });
+
+    document.getElementById('quiz-input-subject').addEventListener('change', (e) => {
+      if (!STUDIO_DATA.quizSets[currentQuizSetIndex]) return;
+      STUDIO_DATA.quizSets[currentQuizSetIndex].subject = e.target.value;
+      const classification = getSubjectClassification(e.target.value);
+      STUDIO_DATA.quizSets[currentQuizSetIndex].tag = classification.type;
+      renderQuizSetsList();
+    });
+
+    document.getElementById('quiz-input-timelimit').addEventListener('input', (e) => {
+      if (!STUDIO_DATA.quizSets[currentQuizSetIndex]) return;
+      STUDIO_DATA.quizSets[currentQuizSetIndex].timeLimitMinutes = parseInt(e.target.value) || 15;
+    });
+
+    document.getElementById('btn-add-quiz-set').addEventListener('click', () => {
+      const newSet = {
+        id: `quiz_${Date.now()}`,
+        subject: 'Effective Communications',
+        tag: 'Main',
+        title: '',
+        desc: '',
+        timeLimitMinutes: 15,
+        questions: []
+      };
+      STUDIO_DATA.quizSets.push(newSet);
+      currentQuizSetIndex = STUDIO_DATA.quizSets.length - 1;
+      renderQuizSetsList();
+      loadQuizSetToEditor();
+      showToast('New quiz set created!');
+    });
+
+    document.getElementById('btn-delete-quiz-set').addEventListener('click', () => {
+      if (STUDIO_DATA.quizSets.length <= 1) {
+        STUDIO_DATA.quizSets = [{
+          id: `quiz_${Date.now()}`,
+          subject: 'Effective Communications',
+          tag: 'Main',
+          title: '',
+          desc: '',
+          timeLimitMinutes: 15,
+          questions: []
+        }];
+        currentQuizSetIndex = 0;
+        renderQuizSetsList();
+        loadQuizSetToEditor();
+        showToast('Quiz set reset.');
+        return;
+      }
+      STUDIO_DATA.quizSets.splice(currentQuizSetIndex, 1);
+      if (currentQuizSetIndex >= STUDIO_DATA.quizSets.length) {
+        currentQuizSetIndex = STUDIO_DATA.quizSets.length - 1;
+      }
+      renderQuizSetsList();
+      loadQuizSetToEditor();
+      showToast('Quiz set deleted.');
+    });
+
+    let testerQuestionIdx = 0;
+    let testerRevealed = false;
+    let testerSelectedMulti = [];
+
+    function renderLiveQuizTester() {
+      const set = STUDIO_DATA.quizSets[currentQuizSetIndex];
+      const container = document.getElementById('quiz-interactive-preview');
+
+      if (!set || set.questions.length === 0) {
+        container.innerHTML = `
+          <div class="text-slate-400 text-xs">
+            <i data-lucide="help-circle" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
+            Add questions on the left to test the interactive drill here!
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      if (testerQuestionIdx >= set.questions.length) testerQuestionIdx = 0;
+      const q = set.questions[testerQuestionIdx];
+
+      let testerBodyHtml = '';
+
+      if (q.type === 'mcq') {
+        testerBodyHtml = `
+          <div class="space-y-1.5 mb-3">
+            ${(q.options || []).map((opt, i) => `
+              <button onclick="checkTesterAnswer(${i})" class="w-full text-left p-2 rounded-lg text-xs font-semibold border transition-all ${
+                testerRevealed
+                  ? (i === q.answerIndex
+                      ? 'bg-emerald-50 dark:bg-emerald-950/70 border-emerald-500 text-emerald-800 dark:text-emerald-300'
+                      : 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700 text-slate-500')
+                  : 'bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 hover:border-g11pink-400 text-slate-800 dark:text-slate-200'
+              }">
+                <span class="font-mono mr-1">${String.fromCharCode(65 + i)}.</span> ${renderMathInHtml(opt)}
+              </button>
+            `).join('')}
+          </div>
+        `;
+      } else if (q.type === 'true_false') {
+        const isTrueCorrect = q.answerBoolean === true || q.answerBoolean === 'true';
+        testerBodyHtml = `
+          <div class="grid grid-cols-2 gap-2 mb-3">
+            <button onclick="checkTesterTrueFalse(true)" class="p-2.5 rounded-xl font-bold text-xs border transition-all ${
+              testerRevealed
+                ? (isTrueCorrect
+                    ? 'bg-emerald-50 dark:bg-emerald-950/70 border-emerald-500 text-emerald-700 dark:text-emerald-300'
+                    : 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700 text-slate-400')
+                : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-emerald-500 text-slate-800 dark:text-slate-200'
+            }">
+              ✓ TRUE
+            </button>
+            <button onclick="checkTesterTrueFalse(false)" class="p-2.5 rounded-xl font-bold text-xs border transition-all ${
+              testerRevealed
+                ? (!isTrueCorrect
+                    ? 'bg-emerald-50 dark:bg-emerald-950/70 border-emerald-500 text-emerald-700 dark:text-emerald-300'
+                    : 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700 text-slate-400')
+                : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-red-500 text-slate-800 dark:text-slate-200'
+            }">
+              ✕ FALSE
+            </button>
+          </div>
+        `;
+      } else if (q.type === 'identification') {
+        testerBodyHtml = `
+          <div class="space-y-2 mb-3">
+            <input type="text" id="tester-ident-input" placeholder="Type your answer here..." class="w-full px-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
+            <button onclick="checkTesterIdentification()" class="w-full py-1.5 rounded-lg bg-g11pink-600 hover:bg-g11pink-700 text-white font-bold text-xs">Submit Answer</button>
+            ${testerRevealed ? `
+              <div class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-[11px] text-slate-700 dark:text-slate-300">
+                <span class="font-bold text-tagsci-700 dark:text-tagsci-400">Accepted Answer:</span> ${q.correctText || ''}
+                ${q.aliases ? `<span class="text-slate-400 text-[10px] block">Aliases: ${q.aliases}</span>` : ''}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      } else if (q.type === 'numerical') {
+        testerBodyHtml = `
+          <div class="space-y-2 mb-3">
+            <div class="flex items-center gap-1.5">
+              <input type="text" id="tester-num-input" placeholder="Type numerical value..." class="flex-1 px-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
+              ${q.unit ? `<span class="text-xs font-mono text-slate-400">${q.unit}</span>` : ''}
+            </div>
+            <button onclick="checkTesterNumerical()" class="w-full py-1.5 rounded-lg bg-g11pink-600 hover:bg-g11pink-700 text-white font-bold text-xs">Check Value</button>
+            ${testerRevealed ? `
+              <div class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-[11px]">
+                <span class="font-bold text-emerald-600 dark:text-emerald-400">Target Value:</span> ${q.correctValue} ± ${q.tolerance || '0.05'} ${q.unit || ''}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      } else if (q.type === 'multi_select') {
+        testerBodyHtml = `
+          <div class="space-y-1.5 mb-3">
+            ${(q.options || []).map((opt, i) => {
+              const isSelected = testerSelectedMulti.includes(i);
+              const isActuallyCorrect = (q.answerIndices || []).includes(i);
+              return `
+                <div onclick="toggleTesterMultiSelectOption(${i})" class="flex items-center gap-2 p-2 rounded-lg text-xs font-semibold border cursor-pointer transition-all ${
+                  testerRevealed
+                    ? (isActuallyCorrect
+                        ? 'bg-emerald-50 dark:bg-emerald-950/70 border-emerald-500 text-emerald-800 dark:text-emerald-300'
+                        : (isSelected ? 'bg-red-50 dark:bg-red-950/60 border-red-500 text-red-600' : 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700 text-slate-400'))
+                    : (isSelected
+                        ? 'bg-teal-50 dark:bg-teal-950/60 border-teal-500 text-teal-800 dark:text-teal-300'
+                        : 'bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 hover:border-teal-400')
+                }">
+                  <input type="checkbox" ${isSelected ? 'checked' : ''} class="rounded text-teal-600 pointer-events-none">
+                  <span class="flex-1">${renderMathInHtml(opt)}</span>
+                </div>
+              `;
+            }).join('')}
+            <button onclick="checkTesterMultiSelect()" class="w-full mt-2 py-1.5 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs">Verify All Selections</button>
+          </div>
+        `;
+      } else if (q.type === 'flashcard') {
+        testerBodyHtml = `
+          <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-dashed border-slate-300 dark:border-slate-700 mb-3 text-center">
+            <div class="text-[10px] uppercase font-bold text-slate-400 mb-1">Card Front:</div>
+            <div class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white mb-2">${renderMathInHtml(q.front || q.prompt)}</div>
+            ${testerRevealed ? `
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-2.5">
+                <div class="text-[10px] uppercase font-bold text-emerald-600 dark:text-emerald-400 mb-1">Card Back (Answer):</div>
+                <div class="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-semibold">${renderMathInHtml(q.back)}</div>
+              </div>
+            ` : `
+              <button onclick="revealTesterFlashcard()" class="inline-flex items-center gap-1 text-xs font-bold text-g11pink-600 dark:text-g11pink-400 hover:underline">
+                <i data-lucide="rotate-cw" class="w-3 h-3"></i> Flip Card to Reveal
+              </button>
+            `}
+          </div>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="w-full max-w-sm text-left bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-black uppercase text-g11pink-600 dark:text-g11pink-400">${q.topic || q.type}</span>
+            <span class="text-[10px] font-bold text-slate-400">Q ${testerQuestionIdx + 1} of ${set.questions.length}</span>
+          </div>
+
+          <div class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mb-3">
+            ${renderMathInHtml(q.prompt || 'Untitled Prompt')}
+          </div>
+
+          ${testerBodyHtml}
+
+          ${testerRevealed && q.explanation ? `
+            <div class="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 text-[11px] text-slate-600 dark:text-slate-300 border-l-2 border-tagsci-500 mb-2">
+              <strong class="text-tagsci-700 dark:text-tagsci-400">Explanation:</strong> ${renderMathInHtml(q.explanation)}
+            </div>
+          ` : ''}
+
+          <div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-2 mt-2">
+            <button onclick="prevTesterQ()" ${testerQuestionIdx === 0 ? 'disabled' : ''} class="text-xs text-slate-400 hover:text-slate-700 disabled:opacity-30 font-semibold">Previous</button>
+            <button onclick="nextTesterQ()" class="text-xs font-bold text-g11pink-600 dark:text-g11pink-400 hover:underline">Next Question &rarr;</button>
+          </div>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+
+    window.checkTesterAnswer = function(idx) {
+      testerRevealed = true;
+      renderLiveQuizTester();
+    };
+    window.checkTesterTrueFalse = function(boolVal) {
+      testerRevealed = true;
+      renderLiveQuizTester();
+    };
+    window.checkTesterIdentification = function() {
+      testerRevealed = true;
+      renderLiveQuizTester();
+    };
+    window.checkTesterNumerical = function() {
+      testerRevealed = true;
+      renderLiveQuizTester();
+    };
+    window.toggleTesterMultiSelectOption = function(oIdx) {
+      const pos = testerSelectedMulti.indexOf(oIdx);
+      if (pos > -1) testerSelectedMulti.splice(pos, 1);
+      else testerSelectedMulti.push(oIdx);
+      renderLiveQuizTester();
+    };
+    window.checkTesterMultiSelect = function() {
+      testerRevealed = true;
+      renderLiveQuizTester();
+    };
+    window.revealTesterFlashcard = function() {
+      testerRevealed = true;
+      renderLiveQuizTester();
+    };
+    window.nextTesterQ = function() {
+      testerRevealed = false;
+      testerSelectedMulti = [];
+      const set = STUDIO_DATA.quizSets[currentQuizSetIndex];
+      testerQuestionIdx = (testerQuestionIdx + 1) % set.questions.length;
+      renderLiveQuizTester();
+    };
+    window.prevTesterQ = function() {
+      testerRevealed = false;
+      testerSelectedMulti = [];
+      if (testerQuestionIdx > 0) testerQuestionIdx--;
+      renderLiveQuizTester();
+    };
+    document.getElementById('btn-reset-quiz-preview').addEventListener('click', () => {
+      testerQuestionIdx = 0;
+      testerRevealed = false;
+      testerSelectedMulti = [];
+      renderLiveQuizTester();
+    });
+
+    /* =========================================================================
+       CALENDAR CONTROLLER
+       ========================================================================= */
+
+    function renderCalendarEvents() {
+      const container = document.getElementById('cal-events-list-container');
+      const badgeCount = document.getElementById('badge-count-cal');
+      const countLabel = document.getElementById('cal-events-count');
+
+      badgeCount.innerText = STUDIO_DATA.calendarEvents.length;
+      countLabel.innerText = `${STUDIO_DATA.calendarEvents.length} events scheduled`;
+
+      container.innerHTML = '';
+      STUDIO_DATA.calendarEvents.forEach((ev, idx) => {
+        const isTagSci = ev.subject === 'TagSci' || ev.tag === 'TagSci';
+        const isDepEd = ev.subject === 'DepEd' || ev.tag === 'DepEd';
+        let badgeColorClass = 'bg-emerald-50 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300';
+        let borderColorClass = 'border-slate-200 dark:border-slate-800';
+
+        if (isTagSci) {
+          badgeColorClass = 'bg-tagsci-100 dark:bg-tagsci-950/80 text-tagsci-800 dark:text-tagsci-300 font-black border border-tagsci-300 dark:border-tagsci-800';
+          borderColorClass = 'border-tagsci-400 dark:border-tagsci-800';
+        } else if (isDepEd) {
+          badgeColorClass = 'bg-blue-100 dark:bg-blue-950/80 text-blue-800 dark:text-blue-300 font-black border border-blue-300 dark:border-blue-800';
+          borderColorClass = 'border-blue-400 dark:border-blue-800';
+        }
+
+        const card = document.createElement('div');
+        card.className = `p-3.5 rounded-xl bg-white dark:bg-slate-900 border ${borderColorClass} shadow-sm flex flex-col justify-between`;
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded ${badgeColorClass}">${ev.subject}</span>
+              <span class="text-[10px] font-bold text-slate-400 font-mono">${ev.date}</span>
+            </div>
+            <h4 class="text-xs font-black text-slate-900 dark:text-white mb-1">${ev.title}</h4>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 mb-2 leading-relaxed">${ev.desc || ''}</p>
+          </div>
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800 text-[10.5px]">
+            <span class="font-bold text-tagsci-700 dark:text-tagsci-400">${ev.badge || ev.type}</span>
+            <button onclick="deleteCalendarEvent(${idx})" class="text-slate-400 hover:text-red-500 font-semibold">Remove</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    document.getElementById('calendar-event-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newEv = {
+        id: Date.now(),
+        date: document.getElementById('cal-input-date').value,
+        subject: document.getElementById('cal-input-subject').value,
+        title: document.getElementById('cal-input-title').value,
+        type: document.getElementById('cal-input-type').value,
+        badge: document.getElementById('cal-input-badge').value || 'Deadline',
+        desc: document.getElementById('cal-input-desc').value
+      };
+      STUDIO_DATA.calendarEvents.push(newEv);
+      renderCalendarEvents();
+      document.getElementById('calendar-event-form').reset();
+      showToast('Event added to calendar!');
+    });
+
+    window.deleteCalendarEvent = function(idx) {
+      STUDIO_DATA.calendarEvents.splice(idx, 1);
+      renderCalendarEvents();
+      showToast('Calendar event removed.');
+    };
+
+    /* =========================================================================
+       JSON HUB & EXPORT PIPELINE
+       ========================================================================= */
+
+    function generateExportPayload() {
+      STUDIO_DATA.stemReviewers.forEach(r => {
+        if (r.blocks && r.blocks.length > 0) {
+          r.rawMarkdown = compileBlocksToMarkdown(r.blocks);
+        }
+        r.content = parseMarkdownToHtml(r.rawMarkdown || '');
+      });
+      return {
+        version: STUDIO_DATA.version || "1.4.0",
+        updatedAt: new Date().toISOString(),
+        announcement: `Refreshed ${STUDIO_DATA.stemReviewers.length} Reviewers, ${STUDIO_DATA.calendarEvents.length} Deadlines, and ${STUDIO_DATA.quizSets.length} Quiz Banks.`,
+        calendarEvents: STUDIO_DATA.calendarEvents,
+        stemReviewers: STUDIO_DATA.stemReviewers.map(r => ({
+          id: r.id,
+          subject: r.subject,
+          tag: r.tag,
+          color: r.color || "border-l-4 border-tagsci-600",
+          title: r.title,
+          summary: r.summary,
+          content: r.content || parseMarkdownToHtml(r.rawMarkdown || '')
+        })),
+        studyMaterials: STUDIO_DATA.studyMaterials || [],
+        problemSets: STUDIO_DATA.problemSets || [],
+        quizSets: STUDIO_DATA.quizSets
+      };
+    }
+
+    function renderJsonHub() {
+      const payload = generateExportPayload();
+      document.getElementById('hub-json-viewer').value = JSON.stringify(payload, null, 2);
+    }
+
+    function downloadFile(filename, content, type = 'application/json') {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function exportJsonFile() {
+      const payload = generateExportPayload();
+      downloadFile('updates.json', JSON.stringify(payload, null, 2), 'application/json');
+      showToast('Exported updates.json!');
+    }
+
+    function copyJsonToClipboard() {
+      const payload = generateExportPayload();
+      navigator.clipboard.writeText(JSON.stringify(payload, null, 2)).then(() => {
+        showToast('JSON copied to clipboard!');
+      }).catch(() => {
+        showToast('Failed to copy to clipboard.');
+      });
+    }
+
+    document.getElementById('btn-quick-export').addEventListener('click', exportJsonFile);
+    document.getElementById('btn-hub-download-json').addEventListener('click', exportJsonFile);
+    document.getElementById('btn-copy-json').addEventListener('click', copyJsonToClipboard);
+    document.getElementById('btn-hub-copy-json').addEventListener('click', copyJsonToClipboard);
+
+    document.getElementById('btn-download-md-rev').addEventListener('click', () => {
+      const rev = STUDIO_DATA.stemReviewers[currentRevIndex];
+      if (!rev) return;
+      const mdBody = compileBlocksToMarkdown(rev.blocks || []);
+      const mdContent = `---
+id: ${rev.id}
+subject: ${rev.subject}
+tag: ${rev.tag}
+title: ${rev.title}
+summary: ${rev.summary}
+---
+
+${mdBody}
+`;
+      downloadFile(`${rev.id || 'reviewer'}.md`, mdContent, 'text/markdown');
+      showToast(`Downloaded ${rev.id}.md!`);
+    });
+
+    document.getElementById('btn-download-md-quiz').addEventListener('click', () => {
+      const set = STUDIO_DATA.quizSets[currentQuizSetIndex];
+      if (!set) return;
+      let mdLines = `---
+id: ${set.id}
+subject: ${set.subject}
+tag: ${set.tag || 'Quiz'}
+title: ${set.title}
+desc: ${set.desc}
+timeLimitMinutes: ${set.timeLimitMinutes || 15}
+---
+
+`;
+      set.questions.forEach((q, i) => {
+        mdLines += `### Question ${i + 1} (${q.type})\n${q.prompt}\n\n`;
+        if (q.type === 'mcq') {
+          (q.options || []).forEach((opt, oIdx) => {
+            const isChecked = oIdx === q.answerIndex ? '[x]' : '[ ]';
+            mdLines += `- ${isChecked} ${opt}\n`;
+          });
+        } else if (q.type === 'true_false') {
+          mdLines += `answerBoolean: ${q.answerBoolean === true || q.answerBoolean === 'true'}\n`;
+        } else if (q.type === 'identification') {
+          mdLines += `correctText: ${q.correctText || ''}\naliases: ${q.aliases || ''}\n`;
+        } else if (q.type === 'numerical') {
+          mdLines += `correctValue: ${q.correctValue || ''}\ntolerance: ${q.tolerance || '0.05'}\nunit: ${q.unit || ''}\n`;
+        } else if (q.type === 'multi_select') {
+          (q.options || []).forEach((opt, oIdx) => {
+            const isChecked = (q.answerIndices || []).includes(oIdx) ? '[x]' : '[ ]';
+            mdLines += `- ${isChecked} ${opt}\n`;
+          });
+        } else if (q.type === 'flashcard') {
+          mdLines += `front: ${q.front || q.prompt}\nback: ${q.back || ''}\n`;
+        }
+        if (q.explanation) {
+          mdLines += `\n> **Explanation:** ${q.explanation}\n`;
+        }
+        mdLines += `\n---\n\n`;
+      });
+
+      downloadFile(`${set.id || 'quiz_set'}.md`, mdLines, 'text/markdown');
+      showToast(`Downloaded ${set.id}.md!`);
+    });
+
+    document.getElementById('file-import-input').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const json = JSON.parse(event.target.result);
+          if (json.stemReviewers) STUDIO_DATA.stemReviewers = json.stemReviewers;
+          if (json.calendarEvents) STUDIO_DATA.calendarEvents = json.calendarEvents;
+          if (json.quizSets) STUDIO_DATA.quizSets = json.quizSets;
+          if (json.studyMaterials) STUDIO_DATA.studyMaterials = json.studyMaterials;
+          
+          currentRevIndex = 0;
+          currentQuizSetIndex = 0;
+          renderReviewersList();
+          loadReviewerToEditor();
+          renderQuizSetsList();
+          loadQuizSetToEditor();
+          renderCalendarEvents();
+          showToast('Successfully imported updates.json!');
+        } catch (err) {
+          alert('Invalid JSON file format.');
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    document.getElementById('btn-test-ota-hub').addEventListener('click', async () => {
+      const url = document.getElementById('hub-ota-endpoint-input').value.trim();
+      const status = document.getElementById('hub-ota-status');
+      status.classList.remove('hidden');
+      status.innerHTML = '<span class="text-blue-500">Pinging OTA endpoint...</span>';
+      try {
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+        status.innerHTML = `<span class="text-emerald-600 dark:text-emerald-400 font-bold">✓ Connected! Version: ${data.version || 'OK'}, Announcements: "${data.announcement || 'None'}"</span>`;
+      } catch (err) {
+        status.innerHTML = `<span class="text-red-500 font-bold">✕ Error: ${err.message}</span>`;
+      }
+    });
+
+    /* Theme Toggle */
+    const themeBtn = document.getElementById('btn-theme-toggle');
+    themeBtn.addEventListener('click', () => {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.theme = 'light';
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.theme = 'dark';
+      }
+    });
+
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    /* =========================================================================
+       INITIALIZATION BOOTSTRAP
+       ========================================================================= */
+    document.addEventListener('DOMContentLoaded', () => {
+      renderReviewersList();
+      loadReviewerToEditor();
+      renderQuizSetsList();
+      loadQuizSetToEditor();
+      renderCalendarEvents();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
