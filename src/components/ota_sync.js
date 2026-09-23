@@ -7,7 +7,7 @@ export async function checkOtaUpdates() {
 
   if (syncBtn) {
     syncBtn.disabled = true;
-    syncBtn.innerHTML = `<span>&#x23F3; Syncing GDrive...</span>`;
+    syncBtn.innerHTML = `<span>&#x23F3; Checking Updates...</span>`;
   }
   if (settingsSyncBtn) {
     settingsSyncBtn.disabled = true;
@@ -15,11 +15,14 @@ export async function checkOtaUpdates() {
   }
 
   const endpoint = getSyncUrl();
+  const cacheBustUrl = endpoint.includes('?') 
+    ? `${endpoint}&_t=${Date.now()}` 
+    : `${endpoint}?_t=${Date.now()}`;
 
   try {
-    const res = await fetch(endpoint, { 
+    const res = await fetch(cacheBustUrl, { 
       method: 'GET',
-      redirect: 'follow',
+      headers: { 'Accept': 'application/json' },
       cache: 'no-cache'
     });
 
@@ -34,18 +37,18 @@ export async function checkOtaUpdates() {
       }
 
       const counts = `• Reviewers: ${data.stemReviewers ? data.stemReviewers.length : 0}\n• Quizzes: ${data.quizSets ? data.quizSets.length : 0}\n• Deadlines: ${data.calendarEvents ? data.calendarEvents.length : 0}`;
-      alert(`✅ Google Drive OTA Sync Successful!\n\nVersion: v${data.version}\n\n${counts}\n\n${data.announcement || 'Study materials refreshed.'}`);
+      alert(`✅ GitHub Pages OTA Sync Successful!\n\nVersion: v${data.version}\n\n${counts}\n\n${data.announcement || 'Student materials refreshed.'}`);
       
       // Reload UI views with fresh data
       window.location.reload();
     } else if (data && data.status === 'error') {
-      throw new Error(data.message || 'Google Drive endpoint returned an error.');
+      throw new Error(data.message || 'OTA endpoint returned an error.');
     } else {
-      throw new Error('Invalid update payload format from Google Drive.');
+      throw new Error('Invalid update payload format from OTA endpoint.');
     }
   } catch (err) {
     console.warn('OTA Check notice:', err);
-    alert(`ℹ️ Google Drive Sync Notice:\nCould not connect to:\n${endpoint}\n\nDetails: ${err.message}\n\n(If you are offline, all existing downloaded reviewers and personal tasks remain 100% accessible!)`);
+    alert(`ℹ️ GitHub OTA Sync Notice:\nCould not connect to:\n${endpoint}\n\nDetails: ${err.message}\n\n(If you are offline, all existing downloaded reviewers and personal tasks remain 100% accessible!)`);
   } finally {
     if (syncBtn) {
       syncBtn.disabled = false;
@@ -53,7 +56,7 @@ export async function checkOtaUpdates() {
     }
     if (settingsSyncBtn) {
       settingsSyncBtn.disabled = false;
-      settingsSyncBtn.textContent = 'Sync from GDrive Now';
+      settingsSyncBtn.textContent = 'Sync from GitHub Now';
     }
   }
 }
@@ -72,7 +75,7 @@ export function resetOtaUrl() {
   const defaultUrl = resetSyncUrlToDefault();
   const input = document.getElementById('otaUrlInput');
   if (input) input.value = defaultUrl;
-  alert('✅ Reset OTA Endpoint to default Google Drive Apps Script URL!');
+  alert('✅ Reset OTA Endpoint to default GitHub Pages updates.json URL!');
 }
 
 export function handleClearCache() {

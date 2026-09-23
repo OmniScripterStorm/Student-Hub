@@ -498,18 +498,18 @@
       <!-- Settings Cards -->
       <div class="grid grid-cols-1 gap-5">
         
-        <!-- Google Drive OTA Endpoint Card -->
+        <!-- GitHub Pages OTA Endpoint Card -->
         <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
           <div class="flex items-start justify-between">
             <div>
               <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
-                Google Apps Script API
+                GitHub Pages Fastly CDN
               </span>
               <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-2">
-                Google Drive OTA Sync Endpoint
+                GitHub OTA Sync Endpoint
               </h3>
               <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                The web app fetches new study reviewers, problem sets, and calendar deadlines from this URL when online.
+                The web app automatically syncs updated reviewers, quiz banks, and calendar deadlines from this repository URL when online.
               </p>
             </div>
             <span id="settingsVersionDisplay" class="text-xs font-mono-math font-bold text-tagsci-700 dark:text-tagsci-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg">
@@ -518,7 +518,7 @@
           </div>
 
           <div class="space-y-2">
-            <label class="block text-[11px] font-bold uppercase text-slate-500 dark:text-slate-400">Endpoint Web App URL</label>
+            <label class="block text-[11px] font-bold uppercase text-slate-500 dark:text-slate-400">Endpoint Web URL</label>
             <input 
               type="url" 
               id="otaUrlInput" 
@@ -533,7 +533,7 @@
               class="px-4 py-2 rounded-xl bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-xs font-bold text-white shadow-sm transition flex items-center space-x-1.5"
             >
               <span>&#x26A1;</span>
-              <span>Sync from GDrive Now</span>
+              <span>Sync from GitHub Now</span>
             </button>
             <button 
               onclick="saveOtaSettings()" 
@@ -611,7 +611,7 @@
 const CACHE_KEY = 'tagsci_g11_study_cache';
 const SYNC_URL_KEY = 'tagsci_g11_sync_url';
 
-const DEFAULT_OTA_URL = 'https://script.google.com/macros/s/AKfycbyJbM_8Ln41glBWb6cDmzu0XYQmbImYLO0UHJIr6TKS37aZhNoz9Eubmir1FpQ_DlPvWA/exec';
+const DEFAULT_OTA_URL = 'https://omniscripterstorm.github.io/Student-Hub/updates.json';
 
 const SUBJECTS = [
   { name: 'TagSci', type: 'Institutional', color: 'border-l-4 border-tagsci-700', badgeClass: 'bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300' },
@@ -1802,7 +1802,7 @@ async function checkOtaUpdates() {
 
   if (syncBtn) {
     syncBtn.disabled = true;
-    syncBtn.innerHTML = `<span>&#x23F3; Syncing GDrive...</span>`;
+    syncBtn.innerHTML = `<span>&#x23F3; Checking Updates...</span>`;
   }
   if (settingsSyncBtn) {
     settingsSyncBtn.disabled = true;
@@ -1810,11 +1810,14 @@ async function checkOtaUpdates() {
   }
 
   const endpoint = getSyncUrl();
+  const cacheBustUrl = endpoint.includes('?') 
+    ? `${endpoint}&_t=${Date.now()}` 
+    : `${endpoint}?_t=${Date.now()}`;
 
   try {
-    const res = await fetch(endpoint, { 
+    const res = await fetch(cacheBustUrl, { 
       method: 'GET',
-      redirect: 'follow',
+      headers: { 'Accept': 'application/json' },
       cache: 'no-cache'
     });
 
@@ -1829,18 +1832,18 @@ async function checkOtaUpdates() {
       }
 
       const counts = `• Reviewers: ${data.stemReviewers ? data.stemReviewers.length : 0}\n• Quizzes: ${data.quizSets ? data.quizSets.length : 0}\n• Deadlines: ${data.calendarEvents ? data.calendarEvents.length : 0}`;
-      alert(`✅ Google Drive OTA Sync Successful!\n\nVersion: v${data.version}\n\n${counts}\n\n${data.announcement || 'Study materials refreshed.'}`);
+      alert(`✅ GitHub Pages OTA Sync Successful!\n\nVersion: v${data.version}\n\n${counts}\n\n${data.announcement || 'Student materials refreshed.'}`);
       
       // Reload UI views with fresh data
       window.location.reload();
     } else if (data && data.status === 'error') {
-      throw new Error(data.message || 'Google Drive endpoint returned an error.');
+      throw new Error(data.message || 'OTA endpoint returned an error.');
     } else {
-      throw new Error('Invalid update payload format from Google Drive.');
+      throw new Error('Invalid update payload format from OTA endpoint.');
     }
   } catch (err) {
     console.warn('OTA Check notice:', err);
-    alert(`ℹ️ Google Drive Sync Notice:\nCould not connect to:\n${endpoint}\n\nDetails: ${err.message}\n\n(If you are offline, all existing downloaded reviewers and personal tasks remain 100% accessible!)`);
+    alert(`ℹ️ GitHub OTA Sync Notice:\nCould not connect to:\n${endpoint}\n\nDetails: ${err.message}\n\n(If you are offline, all existing downloaded reviewers and personal tasks remain 100% accessible!)`);
   } finally {
     if (syncBtn) {
       syncBtn.disabled = false;
@@ -1848,7 +1851,7 @@ async function checkOtaUpdates() {
     }
     if (settingsSyncBtn) {
       settingsSyncBtn.disabled = false;
-      settingsSyncBtn.textContent = 'Sync from GDrive Now';
+      settingsSyncBtn.textContent = 'Sync from GitHub Now';
     }
   }
 }
@@ -1867,7 +1870,7 @@ function resetOtaUrl() {
   const defaultUrl = resetSyncUrlToDefault();
   const input = document.getElementById('otaUrlInput');
   if (input) input.value = defaultUrl;
-  alert('✅ Reset OTA Endpoint to default Google Drive Apps Script URL!');
+  alert('✅ Reset OTA Endpoint to default GitHub Pages updates.json URL!');
 }
 
 function handleClearCache() {

@@ -5,7 +5,7 @@
 const CACHE_KEY = 'tagsci_g11_study_cache';
 const SYNC_URL_KEY = 'tagsci_g11_sync_url';
 
-export const DEFAULT_OTA_URL = 'https://script.google.com/macros/s/AKfycbyJbM_8Ln41glBWb6cDmzu0XYQmbImYLO0UHJIr6TKS37aZhNoz9Eubmir1FpQ_DlPvWA/exec';
+export const DEFAULT_OTA_URL = 'https://omniscripterstorm.github.io/Student-Hub/updates.json';
 
 export const SUBJECTS = [
   { name: 'TagSci', type: 'Institutional', color: 'border-l-4 border-tagsci-700', badgeClass: 'bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300' },

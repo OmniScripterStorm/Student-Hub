@@ -659,9 +659,9 @@
           <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
             <div class="font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-1">
               <span class="w-4 h-4 rounded-full bg-tagsci-700 text-white text-[10px] flex items-center justify-center font-black">2</span>
-              Upload to Google Drive
+              Commit / Push to GitHub
             </div>
-            <p class="text-slate-600 dark:text-slate-300 text-[11px]">Overwrite your `updates.json` in your designated Google Drive folder.</p>
+            <p class="text-slate-600 dark:text-slate-300 text-[11px]">Commit the refreshed `updates.json` to the `Student-Hub` GitHub repository.</p>
           </div>
 
           <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
@@ -669,7 +669,7 @@
               <span class="w-4 h-4 rounded-full bg-tagsci-700 text-white text-[10px] flex items-center justify-center font-black">3</span>
               Automatic Student Sync
             </div>
-            <p class="text-slate-600 dark:text-slate-300 text-[11px]">When students open their WebApp, it automatically downloads and caches your updates locally!</p>
+            <p class="text-slate-600 dark:text-slate-300 text-[11px]">When students open their WebApp, it automatically downloads and caches your updates locally from GitHub Pages CDN!</p>
           </div>
         </div>
 
@@ -677,7 +677,7 @@
           <label class="block text-[11px] font-bold text-tagsci-900 dark:text-tagsci-200 mb-1.5">
             Test Over-The-Air Endpoint:
           </label>
-          <input type="url" id="hub-ota-endpoint-input" value="https://script.google.com/macros/s/AKfycbyJbM_8Ln41glBWb6cDmzu0XYQmbImYLO0UHJIr6TKS37aZhNoz9Eubmir1FpQ_DlPvWA/exec" class="w-full px-2.5 py-1.5 text-xs bg-white dark:bg-slate-900 border border-tagsci-300 dark:border-tagsci-700 rounded-lg text-slate-800 dark:text-slate-200 font-mono mb-2">
+          <input type="url" id="hub-ota-endpoint-input" value="https://omniscripterstorm.github.io/Student-Hub/updates.json" class="w-full px-2.5 py-1.5 text-xs bg-white dark:bg-slate-900 border border-tagsci-300 dark:border-tagsci-700 rounded-lg text-slate-800 dark:text-slate-200 font-mono mb-2">
           <button id="btn-test-ota-hub" class="w-full py-1.5 rounded-lg bg-tagsci-700 hover:bg-tagsci-800 text-white font-bold text-xs flex items-center justify-center gap-1.5">
             <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
             Ping OTA Endpoint

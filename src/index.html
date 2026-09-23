@@ -498,18 +498,18 @@
       <!-- Settings Cards -->
       <div class="grid grid-cols-1 gap-5">
         
-        <!-- Google Drive OTA Endpoint Card -->
+        <!-- GitHub Pages OTA Endpoint Card -->
         <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
           <div class="flex items-start justify-between">
             <div>
               <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
-                Google Apps Script API
+                GitHub Pages Fastly CDN
               </span>
               <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-2">
-                Google Drive OTA Sync Endpoint
+                GitHub OTA Sync Endpoint
               </h3>
               <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                The web app fetches new study reviewers, problem sets, and calendar deadlines from this URL when online.
+                The web app automatically syncs updated reviewers, quiz banks, and calendar deadlines from this repository URL when online.
               </p>
             </div>
             <span id="settingsVersionDisplay" class="text-xs font-mono-math font-bold text-tagsci-700 dark:text-tagsci-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg">
@@ -518,7 +518,7 @@
           </div>
 
           <div class="space-y-2">
-            <label class="block text-[11px] font-bold uppercase text-slate-500 dark:text-slate-400">Endpoint Web App URL</label>
+            <label class="block text-[11px] font-bold uppercase text-slate-500 dark:text-slate-400">Endpoint Web URL</label>
             <input 
               type="url" 
               id="otaUrlInput" 
@@ -533,7 +533,7 @@
               class="px-4 py-2 rounded-xl bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-xs font-bold text-white shadow-sm transition flex items-center space-x-1.5"
             >
               <span>&#x26A1;</span>
-              <span>Sync from GDrive Now</span>
+              <span>Sync from GitHub Now</span>
             </button>
             <button 
               onclick="window.App.saveOtaSettings()" 
