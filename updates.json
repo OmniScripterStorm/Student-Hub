@@ -1,6 +1,6 @@
 {
   "version": "1.4.0",
-  "updatedAt": "2026-09-24T00:12:04.239Z",
+  "updatedAt": "2026-09-24T00:29:33.870Z",
   "announcement": "Refreshed 1 Reviewers, 1 Deadlines, and 1 Quiz Banks.",
   "calendarEvents": [
     {
@@ -54,10 +54,126 @@
       "id": "quiz_1790208718271",
       "subject": "Effective Communications",
       "tag": "Main",
-      "title": "",
+      "title": "efcom",
       "desc": "",
       "timeLimitMinutes": 15,
-      "questions": []
+      "questions": [
+        {
+          "type": "mcq",
+          "topic": "Multiple Choice",
+          "prompt": "",
+          "options": [
+            "Option 1",
+            "Option 2",
+            "Option 3",
+            "Option 4"
+          ],
+          "answerIndex": 0,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "front": "",
+          "back": "",
+          "explanation": ""
+        },
+        {
+          "type": "mcq",
+          "topic": "Multiple Choice",
+          "prompt": "",
+          "options": [
+            "Option 1",
+            "Option 2",
+            "Option 3",
+            "Option 4"
+          ],
+          "answerIndex": 0,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "front": "",
+          "back": "",
+          "explanation": ""
+        },
+        {
+          "type": "mcq",
+          "topic": "Multiple Choice",
+          "prompt": "",
+          "options": [
+            "Option 1",
+            "Option 2",
+            "Option 3",
+            "Option 4"
+          ],
+          "answerIndex": 0,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "front": "",
+          "back": "",
+          "explanation": ""
+        },
+        {
+          "type": "mcq",
+          "topic": "Multiple Choice",
+          "prompt": "",
+          "options": [
+            "Option 1",
+            "Option 2",
+            "Option 3",
+            "Option 4"
+          ],
+          "answerIndex": 0,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "front": "",
+          "back": "",
+          "explanation": ""
+        },
+        {
+          "type": "mcq",
+          "topic": "Multiple Choice",
+          "prompt": "",
+          "options": [
+            "Option 1",
+            "Option 2",
+            "Option 3",
+            "Option 4"
+          ],
+          "answerIndex": 0,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "front": "",
+          "back": "",
+          "explanation": ""
+        },
+        {
+          "type": "true_false",
+          "topic": "True or False",
+          "prompt": "",
+          "answerBoolean": true,
+          "explanation": ""
+        },
+        {
+          "type": "true_false",
+          "topic": "True or False",
+          "prompt": "",
+          "answerBoolean": true,
+          "explanation": ""
+        },
+        {
+          "type": "multi_select",
+          "topic": "Multi-Select",
+          "prompt": "",
+          "options": [
+            "Option 1",
+            "Option 2",
+            "Option 3",
+            "Option 4"
+          ],
+          "answerIndices": [
+            0,
+            2
+          ],
+          "explanation": ""
+        }
+      ]
     }
   ]
 }
