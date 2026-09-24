@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Concept 1: Workspace & Document Hub • TagSci Content Studio</title>
+  <link rel="icon" href="../tagsci logo.png" type="image/png">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            tagsci: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#0e3a24',
+              950: '#052e16',
+            },
+            g11pink: {
+              50: '#fdf2f8',
+              100: '#fce7f3',
+              200: '#fbcfe8',
+              300: '#f9a8d4',
+              400: '#f472b6',
+              500: '#ec4899',
+              600: '#db2777',
+              700: '#be185d',
+              800: '#9d174d',
+              900: '#831843',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.25); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.45); }
+    .dark ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.2); }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans h-full flex flex-col antialiased transition-colors duration-200">
+
+  <!-- Concept Navigation Switcher Banner -->
+  <div class="bg-gradient-to-r from-emerald-800 via-tagsci-900 to-slate-900 text-white px-4 py-2 text-xs flex flex-wrap items-center justify-between gap-3 shadow-sm border-b border-emerald-700/50">
+    <div class="flex items-center gap-2">
+      <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-black text-[10px] uppercase tracking-wider border border-emerald-500/30">Concept 1 of 2</span>
+      <span class="font-bold">Workspace & Document Hub Model (Notion / Linear Style)</span>
+      <span class="text-slate-300 text-[11px] hidden md:inline">— Centralized dashboard with project cards, document manager, and focused editors.</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="concept_2_ribbon_office.html" class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white font-medium transition-all text-xs">
+        <span>View Concept 2 (Excel / Ribbon GUI)</span>
+        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="flex-1 flex overflow-hidden">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 hidden md:flex">
+      <div>
+        <!-- Workspace Header -->
+        <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-tagsci-900 flex items-center justify-center p-1 text-white shadow-md">
+              <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400"></i>
+            </div>
+            <div>
+              <div class="font-bold text-xs text-slate-900 dark:text-white leading-tight">TagSci Editorial</div>
+              <div class="text-[10px] text-slate-400">G11 STEM Curriculum Hub</div>
+            </div>
+          </div>
+          <button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
+            <i data-lucide="chevrons-up-down" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
+        <!-- Main Workspace Links -->
+        <div class="p-3 space-y-1 text-xs">
+          <button id="nav-home-btn" onclick="showView('home')" class="w-full flex items-center justify-between px-3 py-2 rounded-lg bg-tagsci-50 dark:bg-tagsci-950/80 text-tagsci-800 dark:text-tagsci-300 font-bold border border-tagsci-200 dark:border-tagsci-800/80">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="layout-dashboard" class="w-4 h-4 text-tagsci-600"></i>
+              <span>Hub Overview</span>
+            </div>
+            <span class="text-[10px] bg-tagsci-200 dark:bg-tagsci-800 text-tagsci-900 dark:text-tagsci-200 px-1.5 py-0.2 rounded font-black">Home</span>
+          </button>
+
+          <button onclick="showView('editor')" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200 transition-colors">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="book-open" class="w-4 h-4 text-sky-500"></i>
+              <span>Reviewers Studio</span>
+            </div>
+            <span class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 px-1.5 py-0.2 rounded">4</span>
+          </button>
+
+          <button onclick="showView('editor')" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200 transition-colors">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="brain-circuit" class="w-4 h-4 text-g11pink-500"></i>
+              <span>Quiz & Exam Banks</span>
+            </div>
+            <span class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 px-1.5 py-0.2 rounded">28 Qs</span>
+          </button>
+
+          <button class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200 transition-colors">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="calendar" class="w-4 h-4 text-amber-500"></i>
+              <span>Academic Deadlines</span>
+            </div>
+            <span class="text-[10px] bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 px-1.5 py-0.2 rounded font-bold">3 Due</span>
+          </button>
+
+          <button class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200 transition-colors">
+            <div class="flex items-center gap-2.5">
+              <i data-lucide="git-branch" class="w-4 h-4 text-purple-500"></i>
+              <span>GitHub OTA Sync</span>
+            </div>
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          </button>
+        </div>
+
+        <!-- Subject Folders -->
+        <div class="px-3 pt-3">
+          <div class="px-3 pb-2 text-[10px] uppercase font-extrabold tracking-wider text-slate-400 dark:text-slate-500 flex items-center justify-between">
+            <span>Subject Workspaces</span>
+            <button class="hover:text-slate-700 dark:hover:text-slate-300"><i data-lucide="plus" class="w-3 h-3"></i></button>
+          </div>
+          <div class="space-y-0.5 text-xs">
+            <a href="#" class="flex items-center gap-2 px-3 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">
+              <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+              <span class="truncate">General Mathematics</span>
+            </a>
+            <a href="#" class="flex items-center gap-2 px-3 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span class="truncate">Oral Communication</span>
+            </a>
+            <a href="#" class="flex items-center gap-2 px-3 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              <span class="truncate">Earth and Life Science</span>
+            </a>
+            <a href="#" class="flex items-center gap-2 px-3 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">
+              <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+              <span class="truncate">Komunikasyon</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- User & Sync Footer -->
+      <div class="p-3 border-t border-slate-200 dark:border-slate-800 text-xs">
+        <div class="flex items-center justify-between p-2 rounded-lg bg-slate-100 dark:bg-slate-800/80 mb-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">OTA Sync Active</span>
+          </div>
+          <span class="text-[10px] text-slate-400">v1.2.4</span>
+        </div>
+        <div class="flex items-center justify-between px-1">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-full bg-tagsci-800 text-white flex items-center justify-center text-[10px] font-bold">EC</div>
+            <span class="text-[11px] font-medium text-slate-600 dark:text-slate-400">Editorial Council</span>
+          </div>
+          <button id="theme-btn-sidebar" class="p-1 rounded text-slate-400 hover:text-slate-700 dark:hover:text-white">
+            <i data-lucide="moon" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <main class="flex-1 flex flex-col overflow-hidden bg-slate-50 dark:bg-slate-950">
+
+      <!-- Top Header Bar -->
+      <header class="h-14 border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm px-6 flex items-center justify-between shrink-0">
+        <!-- Left: Search / Breadcrumb -->
+        <div class="flex items-center gap-3">
+          <div id="breadcrumb-container" class="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-400">
+            <button onclick="showView('home')" class="hover:text-tagsci-700 dark:hover:text-tagsci-400 flex items-center gap-1">
+              <i data-lucide="home" class="w-3.5 h-3.5"></i>
+              <span>Hub</span>
+            </button>
+            <span id="breadcrumb-separator" class="text-slate-300 dark:text-slate-700">/</span>
+            <span id="breadcrumb-current" class="text-slate-900 dark:text-white font-bold">Overview & Dashboard</span>
+          </div>
+        </div>
+
+        <!-- Right Action Controls -->
+        <div class="flex items-center gap-2.5">
+          <div class="relative hidden sm:block">
+            <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            <input type="text" placeholder="Search reviewers, questions..." class="pl-8 pr-3 py-1.5 rounded-lg text-xs bg-slate-100 dark:bg-slate-800 border-none focus:ring-2 focus:ring-tagsci-500 w-48 text-slate-800 dark:text-slate-200">
+          </div>
+
+          <button onclick="alert('Exporting updates.json snapshot...')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold border border-slate-200 dark:border-slate-700 transition-all">
+            <i data-lucide="download" class="w-3.5 h-3.5 text-slate-500"></i>
+            <span>Export JSON</span>
+          </button>
+
+          <button onclick="alert('Syncing changes to GitHub OTA...')" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-tagsci-700 hover:bg-tagsci-800 text-white text-xs font-bold shadow-sm shadow-tagsci-900/20 transition-all">
+            <i data-lucide="cloud-upload" class="w-3.5 h-3.5"></i>
+            <span>Publish OTA</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW 1: HUB OVERVIEW & DOCUMENT PORTAL -->
+      <div id="view-home" class="flex-1 overflow-y-auto p-6 space-y-6">
+        
+        <!-- Welcome Hero Banner -->
+        <div class="rounded-2xl bg-gradient-to-br from-tagsci-900 via-emerald-950 to-slate-900 p-6 text-white relative overflow-hidden shadow-md">
+          <div class="absolute right-0 top-0 w-80 h-full opacity-10 pointer-events-none flex items-center justify-center">
+            <i data-lucide="book-open-check" class="w-64 h-64 text-emerald-300"></i>
+          </div>
+          <div class="relative z-10 max-w-2xl space-y-2">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-semibold">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> Content Studio Hub System
+            </div>
+            <h2 class="text-xl sm:text-2xl font-black tracking-tight">Welcome back, TagSci Editorial Council</h2>
+            <p class="text-xs sm:text-sm text-slate-300 font-normal leading-relaxed">
+              Create, curate, and distribute Grade 11 STEM study materials. All changes made here automatically sync to the Student WebApp via GitHub Pages OTA.
+            </p>
+            <div class="pt-3 flex flex-wrap items-center gap-3">
+              <button onclick="showView('editor')" class="px-4 py-2 rounded-xl bg-tagsci-500 hover:bg-tagsci-400 text-tagsci-950 font-bold text-xs shadow-lg transition-all flex items-center gap-1.5">
+                <i data-lucide="plus-circle" class="w-4 h-4"></i> New Visual Reviewer
+              </button>
+              <button onclick="showView('editor')" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition-all flex items-center gap-1.5 border border-white/10">
+                <i data-lucide="brain-circuit" class="w-4 h-4 text-g11pink-400"></i> New Exam Bank
+              </button>
+              <button onclick="alert('Opening Academic Calendar manager...')" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition-all flex items-center gap-1.5 border border-white/10">
+                <i data-lucide="calendar-plus" class="w-4 h-4 text-amber-400"></i> Add Deadline
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Stats Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
+            <div>
+              <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Published Reviewers</div>
+              <div class="text-2xl font-black text-slate-900 dark:text-white mt-0.5">4 <span class="text-xs font-normal text-emerald-500">Modules</span></div>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 flex items-center justify-center">
+              <i data-lucide="book-marked" class="w-5 h-5"></i>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
+            <div>
+              <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Quiz & Drill Bank</div>
+              <div class="text-2xl font-black text-slate-900 dark:text-white mt-0.5">28 <span class="text-xs font-normal text-pink-500">Questions</span></div>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-pink-50 dark:bg-pink-950/50 text-g11pink-500 flex items-center justify-center">
+              <i data-lucide="help-circle" class="w-5 h-5"></i>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
+            <div>
+              <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Active Deadlines</div>
+              <div class="text-2xl font-black text-slate-900 dark:text-white mt-0.5">3 <span class="text-xs font-normal text-amber-500">This Week</span></div>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-600 flex items-center justify-center">
+              <i data-lucide="clock" class="w-5 h-5"></i>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
+            <div>
+              <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">GitHub OTA Sync</div>
+              <div class="text-2xl font-black text-emerald-600 mt-0.5">Synced</div>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/50 text-purple-600 flex items-center justify-center">
+              <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subject Overview Cards -->
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i data-lucide="folder-kanban" class="w-4 h-4 text-tagsci-600"></i>
+              Curriculum Subject Portals
+            </h3>
+            <span class="text-xs text-slate-400">4 Active Subjects</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Gen Math Card -->
+            <div onclick="showView('editor')" class="group cursor-pointer bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-tagsci-500 dark:hover:border-tagsci-500 rounded-xl p-4 shadow-sm hover:shadow-md transition-all">
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-9 h-9 rounded-lg bg-blue-50 dark:bg-blue-950 text-blue-600 flex items-center justify-center font-bold text-sm">
+                  f(x)
+                </div>
+                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">Live</span>
+              </div>
+              <h4 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-tagsci-600 dark:group-hover:text-tagsci-400 transition-colors">General Mathematics</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">Rational Functions, Inverse Functions & Summative Exams.</p>
+              <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                <span>2 Modules • 1 Exam</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+              </div>
+            </div>
+
+            <!-- Oral Comm Card -->
+            <div onclick="showView('editor')" class="group cursor-pointer bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 dark:hover:border-emerald-500 rounded-xl p-4 shadow-sm hover:shadow-md transition-all">
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-9 h-9 rounded-lg bg-emerald-50 dark:bg-emerald-950 text-emerald-600 flex items-center justify-center">
+                  <i data-lucide="message-square" class="w-4 h-4"></i>
+                </div>
+                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">Live</span>
+              </div>
+              <h4 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-emerald-600 transition-colors">Oral Communication</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">Effective Communication Models & Speech Context Drills.</p>
+              <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                <span>1 Module • 8 Qs Drill</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+              </div>
+            </div>
+
+            <!-- Earth & Life Science Card -->
+            <div onclick="showView('editor')" class="group cursor-pointer bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 dark:hover:border-amber-500 rounded-xl p-4 shadow-sm hover:shadow-md transition-all">
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-9 h-9 rounded-lg bg-amber-50 dark:bg-amber-950 text-amber-600 flex items-center justify-center">
+                  <i data-lucide="globe" class="w-4 h-4"></i>
+                </div>
+                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300">Draft</span>
+              </div>
+              <h4 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-amber-600 transition-colors">Earth & Life Science</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">Origin of Universe, Earth Systems & Mineralogy.</p>
+              <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                <span>1 Module • In Review</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+              </div>
+            </div>
+
+            <!-- Komunikasyon Card -->
+            <div onclick="showView('editor')" class="group cursor-pointer bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-500 rounded-xl p-4 shadow-sm hover:shadow-md transition-all">
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-9 h-9 rounded-lg bg-purple-50 dark:bg-purple-950 text-purple-600 flex items-center justify-center font-bold text-xs">
+                  ᜊ
+                </div>
+                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500">Planned</span>
+              </div>
+              <h4 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-purple-600 transition-colors">Komunikasyon at Pananaliksik</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">Konseptong Pangwika at Gamit ng Wika sa Lipunan.</p>
+              <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                <span>0 Modules • Ready</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Documents & Reviewers List -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
+          <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm font-bold text-slate-900 dark:text-white">Curated Learning Content Files</h3>
+              <span class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded-full font-medium">5 Total</span>
+            </div>
+            
+            <!-- Filters -->
+            <div class="flex items-center gap-1.5 text-xs">
+              <button class="px-2.5 py-1 rounded-md bg-tagsci-50 dark:bg-tagsci-950 text-tagsci-800 dark:text-tagsci-300 font-bold border border-tagsci-200 dark:border-tagsci-800">All</button>
+              <button class="px-2.5 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Reviewers</button>
+              <button class="px-2.5 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Exam Banks</button>
+              <button class="px-2.5 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Calendar</button>
+            </div>
+          </div>
+
+          <div class="divide-y divide-slate-100 dark:divide-slate-800">
+            <!-- Row 1 -->
+            <div onclick="showView('editor')" class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer flex items-center justify-between transition-colors">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950/80 text-blue-600 flex items-center justify-center">
+                  <i data-lucide="file-text" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-xs text-slate-900 dark:text-white flex items-center gap-2">
+                    <span>Functions, Rational Equations & Inverses</span>
+                    <span class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">Published</span>
+                  </div>
+                  <div class="text-[11px] text-slate-400">General Mathematics • 3 Sections • 14 Math Blocks • Edited 1 hr ago</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Open Editor</button>
+              </div>
+            </div>
+
+            <!-- Row 2 -->
+            <div onclick="showView('editor')" class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer flex items-center justify-between transition-colors">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-pink-100 dark:bg-pink-950/80 text-pink-600 flex items-center justify-center">
+                  <i data-lucide="help-circle" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-xs text-slate-900 dark:text-white flex items-center gap-2">
+                    <span>First Summative Examination Practice Test</span>
+                    <span class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">Published</span>
+                  </div>
+                  <div class="text-[11px] text-slate-400">General Mathematics • 20 Multiple Choice & Identification • Edited 3 hrs ago</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Open Editor</button>
+              </div>
+            </div>
+
+            <!-- Row 3 -->
+            <div onclick="showView('editor')" class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer flex items-center justify-between transition-colors">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 flex items-center justify-center">
+                  <i data-lucide="layers" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-xs text-slate-900 dark:text-white flex items-center gap-2">
+                    <span>Effective Communication & Speech Contexts</span>
+                    <span class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">Published</span>
+                  </div>
+                  <div class="text-[11px] text-slate-400">Oral Communication • 8 Interactive Drill Questions • Edited yesterday</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Open Editor</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: FOCUSED DOCUMENT EDITOR VIEW (When a reviewer/quiz is clicked) -->
+      <div id="view-editor" class="flex-1 flex flex-col overflow-hidden hidden">
+        <!-- Editor Sub-Header Toolbar -->
+        <div class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 py-2.5 flex items-center justify-between shrink-0">
+          <div class="flex items-center gap-3">
+            <button onclick="showView('home')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-colors">
+              <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+              <span>Back to Hub</span>
+            </button>
+            <div class="h-4 w-px bg-slate-200 dark:bg-slate-700"></div>
+            <div>
+              <div class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                <span>Functions, Rational Equations & Inverses</span>
+                <span class="text-[10px] font-semibold text-slate-400">(General Math)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-tagsci-100 dark:bg-tagsci-950 text-tagsci-800 dark:text-tagsci-300 text-xs font-bold border border-tagsci-300 dark:border-tagsci-800">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Block
+            </button>
+            <button class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-semibold">
+              <i data-lucide="eye" class="w-3.5 h-3.5"></i> Split Preview
+            </button>
+            <button class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-tagsci-700 hover:bg-tagsci-800 text-white text-xs font-bold shadow-sm">
+              <i data-lucide="save" class="w-3.5 h-3.5"></i> Save & Sync
+            </button>
+          </div>
+        </div>
+
+        <!-- Editor Dual Pane Area -->
+        <div class="flex-1 flex overflow-hidden">
+          <!-- Left: Structure & Block Cards -->
+          <div class="flex-1 overflow-y-auto p-6 space-y-4 max-w-3xl mx-auto w-full">
+            <div class="p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-black uppercase text-blue-600 dark:text-blue-400 tracking-wider">Section 1: Core Concept</span>
+                <div class="flex items-center gap-1 text-slate-400">
+                  <button class="p-1 hover:text-slate-700 dark:hover:text-slate-200"><i data-lucide="move" class="w-3.5 h-3.5"></i></button>
+                  <button class="p-1 hover:text-red-500"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                </div>
+              </div>
+              <input type="text" value="Functions & Mathematical Relations" class="w-full text-base font-bold bg-slate-50 dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+              <textarea rows="4" class="w-full text-xs font-sans bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 leading-relaxed">A relation is a rule that relates values from a set of inputs (the domain) to a set of outputs (the range). A function is a special relation where each input has exactly ONE output.</textarea>
+              
+              <!-- Equation Block Sample -->
+              <div class="p-3 bg-slate-50 dark:bg-slate-800/80 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 flex items-center justify-between">
+                <div class="font-mono text-xs text-tagsci-800 dark:text-tagsci-300 font-bold">f(x) = \frac{P(x)}{Q(x)} \quad \text{where } Q(x) \neq 0</div>
+                <button class="text-xs text-blue-500 hover:underline flex items-center gap-1">
+                  <i data-lucide="edit-3" class="w-3 h-3"></i> Edit Equation
+                </button>
+              </div>
+            </div>
+
+            <div class="p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-black uppercase text-emerald-600 dark:text-emerald-400 tracking-wider">Section 2: Worked Example & Steps</span>
+                <div class="flex items-center gap-1 text-slate-400">
+                  <button class="p-1 hover:text-slate-700 dark:hover:text-slate-200"><i data-lucide="move" class="w-3.5 h-3.5"></i></button>
+                  <button class="p-1 hover:text-red-500"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                </div>
+              </div>
+              <input type="text" value="Finding the Inverse of a Rational Function" class="w-full text-base font-bold bg-slate-50 dark:bg-slate-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+              <textarea rows="3" class="w-full text-xs font-sans bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 leading-relaxed">Step 1: Replace f(x) with y.
+Step 2: Interchange x and y.
+Step 3: Solve the equation for y in terms of x.</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Initialize icons
+    lucide.createIcons();
+
+    function showView(viewName) {
+      const homeView = document.getElementById('view-home');
+      const editorView = document.getElementById('view-editor');
+      const breadcrumbCurrent = document.getElementById('breadcrumb-current');
+
+      if (viewName === 'editor') {
+        homeView.classList.add('hidden');
+        editorView.classList.remove('hidden');
+        breadcrumbCurrent.textContent = 'General Mathematics / Functions Reviewer';
+      } else {
+        editorView.classList.add('hidden');
+        homeView.classList.remove('hidden');
+        breadcrumbCurrent.textContent = 'Overview & Dashboard';
+      }
+      lucide.createIcons();
+    }
+
+    // Theme toggle
+    const themeBtn = document.getElementById('theme-btn-sidebar');
+    themeBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+  </script>
+</body>
+</html>
