@@ -1,4 +1,9 @@
-import { STEM_REVIEWERS, STUDY_MATERIALS, PROBLEM_SETS, QUIZ_SETS, EDITORIAL_CREDITS, getSyncUrl, CURRENT_APP_VERSION } from '../data/study_data.js';
+/* =========================================================
+   TagSci G11 Study WebApp - Navigation & View Routing
+   ========================================================= */
+
+import { STEM_REVIEWERS, STUDY_MATERIALS, PROBLEM_SETS, QUIZ_SETS, EDITORIAL_CREDITS, getSyncUrl, CURRENT_APP_VERSION, getSubjectMeta } from '../data/study_data.js';
+import { renderMathInHtml } from './math_engine.js';
 import { renderQuizSetsView } from './quiz_engine.js';
 
 let currentSection = 'overview'; // overview, materials, reviewers, problem_sets, quiz_sets, credits, settings
@@ -98,11 +103,11 @@ export function initTheme() {
    DYNAMIC VIEW RENDERERS
    ========================================================= */
 
-function renderMaterialsView() {
+export function renderMaterialsView() {
   const container = document.getElementById('materialsListContainer');
   if (!container) return;
 
-  if (STUDY_MATERIALS.length === 0) {
+  if (!STUDY_MATERIALS || STUDY_MATERIALS.length === 0) {
     container.innerHTML = `
       <div class="py-12 text-center text-slate-400 dark:text-slate-500 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
         <span class="text-3xl block mb-2">&#x1F4DA;</span>
@@ -110,14 +115,32 @@ function renderMaterialsView() {
         <p class="text-xs text-slate-400 mt-1">Lecture slides, syllabus guides, and formula sheets will be uploaded here.</p>
       </div>
     `;
+    return;
   }
+
+  container.innerHTML = `
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+      ${STUDY_MATERIALS.map(m => `
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300">
+              ${m.subject || 'General'}
+            </span>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white mt-2">${renderMathInHtml(m.title || 'Untitled Material')}</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${renderMathInHtml(m.desc || '')}</p>
+          </div>
+          ${m.link ? `<a href="${m.link}" target="_blank" class="mt-3 inline-flex items-center gap-1 text-xs font-bold text-tagsci-600 dark:text-tagsci-400 hover:underline">Open Material &rarr;</a>` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `;
 }
 
-function renderReviewersView() {
+export function renderReviewersView() {
   const container = document.getElementById('reviewersListContainer');
   if (!container) return;
 
-  if (STEM_REVIEWERS.length === 0) {
+  if (!STEM_REVIEWERS || STEM_REVIEWERS.length === 0) {
     container.innerHTML = `
       <div class="py-12 text-center text-slate-400 dark:text-slate-500 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
         <span class="text-3xl block mb-2">&#x1F52C;</span>
@@ -125,14 +148,51 @@ function renderReviewersView() {
         <p class="text-xs text-slate-400 mt-1">Curated reviewer modules from the Editorial Council will appear here.</p>
       </div>
     `;
+    return;
   }
+
+  container.innerHTML = `
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+      ${STEM_REVIEWERS.map(mat => {
+        const meta = getSubjectMeta(mat.subject);
+        const tagLabel = (mat.tag && (mat.tag.toLowerCase() === 'main' || mat.tag.toLowerCase() === 'elective')) 
+          ? mat.tag 
+          : meta.type;
+        const borderClass = mat.color || meta.color;
+        const isElective = tagLabel.toLowerCase() === 'elective';
+        const tagBadgeStyle = isElective 
+          ? 'bg-purple-100 text-purple-800 dark:bg-purple-950/80 dark:text-purple-300 border border-purple-200 dark:border-purple-800'
+          : 'bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950/80 dark:text-tagsci-300 border border-tagsci-200 dark:border-tagsci-800';
+
+        return `
+          <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 ${borderClass} hover:shadow-md active:scale-[0.98] transition cursor-pointer flex flex-col justify-between" onclick="window.App.openReviewer('${mat.id}')">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${tagBadgeStyle}">
+                  ${tagLabel}
+                </span>
+                <span class="text-xs text-tagsci-600 dark:text-tagsci-400 hover:underline font-semibold flex items-center gap-1">Read &rarr;</span>
+              </div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">${mat.subject}</span>
+              <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mt-1">${renderMathInHtml(mat.title || 'Untitled')}</h3>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 line-clamp-3 leading-relaxed">${renderMathInHtml(mat.summary || '')}</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[10px] text-slate-400">
+              <span>Reviewer Module</span>
+              <span class="font-bold text-tagsci-700 dark:text-tagsci-400">Open Module &rarr;</span>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
 }
 
-function renderProblemSetsView() {
+export function renderProblemSetsView() {
   const container = document.getElementById('problemSetsListContainer');
   if (!container) return;
 
-  if (PROBLEM_SETS.length === 0) {
+  if (!PROBLEM_SETS || PROBLEM_SETS.length === 0) {
     container.innerHTML = `
       <div class="py-12 text-center text-slate-400 dark:text-slate-500 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
         <span class="text-3xl block mb-2">&#x1F4DD;</span>
@@ -140,10 +200,28 @@ function renderProblemSetsView() {
         <p class="text-xs text-slate-400 mt-1">Practice drills and step-by-step problem sets will be provided here.</p>
       </div>
     `;
+    return;
   }
+
+  container.innerHTML = `
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+      ${PROBLEM_SETS.map(ps => `
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300">
+              ${ps.subject || 'Drill'}
+            </span>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white mt-2">${renderMathInHtml(ps.title || 'Untitled Problem Set')}</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${renderMathInHtml(ps.desc || '')}</p>
+          </div>
+          ${ps.link ? `<a href="${ps.link}" target="_blank" class="mt-3 inline-flex items-center gap-1 text-xs font-bold text-tagsci-600 dark:text-tagsci-400 hover:underline">Solve Drill &rarr;</a>` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `;
 }
 
-function renderCreditsView() {
+export function renderCreditsView() {
   const container = document.getElementById('creditsListContainer');
   if (!container) return;
 
@@ -164,7 +242,7 @@ function renderCreditsView() {
   `).join('');
 }
 
-function renderSettingsView() {
+export function renderSettingsView() {
   const input = document.getElementById('otaUrlInput');
   if (input) {
     input.value = getSyncUrl();

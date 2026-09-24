@@ -632,18 +632,149 @@ function getSubjectMeta(subjectName) {
   return found || { name: subjectName, type: 'Main', color: 'border-l-4 border-tagsci-600', badgeClass: 'bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300' };
 }
 
-// Default embedded baseline data
+// Default baseline data loaded from initial curriculum
 const DEFAULT_BASELINE = {
   version: '1.4.0',
-  calendarEvents: [],
-  stemReviewers: [],
+  calendarEvents: [
+    {
+      id: 1,
+      date: "2026-09-24",
+      subject: "Chemistry",
+      title: "Gen Chemistry 1 - Stoichiometry Laboratory",
+      type: "lab",
+      badge: "Lab Report",
+      desc: "Pre-lab calculation check & reagent safety protocol."
+    },
+    {
+      id: 2,
+      date: "2026-09-26",
+      subject: "Finite Math",
+      title: "Finite Math - Conic Sections Problem Set #3",
+      type: "exam",
+      badge: "P-Set #3",
+      desc: "Standard form graphing and vertex-focus derivations."
+    },
+    {
+      id: 3,
+      date: "2026-09-29",
+      subject: "Physics",
+      title: "Physics - 2D Kinematics & Vectors Quiz",
+      type: "quiz",
+      badge: "Quiz",
+      desc: "Projectile range, max height, and vector components."
+    }
+  ],
+  stemReviewers: [
+    {
+      id: "physics_kinematics_2d",
+      subject: "Physics",
+      tag: "Elective",
+      color: "border-l-4 border-tagsci-600",
+      title: "Kinematics in 1D & 2D (Projectile Motion)",
+      summary: "Uniform acceleration equations, trajectory formulas, and vector decomposition.",
+      blocks: [
+        { type: "heading", level: "h2", text: "Key Kinematics Formulas" },
+        { type: "paragraph", text: "For uniform accelerated linear motion along a straight axis:" },
+        { type: "formula", title: "Torricelli Equation", formula: "v^2 = v_0^2 + 2a\\Delta x", note: "Relates velocity and displacement without time." },
+        { type: "formula", title: "Position-Time Relation", formula: "\\Delta x = v_0 t + \\frac{1}{2}at^2", note: "Calculates displacement under constant acceleration." },
+        { type: "heading", level: "h3", text: "2D Projectile Motion" },
+        { type: "bullets", items: [
+          "Horizontal velocity is strictly uniform: $v_x = v_0\\cos\\theta$",
+          "Vertical velocity is accelerated by gravity $g = 9.8\\text{ m/s}^2$: $v_y = v_0\\sin\\theta - gt$"
+        ]},
+        { type: "formula", title: "Maximum Range", formula: "R = \\frac{v_0^2\\sin(2\\theta)}{g}", note: "Max range occurs at angle theta = 45 degrees." },
+        { type: "formula", title: "Maximum Trajectory Height", formula: "H = \\frac{v_0^2\\sin^2\\theta}{2g}", note: "Apex height reached by projectile." }
+      ]
+    },
+    {
+      id: "math_conic_sections",
+      subject: "Finite Math",
+      tag: "Elective",
+      color: "border-l-4 border-purple-500",
+      title: "Conic Sections & Standard Forms",
+      summary: "Equations, vertices, foci, directrix, and eccentricity of circles, parabolas, ellipses, and hyperbolas.",
+      blocks: [
+        { type: "heading", level: "h2", text: "Standard Conic Section Equations" },
+        { type: "heading", level: "h3", text: "1. Circle" },
+        { type: "formula", title: "Standard Form", formula: "(x - h)^2 + (y - k)^2 = r^2", note: "Center at (h, k) with radius r." },
+        { type: "heading", level: "h3", text: "2. Parabola" },
+        { type: "bullets", items: [
+          "Vertical axis: $(x - h)^2 = 4p(y - k)$, Focus $(h, k + p)$",
+          "Horizontal axis: $(y - k)^2 = 4p(x - h)$, Focus $(h + p, k)$"
+        ]},
+        { type: "heading", level: "h3", text: "3. Ellipse (Horizontal Major Axis)" },
+        { type: "formula", title: "Standard Equation", formula: "\\frac{(x - h)^2}{a^2} + \\frac{(y - k)^2}{b^2} = 1", note: "c^2 = a^2 - b^2, foci at (h +- c, k)." }
+      ]
+    }
+  ],
+  studyMaterials: [],
   problemSets: [],
-  quizSets: [],
-  studyMaterials: []
+  quizSets: [
+    {
+      id: "precal_conics_quiz",
+      subject: "Finite Math",
+      tag: "Elective",
+      title: "Conic Sections & Analytical Geometry Drill",
+      desc: "Practice circles, parabolas, ellipses, hyperbolas, and foci coordinates.",
+      timeLimitMinutes: 10,
+      questions: [
+        {
+          type: "mcq",
+          prompt: "What is the radius and center of the circle with standard equation $(x - 3)^2 + (y + 5)^2 = 49$?",
+          options: [
+            "Center $(3, -5)$, Radius $r = 7$",
+            "Center $(-3, 5)$, Radius $r = 7$",
+            "Center $(3, -5)$, Radius $r = 49$",
+            "Center $(-3, 5)$, Radius $r = 49$"
+          ],
+          answerIndex: 0,
+          explanation: "The standard circle equation is $(x - h)^2 + (y - k)^2 = r^2$. Comparing values: $h = 3$, $k = -5$, and $r = \\sqrt{49} = 7$."
+        },
+        {
+          type: "mcq",
+          prompt: "Find the foci of the hyperbola:\n$$ \\frac{(x - 2)^2}{16} - \\frac{(y + 1)^2}{9} = 1 $$",
+          options: [
+            "$(2 \\pm \\sqrt{7}, -1)$",
+            "$(2 \\pm 5, -1)$",
+            "$(2, -1 \\pm 5)$",
+            "$(2 \\pm 25, -1)$"
+          ],
+          answerIndex: 1,
+          explanation: "For a horizontal hyperbola, $c^2 = a^2 + b^2$. Here $a^2 = 16$ and $b^2 = 9$, so $c^2 = 25 \\implies c = 5$. The foci are $(h \\pm c, k) = (2 \\pm 5, -1)$."
+        },
+        {
+          type: "numerical",
+          prompt: "A horizontal parabola has equation $(y - 2)^2 = 16(x + 1)$. What is the focal distance parameter $p$?",
+          options: [],
+          correctValue: "4",
+          tolerance: "0.01",
+          explanation: "The standard form is $(y - k)^2 = 4p(x - h)$. Matching $4p = 16 \\implies p = 4$."
+        },
+        {
+          type: "flashcard",
+          prompt: "Hyperbola Asymptote Formula (Horizontal Transverse Axis)",
+          front: "Hyperbola Asymptote Formula (Horizontal Transverse Axis)",
+          back: "$$ y - k = \\pm \\frac{b}{a}(x - h) $$",
+          explanation: "For horizontal hyperbolas centered at $(h,k)$, slopes are +- b/a."
+        }
+      ]
+    }
+  ]
 };
 
 // Load cached data if available (survives updates & syncs), or fallback to baseline
 let cachedData = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null') || DEFAULT_BASELINE;
+
+// If cached data exists but has empty reviewers array, use baseline reviewers
+if (!cachedData.stemReviewers || cachedData.stemReviewers.length === 0) {
+  cachedData.stemReviewers = DEFAULT_BASELINE.stemReviewers;
+}
+if (!cachedData.quizSets || cachedData.quizSets.length === 0) {
+  cachedData.quizSets = DEFAULT_BASELINE.quizSets;
+}
+if (!cachedData.calendarEvents || cachedData.calendarEvents.length === 0) {
+  cachedData.calendarEvents = DEFAULT_BASELINE.calendarEvents;
+}
 
 let CALENDAR_EVENTS = cachedData.calendarEvents || [];
 let STEM_REVIEWERS = cachedData.stemReviewers || [];
@@ -1005,14 +1136,64 @@ function renderEventsList() {
 }
 
 
-    
+    /* =========================================================
+   TagSci G11 Study WebApp - Curated Reviewers Engine
+   ========================================================= */
 
+
+
+
+function renderBlocksToHtml(blocks) {
+  if (!blocks || !Array.isArray(blocks) || blocks.length === 0) return '';
+  
+  let html = '';
+  blocks.forEach(b => {
+    if (b.type === 'heading') {
+      const headingClass = b.level === 'h2' 
+        ? 'text-base sm:text-lg font-extrabold text-slate-900 dark:text-white mt-5 mb-2 pb-1.5 border-b border-slate-200 dark:border-slate-800'
+        : 'text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-4 mb-1.5';
+      html += `<h3 class="${headingClass}">${renderMathInHtml(b.text || '')}</h3>`;
+    } else if (b.type === 'paragraph') {
+      html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(b.text || '')}</p>`;
+    } else if (b.type === 'formula') {
+      html += `
+        <div class="my-3 p-3.5 sm:p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">
+          ${b.title ? `<span class="text-[11px] font-bold text-tagsci-800 dark:text-emerald-400 block mb-1 uppercase tracking-wider">${renderMathInHtml(b.title)}</span>` : ''}
+          <div class="text-center font-mono-math text-sm sm:text-base text-tagsci-950 dark:text-emerald-300 py-1 overflow-x-auto">
+            ${renderMathInHtml('$$ ' + (b.formula || '') + ' $$')}
+          </div>
+          ${b.note ? `<p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 italic">${renderMathInHtml(b.note)}</p>` : ''}
+        </div>
+      `;
+    } else if (b.type === 'bullets') {
+      if (b.items && Array.isArray(b.items) && b.items.length > 0) {
+        html += `<ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-slate-700 dark:text-slate-200 my-2">`;
+        b.items.forEach(it => {
+          html += `<li>${renderMathInHtml(it)}</li>`;
+        });
+        html += `</ul>`;
+      }
+    } else if (b.type === 'callout') {
+      const isWarn = b.style === 'warning';
+      const calloutClass = isWarn 
+        ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-800 text-amber-900 dark:text-amber-200' 
+        : 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200';
+      html += `
+        <div class="my-3 p-3.5 rounded-xl border ${calloutClass}">
+          ${b.title ? `<div class="font-bold text-xs mb-1">${renderMathInHtml(b.title)}</div>` : ''}
+          <div class="text-xs leading-relaxed">${renderMathInHtml(b.text || '')}</div>
+        </div>
+      `;
+    }
+  });
+  return html;
+}
 
 function renderMaterials(items = STEM_REVIEWERS) {
   const grid = document.getElementById('materialsGrid');
   if (!grid) return;
 
-  if (items.length === 0) {
+  if (!items || items.length === 0) {
     grid.innerHTML = `
       <div class="col-span-full py-8 text-center text-slate-400 dark:text-slate-500 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50">
         <span class="text-2xl block mb-1">&#x1F4DA;</span>
@@ -1044,8 +1225,8 @@ function renderMaterials(items = STEM_REVIEWERS) {
             <span class="text-xs text-tagsci-600 dark:text-tagsci-400 hover:underline font-semibold">View &rarr;</span>
           </div>
           <h3 class="text-xs font-bold text-slate-900 dark:text-white mt-1.5">${mat.subject}</h3>
-          <p class="text-[11px] font-medium text-slate-700 dark:text-slate-300 mt-0.5">${renderMathInHtml(mat.title)}</p>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">${renderMathInHtml(mat.summary)}</p>
+          <p class="text-[11px] font-medium text-slate-700 dark:text-slate-300 mt-0.5">${renderMathInHtml(mat.title || 'Untitled')}</p>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">${renderMathInHtml(mat.summary || '')}</p>
         </div>
       </div>
     `;
@@ -1058,10 +1239,10 @@ function filterMaterials() {
 
   const query = searchInput.value.toLowerCase();
   const filtered = STEM_REVIEWERS.filter(m => 
-    m.subject.toLowerCase().includes(query) ||
-    m.title.toLowerCase().includes(query) ||
-    m.summary.toLowerCase().includes(query) ||
-    m.tag.toLowerCase().includes(query)
+    (m.subject || '').toLowerCase().includes(query) ||
+    (m.title || '').toLowerCase().includes(query) ||
+    (m.summary || '').toLowerCase().includes(query) ||
+    (m.tag || '').toLowerCase().includes(query)
   );
   renderMaterials(filtered);
 }
@@ -1076,14 +1257,31 @@ function openReviewer(id) {
   const modal = document.getElementById('reviewerModal');
 
   if (modalBadge) modalBadge.textContent = item.subject;
-  if (modalTitle) modalTitle.innerHTML = renderMathInHtml(item.title);
-  if (modalContent) modalContent.innerHTML = renderMathInHtml(item.content);
+  if (modalTitle) modalTitle.innerHTML = renderMathInHtml(item.title || '');
+  
+  let finalHtml = '';
+  if (item.blocks && Array.isArray(item.blocks) && item.blocks.length > 0) {
+    finalHtml = renderBlocksToHtml(item.blocks);
+  } else if (item.content) {
+    finalHtml = renderMathInHtml(item.content);
+  } else if (item.rawMarkdown) {
+    finalHtml = renderMathInHtml(item.rawMarkdown.replace(/\n/g, '<br>'));
+  } else {
+    finalHtml = `<p class="text-xs text-slate-400 italic">No content available in this reviewer draft.</p>`;
+  }
+
+  if (modalContent) modalContent.innerHTML = finalHtml;
   if (modal) modal.classList.remove('hidden');
 }
 
 function closeModal() {
   const modal = document.getElementById('reviewerModal');
   if (modal) modal.classList.add('hidden');
+}
+
+if (typeof window !== 'undefined') {
+  window.openReviewer = openReviewer;
+  window.closeModal = closeModal;
 }
 
 
@@ -1615,7 +1813,12 @@ function exitQuiz() {
 }
 
 
-    
+    /* =========================================================
+   TagSci G11 Study WebApp - Navigation & View Routing
+   ========================================================= */
+
+
+
 
 
 let currentSection = 'overview'; // overview, materials, reviewers, problem_sets, quiz_sets, credits, settings
@@ -1719,7 +1922,7 @@ function renderMaterialsView() {
   const container = document.getElementById('materialsListContainer');
   if (!container) return;
 
-  if (STUDY_MATERIALS.length === 0) {
+  if (!STUDY_MATERIALS || STUDY_MATERIALS.length === 0) {
     container.innerHTML = `
       <div class="py-12 text-center text-slate-400 dark:text-slate-500 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
         <span class="text-3xl block mb-2">&#x1F4DA;</span>
@@ -1727,14 +1930,32 @@ function renderMaterialsView() {
         <p class="text-xs text-slate-400 mt-1">Lecture slides, syllabus guides, and formula sheets will be uploaded here.</p>
       </div>
     `;
+    return;
   }
+
+  container.innerHTML = `
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+      ${STUDY_MATERIALS.map(m => `
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300">
+              ${m.subject || 'General'}
+            </span>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white mt-2">${renderMathInHtml(m.title || 'Untitled Material')}</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${renderMathInHtml(m.desc || '')}</p>
+          </div>
+          ${m.link ? `<a href="${m.link}" target="_blank" class="mt-3 inline-flex items-center gap-1 text-xs font-bold text-tagsci-600 dark:text-tagsci-400 hover:underline">Open Material &rarr;</a>` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `;
 }
 
 function renderReviewersView() {
   const container = document.getElementById('reviewersListContainer');
   if (!container) return;
 
-  if (STEM_REVIEWERS.length === 0) {
+  if (!STEM_REVIEWERS || STEM_REVIEWERS.length === 0) {
     container.innerHTML = `
       <div class="py-12 text-center text-slate-400 dark:text-slate-500 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
         <span class="text-3xl block mb-2">&#x1F52C;</span>
@@ -1742,14 +1963,51 @@ function renderReviewersView() {
         <p class="text-xs text-slate-400 mt-1">Curated reviewer modules from the Editorial Council will appear here.</p>
       </div>
     `;
+    return;
   }
+
+  container.innerHTML = `
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+      ${STEM_REVIEWERS.map(mat => {
+        const meta = getSubjectMeta(mat.subject);
+        const tagLabel = (mat.tag && (mat.tag.toLowerCase() === 'main' || mat.tag.toLowerCase() === 'elective')) 
+          ? mat.tag 
+          : meta.type;
+        const borderClass = mat.color || meta.color;
+        const isElective = tagLabel.toLowerCase() === 'elective';
+        const tagBadgeStyle = isElective 
+          ? 'bg-purple-100 text-purple-800 dark:bg-purple-950/80 dark:text-purple-300 border border-purple-200 dark:border-purple-800'
+          : 'bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950/80 dark:text-tagsci-300 border border-tagsci-200 dark:border-tagsci-800';
+
+        return `
+          <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 ${borderClass} hover:shadow-md active:scale-[0.98] transition cursor-pointer flex flex-col justify-between" onclick="openReviewer('${mat.id}')">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${tagBadgeStyle}">
+                  ${tagLabel}
+                </span>
+                <span class="text-xs text-tagsci-600 dark:text-tagsci-400 hover:underline font-semibold flex items-center gap-1">Read &rarr;</span>
+              </div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">${mat.subject}</span>
+              <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mt-1">${renderMathInHtml(mat.title || 'Untitled')}</h3>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 line-clamp-3 leading-relaxed">${renderMathInHtml(mat.summary || '')}</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[10px] text-slate-400">
+              <span>Reviewer Module</span>
+              <span class="font-bold text-tagsci-700 dark:text-tagsci-400">Open Module &rarr;</span>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
 }
 
 function renderProblemSetsView() {
   const container = document.getElementById('problemSetsListContainer');
   if (!container) return;
 
-  if (PROBLEM_SETS.length === 0) {
+  if (!PROBLEM_SETS || PROBLEM_SETS.length === 0) {
     container.innerHTML = `
       <div class="py-12 text-center text-slate-400 dark:text-slate-500 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
         <span class="text-3xl block mb-2">&#x1F4DD;</span>
@@ -1757,7 +2015,25 @@ function renderProblemSetsView() {
         <p class="text-xs text-slate-400 mt-1">Practice drills and step-by-step problem sets will be provided here.</p>
       </div>
     `;
+    return;
   }
+
+  container.innerHTML = `
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+      ${PROBLEM_SETS.map(ps => `
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300">
+              ${ps.subject || 'Drill'}
+            </span>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white mt-2">${renderMathInHtml(ps.title || 'Untitled Problem Set')}</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${renderMathInHtml(ps.desc || '')}</p>
+          </div>
+          ${ps.link ? `<a href="${ps.link}" target="_blank" class="mt-3 inline-flex items-center gap-1 text-xs font-bold text-tagsci-600 dark:text-tagsci-400 hover:underline">Solve Drill &rarr;</a>` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `;
 }
 
 function renderCreditsView() {

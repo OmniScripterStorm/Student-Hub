@@ -16,3 +16,7 @@ Desktop.ini
 
 # Temporary scripts
 *.ps1
+
+# Submodule / Separate Repo
+Content Studio/
+
