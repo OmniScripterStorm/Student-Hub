@@ -1,6 +1,6 @@
 {
   "version": "1.4.0",
-  "updatedAt": "2026-09-24T02:41:06.896Z",
+  "updatedAt": "2026-09-24T02:43:37.166Z",
   "announcement": "Refreshed 1 Reviewers, 1 Deadlines, and 1 Quiz Banks.",
   "calendarEvents": [
     {
@@ -191,6 +191,62 @@
           "prompt": "",
           "correctText": "",
           "aliases": "",
+          "explanation": ""
+        },
+        {
+          "type": "numerical",
+          "topic": "Numerical Calculation",
+          "prompt": "",
+          "options": [],
+          "answerIndex": 0,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "unit": "",
+          "front": "",
+          "back": "",
+          "explanation": ""
+        },
+        {
+          "type": "numerical",
+          "topic": "Numerical Calculation",
+          "prompt": "",
+          "options": [],
+          "answerIndex": 0,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "unit": "",
+          "front": "",
+          "back": "",
+          "explanation": ""
+        },
+        {
+          "type": "multi_select",
+          "topic": "Multi-Select",
+          "prompt": "",
+          "options": [
+            "Option 1",
+            "Option 2",
+            "Option 3",
+            "Option 4"
+          ],
+          "answerIndices": [
+            0
+          ],
+          "explanation": ""
+        },
+        {
+          "type": "multi_select",
+          "topic": "Multi-Select",
+          "prompt": "",
+          "options": [
+            "Option 1",
+            "Option 2",
+            "Option 3",
+            "Option 4"
+          ],
+          "answerIndices": [
+            0
+          ],
           "explanation": ""
         },
         {
