@@ -58,6 +58,11 @@ def build_single_file():
         ota_sync_js = re.sub(r'import\s+[^;]+;', '', ota_sync_js)
         ota_sync_js = re.sub(r'export\s+(async\s+)?function\s+', r'\1function ', ota_sync_js)
 
+    with open(os.path.join(src_dir, 'components', 'pwa_installer.js'), 'r', encoding='utf-8') as f:
+        pwa_installer_js = f.read()
+        pwa_installer_js = re.sub(r'import\s+[^;]+;', '', pwa_installer_js)
+        pwa_installer_js = re.sub(r'export\s+(async\s+)?function\s+', r'\1function ', pwa_installer_js)
+
     with open(os.path.join(src_dir, 'app.js'), 'r', encoding='utf-8') as f:
         app_js = f.read()
         app_js = re.sub(r'import\s+[^;]+;', '', app_js)
@@ -81,6 +86,8 @@ def build_single_file():
     {navigation_js}
 
     {ota_sync_js}
+
+    {pwa_installer_js}
 
     {app_js}
     """

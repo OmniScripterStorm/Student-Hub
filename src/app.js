@@ -22,6 +22,7 @@ import {
   nextQuizQuestion, 
   exitQuiz 
 } from './components/quiz_engine.js';
+import { initPwaInstallPrompt, triggerPwaInstall, dismissPwaPrompt } from './components/pwa_installer.js';
 
 // Expose public functions to window.App for inline HTML event handlers
 window.App = {
@@ -57,10 +58,18 @@ window.App = {
   rateFlashcard,
   prevQuizQuestion,
   nextQuizQuestion,
-  exitQuiz
+  exitQuiz,
+  triggerPwaInstall,
+  dismissPwaPrompt
 };
 
 window.addEventListener('resize', checkResponsiveLayout);
+
+// Auto-sync when coming online
+window.addEventListener('online', () => {
+  console.log('Network connected: Running background curriculum sync...');
+  checkOtaUpdates(true);
+});
 
 window.addEventListener('DOMContentLoaded', () => {
   initTheme();
@@ -68,4 +77,14 @@ window.addEventListener('DOMContentLoaded', () => {
   renderMaterials();
   renderTasks();
   checkResponsiveLayout();
+
+  // 1. Initialize PWA First-Launch Install Prompt
+  initPwaInstallPrompt();
+
+  // 2. Auto-Update on Launch (Silent background sync if online)
+  if (navigator.onLine) {
+    setTimeout(() => {
+      checkOtaUpdates(true);
+    }, 1200);
+  }
 });
