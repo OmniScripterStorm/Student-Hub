@@ -78,9 +78,3 @@ A unified, offline-first, single-file study web application and OTA distribution
    Students click **`⚡ Check Updates`** inside their web app, and the new materials are cached offline immediately!
 
 ---
-
-## 🎓 Credits
-
-- **Project Lead**: JV REJUSO, G11 REPRESENTATIVE
-- **Curators & Content Writers**: TagSci G11 Editorial Council
-- **Institution**: Taguig Science High School
