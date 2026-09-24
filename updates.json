@@ -1,268 +1,47 @@
 {
   "version": "1.4.0",
-  "updatedAt": "2026-09-24T02:43:37.166Z",
-  "announcement": "Refreshed 1 Reviewers, 1 Deadlines, and 1 Quiz Banks.",
+  "updatedAt": "2026-09-24T20:32:22.799Z",
+  "announcement": "Refreshed 0 Reviewers, 4 Deadlines, and 0 Quiz Banks.",
   "calendarEvents": [
     {
-      "id": 1790208692100,
-      "date": "2026-10-04",
+      "id": 1790281754787,
+      "date": "2026-10-07",
       "subject": "DepEd",
       "title": "First Summative Exam",
       "type": "exam",
       "badge": "Exam / 60pts",
       "desc": ""
-    }
-  ],
-  "stemReviewers": [
+    },
     {
-      "id": "gen_math_functions",
-      "subject": "General Math",
-      "tag": "Main",
-      "color": "border-l-4 border-g11pink-500",
-      "title": "Functions, Rational Equations & Inverses",
-      "summary": "Domain, range, rational functions, asymptotes, and inverse function properties.",
-      "blocks": [
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "1. Rational Functions & Asymptotes"
-        },
-        {
-          "type": "paragraph",
-          "text": "A rational function is defined as a fraction of polynomials $f(x) = \\frac{P(x)}{Q(x)}$ where $Q(x) \\neq 0$."
-        },
-        {
-          "type": "formula",
-          "title": "Standard Rational Form",
-          "formula": "f(x) = \\frac{a_n x^n + \\dots}{b_m x^m + \\dots}",
-          "note": "Compare degree n and degree m to find horizontal asymptotes."
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "Vertical Asymptote: Values of x where denominator Q(x) = 0.",
-            "Horizontal Asymptote: If n < m, y = 0. If n = m, y = a_n / b_m."
-          ]
-        }
-      ]
+      "id": 1790281796283,
+      "date": "2026-10-29",
+      "subject": "DepEd",
+      "title": "Second Summative Exam",
+      "type": "exam",
+      "badge": "Exam / 60pts",
+      "desc": ""
+    },
+    {
+      "id": 1790281856283,
+      "date": "2026-11-03",
+      "subject": "DepEd",
+      "title": "Second Term Exam",
+      "type": "exam",
+      "badge": "Exam / 60pts",
+      "desc": ""
+    },
+    {
+      "id": 1790281880243,
+      "date": "2026-11-04",
+      "subject": "DepEd",
+      "title": "Second Term Exam",
+      "type": "exam",
+      "badge": "Exam / 60pts",
+      "desc": ""
     }
   ],
+  "stemReviewers": [],
   "studyMaterials": [],
   "problemSets": [],
-  "quizSets": [
-    {
-      "id": "quiz_1790208718271",
-      "subject": "Effective Communications",
-      "tag": "Main",
-      "title": "efcom",
-      "desc": "",
-      "timeLimitMinutes": 15,
-      "questions": [
-        {
-          "type": "mcq",
-          "topic": "Multiple Choice",
-          "prompt": "",
-          "options": [
-            "Option 1",
-            "Option 2",
-            "Option 3",
-            "Option 4"
-          ],
-          "answerIndex": 0,
-          "correctValue": "",
-          "tolerance": "0.05",
-          "front": "",
-          "back": "",
-          "explanation": ""
-        },
-        {
-          "type": "mcq",
-          "topic": "Multiple Choice",
-          "prompt": "",
-          "options": [
-            "Option 1",
-            "Option 2",
-            "Option 3",
-            "Option 4"
-          ],
-          "answerIndex": 0,
-          "correctValue": "",
-          "tolerance": "0.05",
-          "front": "",
-          "back": "",
-          "explanation": ""
-        },
-        {
-          "type": "mcq",
-          "topic": "Multiple Choice",
-          "prompt": "",
-          "options": [
-            "Option 1",
-            "Option 2",
-            "Option 3",
-            "Option 4"
-          ],
-          "answerIndex": 0,
-          "correctValue": "",
-          "tolerance": "0.05",
-          "front": "",
-          "back": "",
-          "explanation": ""
-        },
-        {
-          "type": "mcq",
-          "topic": "Multiple Choice",
-          "prompt": "",
-          "options": [
-            "Option 1",
-            "Option 2",
-            "Option 3",
-            "Option 4"
-          ],
-          "answerIndex": 0,
-          "correctValue": "",
-          "tolerance": "0.05",
-          "front": "",
-          "back": "",
-          "explanation": ""
-        },
-        {
-          "type": "mcq",
-          "topic": "Multiple Choice",
-          "prompt": "",
-          "options": [
-            "Option 1",
-            "Option 2",
-            "Option 3",
-            "Option 4"
-          ],
-          "answerIndex": 0,
-          "correctValue": "",
-          "tolerance": "0.05",
-          "front": "",
-          "back": "",
-          "explanation": ""
-        },
-        {
-          "type": "true_false",
-          "topic": "True or False",
-          "prompt": "",
-          "answerBoolean": true,
-          "explanation": ""
-        },
-        {
-          "type": "true_false",
-          "topic": "True or False",
-          "prompt": "",
-          "answerBoolean": true,
-          "explanation": ""
-        },
-        {
-          "type": "multi_select",
-          "topic": "Multi-Select",
-          "prompt": "",
-          "options": [
-            "Option 1",
-            "Option 2",
-            "Option 3",
-            "Option 4"
-          ],
-          "answerIndices": [
-            0,
-            2
-          ],
-          "explanation": ""
-        },
-        {
-          "type": "flashcard",
-          "topic": "Flashcard",
-          "prompt": "",
-          "options": [],
-          "answerIndex": 0,
-          "correctValue": "",
-          "tolerance": "0.05",
-          "front": "",
-          "back": "",
-          "explanation": ""
-        },
-        {
-          "type": "identification",
-          "topic": "Identification",
-          "prompt": "",
-          "correctText": "",
-          "aliases": "",
-          "explanation": ""
-        },
-        {
-          "type": "numerical",
-          "topic": "Numerical Calculation",
-          "prompt": "",
-          "options": [],
-          "answerIndex": 0,
-          "correctValue": "",
-          "tolerance": "0.05",
-          "unit": "",
-          "front": "",
-          "back": "",
-          "explanation": ""
-        },
-        {
-          "type": "numerical",
-          "topic": "Numerical Calculation",
-          "prompt": "",
-          "options": [],
-          "answerIndex": 0,
-          "correctValue": "",
-          "tolerance": "0.05",
-          "unit": "",
-          "front": "",
-          "back": "",
-          "explanation": ""
-        },
-        {
-          "type": "multi_select",
-          "topic": "Multi-Select",
-          "prompt": "",
-          "options": [
-            "Option 1",
-            "Option 2",
-            "Option 3",
-            "Option 4"
-          ],
-          "answerIndices": [
-            0
-          ],
-          "explanation": ""
-        },
-        {
-          "type": "multi_select",
-          "topic": "Multi-Select",
-          "prompt": "",
-          "options": [
-            "Option 1",
-            "Option 2",
-            "Option 3",
-            "Option 4"
-          ],
-          "answerIndices": [
-            0
-          ],
-          "explanation": ""
-        },
-        {
-          "type": "numerical",
-          "topic": "Numerical Calculation",
-          "prompt": "",
-          "options": [],
-          "answerIndex": 0,
-          "correctValue": "",
-          "tolerance": "0.05",
-          "unit": "",
-          "front": "",
-          "back": "",
-          "explanation": ""
-        }
-      ]
-    }
-  ]
+  "quizSets": []
 }
