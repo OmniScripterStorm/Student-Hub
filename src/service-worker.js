@@ -2,7 +2,7 @@
    TagSci Grade 11 Study WebApp - Offline Service Worker (PWA)
    ========================================================= */
 
-const CACHE_NAME = 'tagsci-g11-v1.4.0';
+const CACHE_NAME = 'tagsci-g11-v1.4.2';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -13,18 +13,19 @@ const STATIC_ASSETS = [
   'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap'
 ];
 
-// Install: pre-cache shell assets
+// Install: pre-cache shell assets & skip waiting immediately
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(STATIC_ASSETS).catch((err) => {
-        console.warn('PWA Pre-cache non-fatal warning:', err);
+        console.warn('PWA Pre-cache notice:', err);
       });
-    }).then(() => self.skipWaiting())
+    })
   );
 });
 
-// Activate: clean old cache versions
+// Activate: clean old cache versions and claim all clients
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -39,14 +40,14 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch: Stale-While-Revalidate & Cache-First with fallback
+// Fetch Strategy:
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
 
-  // For updates.json and OTA endpoints: Network first, cache fallback
-  if (url.pathname.endsWith('updates.json') || url.hostname.includes('script.google.com')) {
+  // For updates.json, API endpoints, or HTML navigation: Network First, Fallback to Cache
+  if (url.pathname.endsWith('updates.json') || event.request.mode === 'navigate' || url.pathname.endsWith('index.html')) {
     event.respondWith(
       fetch(event.request)
         .then((networkRes) => {
@@ -56,30 +57,22 @@ self.addEventListener('fetch', (event) => {
           }
           return networkRes;
         })
-        .catch(() => caches.match(event.request))
+        .catch(() => caches.match(event.request).then((cached) => cached || caches.match('./index.html') || caches.match('./')))
     );
     return;
   }
 
-  // For static app shell and navigation: Stale-while-revalidate / Cache-first
+  // For static assets (images, fonts, scripts): Cache First, fallback to Network
   event.respondWith(
     caches.match(event.request).then((cachedRes) => {
-      const fetchPromise = fetch(event.request)
-        .then((networkRes) => {
-          if (networkRes && networkRes.status === 200) {
-            const clone = networkRes.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-          }
-          return networkRes;
-        })
-        .catch(() => {
-          // If offline and request is navigation, fallback to index.html
-          if (event.request.mode === 'navigate') {
-            return caches.match('./index.html') || caches.match('./');
-          }
-        });
-
-      return cachedRes || fetchPromise;
+      if (cachedRes) return cachedRes;
+      return fetch(event.request).then((networkRes) => {
+        if (networkRes && networkRes.status === 200) {
+          const clone = networkRes.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        }
+        return networkRes;
+      });
     })
   );
 });
