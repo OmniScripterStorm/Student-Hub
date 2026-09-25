@@ -179,7 +179,7 @@
           "tolerance": "0.05",
           "front": "",
           "back": "",
-          "explanation": "",
+          "explanation": "It presents research findings to an academic audience.",
           "answerBoolean": true
         },
         {
@@ -195,7 +195,7 @@
           "tolerance": "0.05",
           "front": "",
           "back": "",
-          "explanation": "",
+          "explanation": "It provides instructions to help users install and troubleshoot software.",
           "answerBoolean": true
         },
         {
@@ -211,7 +211,7 @@
           "tolerance": "0.05",
           "front": "",
           "back": "",
-          "explanation": "",
+          "explanation": "It documents procedures and results related to repairing a computer system.",
           "answerBoolean": true
         },
         {
@@ -243,7 +243,7 @@
           "tolerance": "0.05",
           "front": "",
           "back": "",
-          "explanation": "",
+          "explanation": "It analyzes and discusses previous research using academic sources.",
           "answerBoolean": true
         }
       ]
