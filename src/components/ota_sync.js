@@ -157,7 +157,7 @@ export async function submitEditorialApplication() {
   const payload = {
     embeds: [
       {
-        title: '🎓 G11 Student Hub - Editorial Application',
+        title: '🎓 G11 Student Hub - Academic Committee Application',
         color: 0x16a34a,
         fields: [
           { name: 'Applicant Name', value: name, inline: true },
@@ -178,7 +178,7 @@ export async function submitEditorialApplication() {
     });
 
     if (res.ok) {
-      alert('🎉 Application submitted successfully to the G11 Editorial Council! Thank you for contributing.');
+      alert('🎉 Application submitted successfully to the Academic Committee! Thank you for contributing.');
       nameInput.value = '';
       sectionInput.value = '';
       subjectInput.value = '';
@@ -187,11 +187,11 @@ export async function submitEditorialApplication() {
       throw new Error(`HTTP ${res.status}`);
     }
   } catch (err) {
-    alert(`Could not submit application online (${err.message}). Please reach out to your G11 SSLG Representative directly!`);
+    alert(`Could not submit application online (${err.message}). Please reach out to your G11 Representative directly!`);
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Submit Application to Editorial Council';
+      submitBtn.textContent = 'Submit Application to Committee';
     }
   }
 }

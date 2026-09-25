@@ -130,28 +130,28 @@ export let QUIZ_SETS = cachedData.quizSets || DEFAULT_BASELINE.quizSets;
 export let STUDY_MATERIALS = cachedData.studyMaterials || DEFAULT_BASELINE.studyMaterials;
 export let CURRENT_APP_VERSION = cachedData.version || DEFAULT_BASELINE.version;
 
-export const INITIAL_TASKS = [];
+const CREDITS_CACHE_KEY = 'tagsci_g11_credits_cache';
+export const DEFAULT_CREDITS_URL = 'https://omniscripterstorm.github.io/Student-Hub/credits.md';
 
-export const EDITORIAL_CREDITS = [
-  {
-    role: 'Project Lead & G11 Representative',
-    name: 'G11 SSLG Representative',
-    title: 'Lead Architect & Curator',
-    badge: 'Head Council'
-  },
-  {
-    role: 'Editorial Council',
-    name: 'Academic Committee',
-    title: 'Curators & Subject Content Writers',
-    badge: 'Editorial Board'
-  },
-  {
-    role: 'Peer Contributors',
-    name: 'TagSci G11 Student Cohort',
-    title: 'Reviewers & Problem Set Solvers',
-    badge: 'Contributors'
+export const DEFAULT_CREDITS_MARKDOWN = `# Grade 11 Representative
+- **G11 Representative** — Platform Architect & Project Lead
+
+# Academic Committee
+- **Juan Dela Cruz** — Physics & Pre-Calculus Reviewers
+- **Maria Clara** — General Chemistry & Biology Notes
+- **TagSci G11 Student Cohort** — Reviewers & Practice Drill Solvers
+
+> *Special thanks to all student contributors and subject teachers for supporting TagSci Grade 11.*`;
+
+export function getCachedCreditsMarkdown() {
+  return localStorage.getItem(CREDITS_CACHE_KEY) || DEFAULT_CREDITS_MARKDOWN;
+}
+
+export function saveCachedCreditsMarkdown(md) {
+  if (md && typeof md === 'string') {
+    localStorage.setItem(CREDITS_CACHE_KEY, md);
   }
-];
+}
 
 export function getSyncUrl() {
   return localStorage.getItem(SYNC_URL_KEY) || DEFAULT_OTA_URL;

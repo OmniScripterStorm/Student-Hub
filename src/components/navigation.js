@@ -1,8 +1,4 @@
-/* =========================================================
-   TagSci G11 Study WebApp - Navigation & View Routing
-   ========================================================= */
-
-import { STEM_REVIEWERS, STUDY_MATERIALS, PROBLEM_SETS, QUIZ_SETS, EDITORIAL_CREDITS, getSyncUrl, CURRENT_APP_VERSION, getSubjectMeta } from '../data/study_data.js';
+import { STEM_REVIEWERS, STUDY_MATERIALS, PROBLEM_SETS, QUIZ_SETS, getCachedCreditsMarkdown, saveCachedCreditsMarkdown, DEFAULT_CREDITS_URL, getSyncUrl, CURRENT_APP_VERSION, getSubjectMeta } from '../data/study_data.js';
 import { renderMathInHtml } from './math_engine.js';
 import { renderQuizSetsView } from './quiz_engine.js';
 
@@ -240,25 +236,107 @@ export function renderProblemSetsView() {
   `;
 }
 
-export function renderCreditsView() {
-  const container = document.getElementById('creditsListContainer');
+export function parseAndRenderCreditsMarkdown(mdText) {
+  if (!mdText) return '';
+  const lines = mdText.split(/\r?\n/);
+  let html = '';
+  let inList = false;
+
+  for (let rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) {
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      continue;
+    }
+
+    if (line.startsWith('#')) {
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      const level = line.match(/^#+/)[0].length;
+      const text = line.replace(/^#+\s*/, '').trim();
+      html += `<h${level}>${text}</h${level}>`;
+    } else if (line.startsWith('-') || line.startsWith('*')) {
+      if (!inList) {
+        html += '<ul>';
+        inList = true;
+      }
+      const rawItem = line.replace(/^[-*]\s*/, '').trim();
+      let name = '';
+      let role = '';
+
+      const boldMatch = rawItem.match(/^\*\*(.*?)\*\*\s*(?:—|–|-|\||:)\s*(.*)$/);
+      if (boldMatch) {
+        name = boldMatch[1].trim();
+        role = boldMatch[2].trim();
+      } else {
+        const parts = rawItem.split(/—|–|-|\||:/);
+        name = parts[0].replace(/\*\*/g, '').trim();
+        role = parts.slice(1).join(' — ').replace(/\*\*/g, '').trim();
+      }
+
+      html += `
+        <li>
+          <span class="member-name">${name}</span>
+          ${role ? `<span class="member-role">${role}</span>` : ''}
+        </li>
+      `;
+    } else if (line.startsWith('>')) {
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      const quote = line.replace(/^>+\s*/, '').trim();
+      html += `<blockquote>${quote}</blockquote>`;
+    } else {
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      html += `<p class="text-sm my-2 text-slate-600 dark:text-slate-300">${line}</p>`;
+    }
+  }
+
+  if (inList) {
+    html += '</ul>';
+  }
+
+  return html;
+}
+
+export async function renderCreditsView() {
+  const container = document.getElementById('creditsMarkdownContainer');
   if (!container) return;
 
-  container.innerHTML = EDITORIAL_CREDITS.map(c => `
-    <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-start justify-between space-x-3">
-      <div>
-        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-g11pink-100 text-g11pink-700 dark:bg-g11pink-950 dark:text-g11pink-300">
-          ${c.badge}
-        </span>
-        <h3 class="text-sm font-bold text-slate-900 dark:text-white mt-2">${c.name}</h3>
-        <p class="text-xs font-semibold text-tagsci-700 dark:text-tagsci-400 mt-0.5">${c.role}</p>
-        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">${c.title}</p>
-      </div>
-      <div class="w-10 h-10 rounded-xl bg-tagsci-50 dark:bg-tagsci-950 border border-tagsci-200 dark:border-tagsci-800 flex items-center justify-center text-tagsci-700 dark:text-tagsci-300 font-bold text-base flex-shrink-0">
-        &#x1F393;
-      </div>
-    </div>
-  `).join('');
+  const cachedMd = getCachedCreditsMarkdown();
+  container.innerHTML = parseAndRenderCreditsMarkdown(cachedMd);
+
+  if (navigator.onLine) {
+    try {
+      const endpoints = ['./credits.md', DEFAULT_CREDITS_URL];
+      for (const url of endpoints) {
+        try {
+          const res = await fetch(url + '?_t=' + Date.now(), { cache: 'no-cache' });
+          if (res.ok) {
+            const text = await res.text();
+            if (text && text.trim().length > 0 && text !== cachedMd) {
+              saveCachedCreditsMarkdown(text);
+              container.innerHTML = parseAndRenderCreditsMarkdown(text);
+              break;
+            }
+          }
+        } catch (e) {
+          // ignore individual fetch errors
+        }
+      }
+    } catch (err) {
+      console.log('Background credits sync skipped:', err);
+    }
+  }
 }
 
 export function renderSettingsView() {

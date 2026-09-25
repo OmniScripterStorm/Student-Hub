@@ -48,7 +48,7 @@
     };
   </script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap');
     
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -57,6 +57,110 @@
     
     .font-mono-math {
       font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Editorial Chronicle Styles for Academic Committee */
+    .editorial-chronicle h1, .editorial-chronicle h2 {
+      font-family: 'Newsreader', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #166534;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px dashed #aef0c8;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .dark .editorial-chronicle h1, .dark .editorial-chronicle h2 {
+      color: #4ade80;
+      border-bottom-color: #14532d;
+    }
+    .editorial-chronicle h1:first-child, .editorial-chronicle h2:first-child {
+      margin-top: 0;
+    }
+
+    .editorial-chronicle ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-top: 0.5rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .editorial-chronicle li {
+      padding: 0.75rem 1rem;
+      border-radius: 0.875rem;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      transition: all 0.15s ease-in-out;
+    }
+    @media (min-width: 640px) {
+      .editorial-chronicle li {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+    .dark .editorial-chronicle li {
+      background-color: #0f172a;
+      border-color: #1e293b;
+    }
+    .editorial-chronicle li:hover {
+      border-color: #aef0c8;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+    .dark .editorial-chronicle li:hover {
+      border-color: #14532d;
+    }
+
+    .editorial-chronicle .member-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .dark .editorial-chronicle .member-name {
+      color: #f8fafc;
+    }
+
+    .editorial-chronicle .member-role {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #15803d;
+      text-align: left;
+    }
+    @media (min-width: 640px) {
+      .editorial-chronicle .member-role {
+        text-align: right;
+      }
+    }
+    .dark .editorial-chronicle .member-role {
+      color: #4ade80;
+    }
+
+    .editorial-chronicle blockquote {
+      margin-top: 1.25rem;
+      padding: 0.75rem 1rem;
+      background: #edfcf2;
+      border-left: 3px solid #16a34a;
+      border-radius: 0.5rem;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: #166534;
+    }
+    .dark .editorial-chronicle blockquote {
+      background: #072416;
+      border-left-color: #4ade80;
+      color: #86efac;
     }
 
     ::-webkit-scrollbar {
@@ -190,7 +294,7 @@
 
       <button id="navItem-credits" onclick="window.App.navigateSection('credits')" class="w-full flex items-center space-x-3 px-3.5 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition font-medium">
         <span class="text-base">&#x1F3C5;</span>
-        <span>Editorial & Credits</span>
+        <span>Academic Committee</span>
       </button>
 
       <!-- Settings Menu Item -->
@@ -439,32 +543,35 @@
       <div id="quizSetsListContainer"></div>
     </div>
 
-    <!-- 6. EDITORIAL COUNCIL & CREDITS VIEW -->
+    <!-- 6. ACADEMIC COMMITTEE & CREDITS VIEW -->
     <div id="viewSection-credits" class="hidden space-y-6">
       <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
         <div>
           <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center space-x-2">
             <span>&#x1F3C5;</span>
-            <span>Editorial Council & Curators</span>
+            <span>Academic Committee</span>
           </h2>
           <p class="text-xs text-slate-500 dark:text-slate-400">The team curating and creating study materials for Grade 11</p>
         </div>
       </div>
       
-      <div id="creditsListContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      <!-- Rendered Editorial Chronicle Container -->
+      <div class="p-5 sm:p-7 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div id="creditsMarkdownContainer" class="editorial-chronicle"></div>
+      </div>
 
-      <!-- Application Box for Students to Join the Council -->
-      <section class="mt-8 p-5 sm:p-7 rounded-2xl bg-gradient-to-br from-white to-g11pink-50/40 dark:from-slate-900 dark:to-slate-900 border border-g11pink-200 dark:border-slate-800 shadow-md">
+      <!-- Application Box for Students to Join the Committee -->
+      <section class="mt-8 p-5 sm:p-7 rounded-2xl bg-gradient-to-br from-white to-tagsci-50/40 dark:from-slate-900 dark:to-slate-900 border border-tagsci-200 dark:border-slate-800 shadow-sm">
         <div class="flex items-start justify-between">
           <div>
-            <div class="inline-flex items-center space-x-2 bg-g11pink-100 dark:bg-g11pink-950/60 text-g11pink-700 dark:text-g11pink-300 border border-g11pink-300 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
+            <div class="inline-flex items-center space-x-2 bg-tagsci-100 dark:bg-tagsci-950/60 text-tagsci-800 dark:text-tagsci-300 border border-tagsci-300 dark:border-tagsci-800 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
               <span>&#x1F4E8; Call for Curators</span>
             </div>
             <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-2">
-              Join the G11 Editorial Council
+              Join the Academic Committee
             </h3>
             <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 max-w-xl">
-              Want to contribute your lecture summaries, problem set solutions, or reviewer decks to the batch? Submit your details below to join the council via Discord!
+              Want to contribute your lecture summaries, problem set solutions, or reviewer decks to the batch? Submit your details below to collaborate with the team!
             </p>
           </div>
         </div>
@@ -477,7 +584,7 @@
               id="applicantName" 
               placeholder="e.g. Juan Dela Cruz" 
               required
-              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-g11pink-400"
+              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-tagsci-500"
             />
           </div>
 
@@ -488,7 +595,7 @@
               id="applicantSection" 
               placeholder="e.g. 11-Newton / 11-Curie" 
               required
-              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-g11pink-400"
+              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-tagsci-500"
             />
           </div>
 
@@ -499,7 +606,7 @@
               id="applicantSubject" 
               placeholder="e.g. Pre-Cal, Gen Chem 1, Physics" 
               required
-              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-g11pink-400"
+              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-tagsci-500"
             />
           </div>
 
@@ -509,7 +616,7 @@
               id="applicantMessage" 
               rows="2" 
               placeholder="Share what reviewers or topics you'd love to write and curate for the batch..." 
-              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-g11pink-400 resize-none"
+              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-tagsci-500 resize-none"
             ></textarea>
           </div>
 
@@ -520,7 +627,7 @@
               class="bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow-md transition flex items-center space-x-2"
             >
               <span>&#x1F4E8;</span>
-              <span>Submit Application to Discord</span>
+              <span>Submit Application to Committee</span>
             </button>
           </div>
         </form>

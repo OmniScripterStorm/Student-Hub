@@ -48,7 +48,7 @@
     };
   </script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap');
     
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -57,6 +57,110 @@
     
     .font-mono-math {
       font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Editorial Chronicle Styles for Academic Committee */
+    .editorial-chronicle h1, .editorial-chronicle h2 {
+      font-family: 'Newsreader', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #166534;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px dashed #aef0c8;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .dark .editorial-chronicle h1, .dark .editorial-chronicle h2 {
+      color: #4ade80;
+      border-bottom-color: #14532d;
+    }
+    .editorial-chronicle h1:first-child, .editorial-chronicle h2:first-child {
+      margin-top: 0;
+    }
+
+    .editorial-chronicle ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-top: 0.5rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .editorial-chronicle li {
+      padding: 0.75rem 1rem;
+      border-radius: 0.875rem;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      transition: all 0.15s ease-in-out;
+    }
+    @media (min-width: 640px) {
+      .editorial-chronicle li {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+    .dark .editorial-chronicle li {
+      background-color: #0f172a;
+      border-color: #1e293b;
+    }
+    .editorial-chronicle li:hover {
+      border-color: #aef0c8;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+    .dark .editorial-chronicle li:hover {
+      border-color: #14532d;
+    }
+
+    .editorial-chronicle .member-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .dark .editorial-chronicle .member-name {
+      color: #f8fafc;
+    }
+
+    .editorial-chronicle .member-role {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #15803d;
+      text-align: left;
+    }
+    @media (min-width: 640px) {
+      .editorial-chronicle .member-role {
+        text-align: right;
+      }
+    }
+    .dark .editorial-chronicle .member-role {
+      color: #4ade80;
+    }
+
+    .editorial-chronicle blockquote {
+      margin-top: 1.25rem;
+      padding: 0.75rem 1rem;
+      background: #edfcf2;
+      border-left: 3px solid #16a34a;
+      border-radius: 0.5rem;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: #166534;
+    }
+    .dark .editorial-chronicle blockquote {
+      background: #072416;
+      border-left-color: #4ade80;
+      color: #86efac;
     }
 
     ::-webkit-scrollbar {
@@ -190,7 +294,7 @@
 
       <button id="navItem-credits" onclick="navigateSection('credits')" class="w-full flex items-center space-x-3 px-3.5 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition font-medium">
         <span class="text-base">&#x1F3C5;</span>
-        <span>Editorial & Credits</span>
+        <span>Academic Committee</span>
       </button>
 
       <!-- Settings Menu Item -->
@@ -439,32 +543,35 @@
       <div id="quizSetsListContainer"></div>
     </div>
 
-    <!-- 6. EDITORIAL COUNCIL & CREDITS VIEW -->
+    <!-- 6. ACADEMIC COMMITTEE & CREDITS VIEW -->
     <div id="viewSection-credits" class="hidden space-y-6">
       <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
         <div>
           <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center space-x-2">
             <span>&#x1F3C5;</span>
-            <span>Editorial Council & Curators</span>
+            <span>Academic Committee</span>
           </h2>
           <p class="text-xs text-slate-500 dark:text-slate-400">The team curating and creating study materials for Grade 11</p>
         </div>
       </div>
       
-      <div id="creditsListContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      <!-- Rendered Editorial Chronicle Container -->
+      <div class="p-5 sm:p-7 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div id="creditsMarkdownContainer" class="editorial-chronicle"></div>
+      </div>
 
-      <!-- Application Box for Students to Join the Council -->
-      <section class="mt-8 p-5 sm:p-7 rounded-2xl bg-gradient-to-br from-white to-g11pink-50/40 dark:from-slate-900 dark:to-slate-900 border border-g11pink-200 dark:border-slate-800 shadow-md">
+      <!-- Application Box for Students to Join the Committee -->
+      <section class="mt-8 p-5 sm:p-7 rounded-2xl bg-gradient-to-br from-white to-tagsci-50/40 dark:from-slate-900 dark:to-slate-900 border border-tagsci-200 dark:border-slate-800 shadow-sm">
         <div class="flex items-start justify-between">
           <div>
-            <div class="inline-flex items-center space-x-2 bg-g11pink-100 dark:bg-g11pink-950/60 text-g11pink-700 dark:text-g11pink-300 border border-g11pink-300 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
+            <div class="inline-flex items-center space-x-2 bg-tagsci-100 dark:bg-tagsci-950/60 text-tagsci-800 dark:text-tagsci-300 border border-tagsci-300 dark:border-tagsci-800 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
               <span>&#x1F4E8; Call for Curators</span>
             </div>
             <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-2">
-              Join the G11 Editorial Council
+              Join the Academic Committee
             </h3>
             <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 max-w-xl">
-              Want to contribute your lecture summaries, problem set solutions, or reviewer decks to the batch? Submit your details below to join the council via Discord!
+              Want to contribute your lecture summaries, problem set solutions, or reviewer decks to the batch? Submit your details below to collaborate with the team!
             </p>
           </div>
         </div>
@@ -477,7 +584,7 @@
               id="applicantName" 
               placeholder="e.g. Juan Dela Cruz" 
               required
-              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-g11pink-400"
+              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-tagsci-500"
             />
           </div>
 
@@ -488,7 +595,7 @@
               id="applicantSection" 
               placeholder="e.g. 11-Newton / 11-Curie" 
               required
-              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-g11pink-400"
+              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-tagsci-500"
             />
           </div>
 
@@ -499,7 +606,7 @@
               id="applicantSubject" 
               placeholder="e.g. Pre-Cal, Gen Chem 1, Physics" 
               required
-              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-g11pink-400"
+              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-tagsci-500"
             />
           </div>
 
@@ -509,7 +616,7 @@
               id="applicantMessage" 
               rows="2" 
               placeholder="Share what reviewers or topics you'd love to write and curate for the batch..." 
-              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-g11pink-400 resize-none"
+              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-tagsci-500 resize-none"
             ></textarea>
           </div>
 
@@ -520,7 +627,7 @@
               class="bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow-md transition flex items-center space-x-2"
             >
               <span>&#x1F4E8;</span>
-              <span>Submit Application to Discord</span>
+              <span>Submit Application to Committee</span>
             </button>
           </div>
         </form>
@@ -780,28 +887,28 @@ let QUIZ_SETS = cachedData.quizSets || DEFAULT_BASELINE.quizSets;
 let STUDY_MATERIALS = cachedData.studyMaterials || DEFAULT_BASELINE.studyMaterials;
 let CURRENT_APP_VERSION = cachedData.version || DEFAULT_BASELINE.version;
 
-const INITIAL_TASKS = [];
+const CREDITS_CACHE_KEY = 'tagsci_g11_credits_cache';
+const DEFAULT_CREDITS_URL = 'https://omniscripterstorm.github.io/Student-Hub/credits.md';
 
-const EDITORIAL_CREDITS = [
-  {
-    role: 'Project Lead & G11 Representative',
-    name: 'G11 SSLG Representative',
-    title: 'Lead Architect & Curator',
-    badge: 'Head Council'
-  },
-  {
-    role: 'Editorial Council',
-    name: 'Academic Committee',
-    title: 'Curators & Subject Content Writers',
-    badge: 'Editorial Board'
-  },
-  {
-    role: 'Peer Contributors',
-    name: 'TagSci G11 Student Cohort',
-    title: 'Reviewers & Problem Set Solvers',
-    badge: 'Contributors'
+const DEFAULT_CREDITS_MARKDOWN = `# Grade 11 Representative
+- **G11 Representative** — Platform Architect & Project Lead
+
+# Academic Committee
+- **Juan Dela Cruz** — Physics & Pre-Calculus Reviewers
+- **Maria Clara** — General Chemistry & Biology Notes
+- **TagSci G11 Student Cohort** — Reviewers & Practice Drill Solvers
+
+> *Special thanks to all student contributors and subject teachers for supporting TagSci Grade 11.*`;
+
+function getCachedCreditsMarkdown() {
+  return localStorage.getItem(CREDITS_CACHE_KEY) || DEFAULT_CREDITS_MARKDOWN;
+}
+
+function saveCachedCreditsMarkdown(md) {
+  if (md && typeof md === 'string') {
+    localStorage.setItem(CREDITS_CACHE_KEY, md);
   }
-];
+}
 
 function getSyncUrl() {
   return localStorage.getItem(SYNC_URL_KEY) || DEFAULT_OTA_URL;
@@ -2183,11 +2290,7 @@ function exitQuiz() {
 }
 
 
-    /* =========================================================
-   TagSci G11 Study WebApp - Navigation & View Routing
-   ========================================================= */
-
-
+    
 
 
 
@@ -2425,25 +2528,107 @@ function renderProblemSetsView() {
   `;
 }
 
-function renderCreditsView() {
-  const container = document.getElementById('creditsListContainer');
+function parseAndRenderCreditsMarkdown(mdText) {
+  if (!mdText) return '';
+  const lines = mdText.split(/\r?\n/);
+  let html = '';
+  let inList = false;
+
+  for (let rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) {
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      continue;
+    }
+
+    if (line.startsWith('#')) {
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      const level = line.match(/^#+/)[0].length;
+      const text = line.replace(/^#+\s*/, '').trim();
+      html += `<h${level}>${text}</h${level}>`;
+    } else if (line.startsWith('-') || line.startsWith('*')) {
+      if (!inList) {
+        html += '<ul>';
+        inList = true;
+      }
+      const rawItem = line.replace(/^[-*]\s*/, '').trim();
+      let name = '';
+      let role = '';
+
+      const boldMatch = rawItem.match(/^\*\*(.*?)\*\*\s*(?:—|–|-|\||:)\s*(.*)$/);
+      if (boldMatch) {
+        name = boldMatch[1].trim();
+        role = boldMatch[2].trim();
+      } else {
+        const parts = rawItem.split(/—|–|-|\||:/);
+        name = parts[0].replace(/\*\*/g, '').trim();
+        role = parts.slice(1).join(' — ').replace(/\*\*/g, '').trim();
+      }
+
+      html += `
+        <li>
+          <span class="member-name">${name}</span>
+          ${role ? `<span class="member-role">${role}</span>` : ''}
+        </li>
+      `;
+    } else if (line.startsWith('>')) {
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      const quote = line.replace(/^>+\s*/, '').trim();
+      html += `<blockquote>${quote}</blockquote>`;
+    } else {
+      if (inList) {
+        html += '</ul>';
+        inList = false;
+      }
+      html += `<p class="text-sm my-2 text-slate-600 dark:text-slate-300">${line}</p>`;
+    }
+  }
+
+  if (inList) {
+    html += '</ul>';
+  }
+
+  return html;
+}
+
+export async function renderCreditsView() {
+  const container = document.getElementById('creditsMarkdownContainer');
   if (!container) return;
 
-  container.innerHTML = EDITORIAL_CREDITS.map(c => `
-    <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-start justify-between space-x-3">
-      <div>
-        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-g11pink-100 text-g11pink-700 dark:bg-g11pink-950 dark:text-g11pink-300">
-          ${c.badge}
-        </span>
-        <h3 class="text-sm font-bold text-slate-900 dark:text-white mt-2">${c.name}</h3>
-        <p class="text-xs font-semibold text-tagsci-700 dark:text-tagsci-400 mt-0.5">${c.role}</p>
-        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">${c.title}</p>
-      </div>
-      <div class="w-10 h-10 rounded-xl bg-tagsci-50 dark:bg-tagsci-950 border border-tagsci-200 dark:border-tagsci-800 flex items-center justify-center text-tagsci-700 dark:text-tagsci-300 font-bold text-base flex-shrink-0">
-        &#x1F393;
-      </div>
-    </div>
-  `).join('');
+  const cachedMd = getCachedCreditsMarkdown();
+  container.innerHTML = parseAndRenderCreditsMarkdown(cachedMd);
+
+  if (navigator.onLine) {
+    try {
+      const endpoints = ['./credits.md', DEFAULT_CREDITS_URL];
+      for (const url of endpoints) {
+        try {
+          const res = await fetch(url + '?_t=' + Date.now(), { cache: 'no-cache' });
+          if (res.ok) {
+            const text = await res.text();
+            if (text && text.trim().length > 0 && text !== cachedMd) {
+              saveCachedCreditsMarkdown(text);
+              container.innerHTML = parseAndRenderCreditsMarkdown(text);
+              break;
+            }
+          }
+        } catch (e) {
+          // ignore individual fetch errors
+        }
+      }
+    } catch (err) {
+      console.log('Background credits sync skipped:', err);
+    }
+  }
 }
 
 function renderSettingsView() {
@@ -2617,7 +2802,7 @@ async function submitEditorialApplication() {
   const payload = {
     embeds: [
       {
-        title: '🎓 G11 Student Hub - Editorial Application',
+        title: '🎓 G11 Student Hub - Academic Committee Application',
         color: 0x16a34a,
         fields: [
           { name: 'Applicant Name', value: name, inline: true },
@@ -2638,7 +2823,7 @@ async function submitEditorialApplication() {
     });
 
     if (res.ok) {
-      alert('🎉 Application submitted successfully to the G11 Editorial Council! Thank you for contributing.');
+      alert('🎉 Application submitted successfully to the Academic Committee! Thank you for contributing.');
       nameInput.value = '';
       sectionInput.value = '';
       subjectInput.value = '';
@@ -2647,11 +2832,11 @@ async function submitEditorialApplication() {
       throw new Error(`HTTP ${res.status}`);
     }
   } catch (err) {
-    alert(`Could not submit application online (${err.message}). Please reach out to your G11 SSLG Representative directly!`);
+    alert(`Could not submit application online (${err.message}). Please reach out to your G11 Representative directly!`);
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Submit Application to Editorial Council';
+      submitBtn.textContent = 'Submit Application to Committee';
     }
   }
 }

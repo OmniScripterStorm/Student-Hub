@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academic Committee - Final Draft</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            tagsci: {
+              50: '#eefdf4',
+              100: '#d9fbe6',
+              200: '#b4f5ce',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+              950: '#052e16',
+            },
+            g11pink: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              200: '#fecdd3',
+              400: '#fb7185',
+              500: '#f43f5e',
+              700: '#be123c',
+              950: '#4c0519',
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .font-serif-header { font-family: 'Newsreader', serif; }
+
+    /* Custom Editorial Chronicle (Name on Left, Role on Right) */
+    .editorial-chronicle h1, .editorial-chronicle h2 {
+      font-family: 'Newsreader', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #166534;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px dashed #b4f5ce;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .dark .editorial-chronicle h1, .dark .editorial-chronicle h2 {
+      color: #4ade80;
+      border-bottom-color: #14532d;
+    }
+    .editorial-chronicle h1:first-child, .editorial-chronicle h2:first-child {
+      margin-top: 0;
+    }
+
+    .editorial-chronicle ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-top: 0.5rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .editorial-chronicle li {
+      padding: 0.75rem 1rem;
+      border-radius: 0.875rem;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      transition: all 0.15s ease-in-out;
+    }
+    @media (min-width: 640px) {
+      .editorial-chronicle li {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+    .dark .editorial-chronicle li {
+      background-color: #0f172a;
+      border-color: #1e293b;
+    }
+    .editorial-chronicle li:hover {
+      border-color: #b4f5ce;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+    .dark .editorial-chronicle li:hover {
+      border-color: #14532d;
+    }
+
+    .editorial-chronicle .member-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .dark .editorial-chronicle .member-name {
+      color: #f8fafc;
+    }
+
+    .editorial-chronicle .member-role {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #15803d;
+      text-align: left;
+    }
+    @media (min-width: 640px) {
+      .editorial-chronicle .member-role {
+        text-align: right;
+      }
+    }
+    .dark .editorial-chronicle .member-role {
+      color: #4ade80;
+    }
+
+    .editorial-chronicle blockquote {
+      margin-top: 1.25rem;
+      padding: 0.75rem 1rem;
+      background: #f0fdf4;
+      border-left: 3px solid #16a34a;
+      border-radius: 0.5rem;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: #166534;
+    }
+    .dark .editorial-chronicle blockquote {
+      background: #052e16;
+      border-left-color: #4ade80;
+      color: #86efac;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen p-4 sm:p-8 transition-colors duration-200">
+  <div class="max-w-3xl mx-auto space-y-6">
+
+    <!-- Top Header Navigation -->
+    <header class="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-tagsci-100 dark:bg-tagsci-950 text-tagsci-800 dark:text-tagsci-300 flex items-center justify-center text-lg font-black">
+          🏛️
+        </div>
+        <div>
+          <h1 class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">Academic Committee & Credits</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Final Editorial Chronicle Design</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="toggleDarkMode()" class="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold flex items-center gap-1.5 transition">
+          <span id="themeIcon">🌙</span>
+          <span id="themeText">Dark Mode</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main View Section -->
+    <main class="space-y-6">
+
+      <!-- Section Title -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+        <div>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <span>🎖️</span>
+            <span>Academic Committee</span>
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400">The team curating and creating study materials for Grade 11</p>
+        </div>
+      </div>
+
+      <!-- Rendered Editorial Chronicle Container -->
+      <div class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div id="creditsMarkdownTarget" class="editorial-chronicle"></div>
+      </div>
+
+      <!-- Clean Application Box (No Discord Mentions) -->
+      <section class="mt-8 p-5 sm:p-7 rounded-2xl bg-gradient-to-br from-white to-tagsci-50/40 dark:from-slate-900 dark:to-slate-900 border border-tagsci-200 dark:border-slate-800 shadow-sm">
+        <div class="flex items-start justify-between">
+          <div>
+            <div class="inline-flex items-center space-x-2 bg-tagsci-100 dark:bg-tagsci-950/60 text-tagsci-800 dark:text-tagsci-300 border border-tagsci-300 dark:border-tagsci-800 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
+              <span>📩 Call for Curators</span>
+            </div>
+            <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-2">
+              Join the Academic Committee
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 max-w-xl">
+              Want to contribute your lecture summaries, problem set solutions, or reviewer decks to the batch? Submit your details below to collaborate with the team!
+            </p>
+          </div>
+        </div>
+
+        <form onsubmit="event.preventDefault(); alert('Application submitted to the Academic Committee!');" class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-[11px] font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Full Name</label>
+            <input 
+              type="text" 
+              placeholder="e.g. Juan Dela Cruz" 
+              required
+              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-tagsci-500"
+            />
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Grade 11 Section</label>
+            <input 
+              type="text" 
+              placeholder="e.g. 11-Newton / 11-Curie" 
+              required
+              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-tagsci-500"
+            />
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Target Subject</label>
+            <input 
+              type="text" 
+              placeholder="e.g. Pre-Cal, Gen Chem 1, Physics" 
+              required
+              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-tagsci-500"
+            />
+          </div>
+
+          <div class="sm:col-span-3">
+            <label class="block text-[11px] font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Brief Pitch / Notes Sample</label>
+            <textarea 
+              rows="2" 
+              placeholder="Share what reviewers or topics you'd love to write and curate for the batch..." 
+              class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-tagsci-500 resize-none"
+            ></textarea>
+          </div>
+
+          <div class="sm:col-span-3 flex justify-end">
+            <button 
+              type="submit" 
+              class="bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow-md transition flex items-center space-x-2"
+            >
+              <span>📩</span>
+              <span>Submit Application to Committee</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    const creditsMarkdown = `# Grade 11 Representative
+- **G11 Representative** — Platform Architect & Project Lead
+
+# Academic Committee
+- **Juan Dela Cruz** — Physics & Pre-Calculus Reviewers
+- **Maria Clara** — General Chemistry & Biology Notes
+- **TagSci G11 Student Cohort** — Reviewers & Practice Drill Solvers
+
+> *Special thanks to all student contributors and subject teachers for supporting TagSci Grade 11.*`;
+
+    function parseAndRenderChronicle(mdText) {
+      if (!mdText) return '';
+      const lines = mdText.split(/\r?\n/);
+      let html = '';
+      let inList = false;
+
+      for (let rawLine of lines) {
+        const line = rawLine.trim();
+        if (!line) {
+          if (inList) {
+            html += '</ul>';
+            inList = false;
+          }
+          continue;
+        }
+
+        if (line.startsWith('#')) {
+          if (inList) {
+            html += '</ul>';
+            inList = false;
+          }
+          const level = line.match(/^#+/)[0].length;
+          const text = line.replace(/^#+\s*/, '').trim();
+          html += '<h' + level + '>' + text + '</h' + level + '>';
+        } else if (line.startsWith('-') || line.startsWith('*')) {
+          if (!inList) {
+            html += '<ul>';
+            inList = true;
+          }
+          const rawItem = line.replace(/^[-*]\s*/, '').trim();
+          
+          let name = '';
+          let role = '';
+
+          // Match: **Name** — Role or **Name** | Role or **Name** - Role
+          const boldMatch = rawItem.match(/^\*\*(.*?)\*\*\s*(?:—|–|-|\||:)\s*(.*)$/);
+          if (boldMatch) {
+            name = boldMatch[1].trim();
+            role = boldMatch[2].trim();
+          } else {
+            const parts = rawItem.split(/—|–|-|\||:/);
+            name = parts[0].replace(/\*\*/g, '').trim();
+            role = parts.slice(1).join(' — ').replace(/\*\*/g, '').trim();
+          }
+
+          html += '<li>' +
+            '<span class="member-name">' + name + '</span>' +
+            (role ? '<span class="member-role">' + role + '</span>' : '') +
+            '</li>';
+        } else if (line.startsWith('>')) {
+          if (inList) {
+            html += '</ul>';
+            inList = false;
+          }
+          const quote = line.replace(/^>+\s*/, '').trim();
+          html += '<blockquote>' + quote + '</blockquote>';
+        } else {
+          if (inList) {
+            html += '</ul>';
+            inList = false;
+          }
+          html += '<p class="text-sm my-2 text-slate-600 dark:text-slate-300">' + line + '</p>';
+        }
+      }
+
+      if (inList) {
+        html += '</ul>';
+      }
+
+      return html;
+    }
+
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      const isDark = html.classList.toggle('dark');
+      document.getElementById('themeIcon').textContent = isDark ? '☀️' : '🌙';
+      document.getElementById('themeText').textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    }
+
+    // Render immediately
+    document.getElementById('creditsMarkdownTarget').innerHTML = parseAndRenderChronicle(creditsMarkdown);
+  </script>
+</body>
+</html>
