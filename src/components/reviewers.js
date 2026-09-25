@@ -3,7 +3,7 @@
    ========================================================= */
 
 import { STEM_REVIEWERS, STUDY_MATERIALS, QUIZ_SETS, getSubjectMeta } from '../data/study_data.js';
-import { renderMathInHtml } from './math_engine.js';
+import { renderMathInHtml, renderCartesianPlaneSvg } from './math_engine.js';
 import { navigateSection } from './navigation.js';
 
 let currentVaultTab = 'reviewers'; // 'reviewers' | 'materials' | 'quizzes'
@@ -79,13 +79,31 @@ export function renderBlocksToHtml(blocks) {
       html += `<h3 class="${headingClass}">${renderMathInHtml(b.text || '')}</h3>`;
     } else if (b.type === 'paragraph') {
       const text = b.text || '';
-      if (text.includes('|') && text.split(/\r?\n/).some(l => l.trim().startsWith('|') && l.trim().endsWith('|'))) {
+      if (text.includes('```plot')) {
+        const plotMatch = text.match(/```plot\s*([\s\S]*?)\s*```/);
+        if (plotMatch) {
+          try {
+            const plotObj = JSON.parse(plotMatch[1]);
+            const before = text.substring(0, plotMatch.index).trim();
+            const after = text.substring(plotMatch.index + plotMatch[0].length).trim();
+            if (before) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(before)}</p>`;
+            html += renderCartesianPlaneSvg(plotObj);
+            if (after) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(after)}</p>`;
+          } catch (e) {
+            html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
+          }
+        } else {
+          html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
+        }
+      } else if (text.includes('|') && text.split(/\r?\n/).some(l => l.trim().startsWith('|') && l.trim().endsWith('|'))) {
         html += renderMarkdownTable(text);
       } else {
         html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
       }
     } else if (b.type === 'table') {
       html += renderTableBlock(b);
+    } else if (b.type === 'cartesian' || b.type === 'plot') {
+      html += renderCartesianPlaneSvg(b);
     } else if (b.type === 'formula') {
       html += `
         <div class="my-3 p-3.5 sm:p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">
