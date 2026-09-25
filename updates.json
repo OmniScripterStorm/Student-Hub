@@ -1,7 +1,7 @@
 {
   "version": "1.4.0",
-  "updatedAt": "2026-09-25T08:31:38.540Z",
-  "announcement": "Refreshed 0 Reviewers, 1 Study Materials, 4 Deadlines, and 0 Quiz Banks.",
+  "updatedAt": "2026-09-25T08:55:13.881Z",
+  "announcement": "Merged updates: 0 Reviewers, 4 Deadlines, 1 Quizzes.",
   "calendarEvents": [
     {
       "id": 1790325028547,
@@ -157,5 +157,96 @@
     }
   ],
   "problemSets": [],
-  "quizSets": []
+  "quizSets": [
+    {
+      "id": "quiz_1790325330626",
+      "subject": "Effective Communications",
+      "tag": "Main",
+      "title": "Academic and Technical Classification",
+      "desc": "",
+      "timeLimitMinutes": 15,
+      "questions": [
+        {
+          "type": "mcq",
+          "topic": "Multiple Choice",
+          "prompt": "A university student presents the results of a research study on climate change to their professor and classmates.",
+          "options": [
+            "Academic",
+            "Technical"
+          ],
+          "answerIndex": 0,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "front": "",
+          "back": "",
+          "explanation": "",
+          "answerBoolean": true
+        },
+        {
+          "type": "mcq",
+          "topic": "Multiple Choice",
+          "prompt": "A software developer writes documentation explaining how users can install and troubleshoot an application.",
+          "options": [
+            "Academic",
+            "Technical"
+          ],
+          "answerIndex": 1,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "front": "",
+          "back": "",
+          "explanation": "",
+          "answerBoolean": true
+        },
+        {
+          "type": "mcq",
+          "topic": "Multiple Choice",
+          "prompt": "A technician prepares a report detailing the procedures and results of a computer system repair.",
+          "options": [
+            "Academic",
+            "Technical"
+          ],
+          "answerIndex": 1,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "front": "",
+          "back": "",
+          "explanation": "",
+          "answerBoolean": true
+        },
+        {
+          "type": "mcq",
+          "topic": "Multiple Choice",
+          "prompt": "A researcher writes a literature review analyzing previous studies on the effects of social media on academic performance.",
+          "options": [
+            "Academic",
+            "Technical"
+          ],
+          "answerIndex": 0,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "front": "",
+          "back": "",
+          "explanation": "",
+          "answerBoolean": true
+        },
+        {
+          "type": "mcq",
+          "topic": "Multiple Choice",
+          "prompt": "An engineer creates a step-by-step guide explaining how to safely operate a newly designed machine.",
+          "options": [
+            "Academic",
+            "Technical"
+          ],
+          "answerIndex": 1,
+          "correctValue": "",
+          "tolerance": "0.05",
+          "front": "",
+          "back": "",
+          "explanation": "",
+          "answerBoolean": true
+        }
+      ]
+    }
+  ]
 }
