@@ -8,5 +8,3 @@
 - **Zyra Cel Dulgime** — Mabisang Komunikasyon
 - **Marielle Ydine Ramil** — Mabisang Komunikasyon
 - **Fernando Gabriel Padilla** — Effective Commuincation
-
-> *Special thanks to all student contributors and subject teachers for supporting TagSci Grade 11.*
