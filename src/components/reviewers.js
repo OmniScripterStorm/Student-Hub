@@ -8,6 +8,65 @@ import { navigateSection } from './navigation.js';
 
 let currentVaultTab = 'reviewers'; // 'reviewers' | 'materials' | 'quizzes'
 
+export function renderTableBlock(b) {
+  if (!b) return '';
+  let headers = Array.isArray(b.headers) ? b.headers : [];
+  let rows = Array.isArray(b.rows) ? b.rows : [];
+
+  if (!headers.length && !rows.length && (b.markdown || b.text || b.raw)) {
+    return renderMarkdownTable(b.markdown || b.text || b.raw, b.title);
+  }
+
+  return `
+    <div class="my-4 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-slate-900">
+      ${b.title ? `<div class="px-4 py-2.5 bg-slate-50 dark:bg-slate-950/80 border-b border-slate-200 dark:border-slate-800 font-bold text-xs text-slate-800 dark:text-slate-200">${renderMathInHtml(b.title)}</div>` : ''}
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs sm:text-sm border-collapse">
+          ${headers.length > 0 ? `
+            <thead>
+              <tr class="bg-tagsci-50 dark:bg-tagsci-950/60 border-b border-slate-200 dark:border-slate-800 text-tagsci-900 dark:text-tagsci-200 font-extrabold uppercase text-[11px] tracking-wider">
+                ${headers.map(h => `<th class="px-3.5 py-3 border-r last:border-r-0 border-slate-200 dark:border-slate-800">${renderMathInHtml(h || '')}</th>`).join('')}
+              </tr>
+            </thead>
+          ` : ''}
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+            ${rows.map((row, rIdx) => `
+              <tr class="${rIdx % 2 === 0 ? 'bg-white dark:bg-slate-900' : 'bg-slate-50/50 dark:bg-slate-950/30'} hover:bg-slate-100/60 dark:hover:bg-slate-800/40 transition">
+                ${(Array.isArray(row) ? row : [row]).map(cell => `<td class="px-3.5 py-2.5 border-r last:border-r-0 border-slate-100 dark:border-slate-800 align-top">${renderMathInHtml(String(cell || ''))}</td>`).join('')}
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+export function renderMarkdownTable(mdText, title = '') {
+  if (!mdText) return '';
+  const lines = mdText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+  const tableLines = lines.filter(l => l.startsWith('|') && l.endsWith('|'));
+  if (tableLines.length === 0) return `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(mdText)}</p>`;
+
+  let headers = [];
+  let rows = [];
+
+  for (let i = 0; i < tableLines.length; i++) {
+    const line = tableLines[i];
+    const cells = line.slice(1, -1).split('|').map(c => c.trim());
+    if (cells.every(c => /^:?-+:?$/.test(c))) {
+      continue;
+    }
+    if (headers.length === 0) {
+      headers = cells;
+    } else {
+      rows.push(cells);
+    }
+  }
+
+  return renderTableBlock({ title, headers, rows });
+}
+
 export function renderBlocksToHtml(blocks) {
   if (!blocks || !Array.isArray(blocks) || blocks.length === 0) return '';
   
@@ -19,7 +78,14 @@ export function renderBlocksToHtml(blocks) {
         : 'text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-4 mb-1.5';
       html += `<h3 class="${headingClass}">${renderMathInHtml(b.text || '')}</h3>`;
     } else if (b.type === 'paragraph') {
-      html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(b.text || '')}</p>`;
+      const text = b.text || '';
+      if (text.includes('|') && text.split(/\r?\n/).some(l => l.trim().startsWith('|') && l.trim().endsWith('|'))) {
+        html += renderMarkdownTable(text);
+      } else {
+        html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
+      }
+    } else if (b.type === 'table') {
+      html += renderTableBlock(b);
     } else if (b.type === 'formula') {
       html += `
         <div class="my-3 p-3.5 sm:p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">
