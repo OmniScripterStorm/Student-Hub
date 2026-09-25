@@ -163,7 +163,7 @@
       "subject": "Effective Communications",
       "tag": "Main",
       "title": "Academic and Technical Classification",
-      "desc": "",
+      "desc": "Idenitfy if the situation represent Academic or Technical communication",
       "timeLimitMinutes": 15,
       "questions": [
         {
