@@ -2,15 +2,16 @@
    TagSci Grade 11 Study WebApp - Offline Service Worker (PWA)
    ========================================================= */
 
-const CACHE_NAME = 'tagsci-g11-v1.4.2';
+const CACHE_NAME = 'tagsci-g11-v1.4.3';
 const STATIC_ASSETS = [
   './',
   './index.html',
+  './credits.md',
   './manifest.json',
   './tagsci logo.png',
   './updates.json',
   'https://cdn.tailwindcss.com',
-  'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap'
+  'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap'
 ];
 
 // Install: pre-cache shell assets & skip waiting immediately
@@ -46,8 +47,8 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(event.request.url);
 
-  // For updates.json, API endpoints, or HTML navigation: Network First, Fallback to Cache
-  if (url.pathname.endsWith('updates.json') || event.request.mode === 'navigate' || url.pathname.endsWith('index.html')) {
+  // For updates.json, credits.md, API endpoints, or HTML navigation: Network First, Fallback to Cache
+  if (url.pathname.endsWith('updates.json') || url.pathname.endsWith('credits.md') || event.request.mode === 'navigate' || url.pathname.endsWith('index.html')) {
     event.respondWith(
       fetch(event.request)
         .then((networkRes) => {
