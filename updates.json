@@ -40,26 +40,7 @@
       "desc": ""
     }
   ],
-  "stemReviewers": [
-    {
-      "id": "reviewer_1790338445661",
-      "subject": "General Science",
-      "tag": "Main",
-      "color": "border-l-4 border-tagsci-600",
-      "title": "New Reviewer Draft",
-      "summary": "Curated learning notes and formulas",
-      "blocks": [
-        {
-          "type": "formula",
-          "title": "Formula Card",
-          "formula": "f(x) = {2x+3, x > 0 \\le 5}",
-          "note": ""
-        }
-      ],
-      "rawMarkdown": "**Formula Card**\n$$ f(x) = {2x+3, x > 0 \\le 5} $$",
-      "content": "\n        <div class=\"my-3 p-3.5 sm:p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm\">\n          <span class=\"text-[11px] font-bold text-tagsci-800 dark:text-emerald-400 block mb-1 uppercase tracking-wider\">Formula Card</span>\n          <div class=\"text-center font-mono-math text-sm sm:text-base text-tagsci-950 dark:text-emerald-300 py-1 overflow-x-auto\">\n            <div class=\"my-3 py-2 px-3 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center font-mono-math text-sm text-tagsci-900 dark:text-emerald-300 shadow-sm overflow-x-auto\">f(x) = {2x+3, x > 0 &le; 5}</div>\n          </div>\n          \n        </div>\n      "
-    }
-  ],
+  "stemReviewers": [],
   "studyMaterials": [
     {
       "id": "material_1790316466027",
