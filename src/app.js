@@ -3,7 +3,7 @@
    ========================================================= */
 
 import { renderCalendar, changeMonth, selectCalendarDate } from './components/calendar.js';
-import { renderMaterials, filterMaterials, openReviewer, closeModal } from './components/reviewers.js';
+import { renderMaterials, filterMaterials, switchVaultTab, navigateToCurrentVaultTab, clearMaterialSearch, openReviewer, closeModal } from './components/reviewers.js';
 import { renderTasks, addTask, toggleTask, deleteTask } from './components/tasks.js';
 import { navigateSection, toggleSidebar, closeSidebar, switchMobileTab, checkResponsiveLayout, toggleTheme, initTheme } from './components/navigation.js';
 import { checkOtaUpdates, saveOtaSettings, resetOtaUrl, handleClearCache, submitEditorialApplication } from './components/ota_sync.js';
@@ -32,6 +32,9 @@ window.App = {
   changeMonth,
   selectCalendarDate,
   filterMaterials,
+  switchVaultTab,
+  navigateToCurrentVaultTab,
+  clearMaterialSearch,
   openReviewer,
   closeModal,
   addTask,

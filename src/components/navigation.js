@@ -112,7 +112,7 @@ export function renderMaterialsView() {
       <div class="py-12 text-center text-slate-400 dark:text-slate-500 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
         <span class="text-3xl block mb-2">&#x1F4DA;</span>
         <h4 class="text-sm font-bold text-slate-700 dark:text-slate-200">No Study Materials Published Yet</h4>
-        <p class="text-xs text-slate-400 mt-1">Lecture slides, syllabus guides, and formula sheets will be uploaded here.</p>
+        <p class="text-xs text-slate-400 mt-1">Lecture slides, syllabus guides, formula sheets, and study modules will appear here once synced.</p>
       </div>
     `;
     return;
@@ -120,18 +120,37 @@ export function renderMaterialsView() {
 
   container.innerHTML = `
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
-      ${STUDY_MATERIALS.map(m => `
-        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
-          <div>
-            <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300">
-              ${m.subject || 'General'}
-            </span>
-            <h3 class="text-sm font-bold text-slate-900 dark:text-white mt-2">${renderMathInHtml(m.title || 'Untitled Material')}</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${renderMathInHtml(m.desc || '')}</p>
+      ${STUDY_MATERIALS.map(m => {
+        const meta = getSubjectMeta(m.subject);
+        const tagLabel = m.tag || 'Study Material';
+        const borderClass = m.color || meta.color || 'border-l-4 border-blue-500';
+        const isElective = (meta.type || '').toLowerCase() === 'elective';
+        const tagBadgeStyle = isElective 
+          ? 'bg-purple-100 text-purple-800 dark:bg-purple-950/80 dark:text-purple-300 border border-purple-200 dark:border-purple-800'
+          : 'bg-blue-100 text-blue-800 dark:bg-blue-950/80 dark:text-blue-300 border border-blue-200 dark:border-blue-800';
+
+        const summaryText = m.summary || m.desc || '';
+
+        return `
+          <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 ${borderClass} hover:shadow-md active:scale-[0.98] transition cursor-pointer flex flex-col justify-between" onclick="window.App.openReviewer('${m.id}')">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${tagBadgeStyle}">
+                  ${tagLabel}
+                </span>
+                <span class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-semibold flex items-center gap-1">Read &rarr;</span>
+              </div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">${m.subject || 'General'}</span>
+              <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mt-1">${renderMathInHtml(m.title || 'Untitled Material')}</h3>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 line-clamp-3 leading-relaxed">${renderMathInHtml(summaryText)}</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[10px] text-slate-400">
+              <span>Study Resource</span>
+              <span class="font-bold text-blue-600 dark:text-blue-400">Open Material &rarr;</span>
+            </div>
           </div>
-          ${m.link ? `<a href="${m.link}" target="_blank" class="mt-3 inline-flex items-center gap-1 text-xs font-bold text-tagsci-600 dark:text-tagsci-400 hover:underline">Open Material &rarr;</a>` : ''}
-        </div>
-      `).join('')}
+        `;
+      }).join('')}
     </div>
   `;
 }

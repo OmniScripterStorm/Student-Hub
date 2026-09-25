@@ -1,9 +1,12 @@
 /* =========================================================
-   TagSci G11 Study WebApp - Curated Reviewers Engine
+   TagSci G11 Study WebApp - Study Vault & Reviewers Engine
    ========================================================= */
 
-import { STEM_REVIEWERS, getSubjectMeta } from '../data/study_data.js';
+import { STEM_REVIEWERS, STUDY_MATERIALS, QUIZ_SETS, getSubjectMeta } from '../data/study_data.js';
 import { renderMathInHtml } from './math_engine.js';
+import { navigateSection } from './navigation.js';
+
+let currentVaultTab = 'reviewers'; // 'reviewers' | 'materials' | 'quizzes'
 
 export function renderBlocksToHtml(blocks) {
   if (!blocks || !Array.isArray(blocks) || blocks.length === 0) return '';
@@ -51,66 +54,195 @@ export function renderBlocksToHtml(blocks) {
   return html;
 }
 
-export function renderMaterials(items = STEM_REVIEWERS) {
+export function switchVaultTab(tab) {
+  currentVaultTab = tab;
+  updateVaultTabButtons();
+  renderMaterials();
+}
+
+function updateVaultTabButtons() {
+  const tabs = ['reviewers', 'materials', 'quizzes'];
+  const iconEl = document.getElementById('vaultTabIcon');
+  const titleEl = document.getElementById('vaultTabTitle');
+
+  // Update badges
+  const bRev = document.getElementById('badgeVault-reviewers');
+  const bMat = document.getElementById('badgeVault-materials');
+  const bQuiz = document.getElementById('badgeVault-quizzes');
+
+  if (bRev) bRev.innerText = (STEM_REVIEWERS || []).length;
+  if (bMat) bMat.innerText = (STUDY_MATERIALS || []).length;
+  if (bQuiz) bQuiz.innerText = (QUIZ_SETS || []).length;
+
+  tabs.forEach(t => {
+    const btn = document.getElementById(`btnVaultTab-${t}`);
+    if (!btn) return;
+    if (t === currentVaultTab) {
+      btn.className = 'flex-1 py-1.5 px-2 rounded-lg bg-white dark:bg-slate-900 text-tagsci-800 dark:text-tagsci-300 shadow-sm transition flex items-center justify-center gap-1.5 font-bold';
+    } else {
+      btn.className = 'flex-1 py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5 font-semibold';
+    }
+  });
+
+  if (currentVaultTab === 'reviewers') {
+    if (iconEl) iconEl.innerHTML = '&#x1F52C;';
+    if (titleEl) titleEl.innerText = 'Curated Reviewers';
+  } else if (currentVaultTab === 'materials') {
+    if (iconEl) iconEl.innerHTML = '&#x1F4DA;';
+    if (titleEl) titleEl.innerText = 'Study Materials';
+  } else if (currentVaultTab === 'quizzes') {
+    if (iconEl) iconEl.innerHTML = '&#x2753;';
+    if (titleEl) titleEl.innerText = 'Self-Tests & Quizzes';
+  }
+}
+
+export function navigateToCurrentVaultTab() {
+  if (currentVaultTab === 'reviewers') navigateSection('reviewers');
+  else if (currentVaultTab === 'materials') navigateSection('materials');
+  else if (currentVaultTab === 'quizzes') navigateSection('quiz_sets');
+}
+
+export function clearMaterialSearch() {
+  const searchInput = document.getElementById('materialSearch');
+  if (searchInput) {
+    searchInput.value = '';
+    filterMaterials();
+  }
+}
+
+export function renderMaterials() {
+  updateVaultTabButtons();
   const grid = document.getElementById('materialsGrid');
+  const countLabel = document.getElementById('vaultItemCountLabel');
+  const searchIndicator = document.getElementById('vaultSearchIndicator');
+  const queryDisplay = document.getElementById('vaultSearchQueryDisplay');
+  const searchInput = document.getElementById('materialSearch');
+  const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+
   if (!grid) return;
 
-  if (!items || items.length === 0) {
+  if (query && searchIndicator && queryDisplay) {
+    searchIndicator.classList.remove('hidden');
+    searchIndicator.classList.add('flex');
+    queryDisplay.innerText = `"${query}"`;
+  } else if (searchIndicator) {
+    searchIndicator.classList.add('hidden');
+    searchIndicator.classList.remove('flex');
+  }
+
+  let sourceList = [];
+  if (currentVaultTab === 'reviewers') sourceList = STEM_REVIEWERS || [];
+  else if (currentVaultTab === 'materials') sourceList = STUDY_MATERIALS || [];
+  else if (currentVaultTab === 'quizzes') sourceList = QUIZ_SETS || [];
+
+  // Filter by search query
+  let filtered = sourceList;
+  if (query) {
+    filtered = sourceList.filter(item => {
+      const subj = (item.subject || '').toLowerCase();
+      const title = (item.title || '').toLowerCase();
+      const sum = (item.summary || item.desc || '').toLowerCase();
+      const tag = (item.tag || '').toLowerCase();
+      return subj.includes(query) || title.includes(query) || sum.includes(query) || tag.includes(query);
+    });
+  }
+
+  // Cap display at a maximum of 3 items
+  const displayItems = filtered.slice(0, 3);
+
+  if (countLabel) {
+    if (filtered.length === 0) {
+      countLabel.innerText = 'No matching items';
+    } else {
+      countLabel.innerText = `Showing ${displayItems.length} of ${filtered.length} ${currentVaultTab}`;
+    }
+  }
+
+  if (displayItems.length === 0) {
+    const emptyIcon = currentVaultTab === 'reviewers' ? '&#x1F52C;' : (currentVaultTab === 'materials' ? '&#x1F4DA;' : '&#x2753;');
+    const emptyName = currentVaultTab === 'reviewers' ? 'reviewers' : (currentVaultTab === 'materials' ? 'study materials' : 'quiz banks');
     grid.innerHTML = `
-      <div class="col-span-full py-8 text-center text-slate-400 dark:text-slate-500 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50">
-        <span class="text-2xl block mb-1">&#x1F4DA;</span>
-        <p class="text-xs font-semibold">No study reviewers published yet.</p>
-        <p class="text-[11px] text-slate-400 mt-0.5">Reviewer modules will appear here once pushed by G11 Council.</p>
+      <div class="py-8 text-center text-slate-400 dark:text-slate-500 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 p-4">
+        <span class="text-2xl block mb-1">${emptyIcon}</span>
+        <p class="text-xs font-semibold">No ${emptyName} found${query ? ' matching "' + query + '"' : ' yet'}.</p>
+        <p class="text-[10.5px] text-slate-400 mt-0.5">${query ? 'Try a different subject keyword or clear the search.' : 'Items will appear here once published by the Editorial Council.'}</p>
       </div>
     `;
     return;
   }
 
-  grid.innerHTML = items.map(mat => {
-    const meta = getSubjectMeta(mat.subject);
-    const tagLabel = (mat.tag && (mat.tag.toLowerCase() === 'main' || mat.tag.toLowerCase() === 'elective')) 
-      ? mat.tag 
-      : meta.type;
-    const borderClass = mat.color || meta.color;
-    const isElective = tagLabel.toLowerCase() === 'elective';
-    const tagBadgeStyle = isElective 
-      ? 'bg-purple-100 text-purple-800 dark:bg-purple-950/80 dark:text-purple-300 border border-purple-200 dark:border-purple-800'
-      : 'bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950/80 dark:text-tagsci-300 border border-tagsci-200 dark:border-tagsci-800';
+  // Render cards according to active tab type
+  if (currentVaultTab === 'reviewers' || currentVaultTab === 'materials') {
+    grid.innerHTML = displayItems.map(mat => {
+      const meta = getSubjectMeta(mat.subject);
+      const isMat = currentVaultTab === 'materials';
+      const tagLabel = mat.tag || (isMat ? 'Study Material' : meta.type);
+      const borderClass = mat.color || meta.color || (isMat ? 'border-l-4 border-blue-500' : 'border-l-4 border-tagsci-600');
+      const isElective = (meta.type || '').toLowerCase() === 'elective';
+      const tagBadgeStyle = isElective 
+        ? 'bg-purple-100 text-purple-800 dark:bg-purple-950/80 dark:text-purple-300 border border-purple-200 dark:border-purple-800'
+        : (isMat 
+            ? 'bg-blue-100 text-blue-800 dark:bg-blue-950/80 dark:text-blue-300 border border-blue-200 dark:border-blue-800'
+            : 'bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950/80 dark:text-tagsci-300 border border-tagsci-200 dark:border-tagsci-800');
 
-    return `
-      <div class="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 ${borderClass} hover:shadow-md active:scale-[0.98] transition cursor-pointer flex flex-col justify-between" onclick="window.App.openReviewer('${mat.id}')">
-        <div>
-          <div class="flex items-center justify-between">
-            <span class="text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${tagBadgeStyle}">
-              ${tagLabel}
-            </span>
-            <span class="text-xs text-tagsci-600 dark:text-tagsci-400 hover:underline font-semibold">View &rarr;</span>
+      const summaryText = mat.summary || mat.desc || '';
+
+      return `
+        <div class="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 ${borderClass} hover:shadow-md active:scale-[0.98] transition cursor-pointer flex flex-col justify-between" onclick="window.App.openReviewer('${mat.id}')">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${tagBadgeStyle}">
+                ${tagLabel}
+              </span>
+              <span class="text-xs ${isMat ? 'text-blue-600 dark:text-blue-400' : 'text-tagsci-600 dark:text-tagsci-400'} hover:underline font-semibold flex items-center gap-1">Read &rarr;</span>
+            </div>
+            <h3 class="text-xs font-bold text-slate-900 dark:text-white mt-1.5">${mat.subject || 'General'}</h3>
+            <p class="text-[11px] font-medium text-slate-700 dark:text-slate-300 mt-0.5">${renderMathInHtml(mat.title || 'Untitled')}</p>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">${renderMathInHtml(summaryText)}</p>
           </div>
-          <h3 class="text-xs font-bold text-slate-900 dark:text-white mt-1.5">${mat.subject}</h3>
-          <p class="text-[11px] font-medium text-slate-700 dark:text-slate-300 mt-0.5">${renderMathInHtml(mat.title || 'Untitled')}</p>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">${renderMathInHtml(mat.summary || '')}</p>
         </div>
-      </div>
-    `;
-  }).join('');
+      `;
+    }).join('');
+  } else if (currentVaultTab === 'quizzes') {
+    grid.innerHTML = displayItems.map(q => {
+      const meta = getSubjectMeta(q.subject);
+      const tagLabel = q.tag || meta.type || 'Self-Test';
+      const borderClass = q.color || meta.color || 'border-l-4 border-g11pink-500';
+      const qCount = q.questions ? q.questions.length : 0;
+
+      return `
+        <div class="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 ${borderClass} hover:shadow-md active:scale-[0.98] transition flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-g11pink-100 text-g11pink-800 dark:bg-g11pink-950/80 dark:text-g11pink-300 border border-g11pink-200 dark:border-g11pink-900">
+                ${tagLabel}
+              </span>
+              <span class="text-xs text-slate-400 font-mono-math">${qCount} Qs</span>
+            </div>
+            <h3 class="text-xs font-bold text-slate-900 dark:text-white mt-1.5">${q.subject || 'General'}</h3>
+            <p class="text-[11px] font-medium text-slate-700 dark:text-slate-300 mt-0.5">${renderMathInHtml(q.title || 'Untitled Quiz')}</p>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">${renderMathInHtml(q.desc || '')}</p>
+          </div>
+          <div class="mt-2.5 pt-2 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between gap-1.5">
+            <button onclick="window.App.navigateSection('quiz_sets'); window.App.startQuiz('${q.id}', true);" class="flex-1 py-1 rounded-lg bg-tagsci-100 dark:bg-tagsci-950 hover:bg-tagsci-200 text-tagsci-800 dark:text-tagsci-300 font-bold text-[10.5px] transition text-center border border-tagsci-300 dark:border-tagsci-800">
+              ⚡ Practice
+            </button>
+            <button onclick="window.App.navigateSection('quiz_sets'); window.App.startQuiz('${q.id}', false);" class="flex-1 py-1 rounded-lg bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold text-[10.5px] transition shadow-sm text-center">
+              ⏱️ Timed
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
 }
 
 export function filterMaterials() {
-  const searchInput = document.getElementById('materialSearch');
-  if (!searchInput) return;
-
-  const query = searchInput.value.toLowerCase();
-  const filtered = STEM_REVIEWERS.filter(m => 
-    (m.subject || '').toLowerCase().includes(query) ||
-    (m.title || '').toLowerCase().includes(query) ||
-    (m.summary || '').toLowerCase().includes(query) ||
-    (m.tag || '').toLowerCase().includes(query)
-  );
-  renderMaterials(filtered);
+  renderMaterials();
 }
 
 export function openReviewer(id) {
-  const item = STEM_REVIEWERS.find(m => m.id === id);
+  const item = (STEM_REVIEWERS || []).find(m => m.id === id) || (STUDY_MATERIALS || []).find(m => m.id === id);
   if (!item) return;
 
   const modalBadge = document.getElementById('modalSubjectBadge');
@@ -118,7 +250,7 @@ export function openReviewer(id) {
   const modalContent = document.getElementById('modalContent');
   const modal = document.getElementById('reviewerModal');
 
-  if (modalBadge) modalBadge.textContent = item.subject;
+  if (modalBadge) modalBadge.textContent = item.subject || 'STEM';
   if (modalTitle) modalTitle.innerHTML = renderMathInHtml(item.title || '');
   
   let finalHtml = '';
@@ -128,8 +260,10 @@ export function openReviewer(id) {
     finalHtml = renderMathInHtml(item.content);
   } else if (item.rawMarkdown) {
     finalHtml = renderMathInHtml(item.rawMarkdown.replace(/\n/g, '<br>'));
+  } else if (item.desc) {
+    finalHtml = `<p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">${renderMathInHtml(item.desc)}</p>${item.link ? `<div class="mt-4"><a href="${item.link}" target="_blank" class="px-4 py-2 bg-tagsci-800 text-white rounded-xl text-xs font-bold inline-block hover:bg-tagsci-700">Open External Resource &rarr;</a></div>` : ''}`;
   } else {
-    finalHtml = `<p class="text-xs text-slate-400 italic">No content available in this reviewer draft.</p>`;
+    finalHtml = `<p class="text-xs text-slate-400 italic">No content available in this material draft.</p>`;
   }
 
   if (modalContent) modalContent.innerHTML = finalHtml;

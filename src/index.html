@@ -304,18 +304,55 @@
 
         <!-- RIGHT COLUMN: VAULT & TASKS -->
         <section class="lg:col-span-5 space-y-4 sm:space-y-6">
-          <div id="mobileSection-vault" class="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200/80 dark:border-slate-800">
-            <div class="flex items-center justify-between mb-3 sm:mb-4">
-              <h2 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-                <span class="text-g11pink-500">&#x1F52C;</span>
-                <span>Curated Reviewers</span>
-              </h2>
-              <span class="text-[10px] sm:text-xs font-semibold text-g11pink-600 dark:text-g11pink-400 bg-g11pink-50 dark:bg-g11pink-950/50 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border border-g11pink-200 dark:border-g11pink-900">
-                Grade 11
-              </span>
+          <div id="mobileSection-vault" class="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <h2 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                  <span id="vaultTabIcon" class="text-g11pink-500">&#x1F52C;</span>
+                  <span id="vaultTabTitle">Study Vault</span>
+                </h2>
+                <button id="btnVaultViewAll" onclick="window.App.navigateToCurrentVaultTab()" class="text-xs font-semibold text-tagsci-700 dark:text-tagsci-400 hover:underline flex items-center gap-1">
+                  <span>View All</span>
+                  <span>&rarr;</span>
+                </button>
+              </div>
+
+              <!-- Filter / Type Switcher Tabs -->
+              <div class="flex items-center p-1 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 mb-3.5 text-xs font-bold gap-1">
+                <button id="btnVaultTab-reviewers" onclick="window.App.switchVaultTab('reviewers')" class="flex-1 py-1.5 px-2 rounded-lg bg-white dark:bg-slate-900 text-tagsci-800 dark:text-tagsci-300 shadow-sm transition flex items-center justify-center gap-1.5">
+                  <span>&#x1F52C;</span>
+                  <span class="truncate">Reviewers</span>
+                  <span id="badgeVault-reviewers" class="text-[9.5px] px-1.5 py-0.2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-mono-math">0</span>
+                </button>
+                <button id="btnVaultTab-materials" onclick="window.App.switchVaultTab('materials')" class="flex-1 py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5">
+                  <span>&#x1F4DA;</span>
+                  <span class="truncate">Materials</span>
+                  <span id="badgeVault-materials" class="text-[9.5px] px-1.5 py-0.2 rounded-full bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 font-mono-math">0</span>
+                </button>
+                <button id="btnVaultTab-quizzes" onclick="window.App.switchVaultTab('quizzes')" class="flex-1 py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5">
+                  <span>&#x2753;</span>
+                  <span class="truncate">Self-Tests</span>
+                  <span id="badgeVault-quizzes" class="text-[9.5px] px-1.5 py-0.2 rounded-full bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 font-mono-math">0</span>
+                </button>
+              </div>
+
+              <!-- Active Search Context Indicator -->
+              <div id="vaultSearchIndicator" class="hidden items-center justify-between pb-2 mb-2 border-b border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400">
+                <span>Filtering by: <strong id="vaultSearchQueryDisplay" class="text-tagsci-700 dark:text-tagsci-300"></strong></span>
+                <button onclick="window.App.clearMaterialSearch()" class="text-rose-500 hover:underline font-bold text-[10px]">Clear</button>
+              </div>
+
+              <!-- Vault Cards Container (Max 3 items rendered) -->
+              <div id="materialsGrid" class="grid grid-cols-1 gap-2.5"></div>
             </div>
 
-            <div id="materialsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2.5 sm:gap-3"></div>
+            <!-- Bottom Quick Link -->
+            <div id="vaultFooterLink" class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+              <span id="vaultItemCountLabel">Showing top 3 items</span>
+              <button onclick="window.App.navigateToCurrentVaultTab()" class="font-bold text-tagsci-700 dark:text-tagsci-400 hover:underline">
+                Explore full bank &rarr;
+              </button>
+            </div>
           </div>
 
           <div id="mobileSection-tasks" class="bg-gradient-to-br from-g11pink-50 to-emerald-50 dark:from-slate-900 dark:to-slate-900 rounded-2xl p-4 sm:p-5 border border-g11pink-200/70 dark:border-slate-800">

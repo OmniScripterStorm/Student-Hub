@@ -304,18 +304,55 @@
 
         <!-- RIGHT COLUMN: VAULT & TASKS -->
         <section class="lg:col-span-5 space-y-4 sm:space-y-6">
-          <div id="mobileSection-vault" class="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200/80 dark:border-slate-800">
-            <div class="flex items-center justify-between mb-3 sm:mb-4">
-              <h2 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-                <span class="text-g11pink-500">&#x1F52C;</span>
-                <span>Curated Reviewers</span>
-              </h2>
-              <span class="text-[10px] sm:text-xs font-semibold text-g11pink-600 dark:text-g11pink-400 bg-g11pink-50 dark:bg-g11pink-950/50 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border border-g11pink-200 dark:border-g11pink-900">
-                Grade 11
-              </span>
+          <div id="mobileSection-vault" class="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <h2 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                  <span id="vaultTabIcon" class="text-g11pink-500">&#x1F52C;</span>
+                  <span id="vaultTabTitle">Study Vault</span>
+                </h2>
+                <button id="btnVaultViewAll" onclick="navigateToCurrentVaultTab()" class="text-xs font-semibold text-tagsci-700 dark:text-tagsci-400 hover:underline flex items-center gap-1">
+                  <span>View All</span>
+                  <span>&rarr;</span>
+                </button>
+              </div>
+
+              <!-- Filter / Type Switcher Tabs -->
+              <div class="flex items-center p-1 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 mb-3.5 text-xs font-bold gap-1">
+                <button id="btnVaultTab-reviewers" onclick="switchVaultTab('reviewers')" class="flex-1 py-1.5 px-2 rounded-lg bg-white dark:bg-slate-900 text-tagsci-800 dark:text-tagsci-300 shadow-sm transition flex items-center justify-center gap-1.5">
+                  <span>&#x1F52C;</span>
+                  <span class="truncate">Reviewers</span>
+                  <span id="badgeVault-reviewers" class="text-[9.5px] px-1.5 py-0.2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-mono-math">0</span>
+                </button>
+                <button id="btnVaultTab-materials" onclick="switchVaultTab('materials')" class="flex-1 py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5">
+                  <span>&#x1F4DA;</span>
+                  <span class="truncate">Materials</span>
+                  <span id="badgeVault-materials" class="text-[9.5px] px-1.5 py-0.2 rounded-full bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 font-mono-math">0</span>
+                </button>
+                <button id="btnVaultTab-quizzes" onclick="switchVaultTab('quizzes')" class="flex-1 py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5">
+                  <span>&#x2753;</span>
+                  <span class="truncate">Self-Tests</span>
+                  <span id="badgeVault-quizzes" class="text-[9.5px] px-1.5 py-0.2 rounded-full bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 font-mono-math">0</span>
+                </button>
+              </div>
+
+              <!-- Active Search Context Indicator -->
+              <div id="vaultSearchIndicator" class="hidden items-center justify-between pb-2 mb-2 border-b border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400">
+                <span>Filtering by: <strong id="vaultSearchQueryDisplay" class="text-tagsci-700 dark:text-tagsci-300"></strong></span>
+                <button onclick="clearMaterialSearch()" class="text-rose-500 hover:underline font-bold text-[10px]">Clear</button>
+              </div>
+
+              <!-- Vault Cards Container (Max 3 items rendered) -->
+              <div id="materialsGrid" class="grid grid-cols-1 gap-2.5"></div>
             </div>
 
-            <div id="materialsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2.5 sm:gap-3"></div>
+            <!-- Bottom Quick Link -->
+            <div id="vaultFooterLink" class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+              <span id="vaultItemCountLabel">Showing top 3 items</span>
+              <button onclick="navigateToCurrentVaultTab()" class="font-bold text-tagsci-700 dark:text-tagsci-400 hover:underline">
+                Explore full bank &rarr;
+              </button>
+            </div>
           </div>
 
           <div id="mobileSection-tasks" class="bg-gradient-to-br from-g11pink-50 to-emerald-50 dark:from-slate-900 dark:to-slate-900 rounded-2xl p-4 sm:p-5 border border-g11pink-200/70 dark:border-slate-800">
@@ -1099,288 +1136,14 @@ function renderEventsList() {
 
 
     /* =========================================================
-   TagSci G11 Study WebApp - Curated Reviewers Engine
+   TagSci G11 Study WebApp - Study Vault & Reviewers Engine
    ========================================================= */
 
 
 
 
-function compileMathExpression(exprStr) {
-  if (!exprStr || typeof exprStr !== 'string' || !exprStr.trim()) return () => NaN;
-  let clean = exprStr.trim()
-    .replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, '(($1)/($2))')
-    .replace(/\\sqrt\{([^{}]+)\}/g, 'Math.sqrt($1)')
-    .replace(/\\cdot/g, '*')
-    .replace(/\\times/g, '*')
-    .replace(/\|([^\|]+)\|/g, 'Math.abs($1)')
-    .replace(/\babs\s*\(/g, 'Math.abs(')
-    .replace(/\bsqrt\s*\(/g, 'Math.sqrt(')
-    .replace(/\bcbrt\s*\(/g, 'Math.cbrt(')
-    .replace(/\bsin\s*\(/g, 'Math.sin(')
-    .replace(/\bcos\s*\(/g, 'Math.cos(')
-    .replace(/\btan\s*\(/g, 'Math.tan(')
-    .replace(/\bsec\s*\(([^)]+)\)/g, '(1/Math.cos($1))')
-    .replace(/\bcsc\s*\(([^)]+)\)/g, '(1/Math.sin($1))')
-    .replace(/\bcot\s*\(([^)]+)\)/g, '(1/Math.tan($1))')
-    .replace(/\bln\s*\(/g, 'Math.log(')
-    .replace(/\blog\s*\(/g, 'Math.log10(')
-    .replace(/\bexp\s*\(/g, 'Math.exp(')
-    .replace(/\bfloor\s*\(/g, 'Math.floor(')
-    .replace(/\bceil\s*\(/g, 'Math.ceil(')
-    .replace(/\bround\s*\(/g, 'Math.round(')
-    .replace(/\bpi\b/gi, 'Math.PI')
-    .replace(/\be\b(?![a-zA-Z0-9_])/g, 'Math.E')
-    .replace(/(\d+)\s*([a-zA-Z(])/g, '$1*$2')
-    .replace(/(\))\s*(\()/g, '$1*$2')
-    .replace(/(\))\s*([a-zA-Z0-9])/g, '$1*$2')
-    .replace(/([a-zA-Z0-9_]+)\s*\^\s*([a-zA-Z0-9_]+|\([^)]+\))/g, 'Math.pow($1, $2)')
-    .replace(/\^\s*([0-9.]+)/g, '**$1');
-  try {
-    const fn = new Function('x', 'Math', `with(Math){ try { return (${clean}); } catch(e){ return NaN; } }`);
-    return (x) => fn(x, Math);
-  } catch (e) {
-    return () => NaN;
-  }
-}
 
-function renderCartesianPlaneSvg(block) {
-  const xMin = Number(block.xMin) || -10;
-  const xMax = Number(block.xMax) || 10;
-  const yMin = Number(block.yMin) || -10;
-  const yMax = Number(block.yMax) || 10;
-  const gridStep = Number(block.gridStep) || 1;
-  const width = 540;
-  const height = 380;
-  const pad = 40;
-
-  const toSvgX = (x) => pad + ((x - xMin) / (xMax - xMin)) * (width - 2 * pad);
-  const toSvgY = (y) => height - pad - ((y - yMin) / (yMax - yMin)) * (height - 2 * pad);
-
-  let gridPaths = '';
-  let axisTicks = '';
-
-  const stepX = gridStep <= 0 ? 1 : gridStep;
-  const firstX = Math.ceil(xMin / stepX) * stepX;
-  for (let x = firstX; x <= xMax; x += stepX) {
-    const sx = toSvgX(x);
-    if (sx >= pad && sx <= width - pad) {
-      gridPaths += `<line x1="${sx}" y1="${pad}" x2="${sx}" y2="${height - pad}" stroke="currentColor" class="text-slate-200 dark:text-slate-800/80" stroke-width="0.8" />`;
-      if (x !== 0) {
-        axisTicks += `<line x1="${sx}" y1="${toSvgY(0) - 3}" x2="${sx}" y2="${toSvgY(0) + 3}" stroke="currentColor" class="text-slate-400 dark:text-slate-600" stroke-width="1.2" />`;
-        axisTicks += `<text x="${sx}" y="${Math.min(height - pad + 15, Math.max(pad + 12, toSvgY(0) + 14))}" text-anchor="middle" font-size="9" font-family="monospace" class="fill-slate-400 dark:fill-slate-500 font-bold">${x}</text>`;
-      }
-    }
-  }
-
-  const stepY = gridStep <= 0 ? 1 : gridStep;
-  const firstY = Math.ceil(yMin / stepY) * stepY;
-  for (let y = firstY; y <= yMax; y += stepY) {
-    const sy = toSvgY(y);
-    if (sy >= pad && sy <= height - pad) {
-      gridPaths += `<line x1="${pad}" y1="${sy}" x2="${width - pad}" y2="${sy}" stroke="currentColor" class="text-slate-200 dark:text-slate-800/80" stroke-width="0.8" />`;
-      if (y !== 0) {
-        axisTicks += `<line x1="${toSvgX(0) - 3}" y1="${sy}" x2="${toSvgX(0) + 3}" y2="${sy}" stroke="currentColor" class="text-slate-400 dark:text-slate-600" stroke-width="1.2" />`;
-        axisTicks += `<text x="${Math.max(pad - 6, Math.min(width - pad - 12, toSvgX(0) - 8))}" y="${sy + 3}" text-anchor="end" font-size="9" font-family="monospace" class="fill-slate-400 dark:fill-slate-500 font-bold">${y}</text>`;
-      }
-    }
-  }
-
-  const axisX_Y = toSvgY(0);
-  const axisY_X = toSvgX(0);
-  let axesSvg = '';
-  if (axisX_Y >= pad && axisX_Y <= height - pad) {
-    axesSvg += `
-      <line x1="${pad - 10}" y1="${axisX_Y}" x2="${width - pad + 15}" y2="${axisX_Y}" stroke="currentColor" class="text-slate-700 dark:text-slate-300" stroke-width="1.8" />
-      <polygon points="${width - pad + 18},${axisX_Y} ${width - pad + 10},${axisX_Y - 4} ${width - pad + 10},${axisX_Y + 4}" class="fill-slate-700 dark:fill-slate-300" />
-      <text x="${width - pad + 24}" y="${axisX_Y + 3.5}" font-size="11" font-weight="bold" class="fill-slate-800 dark:fill-slate-200 font-mono">x</text>
-    `;
-  }
-  if (axisY_X >= pad && axisY_X <= width - pad) {
-    axesSvg += `
-      <line x1="${axisY_X}" y1="${height - pad + 10}" x2="${axisY_X}" y2="${pad - 15}" stroke="currentColor" class="text-slate-700 dark:text-slate-300" stroke-width="1.8" />
-      <polygon points="${axisY_X},${pad - 18} ${axisY_X - 4},${pad - 10} ${axisY_X + 4},${pad - 10}" class="fill-slate-700 dark:fill-slate-300" />
-      <text x="${axisY_X - 2}" y="${pad - 22}" font-size="11" font-weight="bold" text-anchor="middle" class="fill-slate-800 dark:fill-slate-200 font-mono">y</text>
-    `;
-  }
-  if (axisX_Y >= pad && axisX_Y <= height - pad && axisY_X >= pad && axisY_X <= width - pad) {
-    axesSvg += `<text x="${axisY_X - 6}" y="${axisX_Y + 12}" font-size="9" font-weight="bold" class="fill-slate-400 font-mono">0</text>`;
-  }
-
-  const pieces = block.pieces || [];
-  let curvesSvg = '';
-  let endpointsSvg = '';
-  let piecewiseFormulaItems = [];
-  const defaultColors = ['#10b981', '#3b82f6', '#ec4899', '#8b5cf6', '#f59e0b', '#06b6d4'];
-
-  pieces.forEach((piece, pIdx) => {
-    const expr = piece.expr || 'x';
-    const fn = compileMathExpression(expr);
-    const pColor = piece.color || defaultColors[pIdx % defaultColors.length];
-    const pStyle = piece.style || 'solid';
-    const dashArray = pStyle === 'dashed' ? '6,4' : pStyle === 'dotted' ? '2,3' : 'none';
-
-    const pMin = (piece.domainMin !== undefined && piece.domainMin !== null && piece.domainMin !== '' && !isNaN(piece.domainMin)) ? Number(piece.domainMin) : xMin;
-    const pMax = (piece.domainMax !== undefined && piece.domainMax !== null && piece.domainMax !== '' && !isNaN(piece.domainMax)) ? Number(piece.domainMax) : xMax;
-    const startInc = piece.minInclusive !== false;
-    const endInc = piece.maxInclusive !== false;
-
-    let conditionText = '';
-    if (pMin > xMin && pMax < xMax) {
-      conditionText = `${pMin} ${startInc ? '\\le' : '<'} x ${endInc ? '\\le' : '<'} ${pMax}`;
-    } else if (pMin > xMin) {
-      conditionText = `x ${startInc ? '\\ge' : '>'} ${pMin}`;
-    } else if (pMax < xMax) {
-      conditionText = `x ${endInc ? '\\le' : '<'} ${pMax}`;
-    } else {
-      conditionText = '\\text{for all } x';
-    }
-    piecewiseFormulaItems.push({ expr, conditionText, color: pColor });
-
-    const clampStart = Math.max(xMin, pMin);
-    const clampEnd = Math.min(xMax, pMax);
-    if (clampStart < clampEnd) {
-      const samples = 240;
-      const dx = (clampEnd - clampStart) / samples;
-      let pathD = '';
-      let isDrawing = false;
-      let prevY = null;
-
-      for (let i = 0; i <= samples; i++) {
-        const cx = clampStart + i * dx;
-        const cy = fn(cx);
-        if (isNaN(cy) || !isFinite(cy) || cy < (yMin - (yMax - yMin) * 2) || cy > (yMax + (yMax - yMin) * 2)) {
-          isDrawing = false;
-          prevY = null;
-          continue;
-        }
-        if (prevY !== null && Math.abs(cy - prevY) > (yMax - yMin) * 0.75) {
-          isDrawing = false;
-        }
-        const sx = toSvgX(cx);
-        const sy = toSvgY(cy);
-        if (!isDrawing) {
-          pathD += `M ${sx.toFixed(1)} ${sy.toFixed(1)} `;
-          isDrawing = true;
-        } else {
-          pathD += `L ${sx.toFixed(1)} ${sy.toFixed(1)} `;
-        }
-        prevY = cy;
-      }
-      if (pathD) {
-        curvesSvg += `<path d="${pathD.trim()}" fill="none" stroke="${pColor}" stroke-width="2.5" stroke-dasharray="${dashArray}" stroke-linecap="round" stroke-linejoin="round" />`;
-      }
-    }
-
-    if (pMin >= xMin && pMin <= xMax && piece.domainMin !== undefined && piece.domainMin !== null && piece.domainMin !== '') {
-      const yStart = fn(pMin);
-      if (!isNaN(yStart) && isFinite(yStart) && yStart >= (yMin - 0.5) && yStart <= (yMax + 0.5)) {
-        const cx = toSvgX(pMin);
-        const cy = toSvgY(yStart);
-        if (startInc) {
-          endpointsSvg += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="4.5" fill="${pColor}" stroke="#ffffff" stroke-width="1.8" />`;
-        } else {
-          endpointsSvg += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="4.5" fill="#ffffff" stroke="${pColor}" stroke-width="2.2" />`;
-        }
-      }
-    }
-
-    if (pMax >= xMin && pMax <= xMax && piece.domainMax !== undefined && piece.domainMax !== null && piece.domainMax !== '') {
-      const yEnd = fn(pMax);
-      if (!isNaN(yEnd) && isFinite(yEnd) && yEnd >= (yMin - 0.5) && yEnd <= (yMax + 0.5)) {
-        const cx = toSvgX(pMax);
-        const cy = toSvgY(yEnd);
-        if (endInc) {
-          endpointsSvg += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="4.5" fill="${pColor}" stroke="#ffffff" stroke-width="1.8" />`;
-        } else {
-          endpointsSvg += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="4.5" fill="#ffffff" stroke="${pColor}" stroke-width="2.2" />`;
-        }
-      }
-    }
-  });
-
-  let definitionBox = '';
-  if (piecewiseFormulaItems.length > 0) {
-    definitionBox = `
-      <div class="mt-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs">
-        <div class="font-bold text-slate-500 uppercase tracking-wider text-[10px] mb-1.5 flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-tagsci-600"></span>
-          Piecewise Definition:
-        </div>
-        <div class="space-y-1 font-mono-math">
-          ${piecewiseFormulaItems.map(item => `
-            <div class="flex items-center justify-between text-xs sm:text-sm py-0.5 border-b border-slate-100 dark:border-slate-800/60 last:border-0">
-              <span class="font-bold" style="color: ${item.color}">${parseMathSyntax(item.expr)}</span>
-              <span class="text-slate-500 text-[11px]">${parseMathSyntax('\\text{if } ' + item.conditionText)}</span>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }
-
-  return `
-    <div class="my-4 p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
-      ${block.title ? `<h4 class="font-black text-xs sm:text-sm text-slate-900 dark:text-white mb-1 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-tagsci-600"></span>${renderMathInHtml(block.title)}</h4>` : ''}
-      ${block.caption ? `<p class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">${renderMathInHtml(block.caption)}</p>` : ''}
-      <div class="w-full flex justify-center items-center bg-slate-50/70 dark:bg-slate-900/50 rounded-xl p-2 border border-slate-100 dark:border-slate-800/80 overflow-x-auto">
-        <svg viewBox="0 0 ${width} ${height}" class="w-full max-w-lg h-auto select-none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="${pad}" y="${pad}" width="${width - 2 * pad}" height="${height - 2 * pad}" fill="transparent" />
-          <g>${gridPaths}</g>
-          <g>${axesSvg}</g>
-          <g>${axisTicks}</g>
-          <g>${curvesSvg}</g>
-          <g>${endpointsSvg}</g>
-        </svg>
-      </div>
-      ${definitionBox}
-    </div>
-  `;
-}
-
-function renderTableToHtml(block) {
-  const title = block.title || '';
-  const headers = block.headers || ['Column 1', 'Column 2'];
-  const rows = block.rows || [['Sample 1', 'Sample 2']];
-
-  let headerHtml = headers.map(h => `
-    <th class="px-3 py-2.5 text-left text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
-      ${renderMathInHtml(h || '')}
-    </th>
-  `).join('');
-
-  let rowsHtml = rows.map((r, rIdx) => `
-    <tr class="${rIdx % 2 === 0 ? 'bg-white dark:bg-slate-950' : 'bg-slate-50/60 dark:bg-slate-900/40'} hover:bg-tagsci-50/40 dark:hover:bg-slate-800/40 transition-colors border-b border-slate-100 dark:border-slate-800/60 last:border-none">
-      ${(r || []).map(cell => `
-        <td class="px-3 py-2 text-xs text-slate-700 dark:text-slate-300">
-          ${renderMathInHtml(cell || '')}
-        </td>
-      `).join('')}
-    </tr>
-  `).join('');
-
-  return `
-    <div class="my-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-sm overflow-hidden">
-      ${title ? `
-        <div class="px-4 py-2.5 bg-slate-50 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-          <h4 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white flex items-center gap-2">
-            <span class="w-2 h-2 rounded bg-blue-500"></span>
-            ${renderMathInHtml(title)}
-          </h4>
-        </div>
-      ` : ''}
-      <div class="overflow-x-auto">
-        <table class="w-full border-collapse text-left">
-          <thead>
-            <tr>${headerHtml}</tr>
-          </thead>
-          <tbody>
-            ${rowsHtml}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  `;
-}
+let currentVaultTab = 'reviewers'; // 'reviewers' | 'materials' | 'quizzes'
 
 function renderBlocksToHtml(blocks) {
   if (!blocks || !Array.isArray(blocks) || blocks.length === 0) return '';
@@ -1412,10 +1175,6 @@ function renderBlocksToHtml(blocks) {
         });
         html += `</ul>`;
       }
-    } else if (b.type === 'table') {
-      html += renderTableToHtml(b);
-    } else if (b.type === 'cartesian' || b.type === 'plot') {
-      html += renderCartesianPlaneSvg(b);
     } else if (b.type === 'callout') {
       const isWarn = b.style === 'warning';
       const calloutClass = isWarn 
@@ -1432,66 +1191,195 @@ function renderBlocksToHtml(blocks) {
   return html;
 }
 
-function renderMaterials(items = STEM_REVIEWERS) {
+function switchVaultTab(tab) {
+  currentVaultTab = tab;
+  updateVaultTabButtons();
+  renderMaterials();
+}
+
+function updateVaultTabButtons() {
+  const tabs = ['reviewers', 'materials', 'quizzes'];
+  const iconEl = document.getElementById('vaultTabIcon');
+  const titleEl = document.getElementById('vaultTabTitle');
+
+  // Update badges
+  const bRev = document.getElementById('badgeVault-reviewers');
+  const bMat = document.getElementById('badgeVault-materials');
+  const bQuiz = document.getElementById('badgeVault-quizzes');
+
+  if (bRev) bRev.innerText = (STEM_REVIEWERS || []).length;
+  if (bMat) bMat.innerText = (STUDY_MATERIALS || []).length;
+  if (bQuiz) bQuiz.innerText = (QUIZ_SETS || []).length;
+
+  tabs.forEach(t => {
+    const btn = document.getElementById(`btnVaultTab-${t}`);
+    if (!btn) return;
+    if (t === currentVaultTab) {
+      btn.className = 'flex-1 py-1.5 px-2 rounded-lg bg-white dark:bg-slate-900 text-tagsci-800 dark:text-tagsci-300 shadow-sm transition flex items-center justify-center gap-1.5 font-bold';
+    } else {
+      btn.className = 'flex-1 py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5 font-semibold';
+    }
+  });
+
+  if (currentVaultTab === 'reviewers') {
+    if (iconEl) iconEl.innerHTML = '&#x1F52C;';
+    if (titleEl) titleEl.innerText = 'Curated Reviewers';
+  } else if (currentVaultTab === 'materials') {
+    if (iconEl) iconEl.innerHTML = '&#x1F4DA;';
+    if (titleEl) titleEl.innerText = 'Study Materials';
+  } else if (currentVaultTab === 'quizzes') {
+    if (iconEl) iconEl.innerHTML = '&#x2753;';
+    if (titleEl) titleEl.innerText = 'Self-Tests & Quizzes';
+  }
+}
+
+function navigateToCurrentVaultTab() {
+  if (currentVaultTab === 'reviewers') navigateSection('reviewers');
+  else if (currentVaultTab === 'materials') navigateSection('materials');
+  else if (currentVaultTab === 'quizzes') navigateSection('quiz_sets');
+}
+
+function clearMaterialSearch() {
+  const searchInput = document.getElementById('materialSearch');
+  if (searchInput) {
+    searchInput.value = '';
+    filterMaterials();
+  }
+}
+
+function renderMaterials() {
+  updateVaultTabButtons();
   const grid = document.getElementById('materialsGrid');
+  const countLabel = document.getElementById('vaultItemCountLabel');
+  const searchIndicator = document.getElementById('vaultSearchIndicator');
+  const queryDisplay = document.getElementById('vaultSearchQueryDisplay');
+  const searchInput = document.getElementById('materialSearch');
+  const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+
   if (!grid) return;
 
-  if (!items || items.length === 0) {
+  if (query && searchIndicator && queryDisplay) {
+    searchIndicator.classList.remove('hidden');
+    searchIndicator.classList.add('flex');
+    queryDisplay.innerText = `"${query}"`;
+  } else if (searchIndicator) {
+    searchIndicator.classList.add('hidden');
+    searchIndicator.classList.remove('flex');
+  }
+
+  let sourceList = [];
+  if (currentVaultTab === 'reviewers') sourceList = STEM_REVIEWERS || [];
+  else if (currentVaultTab === 'materials') sourceList = STUDY_MATERIALS || [];
+  else if (currentVaultTab === 'quizzes') sourceList = QUIZ_SETS || [];
+
+  // Filter by search query
+  let filtered = sourceList;
+  if (query) {
+    filtered = sourceList.filter(item => {
+      const subj = (item.subject || '').toLowerCase();
+      const title = (item.title || '').toLowerCase();
+      const sum = (item.summary || item.desc || '').toLowerCase();
+      const tag = (item.tag || '').toLowerCase();
+      return subj.includes(query) || title.includes(query) || sum.includes(query) || tag.includes(query);
+    });
+  }
+
+  // Cap display at a maximum of 3 items
+  const displayItems = filtered.slice(0, 3);
+
+  if (countLabel) {
+    if (filtered.length === 0) {
+      countLabel.innerText = 'No matching items';
+    } else {
+      countLabel.innerText = `Showing ${displayItems.length} of ${filtered.length} ${currentVaultTab}`;
+    }
+  }
+
+  if (displayItems.length === 0) {
+    const emptyIcon = currentVaultTab === 'reviewers' ? '&#x1F52C;' : (currentVaultTab === 'materials' ? '&#x1F4DA;' : '&#x2753;');
+    const emptyName = currentVaultTab === 'reviewers' ? 'reviewers' : (currentVaultTab === 'materials' ? 'study materials' : 'quiz banks');
     grid.innerHTML = `
-      <div class="col-span-full py-8 text-center text-slate-400 dark:text-slate-500 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50">
-        <span class="text-2xl block mb-1">&#x1F4DA;</span>
-        <p class="text-xs font-semibold">No study reviewers published yet.</p>
-        <p class="text-[11px] text-slate-400 mt-0.5">Reviewer modules will appear here once pushed by G11 Council.</p>
+      <div class="py-8 text-center text-slate-400 dark:text-slate-500 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 p-4">
+        <span class="text-2xl block mb-1">${emptyIcon}</span>
+        <p class="text-xs font-semibold">No ${emptyName} found${query ? ' matching "' + query + '"' : ' yet'}.</p>
+        <p class="text-[10.5px] text-slate-400 mt-0.5">${query ? 'Try a different subject keyword or clear the search.' : 'Items will appear here once published by the Editorial Council.'}</p>
       </div>
     `;
     return;
   }
 
-  grid.innerHTML = items.map(mat => {
-    const meta = getSubjectMeta(mat.subject);
-    const tagLabel = (mat.tag && (mat.tag.toLowerCase() === 'main' || mat.tag.toLowerCase() === 'elective')) 
-      ? mat.tag 
-      : meta.type;
-    const borderClass = mat.color || meta.color;
-    const isElective = tagLabel.toLowerCase() === 'elective';
-    const tagBadgeStyle = isElective 
-      ? 'bg-purple-100 text-purple-800 dark:bg-purple-950/80 dark:text-purple-300 border border-purple-200 dark:border-purple-800'
-      : 'bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950/80 dark:text-tagsci-300 border border-tagsci-200 dark:border-tagsci-800';
+  // Render cards according to active tab type
+  if (currentVaultTab === 'reviewers' || currentVaultTab === 'materials') {
+    grid.innerHTML = displayItems.map(mat => {
+      const meta = getSubjectMeta(mat.subject);
+      const isMat = currentVaultTab === 'materials';
+      const tagLabel = mat.tag || (isMat ? 'Study Material' : meta.type);
+      const borderClass = mat.color || meta.color || (isMat ? 'border-l-4 border-blue-500' : 'border-l-4 border-tagsci-600');
+      const isElective = (meta.type || '').toLowerCase() === 'elective';
+      const tagBadgeStyle = isElective 
+        ? 'bg-purple-100 text-purple-800 dark:bg-purple-950/80 dark:text-purple-300 border border-purple-200 dark:border-purple-800'
+        : (isMat 
+            ? 'bg-blue-100 text-blue-800 dark:bg-blue-950/80 dark:text-blue-300 border border-blue-200 dark:border-blue-800'
+            : 'bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950/80 dark:text-tagsci-300 border border-tagsci-200 dark:border-tagsci-800');
 
-    return `
-      <div class="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 ${borderClass} hover:shadow-md active:scale-[0.98] transition cursor-pointer flex flex-col justify-between" onclick="openReviewer('${mat.id}')">
-        <div>
-          <div class="flex items-center justify-between">
-            <span class="text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${tagBadgeStyle}">
-              ${tagLabel}
-            </span>
-            <span class="text-xs text-tagsci-600 dark:text-tagsci-400 hover:underline font-semibold">View &rarr;</span>
+      const summaryText = mat.summary || mat.desc || '';
+
+      return `
+        <div class="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 ${borderClass} hover:shadow-md active:scale-[0.98] transition cursor-pointer flex flex-col justify-between" onclick="openReviewer('${mat.id}')">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${tagBadgeStyle}">
+                ${tagLabel}
+              </span>
+              <span class="text-xs ${isMat ? 'text-blue-600 dark:text-blue-400' : 'text-tagsci-600 dark:text-tagsci-400'} hover:underline font-semibold flex items-center gap-1">Read &rarr;</span>
+            </div>
+            <h3 class="text-xs font-bold text-slate-900 dark:text-white mt-1.5">${mat.subject || 'General'}</h3>
+            <p class="text-[11px] font-medium text-slate-700 dark:text-slate-300 mt-0.5">${renderMathInHtml(mat.title || 'Untitled')}</p>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">${renderMathInHtml(summaryText)}</p>
           </div>
-          <h3 class="text-xs font-bold text-slate-900 dark:text-white mt-1.5">${mat.subject}</h3>
-          <p class="text-[11px] font-medium text-slate-700 dark:text-slate-300 mt-0.5">${renderMathInHtml(mat.title || 'Untitled')}</p>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">${renderMathInHtml(mat.summary || '')}</p>
         </div>
-      </div>
-    `;
-  }).join('');
+      `;
+    }).join('');
+  } else if (currentVaultTab === 'quizzes') {
+    grid.innerHTML = displayItems.map(q => {
+      const meta = getSubjectMeta(q.subject);
+      const tagLabel = q.tag || meta.type || 'Self-Test';
+      const borderClass = q.color || meta.color || 'border-l-4 border-g11pink-500';
+      const qCount = q.questions ? q.questions.length : 0;
+
+      return `
+        <div class="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 ${borderClass} hover:shadow-md active:scale-[0.98] transition flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-g11pink-100 text-g11pink-800 dark:bg-g11pink-950/80 dark:text-g11pink-300 border border-g11pink-200 dark:border-g11pink-900">
+                ${tagLabel}
+              </span>
+              <span class="text-xs text-slate-400 font-mono-math">${qCount} Qs</span>
+            </div>
+            <h3 class="text-xs font-bold text-slate-900 dark:text-white mt-1.5">${q.subject || 'General'}</h3>
+            <p class="text-[11px] font-medium text-slate-700 dark:text-slate-300 mt-0.5">${renderMathInHtml(q.title || 'Untitled Quiz')}</p>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">${renderMathInHtml(q.desc || '')}</p>
+          </div>
+          <div class="mt-2.5 pt-2 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between gap-1.5">
+            <button onclick="navigateSection('quiz_sets'); startQuiz('${q.id}', true);" class="flex-1 py-1 rounded-lg bg-tagsci-100 dark:bg-tagsci-950 hover:bg-tagsci-200 text-tagsci-800 dark:text-tagsci-300 font-bold text-[10.5px] transition text-center border border-tagsci-300 dark:border-tagsci-800">
+              ⚡ Practice
+            </button>
+            <button onclick="navigateSection('quiz_sets'); startQuiz('${q.id}', false);" class="flex-1 py-1 rounded-lg bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold text-[10.5px] transition shadow-sm text-center">
+              ⏱️ Timed
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
 }
 
 function filterMaterials() {
-  const searchInput = document.getElementById('materialSearch');
-  if (!searchInput) return;
-
-  const query = searchInput.value.toLowerCase();
-  const filtered = STEM_REVIEWERS.filter(m => 
-    (m.subject || '').toLowerCase().includes(query) ||
-    (m.title || '').toLowerCase().includes(query) ||
-    (m.summary || '').toLowerCase().includes(query) ||
-    (m.tag || '').toLowerCase().includes(query)
-  );
-  renderMaterials(filtered);
+  renderMaterials();
 }
 
 function openReviewer(id) {
-  const item = STEM_REVIEWERS.find(m => m.id === id);
+  const item = (STEM_REVIEWERS || []).find(m => m.id === id) || (STUDY_MATERIALS || []).find(m => m.id === id);
   if (!item) return;
 
   const modalBadge = document.getElementById('modalSubjectBadge');
@@ -1499,7 +1387,7 @@ function openReviewer(id) {
   const modalContent = document.getElementById('modalContent');
   const modal = document.getElementById('reviewerModal');
 
-  if (modalBadge) modalBadge.textContent = item.subject;
+  if (modalBadge) modalBadge.textContent = item.subject || 'STEM';
   if (modalTitle) modalTitle.innerHTML = renderMathInHtml(item.title || '');
   
   let finalHtml = '';
@@ -1509,8 +1397,10 @@ function openReviewer(id) {
     finalHtml = renderMathInHtml(item.content);
   } else if (item.rawMarkdown) {
     finalHtml = renderMathInHtml(item.rawMarkdown.replace(/\n/g, '<br>'));
+  } else if (item.desc) {
+    finalHtml = `<p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">${renderMathInHtml(item.desc)}</p>${item.link ? `<div class="mt-4"><a href="${item.link}" target="_blank" class="px-4 py-2 bg-tagsci-800 text-white rounded-xl text-xs font-bold inline-block hover:bg-tagsci-700">Open External Resource &rarr;</a></div>` : ''}`;
   } else {
-    finalHtml = `<p class="text-xs text-slate-400 italic">No content available in this reviewer draft.</p>`;
+    finalHtml = `<p class="text-xs text-slate-400 italic">No content available in this material draft.</p>`;
   }
 
   if (modalContent) modalContent.innerHTML = finalHtml;
@@ -2407,7 +2297,7 @@ function renderMaterialsView() {
       <div class="py-12 text-center text-slate-400 dark:text-slate-500 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
         <span class="text-3xl block mb-2">&#x1F4DA;</span>
         <h4 class="text-sm font-bold text-slate-700 dark:text-slate-200">No Study Materials Published Yet</h4>
-        <p class="text-xs text-slate-400 mt-1">Lecture slides, syllabus guides, and formula sheets will be uploaded here.</p>
+        <p class="text-xs text-slate-400 mt-1">Lecture slides, syllabus guides, formula sheets, and study modules will appear here once synced.</p>
       </div>
     `;
     return;
@@ -2415,18 +2305,37 @@ function renderMaterialsView() {
 
   container.innerHTML = `
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
-      ${STUDY_MATERIALS.map(m => `
-        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
-          <div>
-            <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300">
-              ${m.subject || 'General'}
-            </span>
-            <h3 class="text-sm font-bold text-slate-900 dark:text-white mt-2">${renderMathInHtml(m.title || 'Untitled Material')}</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${renderMathInHtml(m.desc || '')}</p>
+      ${STUDY_MATERIALS.map(m => {
+        const meta = getSubjectMeta(m.subject);
+        const tagLabel = m.tag || 'Study Material';
+        const borderClass = m.color || meta.color || 'border-l-4 border-blue-500';
+        const isElective = (meta.type || '').toLowerCase() === 'elective';
+        const tagBadgeStyle = isElective 
+          ? 'bg-purple-100 text-purple-800 dark:bg-purple-950/80 dark:text-purple-300 border border-purple-200 dark:border-purple-800'
+          : 'bg-blue-100 text-blue-800 dark:bg-blue-950/80 dark:text-blue-300 border border-blue-200 dark:border-blue-800';
+
+        const summaryText = m.summary || m.desc || '';
+
+        return `
+          <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 ${borderClass} hover:shadow-md active:scale-[0.98] transition cursor-pointer flex flex-col justify-between" onclick="openReviewer('${m.id}')">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${tagBadgeStyle}">
+                  ${tagLabel}
+                </span>
+                <span class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-semibold flex items-center gap-1">Read &rarr;</span>
+              </div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">${m.subject || 'General'}</span>
+              <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mt-1">${renderMathInHtml(m.title || 'Untitled Material')}</h3>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 line-clamp-3 leading-relaxed">${renderMathInHtml(summaryText)}</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[10px] text-slate-400">
+              <span>Study Resource</span>
+              <span class="font-bold text-blue-600 dark:text-blue-400">Open Material &rarr;</span>
+            </div>
           </div>
-          ${m.link ? `<a href="${m.link}" target="_blank" class="mt-3 inline-flex items-center gap-1 text-xs font-bold text-tagsci-600 dark:text-tagsci-400 hover:underline">Open Material &rarr;</a>` : ''}
-        </div>
-      `).join('')}
+        `;
+      }).join('')}
     </div>
   `;
 }
@@ -2895,6 +2804,9 @@ window.App = {
   changeMonth,
   selectCalendarDate,
   filterMaterials,
+  switchVaultTab,
+  navigateToCurrentVaultTab,
+  clearMaterialSearch,
   openReviewer,
   closeModal,
   addTask,
