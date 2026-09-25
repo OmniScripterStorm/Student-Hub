@@ -130,6 +130,8 @@ export let QUIZ_SETS = cachedData.quizSets || DEFAULT_BASELINE.quizSets;
 export let STUDY_MATERIALS = cachedData.studyMaterials || DEFAULT_BASELINE.studyMaterials;
 export let CURRENT_APP_VERSION = cachedData.version || DEFAULT_BASELINE.version;
 
+export const INITIAL_TASKS = [];
+
 const CREDITS_CACHE_KEY = 'tagsci_g11_credits_cache';
 export const DEFAULT_CREDITS_URL = 'https://omniscripterstorm.github.io/Student-Hub/credits.md';
 
