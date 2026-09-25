@@ -1,10 +1,10 @@
 {
   "version": "1.4.0",
-  "updatedAt": "2026-09-25T08:29:36.112Z",
-  "announcement": "Merged updates: 0 Reviewers, 4 Deadlines, 0 Quizzes.",
+  "updatedAt": "2026-09-25T08:31:38.540Z",
+  "announcement": "Refreshed 0 Reviewers, 1 Study Materials, 4 Deadlines, and 0 Quiz Banks.",
   "calendarEvents": [
     {
-      "id": 1790281754787,
+      "id": 1790325028547,
       "date": "2026-10-07",
       "subject": "DepEd",
       "title": "First Summative Exam",
@@ -13,7 +13,7 @@
       "desc": ""
     },
     {
-      "id": 1790281796283,
+      "id": 1790325058753,
       "date": "2026-10-29",
       "subject": "DepEd",
       "title": "Second Summative Exam",
@@ -22,7 +22,7 @@
       "desc": ""
     },
     {
-      "id": 1790281856283,
+      "id": 1790325073889,
       "date": "2026-11-03",
       "subject": "DepEd",
       "title": "Second Term Exam",
@@ -31,7 +31,7 @@
       "desc": ""
     },
     {
-      "id": 1790281880243,
+      "id": 1790325093383,
       "date": "2026-11-04",
       "subject": "DepEd",
       "title": "Second Term Exam",
@@ -41,7 +41,121 @@
     }
   ],
   "stemReviewers": [],
-  "studyMaterials": [],
+  "studyMaterials": [
+    {
+      "id": "material_1790316466027",
+      "subject": "Effective Communications",
+      "tag": "Study Material",
+      "color": "border-l-4 border-blue-500",
+      "title": "Academic and Technical Communication",
+      "summary": "Similarities and difference of Academic and Technical Communication",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "1. Formal Communication"
+        },
+        {
+          "type": "paragraph",
+          "text": "Formal Communication is the structured exchange of information, following predefined channels, hierarchy, and professional standards. It includes emails, reports, memos, letters, and other documented formats, ensuring clarity, authority, and consistency in workplace communication."
+        },
+        {
+          "type": "paragraph",
+          "text": "Formal Communication can be divided into Academic and Technical Communication."
+        },
+        {
+          "type": "table",
+          "title": "",
+          "headers": [
+            "Academic",
+            "",
+            "technical"
+          ],
+          "rows": [
+            [
+              "Build/discover",
+              "Formal & Organized",
+              "Solve & guide"
+            ],
+            [
+              "Used in academia",
+              "Audience-catered",
+              "Used by professionals"
+            ],
+            [
+              "Research",
+              "Professional Language",
+              "Task"
+            ],
+            [
+              "Explain & Analyze",
+              "Structured",
+              "Instructional"
+            ],
+            [
+              "Unredacted and cited",
+              "Evidence",
+              "Direct and concise"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "2. Academic Communication"
+        },
+        {
+          "type": "paragraph",
+          "text": "Academic communication is the formal exchange of ideas, information, and knowledge in educational and research settings. It includes essays, research papers, presentations, discussions, and academic reports."
+        },
+        {
+          "type": "paragraph",
+          "text": "It uses clear, organized, and formal language to present arguments, explain concepts, and support ideas with evidence. Its goal is to communicate information accurately and effectively to an academic audience."
+        },
+        {
+          "type": "paragraph",
+          "text": "Examples are:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Research paper",
+            "Academic essay",
+            "Thesis",
+            "Book review",
+            "Classroom discussion"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "3. Technical Communication"
+        },
+        {
+          "type": "paragraph",
+          "text": "Technical communication is the process of presenting specialized information clearly and accurately to a specific audience. It is commonly used in fields such as science, engineering, technology, and business."
+        },
+        {
+          "type": "paragraph",
+          "text": "It includes manuals, reports, instructions, proposals, and technical documents. Its main goal is to help readers understand information, solve problems, or perform tasks effectively."
+        },
+        {
+          "type": "paragraph",
+          "text": "Examples are:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "User manual",
+            "Instruction guide",
+            "Technical report",
+            "Product specification",
+            "Safety instructions"
+          ]
+        }
+      ]
+    }
+  ],
   "problemSets": [],
   "quizSets": []
 }
