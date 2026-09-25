@@ -2,6 +2,13 @@ import os
 import base64
 import re
 
+def strip_exports_and_imports(code):
+    code = re.sub(r'import\s+[^;]+;', '', code)
+    code = re.sub(r'export\s+(async\s+)?(function|const|let|var)\s+', r'\1\2 ', code)
+    code = re.sub(r'export\s+default\s+', '', code)
+    code = re.sub(r'export\s*\{[^}]*\};?', '', code)
+    return code
+
 def build_single_file():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     project_dir = os.path.abspath(os.path.join(base_dir, '..'))
@@ -17,55 +24,37 @@ def build_single_file():
 
     # 2. Read modular source files
     with open(os.path.join(src_dir, 'data', 'study_data.js'), 'r', encoding='utf-8') as f:
-        study_data_js = f.read()
-        study_data_js = re.sub(r'export\s+(const|let|function)\s+', r'\1 ', study_data_js)
+        study_data_js = strip_exports_and_imports(f.read())
 
     with open(os.path.join(src_dir, 'components', 'math_engine.js'), 'r', encoding='utf-8') as f:
-        math_engine_js = f.read()
-        math_engine_js = re.sub(r'import\s+[^;]+;', '', math_engine_js)
-        math_engine_js = re.sub(r'export\s+function\s+', 'function ', math_engine_js)
+        math_engine_js = strip_exports_and_imports(f.read())
 
     with open(os.path.join(src_dir, 'components', 'calendar.js'), 'r', encoding='utf-8') as f:
-        calendar_js = f.read()
-        calendar_js = re.sub(r'import\s+[^;]+;', '', calendar_js)
-        calendar_js = re.sub(r'export\s+function\s+', 'function ', calendar_js)
+        calendar_js = strip_exports_and_imports(f.read())
 
     with open(os.path.join(src_dir, 'components', 'reviewers.js'), 'r', encoding='utf-8') as f:
-        reviewers_js = f.read()
-        reviewers_js = re.sub(r'import\s+[^;]+;', '', reviewers_js)
-        reviewers_js = re.sub(r'export\s+function\s+', 'function ', reviewers_js)
+        reviewers_js = strip_exports_and_imports(f.read())
         reviewers_js = reviewers_js.replace('window.App.openReviewer', 'openReviewer')
 
     with open(os.path.join(src_dir, 'components', 'tasks.js'), 'r', encoding='utf-8') as f:
-        tasks_js = f.read()
-        tasks_js = re.sub(r'import\s+[^;]+;', '', tasks_js)
-        tasks_js = re.sub(r'export\s+function\s+', 'function ', tasks_js)
+        tasks_js = strip_exports_and_imports(f.read())
         tasks_js = tasks_js.replace('window.App.toggleTask', 'toggleTask')
         tasks_js = tasks_js.replace('window.App.deleteTask', 'deleteTask')
 
     with open(os.path.join(src_dir, 'components', 'quiz_engine.js'), 'r', encoding='utf-8') as f:
-        quiz_engine_js = f.read()
-        quiz_engine_js = re.sub(r'import\s+[^;]+;', '', quiz_engine_js)
-        quiz_engine_js = re.sub(r'export\s+function\s+', 'function ', quiz_engine_js)
+        quiz_engine_js = strip_exports_and_imports(f.read())
 
     with open(os.path.join(src_dir, 'components', 'navigation.js'), 'r', encoding='utf-8') as f:
-        navigation_js = f.read()
-        navigation_js = re.sub(r'import\s+[^;]+;', '', navigation_js)
-        navigation_js = re.sub(r'export\s+function\s+', 'function ', navigation_js)
+        navigation_js = strip_exports_and_imports(f.read())
 
     with open(os.path.join(src_dir, 'components', 'ota_sync.js'), 'r', encoding='utf-8') as f:
-        ota_sync_js = f.read()
-        ota_sync_js = re.sub(r'import\s+[^;]+;', '', ota_sync_js)
-        ota_sync_js = re.sub(r'export\s+(async\s+)?function\s+', r'\1function ', ota_sync_js)
+        ota_sync_js = strip_exports_and_imports(f.read())
 
     with open(os.path.join(src_dir, 'components', 'pwa_installer.js'), 'r', encoding='utf-8') as f:
-        pwa_installer_js = f.read()
-        pwa_installer_js = re.sub(r'import\s+[^;]+;', '', pwa_installer_js)
-        pwa_installer_js = re.sub(r'export\s+(async\s+)?function\s+', r'\1function ', pwa_installer_js)
+        pwa_installer_js = strip_exports_and_imports(f.read())
 
     with open(os.path.join(src_dir, 'app.js'), 'r', encoding='utf-8') as f:
-        app_js = f.read()
-        app_js = re.sub(r'import\s+[^;]+;', '', app_js)
+        app_js = strip_exports_and_imports(f.read())
 
     bundled_js = f"""
     /* =========================================================

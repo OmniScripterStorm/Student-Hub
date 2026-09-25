@@ -2600,7 +2600,7 @@ function parseAndRenderCreditsMarkdown(mdText) {
   return html;
 }
 
-export async function renderCreditsView() {
+async function renderCreditsView() {
   const container = document.getElementById('creditsMarkdownContainer');
   if (!container) return;
 
