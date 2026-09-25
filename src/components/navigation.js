@@ -4,6 +4,10 @@ import { renderQuizSetsView } from './quiz_engine.js';
 
 let currentSection = 'overview'; // overview, materials, reviewers, problem_sets, quiz_sets, credits, settings
 
+export function getCurrentSection() {
+  return currentSection;
+}
+
 export function navigateSection(sectionId) {
   currentSection = sectionId;
 

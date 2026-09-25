@@ -6,7 +6,7 @@ import { renderCalendar, changeMonth, selectCalendarDate } from './components/ca
 import { renderMaterials, filterMaterials, switchVaultTab, navigateToCurrentVaultTab, clearMaterialSearch, openReviewer, closeModal } from './components/reviewers.js';
 import { renderTasks, addTask, toggleTask, deleteTask } from './components/tasks.js';
 import { navigateSection, toggleSidebar, closeSidebar, switchMobileTab, checkResponsiveLayout, toggleTheme, initTheme } from './components/navigation.js';
-import { checkOtaUpdates, saveOtaSettings, resetOtaUrl, handleClearCache, submitEditorialApplication } from './components/ota_sync.js';
+import { checkOtaUpdates, initAutoSyncEngine, saveOtaSettings, resetOtaUrl, handleClearCache, submitEditorialApplication } from './components/ota_sync.js';
 import { renderMathInHtml, renderMathInElement, parseMathSyntax } from './components/math_engine.js';
 import { 
   startQuiz, 
@@ -43,6 +43,7 @@ window.App = {
   switchMobileTab,
   toggleTheme,
   checkOtaUpdates,
+  initAutoSyncEngine,
   saveOtaSettings,
   resetOtaUrl,
   handleClearCache,
@@ -68,12 +69,6 @@ window.App = {
 
 window.addEventListener('resize', checkResponsiveLayout);
 
-// Auto-sync when coming online
-window.addEventListener('online', () => {
-  console.log('Network connected: Running background curriculum sync...');
-  checkOtaUpdates(true);
-});
-
 window.addEventListener('DOMContentLoaded', () => {
   initTheme();
   renderCalendar();
@@ -84,10 +79,6 @@ window.addEventListener('DOMContentLoaded', () => {
   // 1. Initialize PWA First-Launch Install Prompt
   initPwaInstallPrompt();
 
-  // 2. Auto-Update on Launch (Silent background sync if online)
-  if (navigator.onLine) {
-    setTimeout(() => {
-      checkOtaUpdates(true);
-    }, 1200);
-  }
+  // 2. Initialize Automatic Real-Time OTA Sync Engine (Instant on network + periodic poller)
+  initAutoSyncEngine(15);
 });
