@@ -4,7 +4,7 @@
 # Academic Committee
 - **Eugene Martin Sinampaga** — Physics & Finite Mathematics
 - **Joshua Ramos** — General Mathematics
-- **James Stephen Golis** — General Chemistry
+- **James Stephen Golis** — General Chemistry & General Mathematics
 - **Zyra Cel Dulgime** — Mabisang Komunikasyon
 - **Marielle Ydine Ramil** — Mabisang Komunikasyon
 - **Fernando Gabriel Padilla** — Effective Commuincation
