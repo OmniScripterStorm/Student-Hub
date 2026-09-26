@@ -8,6 +8,3 @@
 - **Zyra Cel Dulgime** — Mabisang Komunikasyon
 - **Marielle Ydine Ramil** — Mabisang Komunikasyon
 - **Fernando Gabriel Padilla** — Effective Commuincation
-
-# Special Mention
-- **Laurenz Raiden Villiona** — G11 Student Guidebook
