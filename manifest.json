@@ -1,19 +1,41 @@
 {
+  "$schema": "https://json.schemastore.org/web-manifest.json",
+  "id": "tagsci-g11-student-hub",
   "name": "TagSci Grade 11 Student Hub",
   "short_name": "TagSci G11",
   "description": "Taguig Science High School Grade 11 Unified Student Hub, Reviewers, Deadlines & Quiz Engine",
-  "start_url": "./",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#072416",
   "theme_color": "#0e3a24",
   "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "categories": ["education", "productivity", "utilities"],
   "icons": [
     {
-      "src": "./tagsci logo.png",
-      "sizes": "192x192 512x512",
+      "src": "./tagsci%20logo.png",
+      "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "./tagsci%20logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./tagsci%20logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./tagsci%20logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

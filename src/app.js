@@ -22,7 +22,7 @@ import {
   nextQuizQuestion, 
   exitQuiz 
 } from './components/quiz_engine.js';
-import { initPwaInstallPrompt, triggerPwaInstall, dismissPwaPrompt } from './components/pwa_installer.js';
+import { initPwaInstallPrompt, triggerPwaInstall, dismissPwaPrompt, manualTriggerPwaPrompt, updateSettingsPwaStatus } from './components/pwa_installer.js';
 
 // Expose public functions to window.App for inline HTML event handlers
 window.App = {
@@ -64,7 +64,9 @@ window.App = {
   nextQuizQuestion,
   exitQuiz,
   triggerPwaInstall,
-  dismissPwaPrompt
+  dismissPwaPrompt,
+  manualTriggerPwaPrompt,
+  updateSettingsPwaStatus
 };
 
 window.addEventListener('resize', checkResponsiveLayout);

@@ -106,6 +106,19 @@ def build_single_file():
     with open(github_pages_index, 'w', encoding='utf-8') as f:
         f.write(html)
 
+    # 4. Synchronize Service Worker and Web Manifest to root for GitHub Pages
+    src_sw = os.path.join(src_dir, 'service-worker.js')
+    root_sw = os.path.join(project_dir, 'service-worker.js')
+    if os.path.exists(src_sw):
+        with open(src_sw, 'r', encoding='utf-8') as f_in, open(root_sw, 'w', encoding='utf-8') as f_out:
+            f_out.write(f_in.read())
+
+    src_manifest = os.path.join(src_dir, 'manifest.json')
+    root_manifest = os.path.join(project_dir, 'manifest.json')
+    if os.path.exists(src_manifest):
+        with open(src_manifest, 'r', encoding='utf-8') as f_in, open(root_manifest, 'w', encoding='utf-8') as f_out:
+            f_out.write(f_in.read())
+
     print("Successfully built standalone index.html (GitHub Pages) and hompage_test.html with embedded quiz engine & PWA support!")
 
 if __name__ == '__main__':
