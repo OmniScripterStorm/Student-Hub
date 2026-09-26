@@ -1,8 +1,8 @@
-import { STEM_REVIEWERS, STUDY_MATERIALS, PROBLEM_SETS, QUIZ_SETS, getCachedCreditsMarkdown, saveCachedCreditsMarkdown, DEFAULT_CREDITS_URL, getSyncUrl, CURRENT_APP_VERSION, getSubjectMeta } from '../data/study_data.js';
+import { STEM_REVIEWERS, STUDY_MATERIALS, QUIZ_SETS, getCachedCreditsMarkdown, saveCachedCreditsMarkdown, DEFAULT_CREDITS_URL, getSyncUrl, CURRENT_APP_VERSION, getSubjectMeta } from '../data/study_data.js';
 import { renderMathInHtml } from './math_engine.js';
 import { renderQuizSetsView } from './quiz_engine.js';
 
-let currentSection = 'overview'; // overview, materials, reviewers, problem_sets, quiz_sets, credits, settings
+let currentSection = 'overview'; // overview, materials, reviewers, quiz_sets, credits, settings
 
 export function getCurrentSection() {
   return currentSection;
@@ -12,7 +12,7 @@ export function navigateSection(sectionId) {
   currentSection = sectionId;
 
   // Update Sidebar active indicators
-  const navItems = ['overview', 'materials', 'reviewers', 'problem_sets', 'quiz_sets', 'credits', 'settings'];
+  const navItems = ['overview', 'materials', 'reviewers', 'quiz_sets', 'credits', 'settings'];
   navItems.forEach(item => {
     const el = document.getElementById(`navItem-${item}`);
     if (el) {
@@ -39,7 +39,6 @@ export function navigateSection(sectionId) {
   // Render content for dynamic views
   if (sectionId === 'materials') renderMaterialsView();
   if (sectionId === 'reviewers') renderReviewersView();
-  if (sectionId === 'problem_sets') renderProblemSetsView();
   if (sectionId === 'quiz_sets') renderQuizSetsView();
   if (sectionId === 'credits') renderCreditsView();
   if (sectionId === 'settings') renderSettingsView();
@@ -203,39 +202,6 @@ export function renderReviewersView() {
           </div>
         `;
       }).join('')}
-    </div>
-  `;
-}
-
-export function renderProblemSetsView() {
-  const container = document.getElementById('problemSetsListContainer');
-  if (!container) return;
-
-  if (!PROBLEM_SETS || PROBLEM_SETS.length === 0) {
-    container.innerHTML = `
-      <div class="py-12 text-center text-slate-400 dark:text-slate-500 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
-        <span class="text-3xl block mb-2">&#x1F4DD;</span>
-        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-200">No Problem Sets Published Yet</h4>
-        <p class="text-xs text-slate-400 mt-1">Practice drills and step-by-step problem sets will be provided here.</p>
-      </div>
-    `;
-    return;
-  }
-
-  container.innerHTML = `
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
-      ${PROBLEM_SETS.map(ps => `
-        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
-          <div>
-            <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300">
-              ${ps.subject || 'Drill'}
-            </span>
-            <h3 class="text-sm font-bold text-slate-900 dark:text-white mt-2">${renderMathInHtml(ps.title || 'Untitled Problem Set')}</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${renderMathInHtml(ps.desc || '')}</p>
-          </div>
-          ${ps.link ? `<a href="${ps.link}" target="_blank" class="mt-3 inline-flex items-center gap-1 text-xs font-bold text-tagsci-600 dark:text-tagsci-400 hover:underline">Solve Drill &rarr;</a>` : ''}
-        </div>
-      `).join('')}
     </div>
   `;
 }

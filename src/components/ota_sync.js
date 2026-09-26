@@ -1,7 +1,7 @@
 import { getSyncUrl, setSyncUrl, resetSyncUrlToDefault, clearAppCache, saveSyncedData, CURRENT_APP_VERSION, DEFAULT_OTA_URL } from '../data/study_data.js';
 import { renderMaterials } from './reviewers.js';
 import { renderCalendar } from './calendar.js';
-import { renderMaterialsView, renderReviewersView, renderProblemSetsView, getCurrentSection } from './navigation.js';
+import { renderMaterialsView, renderReviewersView, getCurrentSection } from './navigation.js';
 import { renderQuizSetsView } from './quiz_engine.js';
 
 let otaPollerInterval = null;
@@ -16,7 +16,6 @@ export function refreshAllViews() {
       if (sec === 'materials' && typeof renderMaterialsView === 'function') renderMaterialsView();
       if (sec === 'reviewers' && typeof renderReviewersView === 'function') renderReviewersView();
       if (sec === 'quiz_sets' && typeof renderQuizSetsView === 'function') renderQuizSetsView();
-      if (sec === 'problem_sets' && typeof renderProblemSetsView === 'function') renderProblemSetsView();
     }
   } catch (err) {
     console.warn('Auto-sync live refresh notice:', err);
