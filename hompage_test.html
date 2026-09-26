@@ -1628,6 +1628,24 @@ function renderBlocksToHtml(blocks) {
         }
       } else if (text.includes('|') && text.split(/\r?\n/).some(l => l.trim().startsWith('|') && l.trim().endsWith('|'))) {
         html += renderMarkdownTable(text);
+      } else if (text.includes('![') && text.includes('](')) {
+        const imgMatch = text.match(/!\[(.*?)\]\((.*?)\)/);
+        if (imgMatch) {
+          const before = text.substring(0, imgMatch.index).trim();
+          const after = text.substring(imgMatch.index + imgMatch[0].length).trim();
+          if (before) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(before)}</p>`;
+          html += `
+            <figure class="my-4 flex flex-col items-center justify-center">
+              <div class="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 shadow-sm max-w-lg w-full">
+                <img src="${imgMatch[2]}" alt="${imgMatch[1]}" loading="lazy" class="w-full h-auto object-contain max-h-[500px] mx-auto" />
+              </div>
+              ${imgMatch[1] ? `<figcaption class="mt-1.5 text-center text-xs text-slate-400 italic">${renderMathInHtml(imgMatch[1])}</figcaption>` : ''}
+            </figure>
+          `;
+          if (after) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(after)}</p>`;
+        } else {
+          html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
+        }
       } else {
         html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
       }
@@ -1635,6 +1653,22 @@ function renderBlocksToHtml(blocks) {
       html += renderTableBlock(b);
     } else if (b.type === 'cartesian' || b.type === 'plot') {
       html += renderCartesianPlaneSvg(b);
+    } else if (b.type === 'image') {
+      const url = b.url || '';
+      const alt = b.alt || 'Figure diagram';
+      const caption = b.caption || '';
+      const size = b.size || 'medium';
+      const sizeClass = size === 'small' ? 'max-w-xs' : (size === 'medium' ? 'max-w-lg' : 'max-w-2xl');
+      if (url) {
+        html += `
+          <figure class="my-4 flex flex-col items-center justify-center">
+            <div class="relative group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 shadow-sm ${sizeClass} w-full">
+              <img src="${url}" alt="${alt}" loading="lazy" class="w-full h-auto object-contain max-h-[500px] mx-auto transition-transform duration-200 hover:scale-[1.01]" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'p-6 text-center text-slate-400 text-xs font-semibold\\'>Failed to load image</div>';" />
+            </div>
+            ${caption ? `<figcaption class="mt-2 text-center text-xs text-slate-500 dark:text-slate-400 italic">${renderMathInHtml(caption)}</figcaption>` : ''}
+          </figure>
+        `;
+      }
     } else if (b.type === 'formula') {
       html += `
         <div class="my-3 p-3.5 sm:p-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">
