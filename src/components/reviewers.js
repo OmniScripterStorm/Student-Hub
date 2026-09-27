@@ -196,9 +196,9 @@ function updateVaultTabButtons() {
     const btn = document.getElementById(`btnVaultTab-${t}`);
     if (!btn) return;
     if (t === currentVaultTab) {
-      btn.className = 'flex-1 py-1.5 px-2 rounded-lg bg-white dark:bg-slate-900 text-tagsci-800 dark:text-tagsci-300 shadow-sm transition flex items-center justify-center gap-1.5 font-bold';
+      btn.className = 'flex-1 min-w-0 py-1.5 px-1 sm:px-2 rounded-lg bg-white dark:bg-slate-900 text-tagsci-800 dark:text-tagsci-300 shadow-sm transition flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-bold overflow-hidden';
     } else {
-      btn.className = 'flex-1 py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5 font-semibold';
+      btn.className = 'flex-1 min-w-0 py-1.5 px-1 sm:px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-semibold overflow-hidden';
     }
   });
 

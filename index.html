@@ -422,21 +422,21 @@
               </div>
 
               <!-- Filter / Type Switcher Tabs -->
-              <div class="flex items-center p-1 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 mb-3.5 text-xs font-bold gap-1">
-                <button id="btnVaultTab-reviewers" onclick="switchVaultTab('reviewers')" class="flex-1 py-1.5 px-2 rounded-lg bg-white dark:bg-slate-900 text-tagsci-800 dark:text-tagsci-300 shadow-sm transition flex items-center justify-center gap-1.5">
-                  <span>&#x1F52C;</span>
+              <div class="grid grid-cols-3 p-1 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 mb-3.5 gap-1">
+                <button id="btnVaultTab-reviewers" onclick="switchVaultTab('reviewers')" class="min-w-0 py-1.5 px-1 sm:px-2 rounded-lg bg-white dark:bg-slate-900 text-tagsci-800 dark:text-tagsci-300 shadow-sm transition flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-bold overflow-hidden">
+                  <span class="shrink-0 text-xs sm:text-sm">&#x1F52C;</span>
                   <span class="truncate">Reviewers</span>
-                  <span id="badgeVault-reviewers" class="text-[9.5px] px-1.5 py-0.2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-mono-math">0</span>
+                  <span id="badgeVault-reviewers" class="text-[9px] sm:text-[9.5px] px-1 sm:px-1.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-mono-math shrink-0">0</span>
                 </button>
-                <button id="btnVaultTab-materials" onclick="switchVaultTab('materials')" class="flex-1 py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5">
-                  <span>&#x1F4DA;</span>
+                <button id="btnVaultTab-materials" onclick="switchVaultTab('materials')" class="min-w-0 py-1.5 px-1 sm:px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-semibold overflow-hidden">
+                  <span class="shrink-0 text-xs sm:text-sm">&#x1F4DA;</span>
                   <span class="truncate">Materials</span>
-                  <span id="badgeVault-materials" class="text-[9.5px] px-1.5 py-0.2 rounded-full bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 font-mono-math">0</span>
+                  <span id="badgeVault-materials" class="text-[9px] sm:text-[9.5px] px-1 sm:px-1.5 py-0.5 rounded-full bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 font-mono-math shrink-0">0</span>
                 </button>
-                <button id="btnVaultTab-quizzes" onclick="switchVaultTab('quizzes')" class="flex-1 py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5">
-                  <span>&#x2753;</span>
+                <button id="btnVaultTab-quizzes" onclick="switchVaultTab('quizzes')" class="min-w-0 py-1.5 px-1 sm:px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-semibold overflow-hidden">
+                  <span class="shrink-0 text-xs sm:text-sm">&#x2753;</span>
                   <span class="truncate">Self-Tests</span>
-                  <span id="badgeVault-quizzes" class="text-[9.5px] px-1.5 py-0.2 rounded-full bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 font-mono-math">0</span>
+                  <span id="badgeVault-quizzes" class="text-[9px] sm:text-[9.5px] px-1 sm:px-1.5 py-0.5 rounded-full bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 font-mono-math shrink-0">0</span>
                 </button>
               </div>
 
@@ -2034,9 +2034,9 @@ function updateVaultTabButtons() {
     const btn = document.getElementById(`btnVaultTab-${t}`);
     if (!btn) return;
     if (t === currentVaultTab) {
-      btn.className = 'flex-1 py-1.5 px-2 rounded-lg bg-white dark:bg-slate-900 text-tagsci-800 dark:text-tagsci-300 shadow-sm transition flex items-center justify-center gap-1.5 font-bold';
+      btn.className = 'flex-1 min-w-0 py-1.5 px-1 sm:px-2 rounded-lg bg-white dark:bg-slate-900 text-tagsci-800 dark:text-tagsci-300 shadow-sm transition flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-bold overflow-hidden';
     } else {
-      btn.className = 'flex-1 py-1.5 px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5 font-semibold';
+      btn.className = 'flex-1 min-w-0 py-1.5 px-1 sm:px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-semibold overflow-hidden';
     }
   });
 
