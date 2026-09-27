@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grade 11 Student Guidebook — TagSci Student Hub</title>
+  <link rel="icon" href="../tagsci logo.png" type="image/png" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            tagsci: {
+              50: '#edfcf2',
+              100: '#d5f7e1',
+              200: '#aef0c8',
+              300: '#72e2a3',
+              400: '#38cd7a',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#0e3a24',
+              950: '#072416',
+            },
+            g11pink: {
+              50: '#fdf2f8',
+              100: '#fce7f3',
+              200: '#fbcfe8',
+              300: '#f9a8d4',
+              400: '#f472b6',
+              500: '#ec4899',
+              600: '#db2777',
+              700: '#be185d',
+              800: '#9d174d',
+              900: '#831843',
+            },
+            gold: {
+              300: '#fde047',
+              400: '#fbbf24',
+              500: '#f59e0b',
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'system-ui', '-apple-system', 'sans-serif'],
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            mono: ['JetBrains Mono', 'Courier New', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .font-serif-title {
+      font-family: 'Newsreader', Georgia, serif;
+    }
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .hymn-verse {
+      line-height: 1.9;
+      letter-spacing: 0.02em;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #166534;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-tagsci-500 selection:text-white">
+
+  <!-- ================= TOP HEADER BAR ================= -->
+  <header class="sticky top-0 z-40 bg-tagsci-950/90 backdrop-blur-md text-white border-b border-tagsci-800/80 shadow-md">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
+      <div class="flex items-center space-x-3 min-w-0">
+        <a href="../index.html" class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition flex items-center gap-1.5 text-xs font-semibold shrink-0">
+          <span>&larr;</span>
+          <span class="hidden sm:inline">Hub</span>
+        </a>
+        <img src="../tagsci logo.png" alt="TagSci Logo" class="w-8 h-8 sm:w-9 sm:h-9 object-contain rounded-lg p-0.5 bg-white shadow shrink-0" />
+        <div class="min-w-0">
+          <div class="flex items-center space-x-2">
+            <h1 class="font-extrabold text-sm sm:text-base tracking-tight text-white truncate">
+              Scientian Student Guidebook
+            </h1>
+            <span class="bg-g11pink-600 text-white text-[9px] sm:text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider whitespace-nowrap">
+              Grade 11
+            </span>
+          </div>
+          <p class="text-[10px] sm:text-xs text-tagsci-300 truncate">
+            Taguig Science High School • SSLG
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="flex items-center space-x-2 shrink-0">
+        <button 
+          onclick="window.print()" 
+          class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-xs font-bold text-white transition shadow-sm border border-tagsci-700"
+          title="Print Guidebook"
+        >
+          <span>🖨️</span>
+          <span>Print</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN UNIFIED CONTINUOUS GUIDEBOOK ================= -->
+  <main class="max-w-4xl mx-auto px-3 sm:px-6 py-6 sm:py-10 flex-1 w-full">
+
+    <!-- Single Continuous Elegant Master Container -->
+    <article class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-tagsci-950 via-tagsci-900 to-slate-900 text-white p-6 sm:p-14 border border-tagsci-800/90 shadow-2xl space-y-16">
+      
+      <!-- Ambient Watermark Emblem in Background -->
+      <div class="absolute -right-16 -top-16 opacity-5 pointer-events-none select-none">
+        <img src="../tagsci logo.png" alt="Watermark Emblem" class="w-96 h-96 object-contain" />
+      </div>
+      <div class="absolute -left-16 bottom-48 opacity-5 pointer-events-none select-none">
+        <img src="../tagsci logo.png" alt="Watermark Emblem" class="w-96 h-96 object-contain" />
+      </div>
+
+      <!-- ================= 1. COVER / TITLE / ORIENTATION ================= -->
+      <header class="relative z-10 space-y-6 text-center max-w-2xl mx-auto pb-4 border-b border-tagsci-800/80">
+        
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[11px] font-bold uppercase tracking-widest text-tagsci-200">
+          <span>Supreme Secondary Learner Government</span>
+          <span>•</span>
+          <span class="text-g11pink-300">S.Y. 2026–2027</span>
+        </div>
+
+        <div class="flex justify-center pt-2">
+          <img src="../tagsci logo.png" alt="TagSci Official Crest" class="w-20 h-20 sm:w-24 sm:h-24 object-contain p-1.5 bg-white rounded-2xl shadow-2xl border-2 border-tagsci-400/40" />
+        </div>
+
+        <div class="space-y-2">
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white uppercase font-serif-title">
+            Grade 11 Student Guidebook
+          </h1>
+          <p class="text-xs sm:text-sm text-tagsci-200 font-medium tracking-wide">
+            Taguig Science High School • The Home of Champions
+          </p>
+        </div>
+
+        <p class="text-xs sm:text-sm text-slate-300 italic max-w-xl mx-auto leading-relaxed pt-2">
+          &ldquo;Note that the information here is based on the old student handbook, and may not be fully accurate. Nonetheless, this guidebook contains the unspoken conduct expected from a Scientian.&rdquo;
+        </p>
+
+      </header>
+
+
+      <!-- ================= 2. MESSAGE FROM GRADE 11 REPRESENTATIVE ================= -->
+      <section class="relative z-10 space-y-6 max-w-2xl mx-auto">
+        
+        <div class="border-b border-tagsci-800/60 pb-3">
+          <h2 class="text-xl sm:text-2xl font-bold text-white font-serif-title">
+            A message from your Grade 11 Representative
+          </h2>
+        </div>
+
+        <div class="space-y-4 text-sm sm:text-base text-slate-200 leading-relaxed font-serif-title">
+          <p class="font-semibold text-white">
+            To my fellow Scientians and dearest batchmates,
+          </p>
+
+          <p>
+            When our school first opened its doors to our batch in Grade 7, the student handbook welcomed us with an invitation that still echoes today: <i class="text-tagsci-200">&ldquo;So, get involved! THIS IS YOUR SCHOOL.&rdquo;</i>
+          </p>
+
+          <p>
+            Those words remain just as true now as they were then.
+          </p>
+
+          <p>
+            To my fellow old students who have walked with me for years: you already know the way of life, our traditions, and what it means to be a Scientian. Thank you for continuing to bear the values of Excellence, Servitude, and Honesty.
+          </p>
+
+          <p>
+            To our transferees: a warm welcome to Taguig Science High School. Stepping into a new school is never easy, but you will always have a place here. From day one, this is your home, and this is your school.
+          </p>
+
+          <p>
+            Senior High School brings tougher challenges and bigger responsibilities. This Guidebook and the Student Hub alongside it were created so that all of us have the tools, voice, and support to succeed together.
+          </p>
+
+          <p>
+            Let us learn from one another, lift each other up, and lead the road to excellence as one.
+          </p>
+
+          <p class="pt-2 font-bold text-white text-base sm:text-lg">
+            Hail to TagSci, the Home of Champions
+          </p>
+        </div>
+
+        <div class="pt-4 border-t border-tagsci-800/40">
+          <p class="text-base font-bold text-white font-serif-title">
+            JV S. Rejuso
+          </p>
+          <p class="text-xs text-tagsci-300 font-sans mt-0.5">
+            Grade 11 Representative, SSLG
+          </p>
+        </div>
+
+      </section>
+
+
+      <!-- ================= 3. MISSION, VISION & CORE VALUES ================= -->
+      <section class="relative z-10 space-y-8 max-w-2xl mx-auto border-t border-tagsci-800/80 pt-10">
+        
+        <div class="space-y-3">
+          <h2 class="text-xs font-bold uppercase tracking-widest text-tagsci-400">
+            Institutional Foundation
+          </h2>
+          
+          <div class="space-y-2">
+            <h3 class="text-lg sm:text-xl font-bold text-white font-serif-title">
+              Mission
+            </h3>
+            <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-serif-title italic">
+              To offer the best quality of education to students and equip them to be world class leaders of the 21st century.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-lg sm:text-xl font-bold text-white font-serif-title">
+            Vision
+          </h3>
+          <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-serif-title italic">
+            To be the country's premier high school which upholds a culture of excellence in Science, Technology, and Mathematics (STM) education.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-lg sm:text-xl font-bold text-white font-serif-title">
+            Core Values
+          </h3>
+          <p class="text-base sm:text-lg font-bold text-amber-300 font-serif-title tracking-wide">
+            Excellence, Servitude, Honesty
+          </p>
+        </div>
+
+      </section>
+
+
+      <!-- ================= 4. TAGUIG SCIENCE HYMN ================= -->
+      <section class="relative z-10 space-y-6 max-w-2xl mx-auto border-t border-tagsci-800/80 pt-10 text-center">
+        
+        <div class="space-y-1">
+          <h2 class="text-xs font-bold uppercase tracking-widest text-tagsci-400">
+            Alma Mater Anthem
+          </h2>
+          <h3 class="text-2xl sm:text-3xl font-bold text-white font-serif-title">
+            Taguig Science Hymn
+          </h3>
+        </div>
+
+        <div class="space-y-6 font-serif-title text-sm sm:text-base tracking-wide hymn-verse text-slate-100 max-w-md mx-auto pt-2">
+          
+          <div class="space-y-1">
+            <p class="font-bold text-tagsci-300 text-base sm:text-lg">
+              Hail to TagSci the Home of Champions,
+            </p>
+            <p>the builder of tomorrow&rsquo;s dreams.</p>
+            <p>We, your sons and daughters, are grateful to thee</p>
+            <p>For bravely guiding us in life.</p>
+          </div>
+
+          <div class="w-12 h-0.5 bg-tagsci-700 mx-auto"></div>
+
+          <div class="space-y-1">
+            <p>And you showed us ways to be strong</p>
+            <p>So we&rsquo;ll be forever proud of you!</p>
+            <p class="font-semibold text-g11pink-300">
+              Excellence, Servitude, and Honesty
+            </p>
+            <p>We will live life with all these things.</p>
+          </div>
+
+          <div class="w-12 h-0.5 bg-tagsci-700 mx-auto"></div>
+
+          <div class="space-y-1">
+            <p>Thy name TagSci, TagSci will echo</p>
+            <p>From eastern shores to western seas!</p>
+            <p class="font-bold text-tagsci-300 text-base sm:text-lg">
+              We will lead the road to excellence
+            </p>
+            <p>Waving high thy banner green and white,</p>
+            <p>A symbol of our unfading love</p>
+            <p class="font-bold text-amber-300">
+              To our dear, alma mater, TagSci!
+            </p>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ================= 5. CODE OF CONDUCT ================= -->
+      <section class="relative z-10 space-y-8 max-w-2xl mx-auto border-t border-tagsci-800/80 pt-10">
+        
+        <div class="space-y-1 border-b border-tagsci-800/60 pb-3">
+          <h2 class="text-xs font-bold uppercase tracking-widest text-tagsci-400">
+            Scientian Protocols
+          </h2>
+          <h3 class="text-2xl sm:text-3xl font-bold text-white font-serif-title">
+            Code of Conduct
+          </h3>
+        </div>
+
+        <div class="space-y-8 text-xs sm:text-sm text-slate-200 leading-relaxed">
+          
+          <!-- Hallway Decorum -->
+          <div class="space-y-2">
+            <h4 class="text-base font-bold text-white font-serif-title">
+              Hallway Decorum
+            </h4>
+            <ul class="space-y-1.5 list-disc pl-5 text-slate-300">
+              <li>Maintain conversational and quiet volume at all times when moving between classrooms, especially near ongoing junior high classes and specialized laboratories.</li>
+              <li>Keep stairwells, fire exits, and central hallway corridors unobstructed. Avoid loitering or sitting in large clusters along corridor floors during transitions or vacant periods.</li>
+              <li>Trash bins are placed in strategic places around the halls, there should be no excuse for littering.</li>
+            </ul>
+          </div>
+
+          <!-- Punctuality -->
+          <div class="space-y-2">
+            <h4 class="text-base font-bold text-white font-serif-title">
+              Punctuality
+            </h4>
+            <ul class="space-y-1.5 list-disc pl-5 text-slate-300">
+              <li>Students are expected to be on campus premises at least 15 minutes before the official start of the first instructional period.</li>
+              <li>Students arriving after the designated entry cutoff must head to the Guidance Office and fill out necessary paperwork before entering their classroom.</li>
+            </ul>
+          </div>
+
+          <!-- School Identification and Campus Security -->
+          <div class="space-y-2">
+            <h4 class="text-base font-bold text-white font-serif-title">
+              School Identification and Campus Security
+            </h4>
+            <ul class="space-y-1.5 list-disc pl-5 text-slate-300">
+              <li>The ID must be visible, properly worn, and identifiable. In case of loss, report to the class adviser.</li>
+            </ul>
+          </div>
+
+          <!-- Science Lab Conduct -->
+          <div class="space-y-2">
+            <h4 class="text-base font-bold text-white font-serif-title">
+              Science Lab Conduct
+            </h4>
+            <ul class="space-y-1.5 list-disc pl-5 text-slate-300">
+              <li>After use, make sure to return the seats under the table, return all lab material/tools used, and refrain from littering.</li>
+            </ul>
+          </div>
+
+          <!-- Personal Decorum -->
+          <div class="space-y-2">
+            <h4 class="text-base font-bold text-white font-serif-title">
+              Personal Decorum
+            </h4>
+            <ul class="space-y-1.5 list-disc pl-5 text-slate-300">
+              <li>Boys' haircuts must not cover the ears and eyebrows. Girls may choose appropriate hairstyles and should see to it that it is neat and tidy. Dying of hair should be limited to black and dark brown.</li>
+              <li>Girls should only wear one pair of earrings.</li>
+              <li>Body tattoos are forbidden.</li>
+              <li>These protocols are usually enforced:
+                <ul class="list-circle pl-5 mt-1 space-y-0.5 text-slate-400">
+                  <li>• Before a major exam (Summative, Term Exam)</li>
+                  <li>• At random</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Cellular Device -->
+          <div class="space-y-2">
+            <h4 class="text-base font-bold text-white font-serif-title">
+              Cellular Device
+            </h4>
+            <ul class="space-y-1.5 list-disc pl-5 text-slate-300">
+              <li>Use of phones in class is prohibited, unless required by the subject teacher as part of the lesson.</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ================= CLOSING FOOTER ================= -->
+      <footer class="relative z-10 pt-10 border-t border-tagsci-800/80 text-center text-xs text-tagsci-400 space-y-1">
+        <p class="font-bold text-slate-200">
+          Taguig Science High School • Supreme Secondary Learner Government (SSLG)
+        </p>
+        <p class="text-[11px] text-tagsci-400">
+          Grade 11 Student Hub & Offline WebApp
+        </p>
+      </footer>
+
+    </article>
+
+  </main>
+
+</body>
+</html>

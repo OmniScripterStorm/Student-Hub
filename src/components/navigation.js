@@ -13,7 +13,7 @@ export function navigateSection(sectionId) {
   currentSection = sectionId;
 
   // Update Sidebar active indicators
-  const navItems = ['overview', 'materials', 'reviewers', 'quiz_sets', 'credits', 'settings'];
+  const navItems = ['overview', 'materials', 'reviewers', 'quiz_sets', 'guidebook', 'credits', 'settings'];
   navItems.forEach(item => {
     const el = document.getElementById(`navItem-${item}`);
     if (el) {
