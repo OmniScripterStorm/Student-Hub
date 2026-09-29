@@ -1,6 +1,6 @@
 {
   "version": "1.4.0",
-  "updatedAt": "2026-09-28T07:22:44.915Z",
+  "updatedAt": "2026-09-29T00:56:32.518Z",
   "announcement": "Refreshed 1 Reviewers, 3 Study Materials, 4 Deadlines, and 1 Quiz Banks.",
   "calendarEvents": [
     {
@@ -415,6 +415,15 @@
       "title": "Piecewise Functions",
       "summary": "Introduction to Piecewise Functions",
       "blocks": [
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "0. History"
+        },
+        {
+          "type": "paragraph",
+          "text": "Did you know that Piecewise Function is only invented by one person? But rather during the 18th and 19th century a new view of functions emerged in tandem with the modern understanding of what a function actually was! Early on, mathematicians such as Leonard Euler actually eschewed the piecewise function as they thought for a function to be a function it had to be expressed with one algebraic expression. This proved problematic though as real world forces such as the plucked string of a guitar have a discontinuous mathematical function at the center which eluded physicists at the time. It was not until 1837 however, that Peter Gustav Lejeune Dirichlet formally defined a function as any rule that associates to each value of x one and only one value of y. To show that his definition did capture everything a mathematician might intuitively understand a function to be, he presented what later became known as the Dirichlet function, a discontinuous piecewise function. Later in the century, Karl Weierstrass would refine the definition even more. These men then proceeded to use their function definitions in other fields, from the study of electrotechnics by Oliver Heaviside and his step function in the 1890s to Richard Courant and his Finite Element Method in 1943."
+        },
         {
           "type": "heading",
           "level": "h3",
