@@ -1,7 +1,7 @@
 {
   "version": "1.4.0",
-  "updatedAt": "2026-09-29T01:12:32.511Z",
-  "announcement": "Refreshed 1 Reviewers, 3 Study Materials, 4 Deadlines, and 1 Quiz Banks.",
+  "updatedAt": "2026-10-01T08:06:15.533Z",
+  "announcement": "Refreshed 1 Reviewers, 4 Study Materials, 4 Deadlines, and 1 Quiz Banks.",
   "calendarEvents": [
     {
       "id": 1790325028547,
@@ -294,6 +294,141 @@
     }
   ],
   "studyMaterials": [
+    {
+      "id": "material_1790837876784",
+      "subject": "General Science",
+      "tag": "Study Material",
+      "color": "border-l-4 border-blue-500",
+      "title": "Chemical Reactions",
+      "summary": "Introduction to Chemical Reactions",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "1. Topic Introduction"
+        },
+        {
+          "type": "paragraph",
+          "text": "A chemical reaction is a process in which one or more substances (reactants) are changed into new substances (products) with different properties."
+        },
+        {
+          "type": "paragraph",
+          "text": "$Reactant → Product$"
+        },
+        {
+          "type": "paragraph",
+          "text": "Example:"
+        },
+        {
+          "type": "paragraph",
+          "text": "$2H₂ + O₂ → 2H₂O$"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "2. Signs of a chemical reaction"
+        },
+        {
+          "type": "paragraph",
+          "text": "A chemical reaction can be identified using the following:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Change in color",
+            "Formation of a gas/bubbles",
+            "Formation of a precipitate",
+            "Change in temperature",
+            "Production of light",
+            "Change in odor"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "A chemical reaction causes the formation of a new substance. The atoms are rearranged into substances with new properties. This is in contrast to Physical Change, where no new substance is formed, with only the physical state changing"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "3. Types of Chemical Reactions"
+        },
+        {
+          "type": "paragraph",
+          "text": "1. Synthesis Reaction"
+        },
+        {
+          "type": "paragraph",
+          "text": "A synthesis reaction occurs when two or more simpler substances combine to form one more complex substance. It follows the pattern $A + B → AB$. The reactants may be elements or compounds, and the product is a single compound. For example, $2H₂ + O₂ → 2H₂O$, where hydrogen and oxygen combine to form water."
+        },
+        {
+          "type": "image",
+          "url": "https://images.openai.com/static-rsc-4/t-YF6Qw0p-mYs1uVvrRlMFIEPZnYGLo5xHzvTCEF6QtJpehCle4x5AEJJbU7kXpPgBPzSMbKnuLA1fbyqpW169epNneSrZNYV6lh9fqEdmo-tZNKuQykjrpHvyPxtg8D7yOw1JXJxAbqOYEdArdJnDta1wt1quycQjZBeK5yhVSe-0S69nFc8vQapO7uVSL3?purpose=fullsize",
+          "caption": "",
+          "alt": "Illustration diagram",
+          "size": "medium"
+        },
+        {
+          "type": "paragraph",
+          "text": "2. Decomposition Reaction"
+        },
+        {
+          "type": "paragraph",
+          "text": "A decomposition reaction is the opposite of synthesis. It occurs when one compound breaks down into two or more simpler substances. It follows the pattern $AB → A + B$ and often requires energy such as heat, electricity, or light. For example, $2H₂O → 2H₂ + O₂$, where water breaks down into hydrogen and oxygen."
+        },
+        {
+          "type": "image",
+          "url": "https://images.openai.com/static-rsc-4/MsToPCW6-7czRzCc3D6NnIbvtHHyy3O-F9QlkSxLiUM6AGtWvKVAeRB5lpl1mV_9Nerpmy9lq4jMKy01RC6wimHQdIceCK0SR6QrdoIfHOjuel19YN1YQ-v8f-bAhrN8QrD77gueUK3oGA1Xw9kp8v1r2dmLVho4V_Z0Zf8F_22D__vmCm1GiiOGqLJOrFWs?purpose=fullsize",
+          "caption": "",
+          "alt": "Illustration diagram",
+          "size": "medium"
+        },
+        {
+          "type": "paragraph",
+          "text": "3. Single Replacement Reaction"
+        },
+        {
+          "type": "paragraph",
+          "text": "A single replacement reaction occurs when one element replaces another element in a compound. It follows the pattern $A + BC → AC + B$. The free element must be reactive enough to replace the element in the compound. For example, $Zn + 2HCl → ZnCl₂ + H₂$, where zinc replaces hydrogen in hydrochloric acid."
+        },
+        {
+          "type": "image",
+          "url": "https://images.openai.com/static-rsc-4/l7-WSloXMUB4jCECXnLftJNSlz4XPdICyatmqCiT2ozzykUdwH0sXByOLFCwTAR9U5gYnddJeZS3u3XqYT2gaHppBB-w0fQNJdmaMYhM3Xsc5V0EYiWVPhB4R7VDkDTmp95HiRxSEoDU_ErJD9eT2zwL0IcxKljc6Ba9bjvTJgSAe0ifC1n0R5Y2T8vYuH0k?purpose=fullsize",
+          "caption": "",
+          "alt": "Illustration diagram",
+          "size": "medium"
+        },
+        {
+          "type": "paragraph",
+          "text": "4. Double Replacement Reaction"
+        },
+        {
+          "type": "paragraph",
+          "text": "A double replacement reaction occurs when two compounds exchange their ions or parts to form two new compounds. It follows the pattern $AB + CD → AD + CB$ and usually happens when the reaction produces a precipitate, gas, or water. For example, $AgNO₃ + NaCl → AgCl + NaNO₃$, where silver and sodium exchange partners."
+        },
+        {
+          "type": "image",
+          "url": "https://images.openai.com/static-rsc-4/bcmh6nA9jJuXD-MGYHgXWJ7pXul_ol6vTJu9DFwkM5WFPTQLXDBQceJpRyyxy95azLErYjZtjSjU96pJjizBmCRf5doaRG7vSo_bW0jvUFxktYJTXrdvoIjOC24AUNzjwx3ca41w83ZbZAEpGCLzPefJn2R7tndp8SliPMr3Gjn3h2GbFq68fkEzSwmP1X3X?purpose=fullsize",
+          "caption": "",
+          "alt": "Illustration diagram",
+          "size": "medium"
+        },
+        {
+          "type": "paragraph",
+          "text": "5. Combustion Reaction"
+        },
+        {
+          "type": "paragraph",
+          "text": "A combustion reaction occurs when a substance reacts rapidly with oxygen, usually releasing heat and light. Hydrocarbons commonly undergo combustion, producing carbon dioxide and water when there is enough oxygen. It follows the pattern $Fuel + O₂ → products$ For example, $CH₄ + 2O₂ → CO₂ + 2H₂O$, where methane burns in oxygen."
+        },
+        {
+          "type": "image",
+          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NjAgNTQwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8IS0tIFNsaWRlIEJhY2tncm91bmQgLS0+CiAgPHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxYjJhNGEiLz4KCiAgPCEtLSBUaXRsZSBCYW5uZXIgLS0+CiAgPHJlY3QgeD0iMCIgeT0iMjQiIHdpZHRoPSI5NjAiIGhlaWdodD0iNzAiIGZpbGw9IiMxMDFjMzMiIG9wYWNpdHk9IjAuOSIvPgogIDx0ZXh0IHg9IjQ4MCIgeT0iNzIiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjM4IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPgogICAgQ29tYnVzdGlvbiBSZWFjdGlvbgogIDwvdGV4dD4KCiAgPCEtLSBEZWZpbml0aW9uIFRleHQgLS0+CiAgPHRleHQgeD0iNDgwIiB5PSIxNDUiIGZpbGw9IiNmMGY0ZjgiIGZvbnQtZmFtaWx5PSJBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4KICAgIEEgcmVhY3Rpb24gb2YgYSBmdWVsIHdpdGggb3h5Z2VuLCBwcm9kdWNpbmcgZW5lcmd5IGluIHRoZSBmb3JtIG9mIGhlYXQgYW5kL29yIGxpZ2h0LgogIDwvdGV4dD4KCiAgPCEtLSBSZWFjdGlvbiBEaWFncmFtIENvbnRhaW5lciAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLCAxNjApIj4KICAgIDwhLS0gRnVlbCBCb3ggLS0+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMzAsIDQwKSI+CiAgICAgIDxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTAwIiByeD0iMTYiIGZpbGw9IiNlNzRjM2MiIHN0cm9rZT0iI2MwMzkyYiIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgICAgIDx0ZXh0IHg9IjkwIiB5PSI2MiIgZmlsbD0iI2ZmZmZmZiIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzQiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4KICAgICAgICBmdWVsCiAgICAgIDwvdGV4dD4KICAgIDwvZz4KCiAgICA8IS0tIFBsdXMgU2lnbiAtLT4KICAgIDx0ZXh0IHg9IjM1NSIgeT0iMTEyIiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1MiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPgogICAgICArCiAgICA8L3RleHQ+CgogICAgPCEtLSBPMiBNb2xlY3VsZSBHcmFwaGljIC0tPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDM1LCA5MCkiPgogICAgICA8Y2lyY2xlIGN4PSItMjgiIGN5PSIwIiByPSIzOCIgZmlsbD0iIzM0OThkYiIgc3Ryb2tlPSIjMjk4MGI5IiBzdHJva2Utd2lkdGg9IjMiLz4KICAgICAgPGNpcmNsZSBjeD0iMjgiIGN5PSIwIiByPSIzOCIgZmlsbD0iIzM0OThkYiIgc3Ryb2tlPSIjMjk4MGI5IiBzdHJva2Utd2lkdGg9IjMiLz4KICAgICAgPHRleHQgeD0iMCIgeT0iMTMiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjM2IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+CiAgICAgICAgTzx0c3BhbiBkeT0iMTAiIGZvbnQtc2l6ZT0iMjQiPjI8L3RzcGFuPgogICAgICA8L3RleHQ+CiAgICA8L2c+CgogICAgPCEtLSBBcnJvdyAtLT4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU0NSwgOTApIj4KICAgICAgPGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iNjUiIHkyPSIwIiBzdHJva2U9IiNmMWM0MGYiIHN0cm9rZS13aWR0aD0iOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgICAgIDxwb2x5Z29uIHBvaW50cz0iNjAsLTE0IDg1LDAgNjAsMTQiIGZpbGw9IiNmMWM0MGYiLz4KICAgIDwvZz4KCiAgICA8IS0tIFByb2R1Y3RzOiBIZWF0IC8gTGlnaHQgLyBFbmVyZ3kgRmxhbWUgSWNvbiAmIExhYmVsIC0tPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjg1LCA0MCkiPgogICAgICA8cmVjdCB3aWR0aD0iMTkwIiBoZWlnaHQ9IjEwMCIgcng9IjE2IiBmaWxsPSIjZjM5YzEyIiBzdHJva2U9IiNkNjg5MTAiIHN0cm9rZS13aWR0aD0iMyIvPgogICAgICA8dGV4dCB4PSI5NSIgeT0iNDgiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+CiAgICAgICAgZW5lcmd5CiAgICAgIDwvdGV4dD4KICAgICAgPHRleHQgeD0iOTUiIHk9Ijc4IiBmaWxsPSIjZmZmM2NkIiBmb250LWZhbWlseT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+CiAgICAgICAgKGhlYXQgJmFtcDsgbGlnaHQpCiAgICAgIDwvdGV4dD4KICAgIDwvZz4KICA8L2c+CgogIDwhLS0gU2xpZGUgRm9vdGVyIEJhciAtLT4KICA8cmVjdCB4PSIwIiB5PSI1MDAiIHdpZHRoPSI5NjAiIGhlaWdodD0iNDAiIGZpbGw9IiMwZjE3MmEiLz4KICA8dGV4dCB4PSI5MjAiIHk9IjUyNiIgZmlsbD0iIzk0YTNiOCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIHRleHQtYW5jaG9yPSJlbmQiPgogICAgMjcKICA8L3RleHQ+Cjwvc3ZnPgo=",
+          "caption": "",
+          "alt": "Illustration diagram",
+          "size": "medium"
+        }
+      ]
+    },
     {
       "id": "material_1790316466027",
       "subject": "Effective Communications",
