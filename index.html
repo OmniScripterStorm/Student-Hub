@@ -1290,6 +1290,7 @@ const GREEK_SYMBOLS = {
 };
 
 const MATH_OPERATORS = {
+  // Arithmetic & Calculus
   '\\cdot': '&middot;',
   '\\times': '&times;',
   '\\pm': '&plusmn;',
@@ -1303,8 +1304,7 @@ const MATH_OPERATORS = {
   '\\nabla': '&nabla;',
   '\\forall': '&forall;',
   '\\exists': '&exist;',
-  '\\in': '&isin;',
-  '\\notin': '&notin;',
+  '\\nexists': '&#x2204;',
   '\\rightarrow': '&rarr;',
   '\\leftarrow': '&larr;',
   '\\Rightarrow': '&rArr;',
@@ -1314,7 +1314,50 @@ const MATH_OPERATORS = {
   '\\iint': '<span class="text-lg leading-none italic font-serif font-bold">&int;&int;</span>',
   '\\sum': '<span class="text-lg leading-none font-bold">&sum;</span>',
   '\\prod': '<span class="text-lg leading-none font-bold">&prod;</span>',
-  '\\sqrt': '&radic;'
+  '\\sqrt': '&radic;',
+
+  // Set Operations & Relations
+  '\\cup': '&cup;',
+  '\\cap': '&cap;',
+  '\\setminus': '&#x2216;',
+  '\\backslash': '&#x2216;',
+  '\\subset': '&sub;',
+  '\\subseteq': '&sube;',
+  '\\supset': '&sup;',
+  '\\supseteq': '&supe;',
+  '\\nsubset': '&#x2284;',
+  '\\nsubseteq': '&#x2288;',
+  '\\nsupset': '&#x2285;',
+  '\\nsupseteq': '&#x2289;',
+  '\\in': '&isin;',
+  '\\notin': '&notin;',
+  '\\ni': '&ni;',
+  '\\emptyset': '&empty;',
+  '\\varnothing': '&#x2205;',
+  '\\complement': '&#x2201;',
+  '\\oplus': '&#x2295;',
+  '\\otimes': '&#x2297;',
+  '\\odot': '&#x2299;',
+  '\\mid': '<span class="mx-1">&#x2223;</span>',
+  '\\colon': '<span class="mx-0.5">:</span>',
+  '\\lor': '&or;',
+  '\\vee': '&or;',
+  '\\land': '&and;',
+  '\\wedge': '&and;',
+  '\\neg': '&not;',
+  '\\lnot': '&not;',
+  '\\sim': '&sim;',
+  '\\implies': '&rArr;',
+  '\\impliedby': '&lArr;',
+  '\\iff': '&hArr;',
+  '\\equiv': '&equiv;',
+  '\\dots': '&hellip;',
+  '\\ldots': '&hellip;',
+  '\\cdots': '&#x22EF;',
+  '\\vdots': '&#x22EE;',
+  '\\ddots': '&#x22F1;',
+  '\\aleph': '&alefsym;',
+  '\\prime': '&prime;'
 };
 
 function parseMathSyntax(tex) {
@@ -1352,6 +1395,29 @@ function parseMathSyntax(tex) {
   s = s.replace(/\\hat\{([^{}]+)\}/g, (match, inner) => {
     return `<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">^</span><span>${inner}</span></span>`;
   });
+
+  // Set Blackboard Bold Notation (\mathbb{R}, \mathbb{N}, \mathbb{Z}, \mathbb{Q}, \mathbb{C}, etc.)
+  s = s.replace(/\\mathbb\s*\{([A-Z])\}/g, (match, letter) => {
+    const bbMap = { 'N': '&#x2115;', 'Z': '&#x2124;', 'Q': '&#x211A;', 'R': '&#x211D;', 'C': '&#x2102;', 'P': '&#x2119;', 'W': '&#x1D54E;', 'H': '&#x210D;' };
+    return `<span class="font-serif font-bold text-sm tracking-tight">${bbMap[letter] || letter}</span>`;
+  });
+  s = s.replace(/\\mathbb\s+([A-Z])/g, (match, letter) => {
+    const bbMap = { 'N': '&#x2115;', 'Z': '&#x2124;', 'Q': '&#x211A;', 'R': '&#x211D;', 'C': '&#x2102;', 'P': '&#x2119;', 'W': '&#x1D54E;', 'H': '&#x210D;' };
+    return `<span class="font-serif font-bold text-sm tracking-tight">${bbMap[letter] || letter}</span>`;
+  });
+
+  // Calligraphic Script (\mathcal{P}, \mathcal{U}, etc.)
+  s = s.replace(/\\mathcal\s*\{([A-Z])\}/g, (match, letter) => {
+    const calMap = { 'P': '&#x2118;', 'U': '&#x1D4B0;', 'F': '&#x2131;', 'B': '&#x212C;', 'H': '&#x210B;', 'L': '&#x2112;', 'M': '&#x2133;', 'R': '&#x211B;' };
+    return `<span class="font-serif italic font-bold text-sm">${calMap[letter] || letter}</span>`;
+  });
+
+  // Overline / Bar for Set Complements & Statistics
+  s = s.replace(/\\overline\s*\{([^{}]+)\}/g, '<span style="text-decoration: overline;">$1</span>');
+  s = s.replace(/\\bar\s*\{([^{}]+)\}/g, '<span style="text-decoration: overline;">$1</span>');
+
+  // Escaped Set Braces \{ ... \}
+  s = s.replace(/\\\{/g, '{').replace(/\\\}/g, '}');
 
   // 4. Superscripts & Subscripts: x^{2} / x^2, v_{0} / v_0
   s = s.replace(/\^\{([^{}]+)\}/g, '<sup>$1</sup>');
