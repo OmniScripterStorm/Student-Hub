@@ -1761,6 +1761,22 @@ function renderVennDiagramSvg(block) {
   const caption = block.caption || '';
   const showNotation = block.showNotation !== false;
   const uLabel = (block.universalLabel || 'U').trim();
+  const shadedOp = block.shadedOperation || 'none';
+  const colorKey = block.shadedColor || 'amber';
+
+  const COLOR_PALETTES = {
+    amber: { hex: '#f59e0b', stroke: '#d97706', bg: 'bg-amber-50 dark:bg-amber-950/40', border: 'border-amber-300 dark:border-amber-700', text: 'text-amber-800 dark:text-amber-300', badgeFill: '#f59e0b' },
+    emerald: { hex: '#10b981', stroke: '#059669', bg: 'bg-emerald-50 dark:bg-emerald-950/40', border: 'border-emerald-300 dark:border-emerald-700', text: 'text-emerald-800 dark:text-emerald-300', badgeFill: '#10b981' },
+    sky: { hex: '#0284c7', stroke: '#0369a1', bg: 'bg-sky-50 dark:bg-sky-950/40', border: 'border-sky-300 dark:border-sky-700', text: 'text-sky-800 dark:text-sky-300', badgeFill: '#0284c7' },
+    purple: { hex: '#8b5cf6', stroke: '#7c3aed', bg: 'bg-purple-50 dark:bg-purple-950/40', border: 'border-purple-300 dark:border-purple-700', text: 'text-purple-800 dark:text-purple-300', badgeFill: '#8b5cf6' },
+    pink: { hex: '#ec4899', stroke: '#db2777', bg: 'bg-pink-50 dark:bg-pink-950/40', border: 'border-pink-300 dark:border-pink-700', text: 'text-pink-800 dark:text-pink-300', badgeFill: '#ec4899' },
+    rose: { hex: '#f43f5e', stroke: '#e11d48', bg: 'bg-rose-50 dark:bg-rose-950/40', border: 'border-rose-300 dark:border-rose-700', text: 'text-rose-800 dark:text-rose-300', badgeFill: '#f43f5e' }
+  };
+  const theme = COLOR_PALETTES[colorKey] || COLOR_PALETTES.amber;
+  const shadeHex = theme.hex;
+
+  // Unique ID for SVG definitions to avoid clashes across multiple blocks
+  const uid = 'v' + Math.random().toString(36).substring(2, 7);
 
   const parseItems = (str) => {
     if (!str || typeof str !== 'string') return [];
@@ -1809,19 +1825,150 @@ function renderVennDiagramSvg(block) {
     const fullU = Array.from(new Set([...unionAB, ...itemsU]));
     const compA = fullU.filter(x => !fullSetA.includes(x));
     const compB = fullU.filter(x => !fullSetB.includes(x));
+    const compUnion = fullU.filter(x => !unionAB.includes(x));
+    const compIntersection = fullU.filter(x => !itemsAB.includes(x));
+    const symDiff = Array.from(new Set([...itemsAOnly, ...itemsBOnly]));
+
+    const activeRegions = [];
+    let opBadgeText = '';
+    let opResultItems = [];
+
+    switch (shadedOp) {
+      case 'intersection':
+        activeRegions.push('AB');
+        opBadgeText = `${nameA} \u2229 ${nameB}`;
+        opResultItems = itemsAB;
+        break;
+      case 'union':
+        activeRegions.push('A_only', 'B_only', 'AB');
+        opBadgeText = `${nameA} \u222A ${nameB}`;
+        opResultItems = unionAB;
+        break;
+      case 'diffAB':
+        activeRegions.push('A_only');
+        opBadgeText = `${nameA} \\ ${nameB}`;
+        opResultItems = itemsAOnly;
+        break;
+      case 'diffBA':
+        activeRegions.push('B_only');
+        opBadgeText = `${nameB} \\ ${nameA}`;
+        opResultItems = itemsBOnly;
+        break;
+      case 'compA':
+        activeRegions.push('B_only', 'Outside');
+        opBadgeText = `${nameA}'`;
+        opResultItems = compA;
+        break;
+      case 'compB':
+        activeRegions.push('A_only', 'Outside');
+        opBadgeText = `${nameB}'`;
+        opResultItems = compB;
+        break;
+      case 'compUnion':
+        activeRegions.push('Outside');
+        opBadgeText = `(${nameA} \u222A ${nameB})'`;
+        opResultItems = compUnion;
+        break;
+      case 'compIntersection':
+        activeRegions.push('A_only', 'B_only', 'Outside');
+        opBadgeText = `(${nameA} \u2229 ${nameB})'`;
+        opResultItems = compIntersection;
+        break;
+      case 'symDiff':
+        activeRegions.push('A_only', 'B_only');
+        opBadgeText = `${nameA} \u0394 ${nameB}`;
+        opResultItems = symDiff;
+        break;
+      case 'A':
+        activeRegions.push('A_only', 'AB');
+        opBadgeText = `Set ${nameA}`;
+        opResultItems = fullSetA;
+        break;
+      case 'B':
+        activeRegions.push('B_only', 'AB');
+        opBadgeText = `Set ${nameB}`;
+        opResultItems = fullSetB;
+        break;
+      default:
+        break;
+    }
+
+    let shadingLayer = '';
+    if (activeRegions.length > 0) {
+      if (activeRegions.includes('A_only')) {
+        shadingLayer += `
+          <circle cx="210" cy="160" r="105" mask="url(#mask-not-b-${uid})" fill="${shadeHex}" fill-opacity="0.32" />
+          <circle cx="210" cy="160" r="105" mask="url(#mask-not-b-${uid})" fill="url(#venn-hatch-${uid})" />
+        `;
+      }
+      if (activeRegions.includes('B_only')) {
+        shadingLayer += `
+          <circle cx="330" cy="160" r="105" mask="url(#mask-not-a-${uid})" fill="${shadeHex}" fill-opacity="0.32" />
+          <circle cx="330" cy="160" r="105" mask="url(#mask-not-a-${uid})" fill="url(#venn-hatch-${uid})" />
+        `;
+      }
+      if (activeRegions.includes('AB')) {
+        shadingLayer += `
+          <g clip-path="url(#clip-a-${uid})">
+            <circle cx="330" cy="160" r="105" fill="${shadeHex}" fill-opacity="0.36" />
+            <circle cx="330" cy="160" r="105" fill="url(#venn-hatch-${uid})" />
+          </g>
+        `;
+      }
+      if (activeRegions.includes('Outside')) {
+        shadingLayer += `
+          <rect x="${pad}" y="${pad}" width="${width - 2 * pad}" height="${height - 2 * pad}" rx="16" mask="url(#mask-not-ab-${uid})" fill="${shadeHex}" fill-opacity="0.28" />
+          <rect x="${pad}" y="${pad}" width="${width - 2 * pad}" height="${height - 2 * pad}" rx="16" mask="url(#mask-not-ab-${uid})" fill="url(#venn-hatch-${uid})" />
+        `;
+      }
+    }
+
+    const opHeaderBadge = opBadgeText ? `
+      <g transform="translate(270, 32)">
+        <rect x="-85" y="-13" width="170" height="26" rx="13" fill="${shadeHex}" fill-opacity="0.16" stroke="${shadeHex}" stroke-width="1.6" />
+        <circle cx="-68" cy="0" r="4.5" fill="${shadeHex}" />
+        <text x="-56" y="1" dominant-baseline="central" font-size="11" font-weight="900" fill="${theme.stroke}" font-family="monospace">Shaded: ${opBadgeText}</text>
+      </g>
+    ` : '';
 
     svgContent = `
       <svg viewBox="0 0 ${width} ${height}" class="w-full max-w-lg h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="venn-hatch-${uid}" width="10" height="10" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="10" stroke="${shadeHex}" stroke-width="2.2" stroke-opacity="0.75" />
+          </pattern>
+
+          <clipPath id="clip-a-${uid}"><circle cx="210" cy="160" r="105" /></clipPath>
+          <clipPath id="clip-b-${uid}"><circle cx="330" cy="160" r="105" /></clipPath>
+
+          <mask id="mask-not-b-${uid}">
+            <rect width="100%" height="100%" fill="white" />
+            <circle cx="330" cy="160" r="105" fill="black" />
+          </mask>
+          <mask id="mask-not-a-${uid}">
+            <rect width="100%" height="100%" fill="white" />
+            <circle cx="210" cy="160" r="105" fill="black" />
+          </mask>
+          <mask id="mask-not-ab-${uid}">
+            <rect width="100%" height="100%" fill="white" />
+            <circle cx="210" cy="160" r="105" fill="black" />
+            <circle cx="330" cy="160" r="105" fill="black" />
+          </mask>
+        </defs>
+
         <rect x="${pad}" y="${pad}" width="${width - 2 * pad}" height="${height - 2 * pad}" rx="16" class="fill-slate-100/70 dark:fill-slate-900/60 stroke-slate-300 dark:stroke-slate-700" stroke-width="1.8" stroke-dasharray="6,4" />
         
         <rect x="${pad + 12}" y="${pad + 10}" width="28" height="22" rx="6" class="fill-slate-200 dark:fill-slate-800" />
         <text x="${pad + 26}" y="${pad + 22}" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="900" class="fill-slate-700 dark:fill-slate-300 font-mono">${uLabel}</text>
 
-        ${renderSvgItemPills(itemsU.slice(0, 3), width - pad - 60, pad + 24, 1)}
-        ${renderSvgItemPills(itemsU.slice(3), width - pad - 60, height - pad - 24, 1)}
+        <!-- Active Region Shading Layer -->
+        <g id="venn-shading-layer">${shadingLayer}</g>
 
-        <circle cx="210" cy="160" r="105" fill="#10b981" fill-opacity="0.22" stroke="#10b981" stroke-width="2.5" />
-        <circle cx="330" cy="160" r="105" fill="#0284c7" fill-opacity="0.22" stroke="#0284c7" stroke-width="2.5" />
+        <!-- Circle A Base Stroke & Tint -->
+        <circle cx="210" cy="160" r="105" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-width="2.5" />
+        
+        <!-- Circle B Base Stroke & Tint -->
+        <circle cx="330" cy="160" r="105" fill="#0284c7" fill-opacity="0.15" stroke="#0284c7" stroke-width="2.5" />
 
         <g transform="translate(145, 75)">
           <rect x="-24" y="-12" width="48" height="24" rx="12" class="fill-white dark:fill-slate-800 stroke-emerald-500 shadow-sm" stroke-width="1.8" />
@@ -1833,7 +1980,13 @@ function renderVennDiagramSvg(block) {
           <text x="0" y="1" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="bold" class="fill-sky-700 dark:fill-sky-300 font-mono">${nameB}</text>
         </g>
 
-        <text x="270" y="95" text-anchor="middle" font-size="10" font-weight="bold" class="fill-slate-500 dark:fill-slate-400 font-mono">${nameA} &cap; ${nameB}</text>
+        <text x="270" y="100" text-anchor="middle" font-size="10" font-weight="bold" class="fill-slate-500 dark:fill-slate-400 font-mono">${nameA} &cap; ${nameB}</text>
+
+        <!-- Shaded Operation Header Badge -->
+        ${opHeaderBadge}
+
+        ${renderSvgItemPills(itemsU.slice(0, 3), width - pad - 60, pad + 24, 1)}
+        ${renderSvgItemPills(itemsU.slice(3), width - pad - 60, height - pad - 24, 1)}
 
         ${renderSvgItemPills(itemsAOnly, 160, 165)}
         ${renderSvgItemPills(itemsBOnly, 380, 165)}
@@ -1843,32 +1996,53 @@ function renderVennDiagramSvg(block) {
 
     if (showNotation) {
       const formatRoster = (arr) => arr.length > 0 ? `{ ${arr.join(', ')} }` : '&empty;';
+      const isShadedOp = (op) => shadedOp === op;
+
       notationHtml = `
         <div class="mt-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs">
           <div class="font-bold text-slate-500 uppercase tracking-wider text-[10px] mb-2 flex items-center justify-between">
             <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Mathematical Set Operations & Roster Notation:</span>
             <span class="font-mono text-slate-400 text-[10px]">n(${uLabel}) = ${fullU.length}</span>
           </div>
+
+          ${opBadgeText ? `
+            <div class="mb-2 p-2.5 rounded-lg border ${theme.bg} ${theme.border} flex items-center justify-between font-mono-math">
+              <span class="font-bold ${theme.text} text-xs sm:text-sm flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${shadeHex}"></span>
+                Target Shaded Set: <strong>${opBadgeText}</strong> = <span class="font-normal text-slate-900 dark:text-white">${formatRoster(opResultItems)}</span>
+              </span>
+              <span class="text-[11px] font-bold ${theme.text} ml-2 shrink-0">Cardinality n = ${opResultItems.length}</span>
+            </div>
+          ` : ''}
+
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono-math text-[11px] sm:text-xs">
-            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border ${isShadedOp('A') ? theme.border + ' ring-1 ring-amber-400' : 'border-slate-100 dark:border-slate-800'} flex items-center justify-between">
               <span class="font-bold text-emerald-700 dark:text-emerald-400">${nameA} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(fullSetA)}</span></span>
               <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n(${nameA})=${fullSetA.length}</span>
             </div>
-            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border ${isShadedOp('B') ? theme.border + ' ring-1 ring-amber-400' : 'border-slate-100 dark:border-slate-800'} flex items-center justify-between">
               <span class="font-bold text-sky-700 dark:text-sky-400">${nameB} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(fullSetB)}</span></span>
               <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n(${nameB})=${fullSetB.length}</span>
             </div>
-            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border ${isShadedOp('intersection') ? theme.border + ' ring-1 ring-amber-400' : 'border-slate-100 dark:border-slate-800'} flex items-center justify-between">
               <span class="font-bold text-purple-700 dark:text-purple-400">${nameA} &cap; ${nameB} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(itemsAB)}</span></span>
               <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n(${nameA}&cap;${nameB})=${itemsAB.length}</span>
             </div>
-            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border ${isShadedOp('union') ? theme.border + ' ring-1 ring-amber-400' : 'border-slate-100 dark:border-slate-800'} flex items-center justify-between">
               <span class="font-bold text-amber-700 dark:text-amber-400">${nameA} &cup; ${nameB} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(unionAB)}</span></span>
               <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n(${nameA}&cup;${nameB})=${unionAB.length}</span>
             </div>
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border ${isShadedOp('diffAB') ? theme.border + ' ring-1 ring-amber-400' : 'border-slate-100 dark:border-slate-800'} flex items-center justify-between">
+              <span class="font-bold text-rose-700 dark:text-rose-400">${nameA} \\ ${nameB} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(itemsAOnly)}</span></span>
+              <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n=${itemsAOnly.length}</span>
+            </div>
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border ${isShadedOp('diffBA') ? theme.border + ' ring-1 ring-amber-400' : 'border-slate-100 dark:border-slate-800'} flex items-center justify-between">
+              <span class="font-bold text-indigo-700 dark:text-indigo-400">${nameB} \\ ${nameA} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(itemsBOnly)}</span></span>
+              <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n=${itemsBOnly.length}</span>
+            </div>
             <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 sm:col-span-2 flex items-center justify-between">
               <span class="font-bold text-slate-700 dark:text-slate-300">${uLabel} (Universal) = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(fullU)}</span></span>
-              <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">${nameA}' = ${formatRoster(compA)}</span>
+              <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">${nameA}' = ${formatRoster(compA)} &bull; ${nameB}' = ${formatRoster(compB)}</span>
             </div>
           </div>
         </div>
@@ -1884,20 +2058,233 @@ function renderVennDiagramSvg(block) {
     const fullSetC = Array.from(new Set([...itemsCOnly, ...itemsAC, ...itemsBC, ...itemsABC]));
     const unionABC = Array.from(new Set([...itemsAOnly, ...itemsBOnly, ...itemsCOnly, ...itemsAB, ...itemsAC, ...itemsBC, ...itemsABC]));
     const fullU = Array.from(new Set([...unionABC, ...itemsU]));
+    const compUnionABC = fullU.filter(x => !unionABC.includes(x));
+    const compABC = fullU.filter(x => !itemsABC.includes(x));
+    const interAB = Array.from(new Set([...itemsAB, ...itemsABC]));
+    const interAC = Array.from(new Set([...itemsAC, ...itemsABC]));
+    const interBC = Array.from(new Set([...itemsBC, ...itemsABC]));
+
+    const activeRegions = [];
+    let opBadgeText = '';
+    let opResultItems = [];
+
+    switch (shadedOp) {
+      case 'intersectionABC':
+        activeRegions.push('ABC');
+        opBadgeText = `${nameA} \u2229 ${nameB} \u2229 ${nameC}`;
+        opResultItems = itemsABC;
+        break;
+      case 'unionABC':
+        activeRegions.push('A_only', 'B_only', 'C_only', 'AB_only', 'AC_only', 'BC_only', 'ABC');
+        opBadgeText = `${nameA} \u222A ${nameB} \u222A ${nameC}`;
+        opResultItems = unionABC;
+        break;
+      case 'intersectionAB':
+        activeRegions.push('AB_only', 'ABC');
+        opBadgeText = `${nameA} \u2229 ${nameB}`;
+        opResultItems = interAB;
+        break;
+      case 'intersectionAC':
+        activeRegions.push('AC_only', 'ABC');
+        opBadgeText = `${nameA} \u2229 ${nameC}`;
+        opResultItems = interAC;
+        break;
+      case 'intersectionBC':
+        activeRegions.push('BC_only', 'ABC');
+        opBadgeText = `${nameB} \u2229 ${nameC}`;
+        opResultItems = interBC;
+        break;
+      case 'diffA_BC':
+        activeRegions.push('A_only');
+        opBadgeText = `${nameA} \\ (${nameB} \u222A ${nameC})`;
+        opResultItems = itemsAOnly;
+        break;
+      case 'diffB_AC':
+        activeRegions.push('B_only');
+        opBadgeText = `${nameB} \\ (${nameA} \u222A ${nameC})`;
+        opResultItems = itemsBOnly;
+        break;
+      case 'diffC_AB':
+        activeRegions.push('C_only');
+        opBadgeText = `${nameC} \\ (${nameA} \u222A ${nameB})`;
+        opResultItems = itemsCOnly;
+        break;
+      case 'interAB_notC':
+        activeRegions.push('AB_only');
+        opBadgeText = `(${nameA} \u2229 ${nameB}) \\ ${nameC}`;
+        opResultItems = itemsAB;
+        break;
+      case 'interAC_notB':
+        activeRegions.push('AC_only');
+        opBadgeText = `(${nameA} \u2229 ${nameC}) \\ ${nameB}`;
+        opResultItems = itemsAC;
+        break;
+      case 'interBC_notA':
+        activeRegions.push('BC_only');
+        opBadgeText = `(${nameB} \u2229 ${nameC}) \\ ${nameA}`;
+        opResultItems = itemsBC;
+        break;
+      case 'compUnion':
+        activeRegions.push('Outside');
+        opBadgeText = `(${nameA} \u222A ${nameB} \u222A ${nameC})'`;
+        opResultItems = compUnionABC;
+        break;
+      case 'compABC':
+        activeRegions.push('A_only', 'B_only', 'C_only', 'AB_only', 'AC_only', 'BC_only', 'Outside');
+        opBadgeText = `(${nameA} \u2229 ${nameB} \u2229 ${nameC})'`;
+        opResultItems = compABC;
+        break;
+      case 'A':
+        activeRegions.push('A_only', 'AB_only', 'AC_only', 'ABC');
+        opBadgeText = `Set ${nameA}`;
+        opResultItems = fullSetA;
+        break;
+      case 'B':
+        activeRegions.push('B_only', 'AB_only', 'BC_only', 'ABC');
+        opBadgeText = `Set ${nameB}`;
+        opResultItems = fullSetB;
+        break;
+      case 'C':
+        activeRegions.push('C_only', 'AC_only', 'BC_only', 'ABC');
+        opBadgeText = `Set ${nameC}`;
+        opResultItems = fullSetC;
+        break;
+      default:
+        break;
+    }
+
+    let shadingLayer = '';
+    if (activeRegions.length > 0) {
+      if (activeRegions.includes('A_only')) {
+        shadingLayer += `
+          <circle cx="225" cy="175" r="98" mask="url(#mask-not-b-not-c-${uid})" fill="${shadeHex}" fill-opacity="0.32" />
+          <circle cx="225" cy="175" r="98" mask="url(#mask-not-b-not-c-${uid})" fill="url(#venn-hatch-${uid})" />
+        `;
+      }
+      if (activeRegions.includes('B_only')) {
+        shadingLayer += `
+          <circle cx="335" cy="175" r="98" mask="url(#mask-not-a-not-c-${uid})" fill="${shadeHex}" fill-opacity="0.32" />
+          <circle cx="335" cy="175" r="98" mask="url(#mask-not-a-not-c-${uid})" fill="url(#venn-hatch-${uid})" />
+        `;
+      }
+      if (activeRegions.includes('C_only')) {
+        shadingLayer += `
+          <circle cx="280" cy="255" r="98" mask="url(#mask-not-a-not-b-${uid})" fill="${shadeHex}" fill-opacity="0.32" />
+          <circle cx="280" cy="255" r="98" mask="url(#mask-not-a-not-b-${uid})" fill="url(#venn-hatch-${uid})" />
+        `;
+      }
+      if (activeRegions.includes('AB_only')) {
+        shadingLayer += `
+          <g clip-path="url(#clip-a-${uid})" mask="url(#mask-not-c-${uid})">
+            <circle cx="335" cy="175" r="98" fill="${shadeHex}" fill-opacity="0.35" />
+            <circle cx="335" cy="175" r="98" fill="url(#venn-hatch-${uid})" />
+          </g>
+        `;
+      }
+      if (activeRegions.includes('AC_only')) {
+        shadingLayer += `
+          <g clip-path="url(#clip-a-${uid})" mask="url(#mask-not-b-${uid})">
+            <circle cx="280" cy="255" r="98" fill="${shadeHex}" fill-opacity="0.35" />
+            <circle cx="280" cy="255" r="98" fill="url(#venn-hatch-${uid})" />
+          </g>
+        `;
+      }
+      if (activeRegions.includes('BC_only')) {
+        shadingLayer += `
+          <g clip-path="url(#clip-b-${uid})" mask="url(#mask-not-a-${uid})">
+            <circle cx="280" cy="255" r="98" fill="${shadeHex}" fill-opacity="0.35" />
+            <circle cx="280" cy="255" r="98" fill="url(#venn-hatch-${uid})" />
+          </g>
+        `;
+      }
+      if (activeRegions.includes('ABC')) {
+        shadingLayer += `
+          <g clip-path="url(#clip-a-${uid})">
+            <g clip-path="url(#clip-b-${uid})">
+              <circle cx="280" cy="255" r="98" fill="${shadeHex}" fill-opacity="0.45" />
+              <circle cx="280" cy="255" r="98" fill="url(#venn-hatch-${uid})" />
+            </g>
+          </g>
+        `;
+      }
+      if (activeRegions.includes('Outside')) {
+        shadingLayer += `
+          <rect x="${pad}" y="${pad}" width="${width - 2 * pad}" height="${height - 2 * pad}" rx="16" mask="url(#mask-not-abc-${uid})" fill="${shadeHex}" fill-opacity="0.28" />
+          <rect x="${pad}" y="${pad}" width="${width - 2 * pad}" height="${height - 2 * pad}" rx="16" mask="url(#mask-not-abc-${uid})" fill="url(#venn-hatch-${uid})" />
+        `;
+      }
+    }
+
+    const opHeaderBadge = opBadgeText ? `
+      <g transform="translate(280, 32)">
+        <rect x="-95" y="-13" width="190" height="26" rx="13" fill="${shadeHex}" fill-opacity="0.16" stroke="${shadeHex}" stroke-width="1.6" />
+        <circle cx="-78" cy="0" r="4.5" fill="${shadeHex}" />
+        <text x="-66" y="1" dominant-baseline="central" font-size="11" font-weight="900" fill="${theme.stroke}" font-family="monospace">Shaded: ${opBadgeText}</text>
+      </g>
+    ` : '';
 
     svgContent = `
       <svg viewBox="0 0 ${width} ${height}" class="w-full max-w-lg h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="venn-hatch-${uid}" width="10" height="10" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="10" stroke="${shadeHex}" stroke-width="2.2" stroke-opacity="0.75" />
+          </pattern>
+
+          <clipPath id="clip-a-${uid}"><circle cx="225" cy="175" r="98" /></clipPath>
+          <clipPath id="clip-b-${uid}"><circle cx="335" cy="175" r="98" /></clipPath>
+          <clipPath id="clip-c-${uid}"><circle cx="280" cy="255" r="98" /></clipPath>
+
+          <mask id="mask-not-b-not-c-${uid}">
+            <rect width="100%" height="100%" fill="white" />
+            <circle cx="335" cy="175" r="98" fill="black" />
+            <circle cx="280" cy="255" r="98" fill="black" />
+          </mask>
+          <mask id="mask-not-a-not-c-${uid}">
+            <rect width="100%" height="100%" fill="white" />
+            <circle cx="225" cy="175" r="98" fill="black" />
+            <circle cx="280" cy="255" r="98" fill="black" />
+          </mask>
+          <mask id="mask-not-a-not-b-${uid}">
+            <rect width="100%" height="100%" fill="white" />
+            <circle cx="225" cy="175" r="98" fill="black" />
+            <circle cx="335" cy="175" r="98" fill="black" />
+          </mask>
+          <mask id="mask-not-c-${uid}">
+            <rect width="100%" height="100%" fill="white" />
+            <circle cx="280" cy="255" r="98" fill="black" />
+          </mask>
+          <mask id="mask-not-b-${uid}">
+            <rect width="100%" height="100%" fill="white" />
+            <circle cx="335" cy="175" r="98" fill="black" />
+          </mask>
+          <mask id="mask-not-a-${uid}">
+            <rect width="100%" height="100%" fill="white" />
+            <circle cx="225" cy="175" r="98" fill="black" />
+          </mask>
+          <mask id="mask-not-abc-${uid}">
+            <rect width="100%" height="100%" fill="white" />
+            <circle cx="225" cy="175" r="98" fill="black" />
+            <circle cx="335" cy="175" r="98" fill="black" />
+            <circle cx="280" cy="255" r="98" fill="black" />
+          </mask>
+        </defs>
+
         <rect x="${pad}" y="${pad}" width="${width - 2 * pad}" height="${height - 2 * pad}" rx="16" class="fill-slate-100/70 dark:fill-slate-900/60 stroke-slate-300 dark:stroke-slate-700" stroke-width="1.8" stroke-dasharray="6,4" />
         
         <rect x="${pad + 12}" y="${pad + 10}" width="28" height="22" rx="6" class="fill-slate-200 dark:fill-slate-800" />
         <text x="${pad + 26}" y="${pad + 22}" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="900" class="fill-slate-700 dark:fill-slate-300 font-mono">${uLabel}</text>
 
-        ${renderSvgItemPills(itemsU.slice(0, 3), width - pad - 60, pad + 24, 1)}
-        ${renderSvgItemPills(itemsU.slice(3), width - pad - 60, height - pad - 24, 1)}
+        <!-- Active Region Shading Layer -->
+        <g id="venn-shading-layer">${shadingLayer}</g>
 
-        <circle cx="225" cy="175" r="98" fill="#10b981" fill-opacity="0.20" stroke="#10b981" stroke-width="2.5" />
-        <circle cx="335" cy="175" r="98" fill="#0284c7" fill-opacity="0.20" stroke="#0284c7" stroke-width="2.5" />
-        <circle cx="280" cy="255" r="98" fill="#ec4899" fill-opacity="0.20" stroke="#ec4899" stroke-width="2.5" />
+        <!-- Circle A (Top-Left) -->
+        <circle cx="225" cy="175" r="98" fill="#10b981" fill-opacity="0.14" stroke="#10b981" stroke-width="2.5" />
+        
+        <!-- Circle B (Top-Right) -->
+        <circle cx="335" cy="175" r="98" fill="#0284c7" fill-opacity="0.14" stroke="#0284c7" stroke-width="2.5" />
+
+        <!-- Circle C (Bottom-Center) -->
+        <circle cx="280" cy="255" r="98" fill="#ec4899" fill-opacity="0.14" stroke="#ec4899" stroke-width="2.5" />
 
         <g transform="translate(155, 95)">
           <rect x="-22" y="-11" width="44" height="22" rx="11" class="fill-white dark:fill-slate-800 stroke-emerald-500 shadow-sm" stroke-width="1.8" />
@@ -1914,6 +2301,12 @@ function renderVennDiagramSvg(block) {
           <text x="0" y="1" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="bold" class="fill-pink-700 dark:fill-pink-300 font-mono">${nameC}</text>
         </g>
 
+        <!-- Shaded Operation Header Badge -->
+        ${opHeaderBadge}
+
+        ${renderSvgItemPills(itemsU.slice(0, 3), width - pad - 60, pad + 24, 1)}
+        ${renderSvgItemPills(itemsU.slice(3), width - pad - 60, height - pad - 24, 1)}
+
         ${renderSvgItemPills(itemsAOnly, 180, 155)}
         ${renderSvgItemPills(itemsBOnly, 380, 155)}
         ${renderSvgItemPills(itemsCOnly, 280, 320)}
@@ -1928,26 +2321,39 @@ function renderVennDiagramSvg(block) {
 
     if (showNotation) {
       const formatRoster = (arr) => arr.length > 0 ? `{ ${arr.join(', ')} }` : '&empty;';
+      const isShadedOp = (op) => shadedOp === op;
+
       notationHtml = `
         <div class="mt-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs">
           <div class="font-bold text-slate-500 uppercase tracking-wider text-[10px] mb-2 flex items-center justify-between">
             <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-500"></span> 3-Set Roster & Intersection Summary:</span>
             <span class="font-mono text-slate-400 text-[10px]">n(${uLabel}) = ${fullU.length}</span>
           </div>
+
+          ${opBadgeText ? `
+            <div class="mb-2 p-2.5 rounded-lg border ${theme.bg} ${theme.border} flex items-center justify-between font-mono-math">
+              <span class="font-bold ${theme.text} text-xs sm:text-sm flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${shadeHex}"></span>
+                Target Shaded Set: <strong>${opBadgeText}</strong> = <span class="font-normal text-slate-900 dark:text-white">${formatRoster(opResultItems)}</span>
+              </span>
+              <span class="text-[11px] font-bold ${theme.text} ml-2 shrink-0">Cardinality n = ${opResultItems.length}</span>
+            </div>
+          ` : ''}
+
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 font-mono-math text-[11px] sm:text-xs">
-            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border ${isShadedOp('A') ? theme.border + ' ring-1 ring-amber-400' : 'border-slate-100 dark:border-slate-800'} flex items-center justify-between">
               <span class="font-bold text-emerald-700 dark:text-emerald-400">${nameA} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(fullSetA)}</span></span>
               <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n=${fullSetA.length}</span>
             </div>
-            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border ${isShadedOp('B') ? theme.border + ' ring-1 ring-amber-400' : 'border-slate-100 dark:border-slate-800'} flex items-center justify-between">
               <span class="font-bold text-sky-700 dark:text-sky-400">${nameB} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(fullSetB)}</span></span>
               <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n=${fullSetB.length}</span>
             </div>
-            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border ${isShadedOp('C') ? theme.border + ' ring-1 ring-amber-400' : 'border-slate-100 dark:border-slate-800'} flex items-center justify-between">
               <span class="font-bold text-pink-700 dark:text-pink-400">${nameC} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(fullSetC)}</span></span>
               <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n=${fullSetC.length}</span>
             </div>
-            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between sm:col-span-3">
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border ${isShadedOp('intersectionABC') ? theme.border + ' ring-1 ring-amber-400' : 'border-slate-100 dark:border-slate-800'} flex items-center justify-between sm:col-span-3">
               <span class="font-bold text-purple-700 dark:text-purple-400">${nameA}&cap;${nameB}&cap;${nameC} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(itemsABC)}</span></span>
               <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">${nameA}&cup;${nameB}&cup;${nameC} = ${formatRoster(unionABC)}</span>
             </div>
