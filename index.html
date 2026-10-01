@@ -1128,7 +1128,62 @@ const DEFAULT_BASELINE = {
       ]
     }
   ],
-  "studyMaterials": [],
+  "studyMaterials": [
+    {
+      "id": "material_set_theory_venn",
+      "subject": "General Math",
+      "tag": "Study Material",
+      "color": "border-l-4 border-emerald-500",
+      "title": "Set Operations, Set-Builder & Venn Diagrams",
+      "summary": "Master set theory, roster notation, set builder notation, and auto-shaded Venn diagrams.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "1. Mathematical Set Operations & Venn Diagrams"
+        },
+        {
+          "type": "paragraph",
+          "text": "A set is a well-defined collection of distinct elements. We can represent sets using **Roster Notation** $\\{x_1, x_2, \\dots\\}$, **Set-Builder Notation** $\\{x \\in \\mathbb{U} \\mid P(x)\\}$, or visually using **Venn Diagrams**."
+        },
+        {
+          "type": "venn",
+          "title": "Natural Numbers ≤ 20: Primes vs Even Integers",
+          "caption": "Shaded intersection A ∩ B with dynamic region highlight and mathematical roster summary.",
+          "mode": "2-set",
+          "shadedOperation": "intersection",
+          "shadedColor": "amber",
+          "universalLabel": "U",
+          "universalItems": "0, 1, 9, 15, 21",
+          "setA": { "name": "Primes", "items": "3, 5, 7, 11, 13, 17, 19" },
+          "setB": { "name": "Evens", "items": "4, 6, 8, 10, 12, 14, 16, 18, 20" },
+          "setC": { "name": "C", "items": "" },
+          "intersectionAB": "2",
+          "intersectionAC": "",
+          "intersectionBC": "",
+          "intersectionABC": "",
+          "showNotation": true
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "2. Core Set Operations Reference"
+        },
+        {
+          "type": "table",
+          "title": "Summary of Set Operations & Set-Builder Definitions",
+          "headers": ["Operation", "Symbol", "Set-Builder Definition", "Meaning"],
+          "rows": [
+            ["Union", "$A \\cup B$", "{x | x ∈ A ∨ x ∈ B}", "Elements in A, B, or both"],
+            ["Intersection", "$A \\cap B$", "{x | x ∈ A ∧ x ∈ B}", "Elements common to both A and B"],
+            ["Relative Complement", "$A \\setminus B$", "{x | x ∈ A ∧ x ∉ B}", "Elements in A but not in B"],
+            ["Complement", "$A'$ or $A^c$", "{x ∈ U | x ∉ A}", "Elements in universal set not in A"],
+            ["Symmetric Difference", "$A \\Delta B$", "(A \\setminus B) \\cup (B \\setminus A)", "Elements in either A or B, but not both"]
+          ]
+        }
+      ]
+    }
+  ],
   "problemSets": [],
   "quizSets": [
     {
