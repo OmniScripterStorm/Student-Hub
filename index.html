@@ -1685,6 +1685,226 @@ function renderCartesianPlaneSvg(block) {
   `;
 }
 
+/* =========================================================
+   SVG Venn Diagram & Mathematical Set Builder Generator
+   ========================================================= */
+function renderVennDiagramSvg(block) {
+  if (!block) return '';
+  const mode = block.mode === '3-set' ? '3-set' : '2-set';
+  const title = block.title || '';
+  const caption = block.caption || '';
+  const showNotation = block.showNotation !== false;
+  const uLabel = (block.universalLabel || 'U').trim();
+
+  const parseItems = (str) => {
+    if (!str || typeof str !== 'string') return [];
+    return str.split(',').map(s => s.trim()).filter(Boolean);
+  };
+
+  const renderSvgItemPills = (items, cx, cy, maxLines = 3) => {
+    if (!items || items.length === 0) return '';
+    const lineHeight = 15;
+    const chunk = 3;
+    const lines = [];
+    for (let i = 0; i < items.length; i += chunk) {
+      lines.push(items.slice(i, i + chunk).join(', '));
+    }
+    const visibleLines = lines.slice(0, maxLines);
+    const startY = cy - ((visibleLines.length - 1) * lineHeight) / 2;
+    return visibleLines.map((line, idx) => `
+      <text x="${cx}" y="${startY + idx * lineHeight}" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="bold" font-family="monospace" class="fill-slate-800 dark:fill-slate-100">${line}</text>
+    `).join('');
+  };
+
+  const nameA = (block.setA && block.setA.name) ? block.setA.name.trim() : 'A';
+  const nameB = (block.setB && block.setB.name) ? block.setB.name.trim() : 'B';
+  const nameC = (block.setC && block.setC.name) ? block.setC.name.trim() : 'C';
+
+  const itemsAOnly = parseItems(block.setA ? block.setA.items : '');
+  const itemsBOnly = parseItems(block.setB ? block.setB.items : '');
+  const itemsCOnly = parseItems(block.setC ? block.setC.items : '');
+  const itemsAB = parseItems(block.intersectionAB || '');
+  const itemsAC = parseItems(block.intersectionAC || '');
+  const itemsBC = parseItems(block.intersectionBC || '');
+  const itemsABC = parseItems(block.intersectionABC || '');
+  const itemsU = parseItems(block.universalItems || '');
+
+  let svgContent = '';
+  let notationHtml = '';
+
+  if (mode === '2-set') {
+    const width = 540;
+    const height = 310;
+    const pad = 16;
+
+    const fullSetA = Array.from(new Set([...itemsAOnly, ...itemsAB]));
+    const fullSetB = Array.from(new Set([...itemsBOnly, ...itemsAB]));
+    const unionAB = Array.from(new Set([...itemsAOnly, ...itemsBOnly, ...itemsAB]));
+    const fullU = Array.from(new Set([...unionAB, ...itemsU]));
+    const compA = fullU.filter(x => !fullSetA.includes(x));
+    const compB = fullU.filter(x => !fullSetB.includes(x));
+
+    svgContent = `
+      <svg viewBox="0 0 ${width} ${height}" class="w-full max-w-lg h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="${pad}" y="${pad}" width="${width - 2 * pad}" height="${height - 2 * pad}" rx="16" class="fill-slate-100/70 dark:fill-slate-900/60 stroke-slate-300 dark:stroke-slate-700" stroke-width="1.8" stroke-dasharray="6,4" />
+        
+        <rect x="${pad + 12}" y="${pad + 10}" width="28" height="22" rx="6" class="fill-slate-200 dark:fill-slate-800" />
+        <text x="${pad + 26}" y="${pad + 22}" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="900" class="fill-slate-700 dark:fill-slate-300 font-mono">${uLabel}</text>
+
+        ${renderSvgItemPills(itemsU.slice(0, 3), width - pad - 60, pad + 24, 1)}
+        ${renderSvgItemPills(itemsU.slice(3), width - pad - 60, height - pad - 24, 1)}
+
+        <circle cx="210" cy="160" r="105" fill="#10b981" fill-opacity="0.22" stroke="#10b981" stroke-width="2.5" />
+        <circle cx="330" cy="160" r="105" fill="#0284c7" fill-opacity="0.22" stroke="#0284c7" stroke-width="2.5" />
+
+        <g transform="translate(145, 75)">
+          <rect x="-24" y="-12" width="48" height="24" rx="12" class="fill-white dark:fill-slate-800 stroke-emerald-500 shadow-sm" stroke-width="1.8" />
+          <text x="0" y="1" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="bold" class="fill-emerald-700 dark:fill-emerald-300 font-mono">${nameA}</text>
+        </g>
+
+        <g transform="translate(395, 75)">
+          <rect x="-24" y="-12" width="48" height="24" rx="12" class="fill-white dark:fill-slate-800 stroke-sky-500 shadow-sm" stroke-width="1.8" />
+          <text x="0" y="1" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="bold" class="fill-sky-700 dark:fill-sky-300 font-mono">${nameB}</text>
+        </g>
+
+        <text x="270" y="95" text-anchor="middle" font-size="10" font-weight="bold" class="fill-slate-500 dark:fill-slate-400 font-mono">${nameA} &cap; ${nameB}</text>
+
+        ${renderSvgItemPills(itemsAOnly, 160, 165)}
+        ${renderSvgItemPills(itemsBOnly, 380, 165)}
+        ${renderSvgItemPills(itemsAB, 270, 165)}
+      </svg>
+    `;
+
+    if (showNotation) {
+      const formatRoster = (arr) => arr.length > 0 ? `{ ${arr.join(', ')} }` : '&empty;';
+      notationHtml = `
+        <div class="mt-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs">
+          <div class="font-bold text-slate-500 uppercase tracking-wider text-[10px] mb-2 flex items-center justify-between">
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Mathematical Set Operations & Roster Notation:</span>
+            <span class="font-mono text-slate-400 text-[10px]">n(${uLabel}) = ${fullU.length}</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono-math text-[11px] sm:text-xs">
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <span class="font-bold text-emerald-700 dark:text-emerald-400">${nameA} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(fullSetA)}</span></span>
+              <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n(${nameA})=${fullSetA.length}</span>
+            </div>
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <span class="font-bold text-sky-700 dark:text-sky-400">${nameB} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(fullSetB)}</span></span>
+              <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n(${nameB})=${fullSetB.length}</span>
+            </div>
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <span class="font-bold text-purple-700 dark:text-purple-400">${nameA} &cap; ${nameB} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(itemsAB)}</span></span>
+              <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n(${nameA}&cap;${nameB})=${itemsAB.length}</span>
+            </div>
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <span class="font-bold text-amber-700 dark:text-amber-400">${nameA} &cup; ${nameB} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(unionAB)}</span></span>
+              <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n(${nameA}&cup;${nameB})=${unionAB.length}</span>
+            </div>
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 sm:col-span-2 flex items-center justify-between">
+              <span class="font-bold text-slate-700 dark:text-slate-300">${uLabel} (Universal) = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(fullU)}</span></span>
+              <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">${nameA}' = ${formatRoster(compA)}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  } else {
+    const width = 560;
+    const height = 400;
+    const pad = 16;
+
+    const fullSetA = Array.from(new Set([...itemsAOnly, ...itemsAB, ...itemsAC, ...itemsABC]));
+    const fullSetB = Array.from(new Set([...itemsBOnly, ...itemsAB, ...itemsBC, ...itemsABC]));
+    const fullSetC = Array.from(new Set([...itemsCOnly, ...itemsAC, ...itemsBC, ...itemsABC]));
+    const unionABC = Array.from(new Set([...itemsAOnly, ...itemsBOnly, ...itemsCOnly, ...itemsAB, ...itemsAC, ...itemsBC, ...itemsABC]));
+    const fullU = Array.from(new Set([...unionABC, ...itemsU]));
+
+    svgContent = `
+      <svg viewBox="0 0 ${width} ${height}" class="w-full max-w-lg h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="${pad}" y="${pad}" width="${width - 2 * pad}" height="${height - 2 * pad}" rx="16" class="fill-slate-100/70 dark:fill-slate-900/60 stroke-slate-300 dark:stroke-slate-700" stroke-width="1.8" stroke-dasharray="6,4" />
+        
+        <rect x="${pad + 12}" y="${pad + 10}" width="28" height="22" rx="6" class="fill-slate-200 dark:fill-slate-800" />
+        <text x="${pad + 26}" y="${pad + 22}" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="900" class="fill-slate-700 dark:fill-slate-300 font-mono">${uLabel}</text>
+
+        ${renderSvgItemPills(itemsU.slice(0, 3), width - pad - 60, pad + 24, 1)}
+        ${renderSvgItemPills(itemsU.slice(3), width - pad - 60, height - pad - 24, 1)}
+
+        <circle cx="225" cy="175" r="98" fill="#10b981" fill-opacity="0.20" stroke="#10b981" stroke-width="2.5" />
+        <circle cx="335" cy="175" r="98" fill="#0284c7" fill-opacity="0.20" stroke="#0284c7" stroke-width="2.5" />
+        <circle cx="280" cy="255" r="98" fill="#ec4899" fill-opacity="0.20" stroke="#ec4899" stroke-width="2.5" />
+
+        <g transform="translate(155, 95)">
+          <rect x="-22" y="-11" width="44" height="22" rx="11" class="fill-white dark:fill-slate-800 stroke-emerald-500 shadow-sm" stroke-width="1.8" />
+          <text x="0" y="1" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="bold" class="fill-emerald-700 dark:fill-emerald-300 font-mono">${nameA}</text>
+        </g>
+
+        <g transform="translate(405, 95)">
+          <rect x="-22" y="-11" width="44" height="22" rx="11" class="fill-white dark:fill-slate-800 stroke-sky-500 shadow-sm" stroke-width="1.8" />
+          <text x="0" y="1" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="bold" class="fill-sky-700 dark:fill-sky-300 font-mono">${nameB}</text>
+        </g>
+
+        <g transform="translate(280, 375)">
+          <rect x="-22" y="-11" width="44" height="22" rx="11" class="fill-white dark:fill-slate-800 stroke-pink-500 shadow-sm" stroke-width="1.8" />
+          <text x="0" y="1" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="bold" class="fill-pink-700 dark:fill-pink-300 font-mono">${nameC}</text>
+        </g>
+
+        ${renderSvgItemPills(itemsAOnly, 180, 155)}
+        ${renderSvgItemPills(itemsBOnly, 380, 155)}
+        ${renderSvgItemPills(itemsCOnly, 280, 320)}
+
+        ${renderSvgItemPills(itemsAB, 280, 140, 1)}
+        ${renderSvgItemPills(itemsAC, 220, 235, 1)}
+        ${renderSvgItemPills(itemsBC, 340, 235, 1)}
+
+        ${renderSvgItemPills(itemsABC, 280, 205, 1)}
+      </svg>
+    `;
+
+    if (showNotation) {
+      const formatRoster = (arr) => arr.length > 0 ? `{ ${arr.join(', ')} }` : '&empty;';
+      notationHtml = `
+        <div class="mt-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs">
+          <div class="font-bold text-slate-500 uppercase tracking-wider text-[10px] mb-2 flex items-center justify-between">
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-500"></span> 3-Set Roster & Intersection Summary:</span>
+            <span class="font-mono text-slate-400 text-[10px]">n(${uLabel}) = ${fullU.length}</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 font-mono-math text-[11px] sm:text-xs">
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <span class="font-bold text-emerald-700 dark:text-emerald-400">${nameA} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(fullSetA)}</span></span>
+              <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n=${fullSetA.length}</span>
+            </div>
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <span class="font-bold text-sky-700 dark:text-sky-400">${nameB} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(fullSetB)}</span></span>
+              <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n=${fullSetB.length}</span>
+            </div>
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <span class="font-bold text-pink-700 dark:text-pink-400">${nameC} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(fullSetC)}</span></span>
+              <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">n=${fullSetC.length}</span>
+            </div>
+            <div class="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 flex items-center justify-between sm:col-span-3">
+              <span class="font-bold text-purple-700 dark:text-purple-400">${nameA}&cap;${nameB}&cap;${nameC} = <span class="font-normal text-slate-800 dark:text-slate-200">${formatRoster(itemsABC)}</span></span>
+              <span class="text-[10px] text-slate-400 font-bold ml-1 shrink-0">${nameA}&cup;${nameB}&cup;${nameC} = ${formatRoster(unionABC)}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  return `
+    <div class="my-4 p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+      ${title ? `<h4 class="font-black text-xs sm:text-sm text-slate-900 dark:text-white mb-1 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-tagsci-600"></span>${renderMathInHtml(title)}</h4>` : ''}
+      ${caption ? `<p class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">${renderMathInHtml(caption)}</p>` : ''}
+      
+      <div class="w-full flex justify-center items-center bg-slate-50/70 dark:bg-slate-900/50 rounded-xl p-2 border border-slate-100 dark:border-slate-800/80 overflow-x-auto">
+        ${svgContent}
+      </div>
+
+      ${notationHtml}
+    </div>
+  `;
+}
+
 
     
 
@@ -1921,6 +2141,22 @@ function renderBlocksToHtml(blocks) {
         } else {
           html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
         }
+      } else if (text.includes('```venn')) {
+        const vennMatch = text.match(/```venn\s*([\s\S]*?)\s*```/);
+        if (vennMatch) {
+          try {
+            const vennObj = JSON.parse(vennMatch[1]);
+            const before = text.substring(0, vennMatch.index).trim();
+            const after = text.substring(vennMatch.index + vennMatch[0].length).trim();
+            if (before) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(before)}</p>`;
+            html += renderVennDiagramSvg(vennObj);
+            if (after) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(after)}</p>`;
+          } catch (e) {
+            html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
+          }
+        } else {
+          html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
+        }
       } else if (text.includes('|') && text.split(/\r?\n/).some(l => l.trim().startsWith('|') && l.trim().endsWith('|'))) {
         html += renderMarkdownTable(text);
       } else if (text.includes('![') && text.includes('](')) {
@@ -1948,6 +2184,8 @@ function renderBlocksToHtml(blocks) {
       html += renderTableBlock(b);
     } else if (b.type === 'cartesian' || b.type === 'plot') {
       html += renderCartesianPlaneSvg(b);
+    } else if (b.type === 'venn' || b.type === 'set') {
+      html += renderVennDiagramSvg(b);
     } else if (b.type === 'image') {
       const url = b.url || '';
       const alt = b.alt || 'Figure diagram';
