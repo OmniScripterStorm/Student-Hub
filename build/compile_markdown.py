@@ -16,6 +16,49 @@ def parse_frontmatter(content):
                 frontmatter[key.strip()] = val.strip()
     return frontmatter, body
 
+def format_rich_text(text):
+    if not text: return ''
+    
+    # 1. Stash inline code
+    code_inlines = []
+    def save_code(m):
+        idx = len(code_inlines)
+        code_inlines.append(m.group(1))
+        return f'\x00CODE_{idx}\x00'
+    text = re.sub(r'`([^`\n]+?)`', save_code, text)
+
+    # 2. Underline: <u>, <ins>, __text__
+    text = re.sub(r'<u\b[^>]*>([\s\S]*?)</u>', r'<u class="underline underline-offset-2">\1</u>', text, flags=re.I)
+    text = re.sub(r'<ins\b[^>]*>([\s\S]*?)</ins>', r'<u class="underline underline-offset-2">\1</u>', text, flags=re.I)
+    text = re.sub(r'__(.+?)__', r'<u class="underline underline-offset-2">\1</u>', text)
+
+    # 3. Bold + Italic: ***text***, **_text_**, _**text**_
+    text = re.sub(r'\*\*\*(.+?)\*\*\*', r'<strong class="font-extrabold text-slate-900 dark:text-white"><em class="italic">\1</em></strong>', text)
+    text = re.sub(r'\*\*_(.+?)_\*\*', r'<strong class="font-extrabold text-slate-900 dark:text-white"><em class="italic">\1</em></strong>', text)
+    text = re.sub(r'_\*\*(.+?)\*\*_', r'<strong class="font-extrabold text-slate-900 dark:text-white"><em class="italic">\1</em></strong>', text)
+
+    # 4. Bold: **text**, <b>, <strong>
+    text = re.sub(r'\*\*(.+?)\*\*', r'<strong class="font-bold text-slate-900 dark:text-white">\1</strong>', text)
+    text = re.sub(r'<b\b[^>]*>([\s\S]*?)</b>', r'<strong class="font-bold text-slate-900 dark:text-white">\1</strong>', text, flags=re.I)
+    text = re.sub(r'<strong\b[^>]*>([\s\S]*?)</strong>', r'<strong class="font-bold text-slate-900 dark:text-white">\1</strong>', text, flags=re.I)
+
+    # 5. Italic: *text*, _text_ (bounded), <i>, <em>
+    text = re.sub(r'(?<!\*)\*(?!\*)([^\*\n]+?)(?<!\*)\*(?!\*)', r'<em class="italic">\1</em>', text)
+    text = re.sub(r'(^|[\s(>])_([^_]+?)_([\s)<.,!?:;]|$)', r'\1<em class="italic">\2</em>\3', text)
+    text = re.sub(r'<i\b[^>]*>([\s\S]*?)</i>', r'<em class="italic">\1</em>', text, flags=re.I)
+    text = re.sub(r'<em\b[^>]*>([\s\S]*?)</em>', r'<em class="italic">\1</em>', text, flags=re.I)
+
+    # 6. Strikethrough: ~~text~~, <s>, <del>
+    text = re.sub(r'~~(.+?)~~', r'<del class="line-through text-slate-400 dark:text-slate-500">\1</del>', text)
+    text = re.sub(r'<s\b[^>]*>([\s\S]*?)</s>', r'<del class="line-through text-slate-400 dark:text-slate-500">\1</del>', text, flags=re.I)
+    text = re.sub(r'<del\b[^>]*>([\s\S]*?)</del>', r'<del class="line-through text-slate-400 dark:text-slate-500">\1</del>', text, flags=re.I)
+
+    # 7. Restore code
+    for i, c in enumerate(code_inlines):
+        text = text.replace(f'\x00CODE_{i}\x00', f'<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs font-mono text-tagsci-700 dark:text-emerald-400 border border-slate-200 dark:border-slate-700">{c}</code>')
+
+    return text
+
 def markdown_to_html(md):
     lines = md.strip().split('\n')
     html_lines = []
@@ -25,22 +68,21 @@ def markdown_to_html(md):
         stripped = line.strip()
         if stripped.startswith('#### '):
             if in_list: html_lines.append('</ul>'); in_list = False
-            html_lines.append(f'<h5 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 mt-3 mb-1">{stripped[5:]}</h5>')
+            html_lines.append(f'<h5 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 mt-3 mb-1">{format_rich_text(stripped[5:])}</h5>')
         elif stripped.startswith('### '):
             if in_list: html_lines.append('</ul>'); in_list = False
-            html_lines.append(f'<h4 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-3.5 mb-1.5">{stripped[4:]}</h4>')
+            html_lines.append(f'<h4 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-3.5 mb-1.5">{format_rich_text(stripped[4:])}</h4>')
         elif stripped.startswith('## '):
             if in_list: html_lines.append('</ul>'); in_list = False
-            html_lines.append(f'<h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-4 mb-2">{stripped[3:]}</h3>')
+            html_lines.append(f'<h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-4 mb-2">{format_rich_text(stripped[3:])}</h3>')
         elif stripped.startswith('# '):
             if in_list: html_lines.append('</ul>'); in_list = False
-            html_lines.append(f'<h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-4 mb-2">{stripped[2:]}</h2>')
+            html_lines.append(f'<h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-4 mb-2">{format_rich_text(stripped[2:])}</h2>')
         elif stripped.startswith('- ') or stripped.startswith('* '):
             if not in_list:
                 html_lines.append('<ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">')
                 in_list = True
-            item_text = stripped[2:]
-            item_text = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', item_text)
+            item_text = format_rich_text(stripped[2:])
             html_lines.append(f'<li>{item_text}</li>')
         elif stripped == '':
             if in_list:
@@ -51,7 +93,7 @@ def markdown_to_html(md):
             if in_list:
                 html_lines.append('</ul>')
                 in_list = False
-            p_text = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', line)
+            p_text = format_rich_text(line)
             html_lines.append(f'<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-1">{p_text}</p>')
 
     if in_list:

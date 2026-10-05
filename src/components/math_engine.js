@@ -121,24 +121,97 @@ export function parseMathSyntax(tex) {
 }
 
 /**
- * Scans an HTML string or DOM container, rendering $...$ as inline math and $$...$$ as block math
+ * Formats Markdown and HTML inline rich text (Bold, Italic, Underline, Strikethrough, Code)
+ */
+export function formatRichText(str) {
+  if (!str) return '';
+  let text = String(str);
+
+  // 1. Stash code blocks & inline code so formatting isn't applied inside code
+  const codeTokens = [];
+  text = text.replace(/`([^`\n]+?)`/g, (match, code) => {
+    const idx = codeTokens.length;
+    codeTokens.push(code);
+    return `\x00CODE_${idx}\x00`;
+  });
+
+  // 2. Underline: <u>text</u>, <ins>text</ins>, __text__
+  text = text.replace(/<u\b[^>]*>([\s\S]*?)<\/u>/gi, '<u class="underline underline-offset-2">$1</u>');
+  text = text.replace(/<ins\b[^>]*>([\s\S]*?)<\/ins>/gi, '<u class="underline underline-offset-2">$1</u>');
+  text = text.replace(/__(.+?)__/g, '<u class="underline underline-offset-2">$1</u>');
+
+  // 3. Bold + Italic combinations: ***text***, **_text_**, _**text**_
+  text = text.replace(/\*\*\*(.+?)\*\*\*/g, '<strong class="font-extrabold text-slate-900 dark:text-white"><em class="italic">$1</em></strong>');
+  text = text.replace(/\*\*_(.+?)_\*\*/g, '<strong class="font-extrabold text-slate-900 dark:text-white"><em class="italic">$1</em></strong>');
+  text = text.replace(/_\*\*(.+?)\*\*_/g, '<strong class="font-extrabold text-slate-900 dark:text-white"><em class="italic">$1</em></strong>');
+
+  // 4. Bold: **text**, <b>text</b>, <strong>text</strong>
+  text = text.replace(/\*\*(.+?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>');
+  text = text.replace(/<b\b[^>]*>([\s\S]*?)<\/b>/gi, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>');
+  text = text.replace(/<strong\b[^>]*>([\s\S]*?)<\/strong>/gi, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>');
+
+  // 5. Italic: *text*, _text_ (surrounded by spaces/boundary), <i>text</i>, <em>text</em>
+  text = text.replace(/(?<!\*)\*(?!\*)([^\*\n]+?)(?<!\*)\*(?!\*)/g, '<em class="italic">$1</em>');
+  text = text.replace(/(^|[\s(>])_([^_]+?)_([\s)<.,!?:;]|$)/g, '$1<em class="italic">$2</em>$3');
+  text = text.replace(/<i\b[^>]*>([\s\S]*?)<\/i>/gi, '<em class="italic">$1</em>');
+  text = text.replace(/<em\b[^>]*>([\s\S]*?)<\/em>/gi, '<em class="italic">$1</em>');
+
+  // 6. Strikethrough: ~~text~~, <s>text</s>, <del>text</del>
+  text = text.replace(/~~(.+?)~~/g, '<del class="line-through text-slate-400 dark:text-slate-500">$1</del>');
+  text = text.replace(/<s\b[^>]*>([\s\S]*?)<\/s>/gi, '<del class="line-through text-slate-400 dark:text-slate-500">$1</del>');
+  text = text.replace(/<del\b[^>]*>([\s\S]*?)<\/del>/gi, '<del class="line-through text-slate-400 dark:text-slate-500">$1</del>');
+
+  // 7. Restore code tokens
+  text = text.replace(/\x00CODE_(\d+)\x00/g, (match, idx) => {
+    const c = codeTokens[Number(idx)] || '';
+    return `<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs font-mono text-tagsci-700 dark:text-emerald-400 border border-slate-200 dark:border-slate-700">${c}</code>`;
+  });
+
+  return text;
+}
+
+/**
+ * Scans an HTML string or DOM container, rendering $...$ as inline math, $$...$$ as block math,
+ * and parsing Markdown/HTML inline formatting (Bold, Italic, Underline, Strikethrough, Code).
  */
 export function renderMathInHtml(htmlString) {
   if (!htmlString) return '';
+  let text = String(htmlString);
 
-  // Block math: $$ ... $$
-  let res = htmlString.replace(/\$\$([\s\S]*?)\$\$/g, (match, tex) => {
+  // Step 1: Protect math formulas into placeholders before rich text processing
+  const mathBlocks = [];
+  text = text.replace(/\$\$([\s\S]*?)\$\$/g, (match, tex) => {
+    const idx = mathBlocks.length;
+    mathBlocks.push(tex);
+    return `\x00MATH_BLOCK_${idx}\x00`;
+  });
+
+  const mathInlines = [];
+  text = text.replace(/\$([^\$\n]+?)\$/g, (match, tex) => {
+    const idx = mathInlines.length;
+    mathInlines.push(tex);
+    return `\x00MATH_INLINE_${idx}\x00`;
+  });
+
+  // Step 2: Parse rich text (Bold, Italic, Underline, Strikethrough, Code)
+  text = formatRichText(text);
+
+  // Step 3: Restore and render math formulas
+  text = text.replace(/\x00MATH_BLOCK_(\d+)\x00/g, (match, idx) => {
+    const tex = mathBlocks[Number(idx)];
+    if (tex === undefined) return '';
     const rendered = parseMathSyntax(tex);
     return `<div class="my-3 py-2.5 px-4 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center font-mono-math text-sm sm:text-base text-tagsci-900 dark:text-emerald-300 shadow-sm overflow-x-auto">${rendered}</div>`;
   });
 
-  // Inline math: $ ... $
-  res = res.replace(/\$([^\$\n]+?)\$/g, (match, tex) => {
+  text = text.replace(/\x00MATH_INLINE_(\d+)\x00/g, (match, idx) => {
+    const tex = mathInlines[Number(idx)];
+    if (tex === undefined) return '';
     const rendered = parseMathSyntax(tex);
     return `<span class="inline-block font-mono-math text-tagsci-800 dark:text-emerald-300 px-1 py-0.5 rounded bg-slate-100/70 dark:bg-slate-800/60 text-xs sm:text-sm font-semibold">${rendered}</span>`;
   });
 
-  return res;
+  return text;
 }
 
 /**
