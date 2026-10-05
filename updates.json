@@ -1,6 +1,6 @@
 {
   "version": "1.4.0",
-  "updatedAt": "2026-10-05T16:54:48.891Z",
+  "updatedAt": "2026-10-05T16:55:37.703Z",
   "announcement": "Refreshed 1 Reviewers, 8 Study Materials, 4 Deadlines, and 2 Quiz Banks.",
   "calendarEvents": [
     {
@@ -294,6 +294,136 @@
     }
   ],
   "studyMaterials": [
+    {
+      "id": "material_1791217115596",
+      "subject": "Finite Math",
+      "tag": "Study Material",
+      "color": "border-l-4 border-purple-500",
+      "title": "FCP, Permutation And Combination",
+      "summary": "Enter short summary...",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "1. Permutations "
+        },
+        {
+          "type": "paragraph",
+          "text": "A permutation is an ordered arrangement of a set of distinct items where**order matters.** Arranging items in the order $(A, B, C)$ produces a different permutation than $(C, B, A)$.Permutations are the Fundamental Counting Principle applied to sequential choices without replacement (where options decrease after each choice)."
+        },
+        {
+          "type": "paragraph",
+          "text": "When picking and arranging $r$ items out of a group of $n$ available items:$$P(n, r) = {}_n P_r = \\frac{n!}{(n - r)!}$$"
+        },
+        {
+          "type": "paragraph",
+          "text": "Where $n!$ ($n$ factorial) is the product of all positive integers up to $n$. Example (Podium Finishers): Out of 8 runners, in how many distinct ways can 1st, 2nd, and 3rd place trophies be awarded?$$P(8, 3) = \\frac{8!}{(8 - 3)!} = \\frac{8!}{5!} = 8 \\times 7 \\times 6 = 336\\text{ ways}$$"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "1.1 Arranging All Items"
+        },
+        {
+          "type": "paragraph",
+          "text": "When arranging all $n$ distinct items into $n$ available slots ($r = n$), the formula simplifies because $0! = 1$:$$P(n, n) = n!$$Example (Line Ordering): How many different ways can 5 people stand in a single line?$$5! = 5 \\times 4 \\times 3 \\times 2 \\times 1 = 120\\text{ ways}$$"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "1.2 Distinguishable Permutations (With Duplicate Items)"
+        },
+        {
+          "type": "paragraph",
+          "text": "If some items in a group are identical, swapping identical items does not create a new visual arrangement. To adjust, divide by the factorial of each duplicate group's size:$$P = \\frac{n!}{n_1! \\times n_2! \\times ... \\times n_k!}$$Example (Letter Anagrams): How many unique word arrangements can be formed using all letters in \"PHILIPPINES\"? Total letters ($n$) = 11 Duplicate letters: P appears 3 times, I appears 3 times$$P = \\frac{11!}{3! \\times 3!} = \\frac{39,916,800}{6 \\times 6} = 1,108,800\\text{ distinct arrangements}$$"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "1.3 Circular Permutation"
+        },
+        {
+          "type": "paragraph",
+          "text": "When arranging $n$ distinct items around a circle (where there is no fixed starting spot, and rotating everyone produces an identical arrangement):$$P_{\\text{circular}} = (n - 1)!$$Example (Round Table Seating): How many distinct ways can 6 people sit around a circular dinner table?$$(6 - 1)! = 5! = 120\\text{ ways}$$"
+        },
+        {
+          "type": "table",
+          "title": "Periodic Properties Comparison",
+          "headers": [
+            "permutation     types ",
+            "formula",
+            "use case"
+          ],
+          "rows": [
+            [
+              "Partial Arrangement ($nPr$)",
+              "$\\frac{n!}{(n-r)!}$",
+              "Select and order a subset of $r$ items from $n$ total"
+            ],
+            [
+              "Full Set ($n!$)",
+              "$n!$",
+              "$n!$Order all $n$ distinct items"
+            ],
+            [
+              "With Duplicates",
+              "$\\frac{n!}{n_1! n_2!n_k!}$",
+              "Order items when some elements are identical"
+            ],
+            [
+              "Circular",
+              "$(n-1)!$",
+              "Order items around a ring with no fixed start"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "2. Combination"
+        },
+        {
+          "type": "paragraph",
+          "text": "A combination is a selection of items from a set where order does NOT matter. Choosing $\\{A, B, C\\}$ results in the exact same combination as $\\{C, B, A\\}$.If permutations measure arrangements (lineups, rankings, passcodes), combinations measure groups or subsets (committees, card hands, lottery numbers).Core Formula & ConceptTo find the number of ways to choose $r$ items from $n$ distinct items without regard to order:$$C(n, r) = {}_n C_r = \\frac{n!}{r!(n - r)!}$$"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Key Properties:"
+        },
+        {
+          "type": "paragraph",
+          "text": "Symmetry Property: Choosing $r$ items to keep is identical to choosing $n - r$ items to leave behind.$$C(n, r) = C(n, n - r)$$(Example: $C(10, 7) = C(10, 3) = 120$) Total Subsets: The total number of possible combinations (subsets of all sizes from $0$ to $n$) for a set of size $n$ equals $2^n$:$$C(n, 0) + C(n, 1) + C(n, 2) + ... + C(n, n) = 2^n$$Combinations with Repetition: Choosing $r$ items from $n$ categories where you can repeat choices:$$C_{\\text{rep}}(n, r) = C(n + r - 1, r) = \\frac{(n + r - 1)!}{r!  (n - 1)!}$$"
+        },
+        {
+          "type": "table",
+          "title": "Examples (Comparison)",
+          "headers": [
+            "Scenario",
+            "Type",
+            "Order Matters?",
+            "Formula",
+            "Total Outcomes"
+          ],
+          "rows": [
+            [
+              "Elect President, Vice President, and Secretary",
+              "Permutation",
+              "Yes (Roles are distinct)",
+              "$P(5, 3) = \\frac{5!}{2!} = 5 \\times 4 \\times 3$",
+              "60 ways"
+            ],
+            [
+              "Select a 3-person study group",
+              "Combination",
+              "No (All members are equal)",
+              "$C(5, 3) = \\frac{5!}{3!2!} = \\frac{60}{6}$",
+              "10 ways"
+            ]
+          ]
+        }
+      ]
+    },
     {
       "id": "material_1791214094438",
       "subject": "Life and Career Skills",
@@ -1319,136 +1449,6 @@
             "Boiling Point",
             "Melting Point",
             "Volatility"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "material_1791217115596",
-      "subject": "Finite Math",
-      "tag": "Study Material",
-      "color": "border-l-4 border-purple-500",
-      "title": "Permutations",
-      "summary": "Enter short summary...",
-      "blocks": [
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "1. Permutations "
-        },
-        {
-          "type": "paragraph",
-          "text": "A permutation is an ordered arrangement of a set of distinct items where <b>order matters.</b> Arranging items in the order $(A, B, C)$ produces a different permutation than $(C, B, A)$.Permutations are the Fundamental Counting Principle applied to sequential choices without replacement (where options decrease after each choice)."
-        },
-        {
-          "type": "paragraph",
-          "text": "When picking and arranging $r$ items out of a group of $n$ available items:$$P(n, r) = {}_n P_r = \\frac{n!}{(n - r)!}$$"
-        },
-        {
-          "type": "paragraph",
-          "text": "Where $n!$ ($n$ factorial) is the product of all positive integers up to $n$. Example (Podium Finishers): Out of 8 runners, in how many distinct ways can 1st, 2nd, and 3rd place trophies be awarded?$$P(8, 3) = \\frac{8!}{(8 - 3)!} = \\frac{8!}{5!} = 8 \\times 7 \\times 6 = 336\\text{ ways}$$"
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "1.1 Arranging All Items"
-        },
-        {
-          "type": "paragraph",
-          "text": "When arranging all $n$ distinct items into $n$ available slots ($r = n$), the formula simplifies because $0! = 1$:$$P(n, n) = n!$$Example (Line Ordering): How many different ways can 5 people stand in a single line?$$5! = 5 \\times 4 \\times 3 \\times 2 \\times 1 = 120\\text{ ways}$$"
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "1.2 Distinguishable Permutations (With Duplicate Items)"
-        },
-        {
-          "type": "paragraph",
-          "text": "If some items in a group are identical, swapping identical items does not create a new visual arrangement. To adjust, divide by the factorial of each duplicate group's size:$$P = \\frac{n!}{n_1! \\times n_2! \\times ... \\times n_k!}$$Example (Letter Anagrams): How many unique word arrangements can be formed using all letters in \"PHILIPPINES\"? Total letters ($n$) = 11 Duplicate letters: P appears 3 times, I appears 3 times$$P = \\frac{11!}{3! \\times 3!} = \\frac{39,916,800}{6 \\times 6} = 1,108,800\\text{ distinct arrangements}$$"
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "1.3 Circular Permutation"
-        },
-        {
-          "type": "paragraph",
-          "text": "When arranging $n$ distinct items around a circle (where there is no fixed starting spot, and rotating everyone produces an identical arrangement):$$P_{\\text{circular}} = (n - 1)!$$Example (Round Table Seating): How many distinct ways can 6 people sit around a circular dinner table?$$(6 - 1)! = 5! = 120\\text{ ways}$$"
-        },
-        {
-          "type": "table",
-          "title": "Periodic Properties Comparison",
-          "headers": [
-            "permutation     types ",
-            "formula",
-            "use case"
-          ],
-          "rows": [
-            [
-              "Partial Arrangement ($nPr$)",
-              "$\\frac{n!}{(n-r)!}$",
-              "Select and order a subset of $r$ items from $n$ total"
-            ],
-            [
-              "Full Set ($n!$)",
-              "$n!$",
-              "$n!$Order all $n$ distinct items"
-            ],
-            [
-              "With Duplicates",
-              "$\\frac{n!}{n_1! n_2!n_k!}$",
-              "Order items when some elements are identical"
-            ],
-            [
-              "Circular",
-              "$(n-1)!$",
-              "Order items around a ring with no fixed start"
-            ]
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "2. Combination"
-        },
-        {
-          "type": "paragraph",
-          "text": "A combination is a selection of items from a set where order does NOT matter. Choosing $\\{A, B, C\\}$ results in the exact same combination as $\\{C, B, A\\}$.If permutations measure arrangements (lineups, rankings, passcodes), combinations measure groups or subsets (committees, card hands, lottery numbers).Core Formula & ConceptTo find the number of ways to choose $r$ items from $n$ distinct items without regard to order:$$C(n, r) = {}_n C_r = \\frac{n!}{r!(n - r)!}$$"
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "Key Properties:"
-        },
-        {
-          "type": "paragraph",
-          "text": "Symmetry Property: Choosing $r$ items to keep is identical to choosing $n - r$ items to leave behind.$$C(n, r) = C(n, n - r)$$(Example: $C(10, 7) = C(10, 3) = 120$) Total Subsets: The total number of possible combinations (subsets of all sizes from $0$ to $n$) for a set of size $n$ equals $2^n$:$$C(n, 0) + C(n, 1) + C(n, 2) + ... + C(n, n) = 2^n$$Combinations with Repetition: Choosing $r$ items from $n$ categories where you can repeat choices:$$C_{\\text{rep}}(n, r) = C(n + r - 1, r) = \\frac{(n + r - 1)!}{r!  (n - 1)!}$$"
-        },
-        {
-          "type": "table",
-          "title": "Examples (Comparison)",
-          "headers": [
-            "Scenario",
-            "Type",
-            "Order Matters?",
-            "Formula",
-            "Total Outcomes"
-          ],
-          "rows": [
-            [
-              "Elect President, Vice President, and Secretary",
-              "Permutation",
-              "Yes (Roles are distinct)",
-              "$P(5, 3) = \\frac{5!}{2!} = 5 \\times 4 \\times 3$",
-              "60 ways"
-            ],
-            [
-              "Select a 3-person study group",
-              "Combination",
-              "No (All members are equal)",
-              "$C(5, 3) = \\frac{5!}{3!2!} = \\frac{60}{6}$",
-              "10 ways"
-            ]
           ]
         }
       ]
