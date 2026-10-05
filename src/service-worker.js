@@ -140,3 +140,119 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
+
+/* =========================================================
+   BACKGROUND SYSTEMS & NOTIFICATION HANDLERS
+   ========================================================= */
+
+// 1. Periodic Background Sync (runs in background when app is closed / on Wi-Fi)
+self.addEventListener('periodicsync', (event) => {
+  if (event.tag === 'tagsci-periodic-curriculum-sync' || event.tag === 'tagsci-deadline-reminders') {
+    event.waitUntil(handlePeriodicBackgroundSync());
+  }
+});
+
+// 2. Background Sync (One-shot queue when connection recovers)
+self.addEventListener('sync', (event) => {
+  if (event.tag === 'tagsci-background-sync') {
+    event.waitUntil(handlePeriodicBackgroundSync());
+  }
+});
+
+/**
+ * Background Task: Fetches fresh updates.json and alerts student of immediate deadlines
+ */
+async function handlePeriodicBackgroundSync() {
+  try {
+    const res = await fetch(`./updates.json?_t=${Date.now()}`, { cache: 'no-store' });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data) return;
+
+    // Cache latest updates.json
+    const cache = await caches.open(CACHE_NAME);
+    await cache.put('./updates.json', new Response(JSON.stringify(data), {
+      headers: { 'Content-Type': 'application/json' }
+    }));
+
+    // Check upcoming deadlines today or tomorrow
+    const events = data.calendarEvents || [];
+    const now = new Date();
+    const todayStr = now.toISOString().split('T')[0];
+
+    for (const evt of events) {
+      if (!evt.date) continue;
+      const evtDate = new Date(evt.date);
+      const diffTime = evtDate.getTime() - now.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays >= 0 && diffDays <= 1) {
+        const prefix = diffDays === 0 ? '🚨 TODAY' : '⏰ TOMORROW';
+        await self.registration.showNotification(`${prefix}: ${evt.title || 'Academic Deadline'}`, {
+          body: `${evt.subject ? `[${evt.subject}] ` : ''}${evt.desc || 'Scheduled exam or submission deadline.'}`,
+          icon: './tagsci%20logo.png',
+          badge: './tagsci%20logo.png',
+          tag: `deadline-${evt.date}-${evt.title}`,
+          data: { url: './#calendar' },
+          vibrate: [200, 100, 200]
+        });
+        break; // Only show top priority alert per periodic wake
+      }
+    }
+  } catch (err) {
+    console.warn('[SW Background] Periodic sync error:', err);
+  }
+}
+
+// 3. Push Event (Web Push integration)
+self.addEventListener('push', (event) => {
+  let payload = { title: 'TagSci G11 Student Hub', body: 'New study materials available!', data: { url: './#materials' } };
+  if (event.data) {
+    try {
+      payload = event.data.json();
+    } catch (e) {
+      payload.body = event.data.text();
+    }
+  }
+
+  event.waitUntil(
+    self.registration.showNotification(payload.title || 'TagSci G11 Student Hub', {
+      body: payload.body,
+      icon: './tagsci%20logo.png',
+      badge: './tagsci%20logo.png',
+      tag: payload.tag || 'tagsci-push-notification',
+      data: payload.data || { url: './#materials' },
+      vibrate: [200, 100, 200]
+    })
+  );
+});
+
+// 4. Notification Click: Navigate to target view or focus active window
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const targetUrl = (event.notification.data && event.notification.data.url) || './';
+
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      for (const client of clientList) {
+        if (client.url && 'focus' in client) {
+          client.focus();
+          client.postMessage({ type: 'NAVIGATE_SECTION', url: targetUrl });
+          return;
+        }
+      }
+      if (self.clients.openWindow) {
+        return self.clients.openWindow(targetUrl);
+      }
+    })
+  );
+});
+
+// 5. Client Message Listener
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  } else if (event.data && event.data.type === 'CHECK_DEADLINES_NOW') {
+    event.waitUntil(handlePeriodicBackgroundSync());
+  }
+});

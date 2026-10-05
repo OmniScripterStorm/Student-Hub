@@ -23,6 +23,14 @@ import {
   exitQuiz 
 } from './components/quiz_engine.js';
 import { initPwaInstallPrompt, triggerPwaInstall, dismissPwaPrompt, manualTriggerPwaPrompt, updateSettingsPwaStatus } from './components/pwa_installer.js';
+import { 
+  initBackgroundEngine, 
+  requestNotificationPermission, 
+  triggerTestNotification, 
+  updateBackgroundSettingsUI, 
+  checkUpcomingDeadlinesAndNotify, 
+  registerPeriodicBackgroundSync 
+} from './components/background_engine.js';
 
 // Expose public functions to window.App for inline HTML event handlers
 window.App = {
@@ -66,7 +74,12 @@ window.App = {
   triggerPwaInstall,
   dismissPwaPrompt,
   manualTriggerPwaPrompt,
-  updateSettingsPwaStatus
+  updateSettingsPwaStatus,
+  requestNotificationPermission,
+  triggerTestNotification,
+  updateBackgroundSettingsUI,
+  checkUpcomingDeadlinesAndNotify,
+  registerPeriodicBackgroundSync
 };
 
 window.addEventListener('resize', checkResponsiveLayout);
@@ -83,4 +96,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // 2. Initialize Automatic Real-Time OTA Sync Engine (Instant on network + periodic poller)
   initAutoSyncEngine(15);
+
+  // 3. Initialize Background Systems & Deadline Reminder Engine
+  initBackgroundEngine();
 });

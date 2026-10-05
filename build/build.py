@@ -53,6 +53,9 @@ def build_single_file():
     with open(os.path.join(src_dir, 'components', 'pwa_installer.js'), 'r', encoding='utf-8') as f:
         pwa_installer_js = strip_exports_and_imports(f.read())
 
+    with open(os.path.join(src_dir, 'components', 'background_engine.js'), 'r', encoding='utf-8') as f:
+        background_engine_js = strip_exports_and_imports(f.read())
+
     with open(os.path.join(src_dir, 'app.js'), 'r', encoding='utf-8') as f:
         app_js = strip_exports_and_imports(f.read())
 
@@ -77,6 +80,8 @@ def build_single_file():
     {ota_sync_js}
 
     {pwa_installer_js}
+
+    {background_engine_js}
 
     {app_js}
     """
