@@ -1450,7 +1450,7 @@
           "front": "How do water ($\\text{H}_2\\text{O}$) molecules orient around a $\\text{Na}^+$ cation vs a $\\text{Cl}^-$ anion during hydration?",
           "back": "Around $\\text{Na}^+$, water orients its partially negative Oxygen atom ($\\delta^- \\text{O}$). Around $\\text{Cl}^-$, water orients its partially positive Hydrogen atoms ($\\delta^+ \\text{H}$).",
           "hint": "Opposite charges attract: $\\delta^-$ toward $(+)$ and $\\delta^+$ toward $(-)$.",
-          "explanation": "Ion-dipole forces dictate hydration spheres: cations interact with the negative dipole pole ($\text{O}^{\delta-}$), while anions interact with the positive dipole poles ($\text{H}^{\delta+}$)."
+          "explanation": "Ion-dipole forces dictate hydration spheres: cations interact with the negative dipole pole ($\\text{O}^{\\delta-}$), while anions interact with the positive dipole poles ($\\text{H}^{\\delta+}$)."
         },
         {
           "type": "flashcard",
