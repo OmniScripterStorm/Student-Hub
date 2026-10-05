@@ -1,7 +1,7 @@
 {
   "version": "1.4.0",
-  "updatedAt": "2026-10-05T15:43:30.028Z",
-  "announcement": "Refreshed 1 Reviewers, 7 Study Materials, 4 Deadlines, and 1 Quiz Banks.",
+  "updatedAt": "2026-10-06T00:23:00.000Z",
+  "announcement": "Refreshed 1 Reviewers, 7 Study Materials, 4 Deadlines, and 2 Quiz Banks (including Active Recall Flashcards).",
   "calendarEvents": [
     {
       "id": 1790325028547,
@@ -1413,6 +1413,53 @@
           "back": "",
           "explanation": "It analyzes and discusses previous research using academic sources.",
           "answerBoolean": true
+        }
+      ]
+    },
+    {
+      "id": "quiz_deck_imfa_chem_flashcards",
+      "subject": "General Chemistry",
+      "tag": "Flashcard Deck",
+      "color": "border-l-4 border-emerald-500",
+      "title": "Intermolecular Forces & Physical Properties (Active Recall)",
+      "desc": "Master London dispersion, dipole-dipole, hydrogen bonding, ion-dipole forces, and their effects on boiling points and vapor pressure.",
+      "timeLimitMinutes": 10,
+      "questions": [
+        {
+          "type": "flashcard",
+          "topic": "Intermolecular Forces",
+          "prompt": "What is the primary condition required for **Hydrogen Bonding** to form between molecules?",
+          "front": "What is the primary structural condition required for **Hydrogen Bonding** to occur?",
+          "back": "A hydrogen atom covalently bonded to a strongly electronegative atom with small atomic radius ($\\text{N}$, $\\text{O}$, or $\\text{F}$) interacts with a lone pair on a nearby $\\text{N}$, $\\text{O}$, or $\\text{F}$ atom.",
+          "hint": "Think of the acronym: FON (Fluorine, Oxygen, Nitrogen).",
+          "explanation": "Hydrogen bonding is an unusually strong dipole-dipole attraction (~20 kJ/mol) occurring exclusively when H is attached directly to Fluorine, Oxygen, or Nitrogen due to extreme polarity and small atomic radii."
+        },
+        {
+          "type": "flashcard",
+          "topic": "Dispersion Forces",
+          "prompt": "How does molecular size / molar mass affect the strength of **London Dispersion Forces (LDF)**?",
+          "front": "How does molecular size and molar mass affect the strength of **London Dispersion Forces (LDF)**?",
+          "back": "Larger molecules with higher molar mass have larger electron clouds, increasing **polarizability**, which produces stronger temporary dipoles and higher boiling points.",
+          "hint": "More electrons = easier to distort the electron cloud.",
+          "explanation": "Polarizability increases with the number of electrons and diffuse electron clouds, making induced dipole fluctuations significantly stronger in heavier molecules."
+        },
+        {
+          "type": "flashcard",
+          "topic": "Ion-Dipole Forces",
+          "prompt": "How do water molecules orient themselves around a dissolved $\\text{Na}^+$ cation versus a $\\text{Cl}^-$ anion in aqueous solution?",
+          "front": "How do water ($\\text{H}_2\\text{O}$) molecules orient around a $\\text{Na}^+$ cation vs a $\\text{Cl}^-$ anion during hydration?",
+          "back": "Around $\\text{Na}^+$, water orients its partially negative Oxygen atom ($\\delta^- \\text{O}$). Around $\\text{Cl}^-$, water orients its partially positive Hydrogen atoms ($\\delta^+ \\text{H}$).",
+          "hint": "Opposite charges attract: $\\delta^-$ toward $(+)$ and $\\delta^+$ toward $(-)$.",
+          "explanation": "Ion-dipole forces dictate hydration spheres: cations interact with the negative dipole pole ($\text{O}^{\delta-}$), while anions interact with the positive dipole poles ($\text{H}^{\delta+}$)."
+        },
+        {
+          "type": "flashcard",
+          "topic": "Physical Properties",
+          "prompt": "What is the relationship between Intermolecular Force (IMF) strength and **Vapor Pressure**?",
+          "front": "What is the relationship between Intermolecular Force (IMF) strength and **Vapor Pressure** at a given temperature?",
+          "back": "**Inversely proportional**: Stronger IMFs $\\implies$ Fewer surface molecules can escape into gas phase $\\implies$ **Lower Vapor Pressure** (and Higher Boiling Point).",
+          "hint": "If molecules stick tightly together, can they easily evaporate into vapor?",
+          "explanation": "Strong cohesive forces prevent molecules from entering the vapor phase, resulting in low vapor pressure and requiring higher thermal energy (higher boiling point) to boil."
         }
       ]
     }

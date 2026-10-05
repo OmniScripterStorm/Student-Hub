@@ -59,6 +59,29 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
+    /* 3D Flashcard Module Styles */
+    .flashcard-3d-scene {
+      perspective: 1000px;
+      width: 100%;
+    }
+    .flashcard-3d-card {
+      position: relative;
+      width: 100%;
+      min-height: 200px;
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-style: preserve-3d;
+      user-select: none;
+    }
+    .flashcard-3d-card.is-flipped {
+      transform: rotateY(180deg);
+    }
+    .flashcard-3d-card.is-flipped .flashcard-face-front {
+      display: none;
+    }
+    .flashcard-3d-card:not(.is-flipped) .flashcard-face-back {
+      display: none;
+    }
+
     /* Editorial Chronicle Styles for Academic Committee */
     .editorial-chronicle h1, .editorial-chronicle h2 {
       font-family: 'Newsreader', serif;
@@ -1166,6 +1189,53 @@ const DEFAULT_BASELINE = {
           "correctText": "Noise",
           "aliases": "interference, barrier",
           "explanation": "Noise is any physical, psychological, or semantic interference in the communication channel."
+        }
+      ]
+    },
+    {
+      "id": "quiz_deck_imfa_chem_flashcards",
+      "subject": "General Chemistry",
+      "tag": "Flashcard Deck",
+      "color": "border-l-4 border-emerald-500",
+      "title": "Intermolecular Forces & Physical Properties (Active Recall)",
+      "desc": "Master London dispersion, dipole-dipole, hydrogen bonding, ion-dipole forces, and their effects on boiling points and vapor pressure.",
+      "timeLimitMinutes": 10,
+      "questions": [
+        {
+          "type": "flashcard",
+          "topic": "Intermolecular Forces",
+          "prompt": "What is the primary condition required for **Hydrogen Bonding** to form between molecules?",
+          "front": "What is the primary structural condition required for **Hydrogen Bonding** to occur?",
+          "back": "A hydrogen atom covalently bonded to a strongly electronegative atom with small atomic radius ($\\text{N}$, $\\text{O}$, or $\\text{F}$) interacts with a lone pair on a nearby $\\text{N}$, $\\text{O}$, or $\\text{F}$ atom.",
+          "hint": "Think of the acronym: FON (Fluorine, Oxygen, Nitrogen).",
+          "explanation": "Hydrogen bonding is an unusually strong dipole-dipole attraction (~20 kJ/mol) occurring exclusively when H is attached directly to Fluorine, Oxygen, or Nitrogen due to extreme polarity and small atomic radii."
+        },
+        {
+          "type": "flashcard",
+          "topic": "Dispersion Forces",
+          "prompt": "How does molecular size / molar mass affect the strength of **London Dispersion Forces (LDF)**?",
+          "front": "How does molecular size and molar mass affect the strength of **London Dispersion Forces (LDF)**?",
+          "back": "Larger molecules with higher molar mass have larger electron clouds, increasing **polarizability**, which produces stronger temporary dipoles and higher boiling points.",
+          "hint": "More electrons = easier to distort the electron cloud.",
+          "explanation": "Polarizability increases with the number of electrons and diffuse electron clouds, making induced dipole fluctuations significantly stronger in heavier molecules."
+        },
+        {
+          "type": "flashcard",
+          "topic": "Ion-Dipole Forces",
+          "prompt": "How do water molecules orient themselves around a dissolved $\\text{Na}^+$ cation versus a $\\text{Cl}^-$ anion in aqueous solution?",
+          "front": "How do water ($\\text{H}_2\\text{O}$) molecules orient around a $\\text{Na}^+$ cation vs a $\\text{Cl}^-$ anion during hydration?",
+          "back": "Around $\\text{Na}^+$, water orients its partially negative Oxygen atom ($\\delta^- \\text{O}$). Around $\\text{Cl}^-$, water orients its partially positive Hydrogen atoms ($\\delta^+ \\text{H}$).",
+          "hint": "Opposite charges attract: $\\delta^-$ toward $(+)$ and $\\delta^+$ toward $(-)$.",
+          "explanation": "Ion-dipole forces dictate hydration spheres: cations interact with the negative dipole pole ($\text{O}^{\delta-}$), while anions interact with the positive dipole poles ($\text{H}^{\delta+}$)."
+        },
+        {
+          "type": "flashcard",
+          "topic": "Physical Properties",
+          "prompt": "What is the relationship between Intermolecular Force (IMF) strength and **Vapor Pressure**?",
+          "front": "What is the relationship between Intermolecular Force (IMF) strength and **Vapor Pressure** at a given temperature?",
+          "back": "**Inversely proportional**: Stronger IMFs $\\implies$ Fewer surface molecules can escape into gas phase $\\implies$ **Lower Vapor Pressure** (and Higher Boiling Point).",
+          "hint": "If molecules stick tightly together, can they easily evaporate into vapor?",
+          "explanation": "Strong cohesive forces prevent molecules from entering the vapor phase, resulting in low vapor pressure and requiring higher thermal energy (higher boiling point) to boil."
         }
       ]
     }
@@ -2304,6 +2374,8 @@ let userAnswers = []; // array of user responses (index, string, boolean, or arr
 let isPracticeMode = true;
 let timerInterval = null;
 let secondsRemaining = 0;
+let flashcardFlipped = false;
+let flashcardHintVisible = false;
 
 function renderQuizSetsView() {
   const container = document.getElementById('quizSetsListContainer');
@@ -2363,6 +2435,8 @@ function startQuiz(quizId, practiceMode) {
   currentQuestionIdx = 0;
   userAnswers = new Array(currentQuiz.questions.length).fill(null);
   isPracticeMode = practiceMode;
+  flashcardFlipped = false;
+  flashcardHintVisible = false;
 
   const deckGrid = document.getElementById('quizDeckGrid');
   const player = document.getElementById('quizPlayerContainer');
@@ -2444,7 +2518,7 @@ function evaluateAnswer(q, userAns) {
   }
 
   if (qType === 'flashcard') {
-    return userAns === true;
+    return userAns === 'mastered' || userAns === true;
   }
 
   return false;
@@ -2669,33 +2743,119 @@ function renderCurrentQuestion() {
     `;
   }
 
-  // 6. FLASHCARD (flashcard)
+  // 6. FLASHCARD (flashcard) - Enhanced 3D Flip & Active Recall Tiers
   else if (qType === 'flashcard') {
-    const flipped = userAns !== null;
+    const isMastered = userAns === 'mastered' || userAns === true;
+    const isHard = userAns === 'hard';
+    const isAgain = userAns === 'again' || userAns === false;
+
     answerInputMarkup = `
       <div class="space-y-4">
-        <div 
-          onclick="flipFlashcard()" 
-          class="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-100 to-white dark:from-slate-950 dark:to-slate-900 border-2 border-dashed border-tagsci-500/50 text-center cursor-pointer hover:shadow-lg transition flex flex-col items-center justify-center min-h-[160px]"
-        >
-          <span class="text-[10px] font-bold uppercase tracking-wider text-g11pink-600 dark:text-g11pink-400 mb-2">
-            ${flipped ? '&#x1F4A1; Solution & Formula (Back)' : '&#x1F504; Tap to Reveal Solution (Front)'}
-          </span>
-          <div class="text-sm sm:text-base font-bold text-slate-900 dark:text-white font-mono-math">
-            ${flipped ? renderMathInHtml(q.back || q.explanation || '') : renderMathInHtml(q.front || q.prompt || '')}
+        <!-- 3D Flashcard Container -->
+        <div class="flashcard-3d-scene">
+          <div 
+            id="activeFlashcard3D"
+            onclick="flipFlashcard()" 
+            class="flashcard-3d-card ${flashcardFlipped ? 'is-flipped' : ''} p-5 sm:p-7 rounded-2xl border-2 cursor-pointer shadow-sm hover:shadow-md transition-all duration-300 min-h-[200px] flex flex-col justify-between ${
+              flashcardFlipped
+                ? 'border-emerald-500/60 dark:border-emerald-500/40 bg-gradient-to-br from-emerald-50/60 to-white dark:from-emerald-950/40 dark:to-slate-900'
+                : 'border-tagsci-500/50 dark:border-tagsci-600/40 bg-gradient-to-br from-slate-50 to-white dark:from-slate-950 dark:to-slate-900'
+            }"
+          >
+            <!-- Card Header -->
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${
+                flashcardFlipped
+                  ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800'
+                  : 'bg-tagsci-100 dark:bg-tagsci-950 text-tagsci-800 dark:text-tagsci-300 border border-tagsci-300 dark:border-tagsci-800'
+              }">
+                ${flashcardFlipped ? '💡 Solution & Formula (Back)' : '❓ Prompt / Concept (Front)'}
+              </span>
+              <span class="text-[11px] font-semibold text-slate-400 dark:text-slate-500 flex items-center gap-1">
+                <span>🔄 Tap or Space to Flip</span>
+              </span>
+            </div>
+
+            <!-- Card Content Body -->
+            <div class="py-3 flex-1 flex flex-col items-center justify-center text-center">
+              ${!flashcardFlipped ? `
+                ${q.frontImage ? `<img src="${q.frontImage}" alt="Diagram" class="max-h-36 max-w-full rounded-xl border border-slate-200 dark:border-slate-800 mb-3 object-contain shadow-sm" />` : ''}
+                <div class="text-sm sm:text-base font-bold text-slate-900 dark:text-white font-mono-math leading-relaxed">
+                  ${renderMathInHtml(q.front || q.prompt || '')}
+                </div>
+              ` : `
+                ${q.backImage ? `<img src="${q.backImage}" alt="Solution Diagram" class="max-h-36 max-w-full rounded-xl border border-slate-200 dark:border-slate-800 mb-3 object-contain shadow-sm" />` : ''}
+                <div class="text-sm sm:text-base font-bold text-emerald-800 dark:text-emerald-300 font-mono-math leading-relaxed">
+                  ${renderMathInHtml(q.back || q.explanation || '')}
+                </div>
+              `}
+            </div>
+
+            <!-- Hint Section (Front side only) -->
+            ${!flashcardFlipped && q.hint ? `
+              <div class="mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-800/80 text-left" onclick="event.stopPropagation()">
+                <button 
+                  onclick="toggleFlashcardHint()" 
+                  class="inline-flex items-center gap-1 text-[11px] font-bold text-amber-600 dark:text-amber-400 hover:underline"
+                >
+                  <span>💡</span> ${flashcardHintVisible ? 'Hide Hint' : 'Need a Hint?'}
+                </button>
+                ${flashcardHintVisible ? `
+                  <div class="mt-1.5 p-2.5 rounded-xl bg-amber-50/90 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/60 text-xs text-amber-900 dark:text-amber-200 font-mono-math">
+                    ${renderMathInHtml(q.hint)}
+                  </div>
+                ` : ''}
+              </div>
+            ` : ''}
           </div>
         </div>
 
-        ${flipped ? `
-          <div class="flex items-center justify-center space-x-3 pt-2">
-            <button onclick="rateFlashcard(false)" class="flex-1 py-2 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-300 text-rose-700 dark:text-rose-300 font-bold text-xs transition">
-              🔁 Review Again
+        <!-- 3-Tier Active Recall Rating -->
+        <div class="space-y-1.5 pt-1">
+          <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 text-center">
+            Rate Your Recall Confidence
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <button 
+              onclick="rateFlashcard('again')" 
+              class="py-2.5 px-2 rounded-xl border font-bold text-xs transition flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-1.5 ${
+                isAgain
+                  ? 'bg-rose-500 text-white border-rose-600 shadow-sm'
+                  : 'bg-rose-50 dark:bg-rose-950/50 border-rose-200 dark:border-rose-900/60 text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/70'
+              }"
+            >
+              <span>🔴</span>
+              <span>Review Again</span>
+              <span class="text-[9px] opacity-70 hidden sm:inline">(1)</span>
             </button>
-            <button onclick="rateFlashcard(true)" class="flex-1 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 text-emerald-700 dark:text-emerald-300 font-bold text-xs transition">
-              👍 Mastered
+
+            <button 
+              onclick="rateFlashcard('hard')" 
+              class="py-2.5 px-2 rounded-xl border font-bold text-xs transition flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-1.5 ${
+                isHard
+                  ? 'bg-amber-500 text-white border-amber-600 shadow-sm'
+                  : 'bg-amber-50 dark:bg-amber-950/50 border-amber-200 dark:border-amber-900/60 text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/70'
+              }"
+            >
+              <span>🟡</span>
+              <span>Almost / Hard</span>
+              <span class="text-[9px] opacity-70 hidden sm:inline">(2)</span>
+            </button>
+
+            <button 
+              onclick="rateFlashcard('mastered')" 
+              class="py-2.5 px-2 rounded-xl border font-bold text-xs transition flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-1.5 ${
+                isMastered
+                  ? 'bg-emerald-600 text-white border-emerald-700 shadow-sm'
+                  : 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-200 dark:border-emerald-900/60 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/70'
+              }"
+            >
+              <span>🟢</span>
+              <span>Mastered</span>
+              <span class="text-[9px] opacity-70 hidden sm:inline">(3)</span>
             </button>
           </div>
-        ` : ''}
+        </div>
       </div>
     `;
   }
@@ -2843,20 +3003,32 @@ function submitMultiSelectAnswer() {
 }
 
 function flipFlashcard() {
-  if (userAnswers[currentQuestionIdx] === null) {
-    userAnswers[currentQuestionIdx] = false;
+  flashcardFlipped = !flashcardFlipped;
+  const cardEl = document.getElementById('activeFlashcard3D');
+  if (cardEl) {
+    if (flashcardFlipped) cardEl.classList.add('is-flipped');
+    else cardEl.classList.remove('is-flipped');
+    renderCurrentQuestion();
+  } else {
     renderCurrentQuestion();
   }
 }
 
-function rateFlashcard(mastered) {
-  userAnswers[currentQuestionIdx] = mastered;
+function toggleFlashcardHint() {
+  flashcardHintVisible = !flashcardHintVisible;
+  renderCurrentQuestion();
+}
+
+function rateFlashcard(rating) {
+  userAnswers[currentQuestionIdx] = rating;
   renderCurrentQuestion();
 }
 
 function prevQuizQuestion() {
   if (currentQuestionIdx > 0) {
     currentQuestionIdx--;
+    flashcardFlipped = false;
+    flashcardHintVisible = false;
     renderCurrentQuestion();
   }
 }
@@ -2864,10 +3036,30 @@ function prevQuizQuestion() {
 function nextQuizQuestion() {
   if (currentQuestionIdx < currentQuiz.questions.length - 1) {
     currentQuestionIdx++;
+    flashcardFlipped = false;
+    flashcardHintVisible = false;
     renderCurrentQuestion();
   } else {
     showResults();
   }
+}
+
+function retryMissedQuestions() {
+  if (!currentQuiz || !currentQuiz.questions) return;
+  const missedQuestions = currentQuiz.questions.filter((q, idx) => !evaluateAnswer(q, userAnswers[idx]));
+  if (missedQuestions.length === 0) return;
+
+  const subQuiz = {
+    id: currentQuiz.id + '_review_' + Date.now(),
+    title: `Targeted Review: ${currentQuiz.title}`,
+    subject: currentQuiz.subject || 'STEM Review',
+    tag: 'Focus Drill',
+    timeLimitMinutes: Math.max(5, Math.ceil(missedQuestions.length * 1.5)),
+    questions: JSON.parse(JSON.stringify(missedQuestions))
+  };
+
+  QUIZ_SETS.unshift(subQuiz);
+  startQuiz(subQuiz.id, true);
 }
 
 function showResults() {
@@ -2912,7 +3104,15 @@ function showResults() {
       const correctOpts = (q.answerIndices || []).map(i => q.options[i]).join(', ');
       solutionDisplay = `<p class="text-emerald-600 dark:text-emerald-400"><span class="text-slate-400">Correct Options:</span> ${correctOpts}</p>`;
     } else if (qType === 'flashcard') {
-      responseDisplay = userAns === true ? 'Mastered' : 'Reviewed';
+      if (userAns === 'mastered' || userAns === true) {
+        responseDisplay = '<span class="text-emerald-600 dark:text-emerald-400 font-bold">🟢 Mastered</span>';
+      } else if (userAns === 'hard') {
+        responseDisplay = '<span class="text-amber-600 dark:text-amber-400 font-bold">🟡 Almost / Hard</span>';
+      } else if (userAns === 'again' || userAns === false) {
+        responseDisplay = '<span class="text-rose-600 dark:text-rose-400 font-bold">🔴 Review Again</span>';
+      } else {
+        responseDisplay = '<span class="text-slate-400 italic">Unanswered</span>';
+      }
       solutionDisplay = `<p class="text-emerald-600 dark:text-emerald-400"><span class="text-slate-400">Back Side:</span> ${renderMathInHtml(q.back || q.explanation || '')}</p>`;
     }
 
@@ -2937,6 +3137,7 @@ function showResults() {
   }).join('');
 
   const pct = Math.round((correctCount / total) * 100);
+  const missedCount = total - correctCount;
 
   results.innerHTML = `
     <div class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md text-center space-y-4">
@@ -2957,8 +3158,13 @@ function showResults() {
       </div>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-2 pt-2">
+        ${missedCount > 0 ? `
+          <button onclick="retryMissedQuestions()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 active:scale-95 text-xs font-bold text-white shadow-sm transition flex items-center justify-center gap-1.5">
+            <span>🔁</span> Drill Missed Items (${missedCount})
+          </button>
+        ` : ''}
         <button onclick="startQuiz('${currentQuiz.id}', ${isPracticeMode})" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-xs font-bold text-white transition">
-          &#x1F504; Retake Quiz
+          🔄 Retake Full Quiz
         </button>
         <button onclick="exitQuiz()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 transition">
           Back to Quiz Bank
@@ -3908,7 +4114,9 @@ window.App = {
   submitMultiSelectAnswer,
   submitNumericalAnswer,
   flipFlashcard,
+  toggleFlashcardHint,
   rateFlashcard,
+  retryMissedQuestions,
   prevQuizQuestion,
   nextQuizQuestion,
   exitQuiz,
@@ -3919,6 +4127,46 @@ window.App = {
 };
 
 window.addEventListener('resize', checkResponsiveLayout);
+
+// Global Keyboard Navigation for Universal Quiz & Flashcard Player
+window.addEventListener('keydown', (e) => {
+  const player = document.getElementById('quizPlayerContainer');
+  if (!player || player.classList.contains('hidden') || !currentQuiz || !currentQuiz.questions) return;
+  
+  // Ignore shortcut handling if student is actively typing in input fields
+  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
+  
+  const q = currentQuiz.questions[currentQuestionIdx];
+  const qType = q ? (q.type || 'mcq') : '';
+
+  if (qType === 'flashcard') {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      flipFlashcard();
+      return;
+    } else if (e.key === '1') {
+      e.preventDefault();
+      rateFlashcard('again');
+      return;
+    } else if (e.key === '2') {
+      e.preventDefault();
+      rateFlashcard('hard');
+      return;
+    } else if (e.key === '3') {
+      e.preventDefault();
+      rateFlashcard('mastered');
+      return;
+    }
+  }
+
+  if (e.key === 'ArrowLeft' && currentQuestionIdx > 0) {
+    e.preventDefault();
+    prevQuizQuestion();
+  } else if (e.key === 'ArrowRight' && currentQuestionIdx < currentQuiz.questions.length - 1) {
+    e.preventDefault();
+    nextQuizQuestion();
+  }
+});
 
 window.addEventListener('DOMContentLoaded', () => {
   initTheme();
