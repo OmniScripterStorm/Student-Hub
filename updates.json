@@ -1,7 +1,7 @@
 {
   "version": "1.4.0",
-  "updatedAt": "2026-10-01T10:42:35.992Z",
-  "announcement": "Refreshed 1 Reviewers, 4 Study Materials, 4 Deadlines, and 1 Quiz Banks.",
+  "updatedAt": "2026-10-05T15:15:22.397Z",
+  "announcement": "Refreshed 1 Reviewers, 6 Study Materials, 4 Deadlines, and 1 Quiz Banks.",
   "calendarEvents": [
     {
       "id": 1790325028547,
@@ -295,6 +295,274 @@
   ],
   "studyMaterials": [
     {
+      "id": "material_1791210892371",
+      "subject": "Life and Career Skills",
+      "tag": "Study Material",
+      "color": "border-l-4 border-emerald-500",
+      "title": "Basic Rights of Employees",
+      "summary": "Introduction to the Basic Rights of every Employee",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Core Framework of Philippine Labor Rights"
+        },
+        {
+          "type": "paragraph",
+          "text": "Under the 1987 Philippine Constitution (Article XIII, Section 3) and the Labor Code of the Philippines (Presidential Decree No. 442, as amended), the State guarantees workers the right to security of tenure, humane conditions of work, a living wage, and participation in decision-making processes."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "1. Security of Tenure and Due Process"
+        },
+        {
+          "type": "paragraph",
+          "text": "An employee cannot be terminated without substantive grounds and procedural due process."
+        },
+        {
+          "type": "paragraph",
+          "text": "The following are valid causes for termination:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Just Causes (Employee Fault, Art. 297 [282]): Serious misconduct, willful disobedience (insubordination), gross and habitual neglect of duty, fraud or willful breach of trust, or commission of a crime against the employer or their immediate family.",
+            "Authorized Causes (Business/Health Grounds, Arts. 298–299 [283–284]): Installation of labor-saving devices, redundancy, retrenchment to prevent losses, closure/cessation of business, or incurable disease prejudicial to the employee or co-workers."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The Twin-Notice Rule"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "First Notice (Notice to Explain): Specifies the particular charges and grounds for termination, giving the employee a reasonable opportunity (at least 5 calendar days) to respond and submit evidence.",
+            "Second Notice (Notice of Decision): Communicates the final decision indicating that all circumstances involving the charge were considered."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "2. Working Hours, Overtime, and Rest Periods"
+        },
+        {
+          "type": "table",
+          "title": "",
+          "headers": [
+            "Right/Benefit",
+            "Legal Basis",
+            "Rule"
+          ],
+          "rows": [
+            [
+              "Normal Working Hours",
+              "Art. 83, Labor Code of the Philippines",
+              "Maximum of 8 hours per day. Excludes a minimum 60-minute regular meal break (unpaid). Short rest periods (5–20 minutes) count as paid hours."
+            ],
+            [
+              "Overtime (OT) Pay",
+              "Art. 87, Labor Code of the Philippines",
+              "Work rendered beyond 8 hours on a regular day incurs an additional +25% of the hourly rate; work on rest days/holidays incurs +30%."
+            ],
+            [
+              "Night Shift Differential",
+              "Art. 86, Labor Code of the Philippines",
+              "Additional +10% of regular hourly rate for work performed between 10:00 PM and 6:00 AM."
+            ],
+            [
+              "Weekly Rest Day",
+              "Art. 91, Labor Code of the Philippines",
+              "Compulsory consecutive rest period of not less than 24 consecutive hours after every 6 consecutive normal workdays."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "3. Statutory Monetary Benefits & Wage Protection"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Minimum Wage: Dictated by the Regional Tripartite Wages and Productivity Boards (RTWPB) based on geographic location and industry sector.",
+            "13th Month Pay (P.D. 851): Mandatory benefit equivalent to $\\frac{1}{12}$ of the total basic salary earned within a calendar year, payable on or before December 24.",
+            "Service Incentive Leave (Art. 95): At least 5 paid days per year for employees who have rendered at least one year of service (convertible to cash if unused).",
+            "Regular Holiday Pay: 100% regular pay even if unworked; 200% if worked.",
+            "Special Non-Working Days: \"No work, no pay\" applies unless company policy dictates otherwise; 130% if worked.",
+            "Non-Diminution of Benefits (Art. 100): Employers cannot unilaterally withdraw, eliminate, or reduce benefits that have ripened into an established, regular company practice."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "4. Collective Bargaining, Health, & Statutory Leaves"
+        },
+        {
+          "type": "paragraph",
+          "text": "Philippine labor law heavily safeguards collective bargaining, occupational well-being, and family and health needs through specific statutory guarantees."
+        },
+        {
+          "type": "paragraph",
+          "text": "Under Article 253 [246] of the Labor Code, workers are granted the fundamental right to self-organization, enabling them to form, join, or assist legitimate labor organizations and negotiate a Collective Bargaining Agreement (CBA) without being subjected to employer unfair labor practices (ULP). Alongside union rights, Republic Act No. 11058 mandates strict Occupational Safety and Health (OSH) standards. This law guarantees every worker a safe and healthful working environment, requires employers to provide personal protective equipment (PPE) free of charge, and upholds the employee's right to refuse unsafe work without fear of retaliation."
+        },
+        {
+          "type": "paragraph",
+          "text": "In addition to workplace safety and collective action, the law provides comprehensive special statutory leaves designed to protect the health, welfare, and personal responsibilities of employees:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Maternity Leave (RA 11210): Grants 105 paid days for live birth (with an additional 15 days for qualified solo mothers) and 60 paid days in cases of miscarriage or emergency termination of pregnancy.",
+            "Paternity Leave (RA 8187): Entitles married male employees to 7 paid days of leave for up to the first four deliveries of their legitimate spouse.",
+            "Solo Parent Leave (RA 8972, as amended by RA 11861): Provides 7 paid parental leave days annually to qualifying solo parents.",
+            "VAWC Leave (RA 9262): Provides 10 paid days of leave for female employees who are victims of Violence Against Women and Their Children.",
+            "Gynecological Surgery Leave (RA 9710 / Magna Carta of Women): Allows up to 2 months of fully paid leave for female employees following surgery caused by gynecological disorders."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "material_1791210892312",
+      "subject": "Life and Career Skills",
+      "tag": "Study Material",
+      "color": "border-l-4 border-emerald-500",
+      "title": "Eli Ginzberg's Developmental Theory",
+      "summary": "Introduction to Eli Ginzberg and his Developmental Theory",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "1. Overview & Historical Significance"
+        },
+        {
+          "type": "paragraph",
+          "text": "Proposed in 1951 by an interdisciplinary team led by economist Eli Ginzberg, along with Sol W. Ginsburg (psychiatrist), Sidney Axelrad (sociologist), and John L. Herma (psychologist) in their seminal work, Occupational Choice: An Approach to a General Theory."
+        },
+        {
+          "type": "paragraph",
+          "text": "Prior to Ginzberg, career counseling relied primarily on the Trait-and-Factor theory (matching fixed personality traits or skills to job types at a single point in time). Ginzberg and his colleagues were the first to argue that occupational choice is a developmental process, evolving over time through distinct psychological stages."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "2. Core Premises"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ginzberg’s original model was built on three foundational tenets:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Occupational choice is a process",
+            "The process is irreversible",
+            "Compromise is an essential aspect of every choice"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "3. Stages of Career Development"
+        },
+        {
+          "type": "paragraph",
+          "text": "1. Fantasy Stage"
+        },
+        {
+          "type": "paragraph",
+          "text": "This stage is play-oriented and imagination-driven. Children adopt roles based on excitement, visible symbols, or heroic figures (e.g., superhero, astronaut, veterinarian, pilot)."
+        },
+        {
+          "type": "paragraph",
+          "text": "2. Tentative Stage"
+        },
+        {
+          "type": "paragraph",
+          "text": "During adolescence, individuals begin to evaluate their career options against internal and emerging external realities. This stage is divided into four sub-stages:"
+        },
+        {
+          "type": "table",
+          "title": "",
+          "headers": [
+            "Sub-Stage",
+            "Age",
+            "Milestone"
+          ],
+          "rows": [
+            [
+              "Interest",
+              "~11-12 years",
+              "Choices are driven by what the adolescent likes and enjoys doing."
+            ],
+            [
+              "Capacity",
+              "~12-14 years",
+              "Adolescents introduce personal competence and skill evaluation into the equation; they assess whether their abilities match their interests."
+            ],
+            [
+              "Value",
+              "~15-16 years",
+              "Individuals weigh personal values, lifestyle goals, and societal impact against career options."
+            ],
+            [
+              "Transition",
+              "~17-18 years",
+              "The realization that immediate real-world decisions must be made (college selection, vocational school, or entering the workforce). Demands, independence, and external realities become urgent."
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "3. Realistic Stage"
+        },
+        {
+          "type": "paragraph",
+          "text": "Adolescents transition into early adulthood, narrowing their vocational scope into a defined profession through actionable commitments. This stage is divided into three sub-stages:"
+        },
+        {
+          "type": "table",
+          "title": "",
+          "headers": [
+            "Sub-Stage",
+            "Description"
+          ],
+          "rows": [
+            [
+              "Exploration",
+              "Active investigation of remaining options; gaining firsthand experience through coursework, internships, or entry-level roles."
+            ],
+            [
+              "Crystallization",
+              "Commitment to a single general career field; the decision becomes clear and consolidated."
+            ],
+            [
+              "Specification",
+              "Final specialization within the chosen field, focusing on a specific role, branch, or graduate training program."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "4. Ginzberg’s Revision"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ginzberg revised his original theory to reflect societal changes and extended research. He later recognized that career development doesn’t limit itself to childhood and adolescence but that it is a life-long process. Ginzberg rescinded his claims that:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Career development comes to a close during the person’s early 20s when they start work.",
+            "Career development is irreversible.",
+            "The resolution of the choice always results in compromise."
+          ]
+        }
+      ]
+    },
+    {
       "id": "material_1790837876784",
       "subject": "General Science",
       "tag": "Study Material",
@@ -363,8 +631,8 @@
         {
           "type": "image",
           "url": "https://images.openai.com/static-rsc-4/t-YF6Qw0p-mYs1uVvrRlMFIEPZnYGLo5xHzvTCEF6QtJpehCle4x5AEJJbU7kXpPgBPzSMbKnuLA1fbyqpW169epNneSrZNYV6lh9fqEdmo-tZNKuQykjrpHvyPxtg8D7yOw1JXJxAbqOYEdArdJnDta1wt1quycQjZBeK5yhVSe-0S69nFc8vQapO7uVSL3?purpose=fullsize",
-          "caption": "",
           "alt": "Illustration diagram",
+          "caption": "",
           "size": "medium"
         },
         {
@@ -378,8 +646,8 @@
         {
           "type": "image",
           "url": "https://images.openai.com/static-rsc-4/MsToPCW6-7czRzCc3D6NnIbvtHHyy3O-F9QlkSxLiUM6AGtWvKVAeRB5lpl1mV_9Nerpmy9lq4jMKy01RC6wimHQdIceCK0SR6QrdoIfHOjuel19YN1YQ-v8f-bAhrN8QrD77gueUK3oGA1Xw9kp8v1r2dmLVho4V_Z0Zf8F_22D__vmCm1GiiOGqLJOrFWs?purpose=fullsize",
-          "caption": "",
           "alt": "Illustration diagram",
+          "caption": "",
           "size": "medium"
         },
         {
@@ -393,8 +661,8 @@
         {
           "type": "image",
           "url": "https://images.openai.com/static-rsc-4/l7-WSloXMUB4jCECXnLftJNSlz4XPdICyatmqCiT2ozzykUdwH0sXByOLFCwTAR9U5gYnddJeZS3u3XqYT2gaHppBB-w0fQNJdmaMYhM3Xsc5V0EYiWVPhB4R7VDkDTmp95HiRxSEoDU_ErJD9eT2zwL0IcxKljc6Ba9bjvTJgSAe0ifC1n0R5Y2T8vYuH0k?purpose=fullsize",
-          "caption": "",
           "alt": "Illustration diagram",
+          "caption": "",
           "size": "medium"
         },
         {
@@ -408,8 +676,8 @@
         {
           "type": "image",
           "url": "https://images.openai.com/static-rsc-4/bcmh6nA9jJuXD-MGYHgXWJ7pXul_ol6vTJu9DFwkM5WFPTQLXDBQceJpRyyxy95azLErYjZtjSjU96pJjizBmCRf5doaRG7vSo_bW0jvUFxktYJTXrdvoIjOC24AUNzjwx3ca41w83ZbZAEpGCLzPefJn2R7tndp8SliPMr3Gjn3h2GbFq68fkEzSwmP1X3X?purpose=fullsize",
-          "caption": "",
           "alt": "Illustration diagram",
+          "caption": "",
           "size": "medium"
         },
         {
@@ -423,8 +691,8 @@
         {
           "type": "image",
           "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NjAgNTQwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8IS0tIFNsaWRlIEJhY2tncm91bmQgLS0+CiAgPHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxYjJhNGEiLz4KCiAgPCEtLSBUaXRsZSBCYW5uZXIgLS0+CiAgPHJlY3QgeD0iMCIgeT0iMjQiIHdpZHRoPSI5NjAiIGhlaWdodD0iNzAiIGZpbGw9IiMxMDFjMzMiIG9wYWNpdHk9IjAuOSIvPgogIDx0ZXh0IHg9IjQ4MCIgeT0iNzIiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjM4IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPgogICAgQ29tYnVzdGlvbiBSZWFjdGlvbgogIDwvdGV4dD4KCiAgPCEtLSBEZWZpbml0aW9uIFRleHQgLS0+CiAgPHRleHQgeD0iNDgwIiB5PSIxNDUiIGZpbGw9IiNmMGY0ZjgiIGZvbnQtZmFtaWx5PSJBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4KICAgIEEgcmVhY3Rpb24gb2YgYSBmdWVsIHdpdGggb3h5Z2VuLCBwcm9kdWNpbmcgZW5lcmd5IGluIHRoZSBmb3JtIG9mIGhlYXQgYW5kL29yIGxpZ2h0LgogIDwvdGV4dD4KCiAgPCEtLSBSZWFjdGlvbiBEaWFncmFtIENvbnRhaW5lciAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLCAxNjApIj4KICAgIDwhLS0gRnVlbCBCb3ggLS0+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMzAsIDQwKSI+CiAgICAgIDxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTAwIiByeD0iMTYiIGZpbGw9IiNlNzRjM2MiIHN0cm9rZT0iI2MwMzkyYiIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgICAgIDx0ZXh0IHg9IjkwIiB5PSI2MiIgZmlsbD0iI2ZmZmZmZiIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzQiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4KICAgICAgICBmdWVsCiAgICAgIDwvdGV4dD4KICAgIDwvZz4KCiAgICA8IS0tIFBsdXMgU2lnbiAtLT4KICAgIDx0ZXh0IHg9IjM1NSIgeT0iMTEyIiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1MiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPgogICAgICArCiAgICA8L3RleHQ+CgogICAgPCEtLSBPMiBNb2xlY3VsZSBHcmFwaGljIC0tPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDM1LCA5MCkiPgogICAgICA8Y2lyY2xlIGN4PSItMjgiIGN5PSIwIiByPSIzOCIgZmlsbD0iIzM0OThkYiIgc3Ryb2tlPSIjMjk4MGI5IiBzdHJva2Utd2lkdGg9IjMiLz4KICAgICAgPGNpcmNsZSBjeD0iMjgiIGN5PSIwIiByPSIzOCIgZmlsbD0iIzM0OThkYiIgc3Ryb2tlPSIjMjk4MGI5IiBzdHJva2Utd2lkdGg9IjMiLz4KICAgICAgPHRleHQgeD0iMCIgeT0iMTMiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjM2IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+CiAgICAgICAgTzx0c3BhbiBkeT0iMTAiIGZvbnQtc2l6ZT0iMjQiPjI8L3RzcGFuPgogICAgICA8L3RleHQ+CiAgICA8L2c+CgogICAgPCEtLSBBcnJvdyAtLT4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU0NSwgOTApIj4KICAgICAgPGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iNjUiIHkyPSIwIiBzdHJva2U9IiNmMWM0MGYiIHN0cm9rZS13aWR0aD0iOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgICAgIDxwb2x5Z29uIHBvaW50cz0iNjAsLTE0IDg1LDAgNjAsMTQiIGZpbGw9IiNmMWM0MGYiLz4KICAgIDwvZz4KCiAgICA8IS0tIFByb2R1Y3RzOiBIZWF0IC8gTGlnaHQgLyBFbmVyZ3kgRmxhbWUgSWNvbiAmIExhYmVsIC0tPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjg1LCA0MCkiPgogICAgICA8cmVjdCB3aWR0aD0iMTkwIiBoZWlnaHQ9IjEwMCIgcng9IjE2IiBmaWxsPSIjZjM5YzEyIiBzdHJva2U9IiNkNjg5MTAiIHN0cm9rZS13aWR0aD0iMyIvPgogICAgICA8dGV4dCB4PSI5NSIgeT0iNDgiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+CiAgICAgICAgZW5lcmd5CiAgICAgIDwvdGV4dD4KICAgICAgPHRleHQgeD0iOTUiIHk9Ijc4IiBmaWxsPSIjZmZmM2NkIiBmb250LWZhbWlseT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+CiAgICAgICAgKGhlYXQgJmFtcDsgbGlnaHQpCiAgICAgIDwvdGV4dD4KICAgIDwvZz4KICA8L2c+CgogIDwhLS0gU2xpZGUgRm9vdGVyIEJhciAtLT4KICA8cmVjdCB4PSIwIiB5PSI1MDAiIHdpZHRoPSI5NjAiIGhlaWdodD0iNDAiIGZpbGw9IiMwZjE3MmEiLz4KICA8dGV4dCB4PSI5MjAiIHk9IjUyNiIgZmlsbD0iIzk0YTNiOCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIHRleHQtYW5jaG9yPSJlbmQiPgogICAgMjcKICA8L3RleHQ+Cjwvc3ZnPgo=",
-          "caption": "",
           "alt": "Illustration diagram",
+          "caption": "",
           "size": "medium"
         }
       ]
