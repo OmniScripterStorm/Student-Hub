@@ -1,7 +1,7 @@
 {
-  "version": "1.4.0",
-  "updatedAt": "2026-10-05T16:56:21.312Z",
-  "announcement": "Refreshed 1 Reviewers, 8 Study Materials, 4 Deadlines, and 2 Quiz Banks.",
+  "version": "1.4.1",
+  "updatedAt": "2026-10-06T15:00:00.000Z",
+  "announcement": "Refreshed 1 Reviewers, 9 Study Materials, 4 Deadlines, and 2 Quiz Banks.",
   "calendarEvents": [
     {
       "id": 1790325028547,
@@ -294,6 +294,16 @@
     }
   ],
   "studyMaterials": [
+    {
+      "id": "material_1791225890120",
+      "subject": "Chemistry",
+      "tag": "Study Material",
+      "color": "border-l-4 border-indigo-500",
+      "title": "The Mole Concept Basics",
+      "summary": "Study handout covering the mole concept, balancing chemical equations, and stoichiometric mole ratios.",
+      "desc": "Lecture handout and worked examples on the mole concept, law of conservation of mass, balancing chemical equations, and calculating stoichiometric mole ratios.",
+      "link": "./THE-MOLE-CONCEPT-BASICS.pdf"
+    },
     {
       "id": "material_1791214094438",
       "subject": "Life and Career Skills",
