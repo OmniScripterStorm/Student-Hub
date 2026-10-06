@@ -36,87 +36,164 @@ const GREEK_SYMBOLS = {
 };
 
 const MATH_OPERATORS = {
-  '\\cdot': '&middot;',
+  '\\Longleftrightarrow': '&hArr;',
+  '\\longleftrightarrow': '&harr;',
+  '\\Longrightarrow': '&rArr;',
+  '\\longrightarrow': '&rarr;',
+  '\\longleftarrow': '&larr;',
+  '\\rightleftharpoons': '&#x21CC;',
+  '\\leftrightharpoons': '&#x21CC;',
+  '\\leftrightarrow': '&harr;',
+  '\\Leftarrow': '&lArr;',
+  '\\Rightarrow': '&rArr;',
+  '\\leftarrow': '&larr;',
+  '\\rightarrow': '&rarr;',
+  '\\implies': '&rArr;',
+  '\\iff': '&hArr;',
+  '\\to': '&rarr;',
+  '\\uparrow': '&uarr;',
+  '\\downarrow': '&darr;',
+  '\\qquad': '&emsp;&emsp;',
+  '\\quad': '&emsp;',
+  '\\thickapprox': '&asymp;',
+  '\\approxeq': '&asymp;',
+  '\\approx': '&asymp;',
+  '\\equiv': '&equiv;',
+  '\\propto': '&prop;',
   '\\times': '&times;',
+  '\\cdot': '&middot;',
+  '\\div': '&divide;',
   '\\pm': '&plusmn;',
   '\\mp': '&#x2213;',
-  '\\approx': '&asymp;',
+  '\\leq': '&le;',
+  '\\geq': '&ge;',
   '\\neq': '&ne;',
   '\\le': '&le;',
   '\\ge': '&ge;',
+  '\\ne': '&ne;',
   '\\infty': '&infin;',
   '\\partial': '&part;',
   '\\nabla': '&nabla;',
   '\\forall': '&forall;',
   '\\exists': '&exist;',
-  '\\in': '&isin;',
   '\\notin': '&notin;',
-  '\\rightarrow': '&rarr;',
-  '\\leftarrow': '&larr;',
-  '\\Rightarrow': '&rArr;',
-  '\\Leftarrow': '&lArr;',
-  '\\leftrightarrow': '&harr;',
-  '\\int': '<span class="text-lg leading-none italic font-serif font-bold">&int;</span>',
+  '\\in': '&isin;',
+  '\\degree': '&deg;',
+  '\\circ': '&deg;',
+  '\\ldots': '&hellip;',
+  '\\cdots': '&hellip;',
+  '\\dots': '&hellip;',
   '\\iint': '<span class="text-lg leading-none italic font-serif font-bold">&int;&int;</span>',
-  '\\sum': '<span class="text-lg leading-none font-bold">&sum;</span>',
+  '\\int': '<span class="text-lg leading-none italic font-serif font-bold">&int;</span>',
   '\\prod': '<span class="text-lg leading-none font-bold">&prod;</span>',
-  '\\sqrt': '&radic;'
+  '\\sum': '<span class="text-lg leading-none font-bold">&sum;</span>',
+  '\\sqrt': '&radic;',
+  '\\,': '&thinsp;',
+  '\\;': '&ensp;',
+  '\\:': '&ensp;',
+  '\\!': '',
+  '\\ ': '&nbsp;',
+  '~': '&nbsp;'
 };
 
+function extractBalancedBraces(text, startIdx) {
+  if (startIdx >= text.length || text[startIdx] !== '{') return null;
+  let depth = 0;
+  const contentStart = startIdx + 1;
+  for (let i = startIdx; i < text.length; i++) {
+    if (text[i] === '{') depth++;
+    else if (text[i] === '}') {
+      depth--;
+      if (depth === 0) return { content: text.substring(contentStart, i), nextIdx: i + 1 };
+    }
+  }
+  return null;
+}
+
 export function parseMathSyntax(tex) {
-  let s = tex.trim();
+  let s = (tex || '').trim();
+  s = s.replace(/<br\s*\/?>/gi, ' ');
 
-  // 1. Fractions: \frac{num}{den} -> stacked visual fraction
-  s = s.replace(/\\frac\s*\{([^{}]+)\}\s*\{([^{}]+)\}/g, (match, num, den) => {
-    return `<span class="inline-flex flex-col text-center align-middle mx-1 text-xs sm:text-sm font-mono-math">
-      <span class="border-b border-current pb-0.5 px-1">${parseMathSyntax(num)}</span>
-      <span class="pt-0.5 px-1">${parseMathSyntax(den)}</span>
-    </span>`;
-  });
+  // 1. Strip LaTeX sizing commands for brackets
+  s = s.replace(/\\left\s*([(\[{|.]|\\\{)/g, (m, p) => p === '\\{' ? '{' : (p === '.' ? '' : p));
+  s = s.replace(/\\right\s*([)\]}|.]|\\\})/g, (m, p) => p === '\\}' ? '}' : (p === '.' ? '' : p));
+  s = s.replace(/\\(?:big|Big|bigg|Bigg)[lrm]?\s*([(\[{)|\]}])/g, '$1');
 
-  // 2. Square roots: \sqrt[n]{x} or \sqrt{x}
+  // 2. Fractions: \frac, \dfrac, \tfrac with balanced braces
+  let fracPos = 0;
+  while (true) {
+    const m = s.substr(fracPos).match(/\\(?:d|t)?frac/);
+    if (!m) break;
+    const idx = fracPos + m.index;
+    let p = idx + m[0].length;
+    while (p < s.length && /\s/.test(s[p])) p++;
+    const numMatch = extractBalancedBraces(s, p);
+    if (numMatch) {
+      let q = numMatch.nextIdx;
+      while (q < s.length && /\s/.test(s[q])) q++;
+      const denMatch = extractBalancedBraces(s, q);
+      if (denMatch) {
+        const replacement = `<span class="inline-flex flex-col text-center align-middle mx-1 text-xs sm:text-sm font-mono-math"><span class="border-b border-current pb-0.5 px-1">${parseMathSyntax(numMatch.content)}</span><span class="pt-0.5 px-1">${parseMathSyntax(denMatch.content)}</span></span>`;
+        s = s.substring(0, idx) + replacement + s.substring(denMatch.nextIdx);
+        fracPos = idx + replacement.length;
+        continue;
+      }
+    }
+    fracPos = idx + m[0].length;
+  }
+
+  // 3. Square roots: \sqrt[n]{x} or \sqrt{x}
   s = s.replace(/\\sqrt\[([^{}]+)\]\{([^{}]+)\}/g, (match, n, inner) => {
-    return `<span class="inline-flex items-center align-middle font-mono-math">
-      <sup class="text-[9px] -mr-1">${parseMathSyntax(n)}</sup>
-      <span class="text-base leading-none">&radic;</span>
-      <span class="border-t border-current px-0.5 ml-0.5">${parseMathSyntax(inner)}</span>
-    </span>`;
+    return `<span class="inline-flex items-center align-middle font-mono-math"><sup class="text-[9px] -mr-1">${parseMathSyntax(n)}</sup><span class="text-base leading-none">&radic;</span><span class="border-t border-current px-0.5 ml-0.5">${parseMathSyntax(inner)}</span></span>`;
   });
-
   s = s.replace(/\\sqrt\{([^{}]+)\}/g, (match, inner) => {
-    return `<span class="inline-flex items-center align-middle font-mono-math">
-      <span class="text-base leading-none">&radic;</span>
-      <span class="border-t border-current px-0.5 ml-0.5">${parseMathSyntax(inner)}</span>
-    </span>`;
+    return `<span class="inline-flex items-center align-middle font-mono-math"><span class="text-base leading-none">&radic;</span><span class="border-t border-current px-0.5 ml-0.5">${parseMathSyntax(inner)}</span></span>`;
   });
 
-  // 3. Vectors: \vec{v} or \hat{i}
-  s = s.replace(/\\vec\{([^{}]+)\}/g, (match, inner) => {
-    return `<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&rarr;</span><span>${inner}</span></span>`;
-  });
+  // 4. Vectors and bars
+  s = s.replace(/\\vec\{([^{}]+)\}/g, (match, inner) => `<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&rarr;</span><span>${inner}</span></span>`);
+  s = s.replace(/\\hat\{([^{}]+)\}/g, (match, inner) => `<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">^</span><span>${inner}</span></span>`);
+  s = s.replace(/\\overline\{([^{}]+)\}/g, '<span class="overline">$1</span>');
 
-  s = s.replace(/\\hat\{([^{}]+)\}/g, (match, inner) => {
-    return `<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">^</span><span>${inner}</span></span>`;
-  });
+  // 5. Text & fonts: \text, \mathrm, \operatorname, \mathbf, \mathit
+  let textPos = 0;
+  while (true) {
+    const m = s.substr(textPos).match(/\\(?:text|mathrm|operatorname)\s*\{/);
+    if (!m) break;
+    const idx = textPos + m.index;
+    const p = idx + m[0].length - 1;
+    const bMatch = extractBalancedBraces(s, p);
+    if (bMatch) {
+      let innerParsed = bMatch.content;
+      innerParsed = innerParsed.replace(/_\{([^{}]+)\}/g, '<sub>$1</sub>');
+      innerParsed = innerParsed.replace(/_([0-9]+|[a-zA-Z])/g, '<sub>$1</sub>');
+      innerParsed = innerParsed.replace(/\^\{([^{}]+)\}/g, '<sup>$1</sup>');
+      innerParsed = innerParsed.replace(/\^([0-9]+|[a-zA-Z])/g, '<sup>$1</sup>');
+      const replacement = `<span class="font-sans font-normal">${innerParsed}</span>`;
+      s = s.substring(0, idx) + replacement + s.substring(bMatch.nextIdx);
+      textPos = idx + replacement.length;
+      continue;
+    }
+    textPos = idx + m[0].length;
+  }
 
-  // 4. Superscripts & Subscripts: x^{2} / x^2, v_{0} / v_0
+  s = s.replace(/\\mathbf\{([^{}]+)\}/g, '<strong class="font-bold font-sans">$1</strong>');
+  s = s.replace(/\\textbf\{([^{}]+)\}/g, '<strong class="font-bold font-sans">$1</strong>');
+  s = s.replace(/\\mathit\{([^{}]+)\}/g, '<em class="italic">$1</em>');
+  s = s.replace(/\\textit\{([^{}]+)\}/g, '<em class="italic">$1</em>');
+
+  // 6. Superscripts & Subscripts: x^{2} / x^2, v_{0} / v_0
   s = s.replace(/\^\{([^{}]+)\}/g, '<sup>$1</sup>');
-  s = s.replace(/\^([a-zA-Z0-9+\-&;]+)/g, '<sup>$1</sup>');
+  s = s.replace(/\^([0-9]+|[a-zA-Z])/g, '<sup>$1</sup>');
   s = s.replace(/_\{([^{}]+)\}/g, '<sub>$1</sub>');
-  s = s.replace(/_([a-zA-Z0-9+\-&;]+)/g, '<sub>$1</sub>');
+  s = s.replace(/_([0-9]+|[a-zA-Z])/g, '<sub>$1</sub>');
 
-  // 5. Greek Letters & Math Symbols
-  for (const [key, val] of Object.entries(GREEK_SYMBOLS)) {
-    s = s.split(key).join(val);
-  }
+  // Support LaTeX line breaks inside display math / matrices / aligned
+  s = s.replace(/\\\\/g, '<br/>');
 
-  for (const [key, val] of Object.entries(MATH_OPERATORS)) {
-    s = s.split(key).join(val);
-  }
-
-  // 6. Text inside math: \text{...}
-  s = s.replace(/\\text\{([^{}]+)\}/g, '<span class="font-sans font-normal">$1</span>');
-
+  // 7. Greek Letters & Math Symbols
+  for (const [key, val] of Object.entries(GREEK_SYMBOLS)) s = s.split(key).join(val);
+  for (const [key, val] of Object.entries(MATH_OPERATORS)) s = s.split(key).join(val);
   return s;
 }
 
@@ -180,16 +257,22 @@ export function renderMathInHtml(htmlString) {
 
   // Step 1: Protect math formulas into placeholders before rich text processing
   const mathBlocks = [];
-  text = text.replace(/\$\$([\s\S]*?)\$\$/g, (match, tex) => {
+  // Support both $$...$$ and \[...\]
+  text = text.replace(/(?:\$\$([\s\S]*?)\$\$|\\\[([\s\S]*?)\\\])/g, (match, tex1, tex2) => {
+    const rawTex = (tex1 !== undefined ? tex1 : tex2) || '';
+    const cleanTex = rawTex.replace(/<br\s*\/?>/gi, ' ').trim();
     const idx = mathBlocks.length;
-    mathBlocks.push(tex);
+    mathBlocks.push(cleanTex);
     return `\x00MATH_BLOCK_${idx}\x00`;
   });
 
   const mathInlines = [];
-  text = text.replace(/\$([^\$\n]+?)\$/g, (match, tex) => {
+  // Support both $...$ and \(...\)
+  text = text.replace(/(?:(?<!\\)\$([^\$\n]+?)(?<!\\)\$|\\\(([\s\S]*?)\\\))/g, (match, tex1, tex2) => {
+    const rawTex = (tex1 !== undefined ? tex1 : tex2) || '';
+    const cleanTex = rawTex.replace(/<br\s*\/?>/gi, ' ').trim();
     const idx = mathInlines.length;
-    mathInlines.push(tex);
+    mathInlines.push(cleanTex);
     return `\x00MATH_INLINE_${idx}\x00`;
   });
 
