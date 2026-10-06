@@ -1,6 +1,6 @@
 {
-  "version": "1.4.1",
-  "updatedAt": "2026-10-06T15:00:00.000Z",
+  "version": "1.4.2",
+  "updatedAt": "2026-10-06T15:15:00.000Z",
   "announcement": "Refreshed 1 Reviewers, 9 Study Materials, 4 Deadlines, and 2 Quiz Banks.",
   "calendarEvents": [
     {
@@ -299,10 +299,109 @@
       "subject": "Chemistry",
       "tag": "Study Material",
       "color": "border-l-4 border-indigo-500",
-      "title": "The Mole Concept Basics",
-      "summary": "Study handout covering the mole concept, balancing chemical equations, and stoichiometric mole ratios.",
-      "desc": "Lecture handout and worked examples on the mole concept, law of conservation of mass, balancing chemical equations, and calculating stoichiometric mole ratios.",
-      "link": "./THE-MOLE-CONCEPT-BASICS.pdf"
+      "title": "The Mole Concept: Balancing Equations & Mole Ratios",
+      "summary": "Core principles of the mole concept, Law of Conservation of Mass, balancing chemical equations, and calculating stoichiometric mole ratios with step-by-step examples.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "1. The Mole Concept"
+        },
+        {
+          "type": "paragraph",
+          "text": "Moles are the standard SI units expressing the quantity of a substance. They are commonly abbreviated as **\"mol\"**."
+        },
+        {
+          "type": "paragraph",
+          "text": "When balancing chemical equations, the **stoichiometric coefficients** (the numbers attached to each chemical formula) represent the lowest ratio of the number of moles needed to complete the reaction."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "2. Balancing Chemical Equations"
+        },
+        {
+          "type": "paragraph",
+          "text": "Balancing chemical equations is based on the **Law of Conservation of Mass** formulated by Antoine Lavoisier, which states that *matter cannot be created nor destroyed*."
+        },
+        {
+          "type": "paragraph",
+          "text": "Any chemical reaction in the form $A + B \\rightarrow C + D$ or $A + B \\rightarrow C$, when balanced, has coefficients attached to the chemical formulas. These coefficients are what we call stoichiometric coefficients, converting the reactions into standard stoichiometric forms:"
+        },
+        {
+          "type": "formula",
+          "title": "General Stoichiometric Form",
+          "formula": "aA + bB \\rightarrow cC + dD",
+          "note": "Coefficients a, b, c, and d represent the relative molar quantities."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Conservation of Atoms**: The total number of atoms of each element on the reactant side must equal the total number of atoms on the product side.",
+            "**Subscripts vs. Coefficients**: Never change the chemical subscripts in a formula—only adjust the stoichiometric coefficients in front.",
+            "**Balancing Priority Rule**: When balancing, **Hydrogen (H)** and **Oxygen (O)** atoms are generally the least priority and should be balanced last."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "3. Balancing Examples & Solutions"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Example 1**: Balance the chemical equation $\\text{Xe} + \\text{F}_2 \\rightarrow \\text{XeF}_6$ (Xenon reacts with Fluorine gas to produce Xenon Hexafluoride)."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Solution for Example 1",
+          "text": "Notice that, on the reactant side, there is exactly $1\\text{ Xe}$ atom and $2\\text{ F}$ atoms. On the right, there is also $1\\text{ Xe}$ atom, but there are $6\\text{ F}$ atoms.<br><br>What we must do is to find a way for those $2\\text{ F}$ atoms on the reactant side to match the $6\\text{ F}$ atoms on the product side. In this case, we must multiply $\\text{F}_2$ by $3$ to create $6\\text{ F}$ atoms.<br><br>All-in-all, the final chemical equation is:<br>$$\\text{Xe} + 3\\text{F}_2 \\rightarrow \\text{XeF}_6$$"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Example 2**: Balance the chemical equation for the combustion of butane, given by $\\text{C}_4\\text{H}_{10} + \\text{O}_2 \\rightarrow \\text{CO}_2 + \\text{H}_2\\text{O}$."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Solution for Example 2",
+          "text": "Similarly, we count the number of each atom on the reactant and the product side. Take note that in balancing, $\\text{H}$ and $\\text{O}$ atoms are the least priority.<br><br>1. We first balance the $\\text{C}$ atoms by multiplying $\\text{CO}_2$ by $4$.<br>2. Then, we balance $\\text{H}$ atoms by multiplying $5$ to $\\text{H}_2\\text{O}$ ($5 \\times 2 = 10\\text{ H}$).<br>3. Lastly, there will be a total of $(4 \\times 2) + (5 \\times 1) = 8 + 5 = 13\\text{ O}$ atoms on the product side. So, we must multiply the $\\text{O}_2$ on the reactant side by $\\frac{13}{2}$.<br>4. Since this is not a whole number, we multiply everything by $2$ to cancel the denominator.<br><br>All-in-all, we get:<br>$$2\\text{C}_4\\text{H}_{10} + 13\\text{O}_2 \\rightarrow 8\\text{CO}_2 + 10\\text{H}_2\\text{O}$$"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "4. Mole Ratios"
+        },
+        {
+          "type": "paragraph",
+          "text": "As stoichiometric coefficients represent the lowest ratio of the number of molecules needed for a complete reaction, if we know how many moles of one substance are going to be used in the reaction, we can also know how many moles of all the other substances are needed."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "5. Mole Ratio Worked Examples"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Example 3**: Given the chemical equation $2\\text{H}_2 + \\text{O}_2 \\rightarrow 2\\text{H}_2\\text{O}$, how many moles of oxygen gas are needed to completely synthesize $6\\text{ moles}$ of hydrogen gas into water? How many moles of water are then formed?"
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Solution for Example 3",
+          "text": "As the given equation is already balanced, we simply take mole ratios. The mole ratios are written as follows:<br>$$\\frac{2\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{O}_2}, \\quad \\frac{2\\text{ mol }\\text{H}_2}{2\\text{ mol }\\text{H}_2\\text{O}} = \\frac{1\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{H}_2\\text{O}}, \\quad \\frac{1\\text{ mol }\\text{O}_2}{2\\text{ mol }\\text{H}_2\\text{O}}$$Then, to find the number of moles of each substance, we must strictly adhere to these mole ratios. For instance, to find the number of moles of oxygen, we simply state:<br>$$\\frac{6\\text{ mol }\\text{H}_2}{x\\text{ mol }\\text{O}_2} = \\frac{2\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{O}_2}$$We can cancel the units to simplify this into a simple ratio problem:<br>$$\\frac{6}{x} = \\frac{2}{1} \\implies 6 = 2x \\implies x = 3$$So, **$3\\text{ moles}$ of oxygen gas $(\\text{O}_2)$ are needed**.<br><br>Likewise, we can do the same for finding the total product. Since $\\text{H}_2 : \\text{H}_2\\text{O}$ is a $1:1$ ratio, we can simply state that we also produce **$6\\text{ moles}$ of water $(\\text{H}_2\\text{O})$**."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Example 4**: John combusts $4\\text{ moles}$ of butane, which follows the balanced chemical equation $2\\text{C}_4\\text{H}_{10} + 13\\text{O}_2 \\rightarrow 8\\text{CO}_2 + 10\\text{H}_2\\text{O}$. How many moles of oxygen gas $(\\text{O}_2)$ are needed to complete this combustion? How many moles of carbon dioxide $(\\text{CO}_2)$ and water $(\\text{H}_2\\text{O})$ are formed?"
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Solution for Example 4",
+          "text": "Again, we can simply take the ratios. To not complicate further, let us use simple ratio notation:<br><br>1. **Oxygen Gas $(\\text{O}_2)$**: We know that the ratio of $\\text{C}_4\\text{H}_{10}$ to $\\text{O}_2$ is $2 : 13$, so as $4\\text{ moles}$ of butane are used, we state $4 : x = 2 : 13$. Solving, we find that $2x = 52 \\implies x = 26$, so we need **$26\\text{ moles}$ of oxygen gas** to complete this reaction.<br><br>2. **Carbon Dioxide $(\\text{CO}_2)$**: Similarly, for the number of $\\text{CO}_2$ moles, we know that the ratio of $\\text{C}_4\\text{H}_{10}$ to $\\text{CO}_2$ moles is $2 : 8$ or $1 : 4$. Setting $4 : y = 1 : 4$, we find that $y = 16$. So, we produce **$16\\text{ moles}$ of carbon dioxide**.<br><br>3. **Water $(\\text{H}_2\\text{O})$**: Lastly, the ratio for $\\text{C}_4\\text{H}_{10}$ and $\\text{H}_2\\text{O}$ is $2 : 10$, or $1 : 5$. So, we set $4 : z = 1 : 5$. Solving for $z$, we find that $z = 20$, meaning that we form **$20\\text{ moles}$ of water**."
+        }
+      ]
     },
     {
       "id": "material_1791214094438",
