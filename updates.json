@@ -1,6 +1,6 @@
 {
-  "version": "1.4.2",
-  "updatedAt": "2026-10-07T01:35:59.369870+00:00",
+  "version": "1.4.3",
+  "updatedAt": "2026-10-07T02:04:52.564783+00:00",
   "announcement": "Refreshed 1 Reviewers, 10 Study Materials, 5 Deadlines, and 2 Quiz Banks.",
   "calendarEvents": [
     {
@@ -1943,6 +1943,230 @@
           "style": "info",
           "title": "Key Exam Takeaway: Time vs. Fit",
           "text": "• **Ginzberg & Super** focus on the question: *'WHEN and HOW does an individual's career self-concept evolve across time?'* (Developmental / Longitudinal Approach).\n• **Holland** focuses on the question: *'WHERE and WITH WHOM does an individual fit best based on their personality archetype?'* (Typological / Structural Approach).\n• Modern vocational counseling pairs both paradigms: as an individual evolves through exploratory life stages (Super), their emerging competencies crystallize into a RIASEC profile (Holland) seeking congruent occupational environments."
+        }
+      ]
+    },
+    {
+      "id": "material_counting_principles_and_sets",
+      "subject": "Finite Math",
+      "tag": "Study Material",
+      "color": "border-l-4 border-purple-500",
+      "title": "Fundamental Counting Principles and Sets",
+      "summary": "Core principles of set theory, subset classifications, Venn diagram analysis, set operations (union, intersection, difference, complement), Principle of Inclusion-Exclusion, and the Fundamental Counting Principle with worked examples.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "1. Set Theory Fundamentals"
+        },
+        {
+          "type": "paragraph",
+          "text": "A **set** is a well-defined collection of distinct objects or elements. Sets are conventionally denoted by uppercase English letters ($A, B, C, \\dots$), and their constituent elements are commonly enclosed within curly braces $\\{ \\}$."
+        },
+        {
+          "type": "paragraph",
+          "text": "An object's membership in a set is represented by standardized mathematical symbols:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Element Inclusion ($\\in$)**: Denotes that an object belongs to a set. For example, if $A = \\{a, e, i, o, u\\}$ is the set of English vowels, then $a \\in A$ and $e \\in A$.",
+            "**Element Exclusion ($\\notin$)**: Denotes that an object is not a member of a set. For example, if $B = \\{4, 6, 8, 10, 12, 14, 16, 18\\}$ contains even integers greater than $2$ but less than $20$, then $17 \\notin B$ and $2 \\notin B$."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "2. Subsets, Equal Sets, and Universal Sets"
+        },
+        {
+          "type": "paragraph",
+          "text": "Relations between sets define how collections of elements nest and compare against one another:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Subset ($A \\subseteq B$)**: Set $A$ is a subset of set $B$ if every element of $A$ is also an element of $B$. If at least one element in $A$ is not found in $B$, then $A$ is not a subset of $B$, denoted by $A \\not\\subseteq B$.",
+            "**Proper Subset ($A \\subset B$)**: If $A \\subseteq B$ and $A \\neq B$ (meaning $B$ contains at least one element not present in $A$), then $A$ is a proper subset of $B$.",
+            "**Equal Sets ($A = B$)**: Two sets are equal if and only if they contain precisely the same elements, regardless of order or repetition ($A \\subseteq B$ and $B \\subseteq A$).",
+            "**Empty Set / Null Set ($\\emptyset$ or $\\{ \\}$)**: The unique set containing no elements. By mathematical definition, the empty set is a subset of every set ($\\emptyset \\subseteq A$).",
+            "**Universal Set ($U$)**: The comprehensive set containing all possible elements under consideration in a specific problem context."
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Check Your Understanding: Set Relations",
+          "text": "Let $A = \\{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\\}$, $B = \\{1, 3, 5, 7, 9\\}$, $C = \\{9, 7, 5, 3, 1\\}$, and $D = \\{5, 10\\}$:\n\n1. **$B \\subset A$** (or $B \\subseteq A$): Every odd number in $B$ belongs to $A$, and $A$ contains additional elements.\n2. **$D \\not\\subseteq C$**: Although $5 \\in C$, the element $10 \\notin C$.\n3. **$B = C$**: Both sets contain identical elements; element ordering inside set braces does not affect set equality.\n4. **$D \\subset A$**: Both $5$ and $10$ belong to $A$."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "3. Fundamental Set Operations"
+        },
+        {
+          "type": "paragraph",
+          "text": "New sets can be generated from existing sets using four foundational binary and unary operations:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Union ($A \\cup B$)**: The set containing all elements found in $A$, in $B$, or in both. Logically equivalent to the inclusive OR: $A \\cup B = \\{x \\mid x \\in A \\lor x \\in B\\}$.",
+            "**Intersection ($A \\cap B$)**: The set containing only the elements common to both $A$ and $B$. Logically equivalent to the AND condition: $A \\cap B = \\{x \\mid x \\in A \\land x \\in B\\}$. If $A \\cap B = \\emptyset$, the sets are **mutually exclusive** (disjoint).",
+            "**Difference / Relative Complement ($A - B$)**: The set containing all elements that belong to $A$ but do not belong to $B$: $A - B = \\{x \\mid x \\in A \\land x \\notin B\\}$.",
+            "**Absolute Complement ($A'$)**: The set of all elements in the universal set $U$ that are not in $A$: $A' = \\{x \\in U \\mid x \\notin A\\} = U - A$."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "**Worked Example: Performing Set Operations**"
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Worked Example: Operations on Sets A, B, and C",
+          "text": "Let the universal set be $U = \\{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\\}$ with subsets:\n• $A = \\{1, 3, 5, 7, 9\\}$ (odd numbers $\\le 10$)\n• $B = \\{2, 3, 5, 7\\}$ (prime numbers $\\le 10$)\n• $C = \\{4, 5, 6, 7, 8, 9, 10\\}$ (integers $> 3$)\n\n**Solutions**:\n1. **$A \\cup B$**: Combine all elements of $A$ and $B$: $\\{1, 2, 3, 5, 7, 9\\}$\n2. **$B \\cap C$**: Shared primes greater than $3$: $\\{5, 7\\}$\n3. **$A - C$**: Elements in $A$ not exceeding $3$: $\\{1, 3\\}$\n4. **$C - A$**: Even numbers in $C$: $\\{4, 6, 8, 10\\}$\n5. **$A'$**: All even numbers in $U$: $\\{2, 4, 6, 8, 10\\}$\n6. **$B'$**: Non-prime integers in $U$: $\\{1, 4, 6, 8, 9, 10\\}$\n7. **$C'$**: Integers in $U$ that are $\\le 3$: $\\{1, 2, 3\\}$"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "4. Venn Diagrams & Multi-Set Cardinality"
+        },
+        {
+          "type": "paragraph",
+          "text": "Introduced by English logician John Venn in the 1880s, a **Venn diagram** is a geometric visual representation of sets. The universal set $U$ is depicted as a surrounding bounding rectangle, while individual subsets are illustrated as overlapping circles."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Venn Diagram Problem 1: STEM Laboratory Experiments**\nA cohort of $30\\text{ STEM students}$ performed lab experiments during the first academic term:\n• $25$ performed Chemistry ($C$)\n• $15$ performed Biology ($B$)\n• $8$ performed Physics ($P$)\n• $12$ performed both Chemistry and Biology ($C \\cap B$)\n• $5$ performed both Chemistry and Physics ($C \\cap P$)\n• $4$ performed both Biology and Physics ($B \\cap P$)\n• $3$ performed all three laboratory experiments ($C \\cap B \\cap P$)"
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Region-by-Region Solution: STEM Lab Venn Diagram",
+          "text": "Always solve 3-set Venn diagrams from the innermost central intersection outward:\n\n1. **Center Region (All Three)**:\n$$n(C \\cap B \\cap P) = 3$$\n\n2. **Two-Subject Overlaps (Excluding the Center)**:\n• Chemistry & Biology only: $12 - 3 = 9$\n• Chemistry & Physics only: $5 - 3 = 2$\n• Biology & Physics only: $4 - 3 = 1$\n\n3. **Single-Subject Exclusive Regions**:\n• Chemistry only: $25 - (9 + 3 + 2) = 25 - 14 = 11$\n• Biology only: $15 - (9 + 3 + 1) = 15 - 13 = 2$\n• Physics only: $8 - (2 + 3 + 1) = 8 - 6 = 2$\n\n4. **Verification & Outside Region**:\nTotal participating students: $11 + 2 + 2 + 9 + 2 + 1 + 3 = 30$.\nStudents performing no experiments: $30 - 30 = 0$."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Venn Diagram Problem 2: Streaming Application Survey**\nA survey of $150\\text{ individuals}$ recorded their usage across Netflix ($N$), YouTube ($Y$), and Disney+ ($D$):\n• $90$ use Netflix, $85$ use YouTube, $70$ use Disney+\n• $53$ use both Netflix and YouTube, $38$ use both Netflix and Disney+, $25$ use both YouTube and Disney+\n• $12$ use all three platforms"
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Region-by-Region Solution: Streaming Survey",
+          "text": "1. **All Three Platforms**: $12$\n2. **Two-App Overlaps Only**:\n• Netflix & YouTube only: $53 - 12 = 41$\n• Netflix & Disney+ only: $38 - 12 = 26$\n• YouTube & Disney+ only: $25 - 12 = 13$\n\n3. **Single App Only**:\n• Netflix only: $90 - (41 + 12 + 26) = 90 - 79 = 11$\n• YouTube only: $85 - (41 + 12 + 13) = 85 - 66 = 19$\n• Disney+ only: $70 - (26 + 12 + 13) = 70 - 51 = 19$\n\n4. **People Using None of the Three**:\nTotal users of at least one service: $11 + 19 + 19 + 41 + 26 + 13 + 12 = 141$.\nPeople using none: $150 - 141 = 9\\text{ people}$."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "5. Principle of Inclusion-Exclusion (Addition Rules)"
+        },
+        {
+          "type": "paragraph",
+          "text": "The **Addition Rule for the Union of Sets** calculates the cardinality of combined sets while preventing duplicate counting of overlapping elements:"
+        },
+        {
+          "type": "formula",
+          "title": "Inclusion-Exclusion for Two Sets",
+          "formula": "n(A \\cup B) = n(A) + n(B) - n(A \\cap B)",
+          "note": "If A and B are mutually exclusive (A ∩ B = ∅), the formula simplifies to n(A ∪ B) = n(A) + n(B)."
+        },
+        {
+          "type": "formula",
+          "title": "Inclusion-Exclusion for Three Sets",
+          "formula": "n(A \\cup B \\cup C) = n(A) + n(B) + n(C) - n(A \\cap B) - n(A \\cap C) - n(B \\cap C) + n(A \\cap B \\cap C)",
+          "note": "Subtract pairwise intersections to remove double counts, then add the central triple intersection."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Worked Example: University Work Preference Survey",
+          "text": "A university alumni support center surveyed new graduates regarding their preferred working setup: $535$ prefer full online, $418$ prefer full onsite, and $221$ prefer hybrid. How many prefer either full online work or full onsite work?\n\n**Solution**:\nBecause full online and full onsite represent mutually exclusive options ($\\text{Online} \\cap \\text{Onsite} = \\emptyset$):\n$$n(\\text{Online} \\cup \\text{Onsite}) = n(\\text{Online}) + n(\\text{Onsite})$$\n$$n(\\text{Online} \\cup \\text{Onsite}) = 535 + 418 = 953\\text{ graduates}$$"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "6. The Fundamental Counting Principle (Multiplication Rule)"
+        },
+        {
+          "type": "paragraph",
+          "text": "When an experiment or event consists of multiple sequential stages, the total number of outcomes is determined using the **Multiplication Principle**:"
+        },
+        {
+          "type": "formula",
+          "title": "Basic Multiplication Rule (Two Tasks)",
+          "formula": "N = m \\cdot n",
+          "note": "Task 1 can be performed in m ways, followed by Task 2 in n ways."
+        },
+        {
+          "type": "paragraph",
+          "text": "The **Fundamental Counting Principle (Generalized Product Rule)** expands this to any arbitrary sequence of $m$ consecutive tasks:"
+        },
+        {
+          "type": "formula",
+          "title": "Fundamental Counting Principle (FCP)",
+          "formula": "N = (k_1)(k_2)(k_3)\\cdots(k_m)",
+          "note": "Where each stage i has k_i independent possible ways to be performed."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Worked Example: Rolling a Die and Tossing Two Coins",
+          "text": "A fair 6-sided die is rolled, followed by tossing a 1-peso coin and a 5-peso coin. Determine the total number of possible outcomes.\n\n**Solution**:\nBreak down the compound event into individual tasks:\n• Task 1 (Roll a fair die): $k_1 = 6$ possible outcomes $\\{1, 2, 3, 4, 5, 6\\}$\n• Task 2 (Toss 1-peso coin): $k_2 = 2$ possible outcomes $\\{\\text{Head}, \\text{Tail}\\}$\n• Task 3 (Toss 5-peso coin): $k_3 = 2$ possible outcomes $\\{\\text{Head}, \\text{Tail}\\}$\n\nApplying the Fundamental Counting Principle:\n$$\\text{Total Outcomes} = (k_1)(k_2)(k_3) = 6 \\times 2 \\times 2 = 24\\text{ outcomes}$$"
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Real-World Application: Password Attack Analysis",
+          "text": "A security policy requires creating passwords under the following 4-stage protocol:\n1. **First character**: Choose one of the first 4 letters of the English alphabet ($\\{A, B, C, D\\} \\implies k_1 = 4$)\n2. **Second character**: Choose 1 special character from a set of 3 ($\\{!, @, \\#\\} \\implies k_2 = 3$)\n3. **Third character**: Choose an integer from 1 to 3 ($\\{1, 2, 3\\} \\implies k_3 = 3$)\n4. **Final characters**: Choose 1 pet name between two options ($\\{\\text{Luna}, \\text{Milo}\\} \\implies k_4 = 2$)\n\n**Total Key Space**:\n$$\\text{Total Passwords} = 4 \\times 3 \\times 3 \\times 2 = 72\\text{ unique passwords}$$\nThis demonstrates how cryptographic security scales exponentially as the number of independent character options and password length increase."
+        },
+        {
+          "type": "table",
+          "title": "Summary Comparison: Counting Rules and Set Logic",
+          "headers": [
+            "Rule / Operation",
+            "Mathematical Notation",
+            "Logical Keyword",
+            "Application Condition",
+            "Key Formula"
+          ],
+          "rows": [
+            [
+              "Disjoint Union",
+              "A ∪ B (Disjoint)",
+              "OR (Mutually Exclusive)",
+              "Sets have zero overlap",
+              "n(A ∪ B) = n(A) + n(B)"
+            ],
+            [
+              "General Union",
+              "A ∪ B (Overlapping)",
+              "OR (Inclusive)",
+              "Sets share common elements",
+              "n(A ∪ B) = n(A) + n(B) - n(A ∩ B)"
+            ],
+            [
+              "Intersection",
+              "A ∩ B",
+              "AND",
+              "Elements common to both sets",
+              "Elements satisfying both conditions"
+            ],
+            [
+              "Multiplication Rule",
+              "Sequential Stages",
+              "THEN / AND",
+              "Task 1 followed by Task 2",
+              "Total = m · n"
+            ],
+            [
+              "Fundamental Counting Principle",
+              "m-Stage Experiment",
+              "SUCCESSION",
+              "k_1 ways, k_2 ways, ..., k_m ways",
+              "Total = (k_1)(k_2)...(k_m)"
+            ]
+          ]
         }
       ]
     }
