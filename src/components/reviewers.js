@@ -95,13 +95,24 @@ export function renderBlocksToHtml(blocks) {
         } else {
           html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
         }
-      } else if (text.includes('```jsxgraph') || text.includes('```jxg') || text.includes('```tikz') || text.includes('```fbd')) {
-        const jxgMatch = text.match(/```(?:jsxgraph|jxg|tikz|fbd)\s*([\s\S]*?)\s*```/);
+      } else if (text.includes('```jsxgraph') || text.includes('```jxg')) {
+        const jxgMatch = text.match(/```(?:jsxgraph|jxg)\s*([\s\S]*?)\s*```/);
         if (jxgMatch) {
           const before = text.substring(0, jxgMatch.index).trim();
           const after = text.substring(jxgMatch.index + jxgMatch[0].length).trim();
           if (before) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(before)}</p>`;
           html += renderJsxgraphBlock(jxgMatch[1]);
+          if (after) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(after)}</p>`;
+        } else {
+          html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
+        }
+      } else if (text.includes('```tikz') || text.includes('```fbd')) {
+        const tikzMatch = text.match(/```(?:tikz|fbd)\s*([\s\S]*?)\s*```/);
+        if (tikzMatch) {
+          const before = text.substring(0, tikzMatch.index).trim();
+          const after = text.substring(tikzMatch.index + tikzMatch[0].length).trim();
+          if (before) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(before)}</p>`;
+          html += renderTikzFbdSvg(tikzMatch[1]);
           if (after) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(after)}</p>`;
         } else {
           html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
@@ -144,7 +155,9 @@ export function renderBlocksToHtml(blocks) {
       html += renderTableBlock(b);
     } else if (b.type === 'cartesian' || b.type === 'plot') {
       html += renderCartesianPlaneSvg(b);
-    } else if (b.type === 'jsxgraph' || b.type === 'jxg' || b.type === 'tikz' || b.type === 'fbd') {
+    } else if (b.type === 'tikz' || b.type === 'fbd') {
+      html += renderTikzFbdSvg(b);
+    } else if (b.type === 'jsxgraph' || b.type === 'jxg') {
       html += renderJsxgraphBlock(b);
     } else if (b.type === 'image') {
       const url = b.url || '';
@@ -419,7 +432,9 @@ export function openReviewer(id) {
       }
     };
     requestAnimationFrame(() => {
-      setTimeout(triggerInit, 20);
+      triggerInit();
+      setTimeout(triggerInit, 60);
+      setTimeout(triggerInit, 250);
     });
   }
 }

@@ -2,7 +2,7 @@
    TagSci Grade 11 Study WebApp - Offline Service Worker (PWA)
    ========================================================= */
 
-const CACHE_NAME = 'tagsci-g11-v1.4.8';
+const CACHE_NAME = 'tagsci-g11-v1.6.1';
 
 const CORE_SHELL_ASSETS = [
   './',
