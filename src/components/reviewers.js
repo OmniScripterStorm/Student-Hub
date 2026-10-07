@@ -3,7 +3,7 @@
    ========================================================= */
 
 import { STEM_REVIEWERS, STUDY_MATERIALS, QUIZ_SETS, getSubjectMeta } from '../data/study_data.js';
-import { renderMathInHtml, renderCartesianPlaneSvg, renderTikzFbdSvg } from './math_engine.js';
+import { renderMathInHtml, renderCartesianPlaneSvg, renderJsxgraphBlock, renderTikzFbdSvg, initializeJsxgraphBoards } from './math_engine.js';
 import { navigateSection } from './navigation.js';
 
 let currentVaultTab = 'reviewers'; // 'reviewers' | 'materials' | 'quizzes'
@@ -95,13 +95,13 @@ export function renderBlocksToHtml(blocks) {
         } else {
           html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
         }
-      } else if (text.includes('```tikz') || text.includes('```fbd')) {
-        const tikzMatch = text.match(/```(?:tikz|fbd)\s*([\s\S]*?)\s*```/);
-        if (tikzMatch) {
-          const before = text.substring(0, tikzMatch.index).trim();
-          const after = text.substring(tikzMatch.index + tikzMatch[0].length).trim();
+      } else if (text.includes('```jsxgraph') || text.includes('```jxg') || text.includes('```tikz') || text.includes('```fbd')) {
+        const jxgMatch = text.match(/```(?:jsxgraph|jxg|tikz|fbd)\s*([\s\S]*?)\s*```/);
+        if (jxgMatch) {
+          const before = text.substring(0, jxgMatch.index).trim();
+          const after = text.substring(jxgMatch.index + jxgMatch[0].length).trim();
           if (before) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(before)}</p>`;
-          html += renderTikzFbdSvg(tikzMatch[1]);
+          html += renderJsxgraphBlock(jxgMatch[1]);
           if (after) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(after)}</p>`;
         } else {
           html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
@@ -144,8 +144,8 @@ export function renderBlocksToHtml(blocks) {
       html += renderTableBlock(b);
     } else if (b.type === 'cartesian' || b.type === 'plot') {
       html += renderCartesianPlaneSvg(b);
-    } else if (b.type === 'tikz' || b.type === 'fbd') {
-      html += renderTikzFbdSvg(b);
+    } else if (b.type === 'jsxgraph' || b.type === 'jxg' || b.type === 'tikz' || b.type === 'fbd') {
+      html += renderJsxgraphBlock(b);
     } else if (b.type === 'image') {
       const url = b.url || '';
       const alt = b.alt || 'Figure diagram';
@@ -408,8 +408,20 @@ export function openReviewer(id) {
     finalHtml = `<p class="text-xs text-slate-400 italic">No content available in this material draft.</p>`;
   }
 
-  if (modalContent) modalContent.innerHTML = finalHtml;
   if (modal) modal.classList.remove('hidden');
+  if (modalContent) {
+    modalContent.innerHTML = finalHtml;
+    const triggerInit = () => {
+      if (typeof initializeJsxgraphBoards === 'function') {
+        initializeJsxgraphBoards(modalContent);
+      } else if (typeof window !== 'undefined' && typeof window.initializeJsxgraphBoards === 'function') {
+        window.initializeJsxgraphBoards(modalContent);
+      }
+    };
+    requestAnimationFrame(() => {
+      setTimeout(triggerInit, 20);
+    });
+  }
 }
 
 export function closeModal() {

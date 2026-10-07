@@ -16,6 +16,9 @@
   <link rel="icon" type="image/png" href="./tagsci logo.png" />
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- JSXGraph Local Offline Assets -->
+  <link rel="stylesheet" href="./vendor/jsxgraph/jsxgraph.css">
+  <script src="./vendor/jsxgraph/jsxgraphcore.js"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -1987,12 +1990,9 @@ function renderCartesianPlaneSvg(block) {
 }
 
 /* =========================================================
-   TikZ-FBD Native Physics Diagram Renderer
-   - 100% Zero-dependency & Offline
-   - Native SVG vector & force rendering
-   - Supports TikZ nodes, shapes, rotations, forces, and relative coordinates
+   TikZ-FBD Legacy Fallback Renderer
    ========================================================= */
-function renderTikzFbdSvg(input, isDark = false) {
+function renderTikzFbdSvgLegacy(input, isDark = false) {
   let code = '';
   let title = '';
   let caption = '';
@@ -2293,6 +2293,154 @@ function renderTikzFbdSvg(input, isDark = false) {
   `;
 }
 
+/* =========================================================
+   JSXGraph Interactive Physics & Math Board Renderer
+   - Local offline vendor: vendor/jsxgraph/jsxgraphcore.js
+   - Interactive vectors, geometries, coordinate boards & forces
+   ========================================================= */
+function renderJsxgraphBlock(input, isDark = false) {
+  let code = '';
+  let title = '';
+  let caption = '';
+  let bBox = [-5, 5, 5, -5];
+  let showAxes = false;
+  let showGrid = false;
+  let id = '';
+
+  if (typeof input === 'object' && input !== null) {
+    code = input.code || input.jsxgraph || input.jxg || input.tikz || '';
+    title = input.title || '';
+    caption = input.caption || '';
+    if (Array.isArray(input.boundingBox) && input.boundingBox.length === 4) {
+      bBox = input.boundingBox;
+    } else if (Array.isArray(input.bBox) && input.bBox.length === 4) {
+      bBox = input.bBox;
+    }
+    if (input.axis !== undefined) showAxes = !!input.axis;
+    if (input.axes !== undefined) showAxes = !!input.axes;
+    if (input.grid !== undefined) showGrid = !!input.grid;
+    id = input.id || '';
+  } else {
+    code = String(input || '');
+  }
+
+  if (!code.trim()) return '';
+
+  // Backward-compatibility: if input is legacy TikZ code, route to TikZ SVG renderer
+  if (code.includes('\\begin{tikzpicture}') || code.includes('\\node[')) {
+    return renderTikzFbdSvgLegacy({ code, title, caption }, isDark);
+  }
+
+  const boardId = id ? `jxg-${id.replace(/[^a-zA-Z0-9_-]/g, '_')}` : `jxg-${Math.random().toString(36).slice(2, 10)}`;
+  const encodedCode = encodeURIComponent(code);
+  const encodedBbox = encodeURIComponent(JSON.stringify(bBox));
+
+  return `
+    <div class="my-4 p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+      ${title ? `<h4 class="font-black text-xs sm:text-sm text-slate-900 dark:text-white mb-1 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>${renderMathInHtml(title)}</h4>` : ''}
+      ${caption ? `<p class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">${renderMathInHtml(caption)}</p>` : ''}
+      
+      <div class="w-full flex justify-center items-center bg-slate-50/70 dark:bg-slate-900/50 rounded-xl p-3 border border-slate-100 dark:border-slate-800/80 overflow-x-auto">
+        <div id="${boardId}" class="jxgbox w-full max-w-xl aspect-[4/3] rounded-xl overflow-hidden select-none border border-slate-200/50 dark:border-slate-800/50 shadow-inner"
+          data-jxg-code="${encodedCode}"
+          data-jxg-bbox="${encodedBbox}"
+          data-jxg-axes="${showAxes}"
+          data-jxg-grid="${showGrid}">
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function initializeJsxgraphBoards(container = document) {
+  if (typeof window === 'undefined') return;
+  if (!window.JXG) {
+    setTimeout(() => initializeJsxgraphBoards(container), 80);
+    return;
+  }
+
+  const root = (container && container.querySelectorAll) ? container : document;
+  const boardEls = root.querySelectorAll('[data-jxg-code]');
+  if (!boardEls || boardEls.length === 0) return;
+
+  const isDarkMode = (typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
+  const colors = {
+    bg: isDarkMode ? '#0f172a' : '#f8fafc',
+    axis: isDarkMode ? '#64748b' : '#94a3b8',
+    grid: isDarkMode ? '#1e293b' : '#e2e8f0',
+    primary: isDarkMode ? '#34d399' : '#059669',
+    secondary: isDarkMode ? '#38bdf8' : '#0284c7',
+    accent: isDarkMode ? '#f472b6' : '#db2777',
+    warning: isDarkMode ? '#fbbf24' : '#d97706',
+    danger: isDarkMode ? '#f87171' : '#dc2626',
+    text: isDarkMode ? '#f1f5f9' : '#0f172a'
+  };
+
+  boardEls.forEach(el => {
+    if (el._jxgBoard) {
+      try {
+        if (el.clientWidth > 0 && el.clientHeight > 0) {
+          el._jxgBoard.resizeContainer(el.clientWidth, el.clientHeight);
+        }
+      } catch (e) {}
+      return;
+    }
+
+    try {
+      const rawCode = el.getAttribute('data-jxg-code');
+      const code = rawCode ? decodeURIComponent(rawCode) : '';
+      if (!code.trim()) return;
+
+      let bBox = [-5, 5, 5, -5];
+      const rawBbox = el.getAttribute('data-jxg-bbox');
+      if (rawBbox) {
+        try {
+          bBox = JSON.parse(decodeURIComponent(rawBbox));
+        } catch (e) {
+          bBox = [-5, 5, 5, -5];
+        }
+      }
+
+      const showAxes = el.getAttribute('data-jxg-axes') === 'true';
+      const showGrid = el.getAttribute('data-jxg-grid') === 'true';
+
+      if (window.JXG.boards && window.JXG.boards[el.id]) {
+        try {
+          window.JXG.JSXGraph.freeBoard(el.id);
+        } catch (e) {}
+      }
+
+      el.innerHTML = '';
+
+      const board = window.JXG.JSXGraph.initBoard(el.id, {
+        boundingbox: bBox,
+        axis: showAxes,
+        grid: showGrid,
+        showNavigation: false,
+        showCopyright: false,
+        keepaspectratio: false,
+        renderer: 'svg'
+      });
+
+      const runner = new Function('board', 'JXG', 'colors', 'isDark', code);
+      runner(board, window.JXG, colors, isDarkMode);
+
+      el._jxgBoard = board;
+    } catch (err) {
+      console.error('JSXGraph init failed on', el.id, err);
+      el.innerHTML = `<div class="p-3 text-xs text-rose-500 font-mono">Diagram render error: ${err.message}</div>`;
+    }
+  });
+}
+
+function renderTikzFbdSvg(input, isDark = false) {
+  return renderJsxgraphBlock(input, isDark);
+}
+
+window.renderJsxgraphBlock = renderJsxgraphBlock;
+window.initializeJsxgraphBoards = initializeJsxgraphBoards;
+window.renderTikzFbdSvg = renderTikzFbdSvg;
+
 
     
 
@@ -2529,13 +2677,13 @@ function renderBlocksToHtml(blocks) {
         } else {
           html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
         }
-      } else if (text.includes('```tikz') || text.includes('```fbd')) {
-        const tikzMatch = text.match(/```(?:tikz|fbd)\s*([\s\S]*?)\s*```/);
-        if (tikzMatch) {
-          const before = text.substring(0, tikzMatch.index).trim();
-          const after = text.substring(tikzMatch.index + tikzMatch[0].length).trim();
+      } else if (text.includes('```jsxgraph') || text.includes('```jxg') || text.includes('```tikz') || text.includes('```fbd')) {
+        const jxgMatch = text.match(/```(?:jsxgraph|jxg|tikz|fbd)\s*([\s\S]*?)\s*```/);
+        if (jxgMatch) {
+          const before = text.substring(0, jxgMatch.index).trim();
+          const after = text.substring(jxgMatch.index + jxgMatch[0].length).trim();
           if (before) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(before)}</p>`;
-          html += renderTikzFbdSvg(tikzMatch[1]);
+          html += renderJsxgraphBlock(jxgMatch[1]);
           if (after) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(after)}</p>`;
         } else {
           html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
@@ -2578,8 +2726,8 @@ function renderBlocksToHtml(blocks) {
       html += renderTableBlock(b);
     } else if (b.type === 'cartesian' || b.type === 'plot') {
       html += renderCartesianPlaneSvg(b);
-    } else if (b.type === 'tikz' || b.type === 'fbd') {
-      html += renderTikzFbdSvg(b);
+    } else if (b.type === 'jsxgraph' || b.type === 'jxg' || b.type === 'tikz' || b.type === 'fbd') {
+      html += renderJsxgraphBlock(b);
     } else if (b.type === 'image') {
       const url = b.url || '';
       const alt = b.alt || 'Figure diagram';
@@ -2843,8 +2991,15 @@ function openReviewer(id) {
     finalHtml = `<p class="text-xs text-slate-400 italic">No content available in this material draft.</p>`;
   }
 
-  if (modalContent) modalContent.innerHTML = finalHtml;
   if (modal) modal.classList.remove('hidden');
+  if (modalContent) {
+    modalContent.innerHTML = finalHtml;
+    requestAnimationFrame(() => {
+      if (typeof initializeJsxgraphBoards === 'function') {
+        initializeJsxgraphBoards(modalContent);
+      }
+    });
+  }
 }
 
 function closeModal() {

@@ -1,6 +1,6 @@
 {
-  "version": "1.4.6",
-  "updatedAt": "2026-10-07T22:41:41.068565",
+  "version": "1.4.8",
+  "updatedAt": "2026-10-07T19:30:49.986766+00:00",
   "announcement": "Refreshed 1 Reviewers, 10 Study Materials, 5 Deadlines, and 2 Quiz Banks.",
   "calendarEvents": [
     {
@@ -2624,10 +2624,16 @@
           ]
         },
         {
-          "type": "tikz",
+          "type": "jsxgraph",
           "title": "Free-Body Diagram: Torque & Lever Arm Resolution",
-          "caption": "Figure 1: TikZ-FBD vector diagram illustrating position vector r from pivot O, applied force F at angle θ, and decomposition into F_⊥ = F sin θ and F_parallel.",
-          "code": "\\begin{tikzpicture}\n  \\node[point] (O) at (0,0) {Pivot $O$};\n  \\node[box,width=3.6,height=0.4] (beam) at (1.8,0) {};\n  \\node[point] (P) at (3.6,0) {$P$};\n  \\draw[force,->,red] (P) -- ++(1.4,1.8) node[above right] {$\\vec{F}$};\n  \\draw[force,->,emerald] (P) -- ++(0,1.8) node[above] {$F_\\perp = F\\sin\\theta$};\n  \\draw[force,->,dashed,blue] (P) -- ++(1.4,0) node[right] {$F_\\parallel$};\n  \\draw[force,->,amber] (O) -- (P) node[below] {Position $\\vec{r}$};\n\\end{tikzpicture}"
+          "caption": "Figure 1: Interactive JSXGraph diagram illustrating position vector r from pivot O, applied force F at angle θ, and decomposition into F_⊥ = F sin θ and F_parallel.",
+          "code": "// Figure 1: Torque & Lever Arm Resolution\nconst O = board.create('point', [0, 0], {name: 'Pivot O', size: 5, color: colors.primary, fixed: true, label: {offset: [-15, -15], color: colors.text}});\nconst P = board.create('point', [3.6, 0], {name: 'P', size: 4, color: colors.primary, fixed: true, label: {offset: [5, -15], color: colors.text}});\nboard.create('segment', [O, P], {strokeColor: colors.axis, strokeWidth: 5});\nboard.create('arrow', [O, [1.8, 0]], {strokeColor: colors.warning, strokeWidth: 3, name: 'r', withLabel: true, label: {color: colors.warning, offset: [0, -12]}});\n\nconst theta = 52 * (Math.PI / 180);\nconst F_mag = 2.4;\nconst fx = 3.6 + F_mag * Math.cos(theta);\nconst fy = F_mag * Math.sin(theta);\nconst F_tip = board.create('point', [fx, fy], {visible: false, fixed: true});\n\nboard.create('arrow', [P, F_tip], {strokeColor: colors.danger, strokeWidth: 3.5, name: 'F', withLabel: true, label: {color: colors.danger, offset: [10, 10]}});\nboard.create('arrow', [P, [3.6, fy]], {strokeColor: colors.accent, strokeWidth: 2.5, name: 'F_⊥ = F sin θ', withLabel: true, label: {color: colors.accent, offset: [-30, 15]}});\nboard.create('arrow', [P, [fx, 0]], {strokeColor: colors.secondary, strokeWidth: 2, dash: 2, name: 'F_∥', withLabel: true, label: {color: colors.secondary, offset: [5, -10]}});\nboard.create('segment', [[3.6, fy], F_tip], {strokeColor: colors.grid, strokeWidth: 1, dash: 2});\nboard.create('segment', [[fx, 0], F_tip], {strokeColor: colors.grid, strokeWidth: 1, dash: 2});",
+          "boundingBox": [
+            -1.5,
+            3.5,
+            5.5,
+            -2.5
+          ]
         },
         {
           "type": "callout",
@@ -2669,10 +2675,16 @@
           ]
         },
         {
-          "type": "tikz",
+          "type": "jsxgraph",
           "title": "Free-Body Diagram: Static Equilibrium of a Crane Boom",
-          "caption": "Figure 2: TikZ-FBD diagram of a hinged horizontal boom in equilibrium showing pin reactions R_x, R_y, cable tension T, beam weight W_beam at center of mass, and payload W_load at tip.",
-          "code": "\\begin{tikzpicture}\n  \\node[point] (O) at (0,0) {Pin $O$};\n  \\node[box,width=4.0,height=0.4] (boom) at (2.0,0) {};\n  \\node[point] (CG) at (2.0,0) {};\n  \\node[point] (Tip) at (4.0,0) {};\n  \\draw[force,->,red] (CG) -- ++(0,-1.5) node[below] {$W_{\\text{beam}}$};\n  \\draw[force,->,red] (Tip) -- ++(0,-2.2) node[below] {$W_{\\text{load}}$};\n  \\draw[force,->,amber] (Tip) -- ++(-1.6,1.4) node[above left] {Tension $\\vec{T}$};\n  \\draw[force,->,cyan] (O) -- ++(1.2,0) node[right] {$R_x$};\n  \\draw[force,->,cyan] (O) -- ++(0,1.4) node[above] {$R_y$};\n\\end{tikzpicture}"
+          "caption": "Figure 2: Interactive JSXGraph diagram of a hinged horizontal boom in equilibrium showing pin reactions R_x, R_y, cable tension T, beam weight W_beam at center of mass, and payload W_load at tip.",
+          "code": "// Figure 2: Static Equilibrium of a Crane Boom\nconst O = board.create('point', [0, 0], {name: 'Pin O', size: 5, color: colors.primary, fixed: true, label: {offset: [-35, -5], color: colors.text}});\nconst boomTip = board.create('point', [4.0, 0], {name: 'Tip', size: 4, color: colors.primary, fixed: true, label: {offset: [5, 12], color: colors.text}});\nboard.create('segment', [O, boomTip], {strokeColor: colors.axis, strokeWidth: 6});\nconst CG = board.create('point', [2.0, 0], {name: 'CG', size: 3, color: colors.text, fixed: true, label: {offset: [-5, 12], color: colors.text}});\n\nboard.create('arrow', [CG, [2.0, -1.8]], {strokeColor: colors.danger, strokeWidth: 3, name: 'W_beam', withLabel: true, label: {color: colors.danger, offset: [5, -10]}});\nboard.create('arrow', [boomTip, [4.0, -2.6]], {strokeColor: colors.danger, strokeWidth: 3.5, name: 'W_load', withLabel: true, label: {color: colors.danger, offset: [5, -10]}});\nboard.create('arrow', [boomTip, [2.2, 1.6]], {strokeColor: colors.warning, strokeWidth: 3.5, name: 'Tension T', withLabel: true, label: {color: colors.warning, offset: [-30, 12]}});\nboard.create('arrow', [O, [1.4, 0]], {strokeColor: colors.secondary, strokeWidth: 2.5, name: 'R_x', withLabel: true, label: {color: colors.secondary, offset: [5, 10]}});\nboard.create('arrow', [O, [0, 1.5]], {strokeColor: colors.secondary, strokeWidth: 2.5, name: 'R_y', withLabel: true, label: {color: colors.secondary, offset: [-25, 5]}});",
+          "boundingBox": [
+            -1.5,
+            3.0,
+            5.5,
+            -3.5
+          ]
         },
         {
           "type": "callout",
@@ -2768,10 +2780,16 @@
           "note": "Momentum p is in kg·m/s; Impulse J is in N·s (1 N·s = 1 kg·m/s)."
         },
         {
-          "type": "tikz",
+          "type": "jsxgraph",
           "title": "Free-Body Diagram: Linear Momentum & Isolated Collision",
-          "caption": "Figure 3: TikZ-FBD diagram showing colliding bodies m₁ and m₂ with velocity vectors v₁, v₂ and vertical normal/gravity force balance.",
-          "code": "\\begin{tikzpicture}\n  \\node[circle,width=1.2,height=1.2] (m1) at (-2.0,0) {$m_1$};\n  \\node[circle,width=1.2,height=1.2] (m2) at (2.0,0) {$m_2$};\n  \\draw[force,->,blue] (m1) -- ++(1.6,0) node[above] {$\\vec{v}_1$};\n  \\draw[force,->,emerald] (m2) -- ++(-1.2,0) node[above] {$\\vec{v}_2$};\n  \\draw[force,->,dashed,red] (m1) -- ++(0,-1.5) node[below] {$m_1 \\vec{g}$};\n  \\draw[force,->,dashed,blue] (m1) -- ++(0,1.5) node[above] {$\\vec{F}_{N1}$};\n\\end{tikzpicture}"
+          "caption": "Figure 3: Interactive JSXGraph diagram showing colliding bodies m₁ and m₂ with velocity vectors v₁, v₂ and vertical normal/gravity force balance.",
+          "code": "// Figure 3: Linear Momentum & Isolated Collision\nboard.create('line', [[-4.5, -0.6], [4.5, -0.6]], {straightFirst: false, straightLast: false, strokeColor: colors.grid, strokeWidth: 2});\nconst c1 = board.create('circle', [[-2.0, 0], 0.6], {fillColor: colors.primary, fillOpacity: 0.5, strokeColor: colors.primary, strokeWidth: 2});\nboard.create('text', [-2.0, 0, 'm_1'], {anchorX: 'middle', anchorY: 'middle', color: colors.text, fontSize: 13});\nconst c2 = board.create('circle', [[2.0, 0], 0.6], {fillColor: colors.accent, fillOpacity: 0.5, strokeColor: colors.accent, strokeWidth: 2});\nboard.create('text', [2.0, 0, 'm_2'], {anchorX: 'middle', anchorY: 'middle', color: colors.text, fontSize: 13});\n\nboard.create('arrow', [[-2.0, 0.9], [-0.4, 0.9]], {strokeColor: colors.secondary, strokeWidth: 3, name: 'v_1', withLabel: true, label: {color: colors.secondary, offset: [-10, 10]}});\nboard.create('arrow', [[2.0, 0.9], [0.8, 0.9]], {strokeColor: colors.danger, strokeWidth: 3, name: 'v_2', withLabel: true, label: {color: colors.danger, offset: [-10, 10]}});\nboard.create('arrow', [[-2.0, 0], [-2.0, -1.8]], {strokeColor: colors.danger, strokeWidth: 2, dash: 2, name: 'm_1 g', withLabel: true, label: {color: colors.danger, offset: [5, -8]}});\nboard.create('arrow', [[-2.0, 0], [-2.0, 1.8]], {strokeColor: colors.secondary, strokeWidth: 2, dash: 2, name: 'F_N1', withLabel: true, label: {color: colors.secondary, offset: [5, 8]}});",
+          "boundingBox": [
+            -4.5,
+            3.0,
+            4.5,
+            -3.0
+          ]
         },
         {
           "type": "callout",
