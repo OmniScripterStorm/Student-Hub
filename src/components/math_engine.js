@@ -74,10 +74,56 @@ const MATH_OPERATORS = {
   '\\infty': '&infin;',
   '\\partial': '&part;',
   '\\nabla': '&nabla;',
+  // Set Theory & Logic Operators
+  '\\smallsetminus': '&#x2216;',
+  '\\setminus': '&#x2216;',
+  '\\complement': '&#x2201;',
+  '\\bigcup': '<span class="text-lg leading-none font-bold">&bigcup;</span>',
+  '\\bigcap': '<span class="text-lg leading-none font-bold">&bigcap;</span>',
+  '\\cup': '&cup;',
+  '\\cap': '&cap;',
+  '\\subsetneqq': '&#x2ACB;',
+  '\\supsetneqq': '&#x2ACC;',
+  '\\subsetneq': '&#x228A;',
+  '\\supsetneq': '&#x228B;',
+  '\\nsubseteq': '&#x2288;',
+  '\\nsupseteq': '&#x2289;',
+  '\\nsubset': '&#x2284;',
+  '\\nsupset': '&#x2285;',
+  '\\subseteqq': '&#x2AC5;',
+  '\\supseteqq': '&#x2AC6;',
+  '\\subseteq': '&sube;',
+  '\\supseteq': '&supe;',
+  '\\sqsubseteq': '&#x2291;',
+  '\\sqsupseteq': '&#x2292;',
+  '\\sqsubset': '&#x228F;',
+  '\\sqsupset': '&#x2290;',
+  '\\subset': '&sub;',
+  '\\supset': '&sup;',
+  '\\varnothing': '&#x2205;',
+  '\\emptyset': '&empty;',
+  '\\notni': '&#x220C;',
+  '\\notin': '&notin;',
+  '\\owns': '&ni;',
+  '\\ni': '&ni;',
+  '\\in': '&isin;',
+  '\\nexists': '&#x2204;',
   '\\forall': '&forall;',
   '\\exists': '&exist;',
-  '\\notin': '&notin;',
-  '\\in': '&isin;',
+  '\\wedge': '&and;',
+  '\\land': '&and;',
+  '\\vee': '&or;',
+  '\\lor': '&or;',
+  '\\lnot': '&not;',
+  '\\neg': '&not;',
+  '\\top': '&#x22A4;',
+  '\\bot': '&#x22A5;',
+  '\\mid': '&#x2223;',
+  '\\aleph': '&alefsym;',
+  '\\beth': '&#x2136;',
+  '\\otimes': '&otimes;',
+  '\\oplus': '&oplus;',
+  '\\odot': '&#x2299;',
   '\\degree': '&deg;',
   '\\circ': '&deg;',
   '\\ldots': '&hellip;',
@@ -182,6 +228,28 @@ export function parseMathSyntax(tex) {
   s = s.replace(/\\mathit\{([^{}]+)\}/g, '<em class="italic">$1</em>');
   s = s.replace(/\\textit\{([^{}]+)\}/g, '<em class="italic">$1</em>');
 
+  // Blackboard Bold for standard number sets (R, N, Z, Q, C, P, etc.)
+  const BB_MAP = {
+    'A': '&#x1D538;', 'B': '&#x1D539;', 'C': '&#x2102;', 'D': '&#x1D53B;', 'E': '&#x1D53C;',
+    'F': '&#x1D53D;', 'G': '&#x1D53E;', 'H': '&#x210D;', 'I': '&#x1D540;', 'J': '&#x1D541;',
+    'K': '&#x1D542;', 'L': '&#x1D543;', 'M': '&#x1D544;', 'N': '&#x2115;', 'O': '&#x1D546;',
+    'P': '&#x2119;', 'Q': '&#x211A;', 'R': '&#x211D;', 'S': '&#x1D54A;', 'T': '&#x1D54B;',
+    'U': '&#x1D54C;', 'V': '&#x1D54D;', 'W': '&#x1D54E;', 'X': '&#x1D54F;', 'Y': '&#x1D550;',
+    'Z': '&#x2124;'
+  };
+  s = s.replace(/\\mathbb\{([A-Z])\}/g, (m, ch) => BB_MAP[ch] || `<strong class="font-serif">${ch}</strong>`);
+  s = s.replace(/\\mathbb\{([^{}]+)\}/g, '<strong class="font-serif">$1</strong>');
+
+  // Calligraphic (e.g. \mathcal{P} for Power Set)
+  const CAL_MAP = {
+    'P': '&#x2118;', 'B': '&#x212C;', 'E': '&#x2130;', 'F': '&#x2131;', 'H': '&#x210B;',
+    'I': '&#x2110;', 'L': '&#x2112;', 'M': '&#x2133;', 'R': '&#x211B;'
+  };
+  s = s.replace(/\\mathcal\{([A-Za-z]+)\}/g, (m, txt) => {
+    if (txt.length === 1 && CAL_MAP[txt]) return CAL_MAP[txt];
+    return `<span class="italic font-serif">${txt}</span>`;
+  });
+
   // 6. Superscripts & Subscripts: x^{2} / x^2, v_{0} / v_0
   s = s.replace(/\^\{([^{}]+)\}/g, '<sup>$1</sup>');
   s = s.replace(/\^([0-9]+|[a-zA-Z])/g, '<sup>$1</sup>');
@@ -194,6 +262,11 @@ export function parseMathSyntax(tex) {
   // 7. Greek Letters & Math Symbols
   for (const [key, val] of Object.entries(GREEK_SYMBOLS)) s = s.split(key).join(val);
   for (const [key, val] of Object.entries(MATH_OPERATORS)) s = s.split(key).join(val);
+
+  // Set literal braces \{ ... \}
+  s = s.replace(/\\\{/g, '{');
+  s = s.replace(/\\\}/g, '}');
+
   return s;
 }
 
