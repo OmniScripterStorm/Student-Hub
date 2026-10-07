@@ -1,6 +1,6 @@
 {
-  "version": "1.4.3",
-  "updatedAt": "2026-10-07T02:04:52.564783+00:00",
+  "version": "1.4.4",
+  "updatedAt": "2026-10-07T10:43:51.936397",
   "announcement": "Refreshed 1 Reviewers, 10 Study Materials, 5 Deadlines, and 2 Quiz Banks.",
   "calendarEvents": [
     {
@@ -2167,6 +2167,409 @@
               "Total = (k_1)(k_2)...(k_m)"
             ]
           ]
+        }
+      ]
+    },
+    {
+      "id": "material_genmath_statistics_variables_scales",
+      "subject": "General Math",
+      "tag": "Study Material",
+      "color": "border-l-4 border-g11pink-500",
+      "title": "Statistical Variables, Data, & Scales of Measurement",
+      "summary": "A comprehensive practical guide to defining statistical variables, classifying qualitative and quantitative data (discrete vs. continuous), and mastering the four fundamental scales of measurement: nominal, ordinal, interval, and ratio.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "1. Learning Objectives & Core Concepts"
+        },
+        {
+          "type": "paragraph",
+          "text": "In statistical inquiry and real-world data science, valid conclusions depend entirely on understanding the nature of what is being observed. Before performing calculations or drawing graphs, a researcher must determine the type of variable and its scale of measurement to apply appropriate statistical methods."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Define** statistical variable, observation, data value, and dataset.",
+            "**Distinguish** clearly between qualitative (categorical) and quantitative (numerical) variables.",
+            "**Differentiate** discrete and continuous quantitative variables using standard rules of thumb.",
+            "**Master the four measurement scales**: Nominal, Ordinal, Interval, and Ratio.",
+            "**Classify** real-life variables, survey items, identification numbers, and measurement instruments accurately."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "2. What Is a Statistical Variable and What Is Data?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Think: What characteristics can vary from one student to another in a classroom? Some students are 16 years old while others are 17. Their heights, travel times to school, blood types, and test scores all differ. Because these characteristics change across different entities, they are called **variables**."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Fundamental Definitions",
+          "text": "• **Statistical Variable**: A characteristic or attribute that can take on different values among people, objects, or observations (e.g., age, sex, mass, test score, satisfaction level, pulse rate).\n• **Data Value (Observation)**: The specific recorded measurement or qualitative value recorded for an individual observation (e.g., one student's recorded age of 17).\n• **Data**: Recorded observations or measurements collected systematically for an investigative purpose (e.g., ages of five students: 16, 17, 16, 18, 17).\n• **Dataset**: A collection of organized data values structured into tables, rows, and columns for analysis."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "3. Classifying Data: Qualitative vs. Quantitative"
+        },
+        {
+          "type": "paragraph",
+          "text": "Data is primarily divided into two overarching categories based on whether it expresses a descriptive category or a measurable numerical quantity."
+        },
+        {
+          "type": "table",
+          "title": "Qualitative vs. Quantitative Data Comparison",
+          "headers": [
+            "Classification",
+            "Nature of Data",
+            "Typical Questions Answered",
+            "Examples",
+            "Key Analytical Rule"
+          ],
+          "rows": [
+            [
+              "**Qualitative** (Categorical)",
+              "Describes non-numerical qualities, categories, classifications, or attributes.",
+              "\"Which category?\", \"What kind?\", \"What type?\"",
+              "Blood type (A, B, AB, O), sex, academic strand (STEM, ABM, HUMSS), brand preference, eye color.",
+              "Numbers used purely as identification labels (e.g., jersey #23, student ID, zip code) remain strictly categorical. Arithmetic operations on them are meaningless."
+            ],
+            [
+              "**Quantitative** (Numerical)",
+              "Represents counts or measurements with true numeric significance.",
+              "\"How many?\", \"How much?\", \"To what degree?\"",
+              "Age (years), height (cm), mass (kg), monthly household income (₱), examination score, heart rate (bpm).",
+              "Arithmetic operations (addition, subtraction, averaging) are valid, meaningful, and interpretable."
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Watch Out: Numbers as Categorical Labels",
+          "text": "Just because a value contains numeric digits does not make it quantitative! For example, Michael Jordan's jersey number `23` identifies the player; it is not a measurement of 23 physical units. Adding jersey numbers or computing an average jersey number produces gibberish. Such numeric labels are **qualitative**."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "4. Quantitative Data: Discrete vs. Continuous"
+        },
+        {
+          "type": "paragraph",
+          "text": "When working with quantitative variables, they are further subdivided into **discrete** or **continuous** based on the mathematical set of values they can assume."
+        },
+        {
+          "type": "table",
+          "title": "Discrete vs. Continuous Quantitative Variables",
+          "headers": [
+            "Feature",
+            "Discrete Quantitative Variable",
+            "Continuous Quantitative Variable"
+          ],
+          "rows": [
+            [
+              "**Definition**",
+              "Values obtained through counting; distinct, separated values with no possible in-between values.",
+              "Values obtained through measurement; can assume any real value within a continuous interval or continuum."
+            ],
+            [
+              "**Possible Values**",
+              "Countable set (often non-negative integers: 0, 1, 2, 3, ...). Gaps exist between successive values.",
+              "Infinite possible values within a range; bounded only by the precision of the measuring instrument."
+            ],
+            [
+              "**Rule of Thumb**",
+              "**Count it** $\\implies$ Discrete",
+              "**Measure it** $\\implies$ Continuous"
+            ],
+            [
+              "**Typical Examples**",
+              "• Number of siblings (0, 1, 2, ...)\n• Number of students enrolled in STEM\n• Defective smartphone chips in a batch\n• Number of text messages sent in a day",
+              "• Running time in a 100m sprint (e.g., 10.42 s, 10.428 s)\n• Body temperature ($36.8^\\circ\\text{C}$)\n• Height ($168.4\\text{ cm}$), mass ($54.25\\text{ kg}$)\n• Distance between two buildings"
+            ],
+            [
+              "**Measurement Precision**",
+              "Exact counts; no fractions of a unit exist (e.g., you cannot have 2.37 siblings).",
+              "Dependent on measuring tool (e.g., digital caliper, stopwatch, thermometer)."
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Nuance: Continuous Variables Recorded as Whole Numbers",
+          "text": "Age recorded in completed whole years (e.g., '16 years old') is fundamentally a measurement of elapsed time (continuous), even when practically rounded to the nearest integer. When analyzing variables, classify them according to the underlying physical property (time is continuous)."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "5. The Four Scales of Measurement"
+        },
+        {
+          "type": "paragraph",
+          "text": "A **scale of measurement** indicates the exact mathematical information carried by recorded values and dictates which algebraic operations and statistical summaries (mode, median, mean, standard deviation) are legitimate. In 1946, psychologist Stanley Smith Stevens formulated the four-level hierarchy: **Nominal**, **Ordinal**, **Interval**, and **Ratio** (NOIR)."
+        },
+        {
+          "type": "table",
+          "title": "Summary of Stevens' Measurement Hierarchy (NOIR)",
+          "headers": [
+            "Scale",
+            "Order / Ranking?",
+            "Equal Intervals?",
+            "True Absolute Zero?",
+            "Permissible Math / Statistics",
+            "Real-World Examples"
+          ],
+          "rows": [
+            [
+              "**1. Nominal**",
+              "No",
+              "No",
+              "No",
+              "Counts, Frequencies, Percentage, Mode. Equality check ($=$ or $\\neq$).",
+              "Blood type, nationality, religious affiliation, SHS strand, eye color, student ID number."
+            ],
+            [
+              "**2. Ordinal**",
+              "Yes",
+              "No",
+              "No",
+              "Greater than / Less than ($>$ or $<$), Ranking, Median, Percentiles.",
+              "Likert scale (Strongly Disagree to Strongly Agree), class honors rank, socio-economic bracket, shirt size (S, M, L, XL)."
+            ],
+            [
+              "**3. Interval**",
+              "Yes",
+              "Yes",
+              "No (Arbitrary Zero)",
+              "Addition, Subtraction, Differences, Mean, Variance, Standard Deviation.",
+              "Temperature in Celsius ($^\\circ\\text{C}$) or Fahrenheit ($^\\circ\\text{F}$), Calendar years (e.g., 2026), IQ scores."
+            ],
+            [
+              "**4. Ratio**",
+              "Yes",
+              "Yes",
+              "Yes (True Zero = Complete Absence)",
+              "All arithmetic operations ($+$, $-$, $\\times$, $\\div$), Ratios, Geometric Mean, Coefficient of Variation.",
+              "Height (cm), weight / mass (kg), age (years), distance (m), time duration (s), monthly allowance (₱)."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Deep Dive: Nominal Scale (Naming & Classifying)"
+        },
+        {
+          "type": "paragraph",
+          "text": "The **Nominal Scale** classifies observations into mutually exclusive categories without any natural order or rank. One category is not greater than, better than, or higher than another. If numbers are assigned to categories (such as `1 = Male`, `2 = Female`), they act solely as labels."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Core logic**: Qualitative comparison of equivalence ($A = B$ or $A \\neq B$).",
+            "**Valid summary**: Frequency distribution, relative frequency, and **Mode** (most frequent category).",
+            "**Invalid operations**: Calculating an average or ranking categories is meaningless."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Deep Dive: Ordinal Scale (Order Without Equal Spacing)"
+        },
+        {
+          "type": "paragraph",
+          "text": "The **Ordinal Scale** classifies observations into ordered categories where a clear hierarchy or ranking exists ($A > B > C$). However, the numerical distance or gap between consecutive ranks is unknown, uneven, or undefined."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Core logic**: Relative ranking ($A > B$).",
+            "**Spacing limitation**: The difference between 1st place and 2nd place in a science fair is not necessarily the same as the difference between 2nd place and 3rd place.",
+            "**Likert Survey Example**: In a 5-point satisfaction rating (`1 = Very Dissatisfied` to `5 = Very Satisfied`), the psychological distance between 'Dissatisfied' and 'Neutral' is not mathematically guaranteed to equal the distance between 'Neutral' and 'Satisfied'."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Deep Dive: Interval Scale (Equal Intervals, Arbitrary Zero)"
+        },
+        {
+          "type": "paragraph",
+          "text": "The **Interval Scale** possesses ordered categories with precise, equal distances between adjacent numerical points. A unit increase represents the exact same physical increment anywhere along the scale. However, **the zero point is arbitrary** and does not signify the absolute absence of the measured trait."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Why $0^\\circ\\text{C}$ Does Not Mean Zero Heat",
+          "text": "In the Celsius scale, $0^\\circ\\text{C}$ is merely the freezing point of water at standard pressure, not the total absence of heat energy (which occurs at absolute zero, $0\\text{ K} = -273.15^\\circ\\text{C}$).\n• Differences are valid: $30^\\circ\\text{C} - 20^\\circ\\text{C} = 10^\\circ\\text{C}$ represents the same temperature increase as $20^\\circ\\text{C} - 10^\\circ\\text{C} = 10^\\circ\\text{C}$.\n• Ratios are invalid: You CANNOT say $40^\\circ\\text{C}$ is 'twice as hot' as $20^\\circ\\text{C}$. In Fahrenheit, $40^\\circ\\text{C} = 104^\\circ\\text{F}$ and $20^\\circ\\text{C} = 68^\\circ\\text{F}$; the ratio $\\frac{104}{68} \\approx 1.53 \\neq 2$."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Deep Dive: Ratio Scale (Equal Intervals + True Absolute Zero)"
+        },
+        {
+          "type": "paragraph",
+          "text": "The **Ratio Scale** is the highest level of measurement. It possesses all properties of the interval scale, with the critical addition of a **true, non-arbitrary zero point**. Zero indicates complete absence of the measured attribute."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**True zero**: $0\\text{ kg}$ means zero mass; $0\\text{ pesos}$ means zero money; $0\\text{ seconds}$ means no elapsed time.",
+            "**Meaningful ratios**: Because zero is anchored to absolute non-existence, multiplicative comparisons hold true. An $80\\text{ kg}$ object possesses exactly twice the mass of a $40\\text{ kg}$ object regardless of whether measured in kilograms, pounds, or grams ($80/40 = 2$).",
+            "**Permissible arithmetic**: Every mathematical operation ($+$, $-$, $\\times$, $\\div$) is fully valid."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "6. Worked Classification Matrix"
+        },
+        {
+          "type": "paragraph",
+          "text": "Use this comprehensive reference table from the curriculum to quickly test your classification skills across common real-life variables:"
+        },
+        {
+          "type": "table",
+          "title": "Real-Life Variable Classification Matrix",
+          "headers": [
+            "Variable",
+            "Data Type",
+            "Nature (If Quantitative)",
+            "Scale of Measurement",
+            "Rationale"
+          ],
+          "rows": [
+            [
+              "Favorite Subject",
+              "Qualitative",
+              "—",
+              "Nominal",
+              "Names subjects (Math, Science, English); categories have no intrinsic mathematical order."
+            ],
+            [
+              "Level of Agreement (Likert: 1 to 5)",
+              "Qualitative / Ordinal",
+              "—",
+              "Ordinal",
+              "Has ordered ranks (Strongly Disagree to Strongly Agree), but intervals between psychological levels are not mathematically uniform."
+            ],
+            [
+              "Body Temperature in Celsius ($^\\circ\\text{C}$)",
+              "Quantitative",
+              "Continuous",
+              "Interval",
+              "Continuous thermal measurement with equal degrees, but $0^\\circ\\text{C}$ is an arbitrary baseline (freezing point of water, not lack of heat)."
+            ],
+            [
+              "Number of Siblings",
+              "Quantitative",
+              "Discrete",
+              "Ratio",
+              "Countable whole number (0, 1, 2,...); 0 siblings represents true absence; 4 siblings is twice 2 siblings."
+            ],
+            [
+              "Student Height in Centimeters (cm)",
+              "Quantitative",
+              "Continuous",
+              "Ratio",
+              "Continuous physical length; $0\\text{ cm}$ means absence of height; $180\\text{ cm}$ is twice $90\\text{ cm}$."
+            ],
+            [
+              "Student LRN / School ID Number",
+              "Qualitative",
+              "—",
+              "Nominal",
+              "Numeric string used purely for unique student identification; mathematical operations are invalid."
+            ],
+            [
+              "100m Sprint Finishing Time (seconds)",
+              "Quantitative",
+              "Continuous",
+              "Ratio",
+              "Time duration; zero seconds indicates no elapsed time; $10.0\\text{ s}$ is half the duration of $20.0\\text{ s}$."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "7. Classroom Activity: Practice & Problem Solving"
+        },
+        {
+          "type": "paragraph",
+          "text": "Test your mastery on these five practice variables by identifying: (1) Qualitative vs. Quantitative, (2) Discrete vs. Continuous (if quantitative), and (3) The Scale of Measurement (Nominal, Ordinal, Interval, Ratio)."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Item A**: Number of text messages sent by a student today",
+            "**Item B**: Favorite social media platform (TikTok, Instagram, Facebook, X)",
+            "**Item C**: Student satisfaction rating from 1 to 5 on school cafeteria food",
+            "**Item D**: Body temperature measured with an infrared forehead scanner in $^\\circ\\text{C}$",
+            "**Item E**: Student height measured with a stadiometer in centimeters"
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Worked Solutions & Explanations",
+          "text": "• **Item A (Text messages sent)**: **Quantitative, Discrete, Ratio Scale**. You count whole messages ($0, 1, 2, \\dots$). Zero messages indicates absolute absence of sent messages; 20 messages is twice 10 messages.\n• **Item B (Favorite social media platform)**: **Qualitative, Nominal Scale**. Platforms are descriptive labels. No natural ranking exists.\n• **Item C (Satisfaction rating 1–5)**: **Qualitative, Ordinal Scale**. A clear hierarchy exists from lowest to highest satisfaction, but the psychological distance between ranks cannot be proved numerically identical.\n• **Item D (Body temperature in $^\\circ\\text{C}$)**: **Quantitative, Continuous, Interval Scale**. Measurable along a continuum with equal degree increments, but $0^\\circ\\text{C}$ is not absolute zero heat.\n• **Item E (Height in cm)**: **Quantitative, Continuous, Ratio Scale**. Measurable to arbitrary decimal precision. $0\\text{ cm}$ indicates zero height, and ratios are preserved under unit conversion."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "8. Conceptual Challenges & Common Misconceptions"
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Challenge 1: Are Student ID Numbers Quantitative Measurements?",
+          "text": "**Answer: No.** Even though an ID or LRN consists of digits, it functions as a unique identifier (a digital name tag). Adding two ID numbers or taking their average produces meaningless numbers. Therefore, it is strictly **Qualitative and Nominal**."
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Challenge 2: Is a 1–5 Teacher Evaluation Rating Automatically Interval?",
+          "text": "**Answer: No, it is Ordinal.** While researchers sometimes compute averages on Likert scales for convenience, technically the distance between '1 (Poor)' and '2 (Fair)' is subjective and not mathematically calibrated to equal the distance between '4 (Very Good)' and '5 (Excellent)'."
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Challenge 3: What Scale Is Track Race Time in Seconds?",
+          "text": "**Answer: Ratio Scale.** Time duration has a true zero (0.00 seconds elapsed at the starting gun), continuous values (e.g., 11.23 seconds), and meaningful ratios (a runner finishing in 10 seconds ran twice as fast as one finishing in 20 seconds)."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "9. Key Takeaways & Summary"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "A **variable** is an attribute that differs across units of observation; **data** are the recorded values.",
+            "**Qualitative data** classifies into categories; **quantitative data** quantifies numerical magnitudes.",
+            "**Discrete variables** are counted in whole steps ($0, 1, 2, \\dots$); **continuous variables** are measured across a continuum.",
+            "The **scales of measurement** build hierarchically: **Nominal** (names) $\\to$ **Ordinal** (ranks) $\\to$ **Interval** (equal intervals, arbitrary zero) $\\to$ **Ratio** (equal intervals, absolute zero).",
+            "Always examine **what the number represents physically** rather than looking solely at whether digits are written down."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "10. Exit Ticket Review"
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Self-Assessment Exit Ticket Prompts",
+          "text": "1. **Nominal Example**: Blood type (A, B, AB, O) or eye color.\n2. **Ordinal Example**: Military ranks, academic honors (Cum Laude, Magna Cum Laude, Summa Cum Laude).\n3. **Interval Example**: Calendar years (AD/BC) or temperature in $^\\circ\\text{C}$ or $^\\circ\\text{F}$.\n4. **Ratio Example**: Mass in kilograms, distance traveled in meters, or bank account balance in pesos.\n5. **Explanation**: Student ID numbers are nominal identifiers rather than quantities because the digits do not measure an amount or count, and arithmetic operations performed on them are mathematically meaningless."
         }
       ]
     }
