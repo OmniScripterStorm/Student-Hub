@@ -1986,6 +1986,313 @@ function renderCartesianPlaneSvg(block) {
   `;
 }
 
+/* =========================================================
+   TikZ-FBD Native Physics Diagram Renderer
+   - 100% Zero-dependency & Offline
+   - Native SVG vector & force rendering
+   - Supports TikZ nodes, shapes, rotations, forces, and relative coordinates
+   ========================================================= */
+function renderTikzFbdSvg(input, isDark = false) {
+  let code = '';
+  let title = '';
+  let caption = '';
+
+  if (typeof input === 'object' && input !== null) {
+    code = input.code || input.tikz || '';
+    title = input.title || '';
+    caption = input.caption || '';
+  } else {
+    code = String(input || '');
+  }
+
+  if (!code.trim()) return '';
+
+  const isDarkMode = isDark || (typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
+  const width = 500;
+  const height = 380;
+  const cx = width / 2;
+  const cy = height / 2;
+
+  // Clean and extract TikZ statements
+  let raw = code
+    .replace(/\\begin\{tikzpicture\}(\[[^\]]*\])?/g, '')
+    .replace(/\\end\{tikzpicture\}/g, '');
+
+  const statements = raw.split(';').map(s => s.trim()).filter(Boolean);
+  const nodes = {};
+  const draws = [];
+
+  function parseCoords(str) {
+    const s = str.trim().replace(/^\(|\)$/g, '');
+    if (s.includes(':')) {
+      const parts = s.split(':');
+      const angle = (parseFloat(parts[0]) || 0) * (Math.PI / 180);
+      const r = parseFloat(parts[1]) || 0;
+      return [r * Math.cos(angle), r * Math.sin(angle)];
+    } else if (s.includes(',')) {
+      const parts = s.split(',');
+      return [parseFloat(parts[0]) || 0, parseFloat(parts[1]) || 0];
+    }
+    return [0, 0];
+  }
+
+  const COLOR_MAP = {
+    red: '#f43f5e',
+    rose: '#f43f5e',
+    blue: '#3b82f6',
+    sky: '#0284c7',
+    emerald: '#10b981',
+    green: '#10b981',
+    purple: '#8b5cf6',
+    amber: '#f59e0b',
+    orange: '#f97316',
+    cyan: '#06b6d4',
+    teal: '#14b8a6',
+    gray: isDarkMode ? '#94a3b8' : '#64748b',
+    slate: isDarkMode ? '#94a3b8' : '#64748b'
+  };
+
+  statements.forEach(stmt => {
+    if (stmt.startsWith('\\node') || stmt.startsWith('\\coordinate')) {
+      const optMatch = stmt.match(/\\node\s*(\[[^\]]*\])?/);
+      const options = (optMatch && optMatch[1]) ? optMatch[1].slice(1, -1) : '';
+      const nameMatch = stmt.match(/\(([\w\d_-]+)\)/);
+      const name = nameMatch ? nameMatch[1] : `node_${Object.keys(nodes).length}`;
+      const atMatch = stmt.match(/at\s*\(([^)]+)\)/);
+      const [x, y] = atMatch ? parseCoords(atMatch[1]) : [0, 0];
+      const labelMatch = stmt.match(/\{([\s\S]*)\}/);
+      const label = labelMatch ? labelMatch[1].trim() : '';
+
+      let shape = 'point';
+      let rotate = 0;
+      let widthVal = 1.6;
+      let heightVal = 1.2;
+
+      options.split(',').map(o => o.trim()).forEach(opt => {
+        if (/box|rectangle/i.test(opt)) shape = 'box';
+        else if (/circle/i.test(opt)) shape = 'circle';
+        else if (/plane|slope|incline/i.test(opt)) shape = 'plane';
+        else if (/pulley/i.test(opt)) shape = 'pulley';
+        else if (opt.startsWith('rotate=')) rotate = parseFloat(opt.split('=')[1]) || 0;
+        else if (opt.startsWith('width=')) widthVal = parseFloat(opt.split('=')[1]) || 1.6;
+        else if (opt.startsWith('height=')) heightVal = parseFloat(opt.split('=')[1]) || 1.2;
+      });
+
+      nodes[name] = { name, x, y, shape, rotate, width: widthVal, height: heightVal, label, options };
+    } else if (stmt.startsWith('\\draw') || stmt.startsWith('\\fill')) {
+      const isArrow = stmt.includes('->') || stmt.includes('-latex') || stmt.includes('force');
+      const isDashed = stmt.includes('dashed');
+      const isFill = stmt.startsWith('\\fill');
+
+      let color = isDarkMode ? '#38bdf8' : '#0284c7';
+      for (const [cName, cHex] of Object.entries(COLOR_MAP)) {
+        const re = new RegExp(`\\b${cName}\\b`, 'i');
+        if (re.test(stmt)) {
+          color = cHex;
+          break;
+        }
+      }
+
+      const nodeMatch = stmt.match(/node\s*(\[[^\]]*\])?\s*\{([\s\S]*?)\}/);
+      const label = nodeMatch ? nodeMatch[2].trim() : '';
+      let posDir = 'above';
+      if (nodeMatch && nodeMatch[1]) {
+        const nOpts = nodeMatch[1].slice(1, -1);
+        const dirs = ['above right', 'above left', 'below right', 'below left', 'above', 'below', 'left', 'right'];
+        for (const d of dirs) {
+          if (nOpts.includes(d)) {
+            posDir = d;
+            break;
+          }
+        }
+      }
+
+      const cleanStmt = stmt.replace(/node\s*(\[[^\]]*\])?\s*\{[\s\S]*?\}/g, '');
+      const pts = cleanStmt.match(/(\+\+\([^\)]+\)|\([^\)]+\)|--\s*cycle)/g) || [];
+      const coords = [];
+      let curX = 0, curY = 0;
+
+      pts.forEach(p => {
+        const tr = p.trim();
+        if (tr === '-- cycle' || tr === 'cycle') {
+          if (coords.length > 0) coords.push([...coords[0]]);
+          return;
+        }
+        if (tr.startsWith('++')) {
+          const [dx, dy] = parseCoords(tr.substring(2));
+          curX += dx;
+          curY += dy;
+          coords.push([curX, curY]);
+        } else {
+          const rawCoord = tr.replace(/^\(|\)$/g, '');
+          if (nodes[rawCoord]) {
+            curX = nodes[rawCoord].x;
+            curY = nodes[rawCoord].y;
+          } else {
+            const [nx, ny] = parseCoords(rawCoord);
+            curX = nx;
+            curY = ny;
+          }
+          coords.push([curX, curY]);
+        }
+      });
+
+      draws.push({ coords, isArrow, isDashed, isFill, color, label, posDir, raw: stmt });
+    }
+  });
+
+  const allX = [];
+  const allY = [];
+  Object.values(nodes).forEach(n => {
+    allX.push(n.x - n.width / 2, n.x + n.width / 2);
+    allY.push(n.y - n.height / 2, n.y + n.height / 2);
+  });
+  draws.forEach(d => {
+    d.coords.forEach(([x, y]) => {
+      allX.push(x);
+      allY.push(y);
+    });
+  });
+
+  if (allX.length === 0) { allX.push(-2, 2); }
+  if (allY.length === 0) { allY.push(-2, 2); }
+
+  const minX = Math.min(...allX) - 1.2;
+  const maxX = Math.max(...allX) + 1.2;
+  const minY = Math.min(...allY) - 1.2;
+  const maxY = Math.max(...allY) + 1.2;
+
+  const cxVal = (minX + maxX) / 2;
+  const cyVal = (minY + maxY) / 2;
+  const spanX = Math.max(maxX - minX, 2.5);
+  const spanY = Math.max(maxY - minY, 2.5);
+
+  const scaleX = (width - 100) / spanX;
+  const scaleY = (height - 90) / spanY;
+  const scale = Math.min(scaleX, scaleY, 65.0);
+
+  const toSx = (x) => cx + (x - cxVal) * scale;
+  const toSy = (y) => cy - (y - cyVal) * scale;
+
+  const bgBox = isDarkMode ? '#0f172a' : '#f8fafc';
+  const fgBox = isDarkMode ? '#38bdf8' : '#0284c7';
+  const textClr = isDarkMode ? '#f1f5f9' : '#0f172a';
+  const gridLineClr = isDarkMode ? '#1e293b' : '#f1f5f9';
+
+  let svgElements = [];
+
+  svgElements.push(`
+    <line x1="20" y1="${height - 25}" x2="${width - 20}" y2="${height - 25}" stroke="${gridLineClr}" stroke-width="1.5" stroke-dasharray="4,4" />
+  `);
+
+  Object.values(nodes).forEach(n => {
+    const sx = toSx(n.x);
+    const sy = toSy(n.y);
+    const w = n.width * scale;
+    const h = n.height * scale;
+    const rot = n.rotate;
+    const rotAttr = rot ? `transform="rotate(${-rot} ${sx} ${sy})"` : '';
+
+    if (n.shape === 'box') {
+      svgElements.push(`
+        <rect x="${sx - w / 2}" y="${sy - h / 2}" width="${w}" height="${h}" rx="6" fill="${bgBox}" stroke="${fgBox}" stroke-width="2.2" ${rotAttr} />
+      `);
+    } else if (n.shape === 'circle' || n.shape === 'pulley') {
+      const r = w / 2;
+      svgElements.push(`
+        <circle cx="${sx}" cy="${sy}" r="${r}" fill="${bgBox}" stroke="${fgBox}" stroke-width="2.2" />
+        ${n.shape === 'pulley' ? `<circle cx="${sx}" cy="${sy}" r="4" fill="${fgBox}" />` : ''}
+      `);
+    } else if (n.shape === 'plane') {
+      const hw = w * 1.5;
+      svgElements.push(`
+        <polygon points="${sx - hw},${sy + h/2} ${sx + hw},${sy + h/2} ${sx + hw},${sy - h/2}" fill="${bgBox}" stroke="${fgBox}" stroke-width="2" />
+      `);
+    } else if (n.shape === 'point') {
+      svgElements.push(`
+        <circle cx="${sx}" cy="${sy}" r="4.5" fill="${fgBox}" />
+      `);
+    }
+
+    if (n.label) {
+      const parsedLabel = renderMathInHtml(n.label);
+      svgElements.push(`
+        <foreignObject x="${sx - 90}" y="${sy - 16}" width="180" height="32" class="overflow-visible pointer-events-none">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center text-xs font-bold font-mono-math" style="color: ${textClr}; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+            ${parsedLabel}
+          </div>
+        </foreignObject>
+      `);
+    }
+  });
+
+  draws.forEach(d => {
+    if (d.coords.length < 2) return;
+    const dashAttr = d.isDashed ? 'stroke-dasharray="5,4"' : '';
+    const pointsStr = d.coords.map(([x, y]) => `${toSx(x).toFixed(1)},${toSy(y).toFixed(1)}`).join(' ');
+
+    if (d.isFill) {
+      svgElements.push(`
+        <polygon points="${pointsStr}" fill="${d.color}" fill-opacity="0.15" stroke="${d.color}" stroke-width="1.8" />
+      `);
+    } else {
+      svgElements.push(`
+        <polyline points="${pointsStr}" fill="none" stroke="${d.color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ${dashAttr} />
+      `);
+    }
+
+    if (d.isArrow && d.coords.length >= 2) {
+      const [x1, y1] = d.coords[d.coords.length - 2];
+      const [x2, y2] = d.coords[d.coords.length - 1];
+      const sx1 = toSx(x1), sy1 = toSy(y1);
+      const sx2 = toSx(x2), sy2 = toSy(y2);
+      const angle = Math.atan2(sy2 - sy1, sx2 - sx1);
+      const arrowLen = 11;
+      const ax1 = sx2 - arrowLen * Math.cos(angle - Math.PI / 6);
+      const ay1 = sy2 - arrowLen * Math.sin(angle - Math.PI / 6);
+      const ax2 = sx2 - arrowLen * Math.cos(angle + Math.PI / 6);
+      const ay2 = sy2 - arrowLen * Math.sin(angle + Math.PI / 6);
+
+      svgElements.push(`
+        <polygon points="${sx2.toFixed(1)},${sy2.toFixed(1)} ${ax1.toFixed(1)},${ay1.toFixed(1)} ${ax2.toFixed(1)},${ay2.toFixed(1)}" fill="${d.color}" />
+      `);
+
+      if (d.label) {
+        let lx = sx2;
+        let ly = sy2;
+        const off = 22;
+
+        if (d.posDir.includes('above')) ly -= off;
+        if (d.posDir.includes('below')) ly += off;
+        if (d.posDir.includes('left')) lx -= off;
+        if (d.posDir.includes('right')) lx += off;
+
+        const parsedLabel = renderMathInHtml(d.label);
+        svgElements.push(`
+          <foreignObject x="${(lx - 75).toFixed(1)}" y="${(ly - 14).toFixed(1)}" width="150" height="28" class="overflow-visible pointer-events-none">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center text-xs font-bold font-mono-math" style="color: ${d.color};">
+              ${parsedLabel}
+            </div>
+          </foreignObject>
+        `);
+      }
+    }
+  });
+
+  return `
+    <div class="my-4 p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+      ${title ? `<h4 class="font-black text-xs sm:text-sm text-slate-900 dark:text-white mb-1 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-tagsci-600"></span>${renderMathInHtml(title)}</h4>` : ''}
+      ${caption ? `<p class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">${renderMathInHtml(caption)}</p>` : ''}
+      
+      <div class="w-full flex justify-center items-center bg-slate-50/70 dark:bg-slate-900/50 rounded-xl p-3 border border-slate-100 dark:border-slate-800/80 overflow-x-auto">
+        <svg viewBox="0 0 ${width} ${height}" class="w-full max-w-lg h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+          ${svgElements.join('\n')}
+        </svg>
+      </div>
+    </div>
+  `;
+}
+
 
     
 
@@ -2222,6 +2529,28 @@ function renderBlocksToHtml(blocks) {
         } else {
           html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
         }
+      } else if (text.includes('```tikz') || text.includes('```fbd')) {
+        const tikzMatch = text.match(/```(?:tikz|fbd)\s*([\s\S]*?)\s*```/);
+        if (tikzMatch) {
+          const before = text.substring(0, tikzMatch.index).trim();
+          const after = text.substring(tikzMatch.index + tikzMatch[0].length).trim();
+          if (before) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(before)}</p>`;
+          html += renderTikzFbdSvg(tikzMatch[1]);
+          if (after) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(after)}</p>`;
+        } else {
+          html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
+        }
+      } else if (text.includes('\\begin{tikzpicture}')) {
+        const tikzMatch = text.match(/\\begin\{tikzpicture\}[\s\S]*?\\end\{tikzpicture\}/);
+        if (tikzMatch) {
+          const before = text.substring(0, tikzMatch.index).trim();
+          const after = text.substring(tikzMatch.index + tikzMatch[0].length).trim();
+          if (before) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(before)}</p>`;
+          html += renderTikzFbdSvg(tikzMatch[0]);
+          if (after) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(after)}</p>`;
+        } else {
+          html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
+        }
       } else if (text.includes('|') && text.split(/\r?\n/).some(l => l.trim().startsWith('|') && l.trim().endsWith('|'))) {
         html += renderMarkdownTable(text);
       } else if (text.includes('![') && text.includes('](')) {
@@ -2249,6 +2578,8 @@ function renderBlocksToHtml(blocks) {
       html += renderTableBlock(b);
     } else if (b.type === 'cartesian' || b.type === 'plot') {
       html += renderCartesianPlaneSvg(b);
+    } else if (b.type === 'tikz' || b.type === 'fbd') {
+      html += renderTikzFbdSvg(b);
     } else if (b.type === 'image') {
       const url = b.url || '';
       const alt = b.alt || 'Figure diagram';
