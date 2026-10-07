@@ -11,31 +11,54 @@
    ========================================================= */
 
 const GREEK_SYMBOLS = {
+  // Lowercase Greek
   '\\alpha': '&alpha;',
   '\\beta': '&beta;',
   '\\gamma': '&gamma;',
   '\\delta': '&delta;',
-  '\\Delta': '&Delta;',
   '\\epsilon': '&epsilon;',
   '\\varepsilon': '&#x03B5;',
+  '\\zeta': '&zeta;',
+  '\\eta': '&eta;',
   '\\theta': '&theta;',
-  '\\Theta': '&Theta;',
+  '\\vartheta': '&#x03D1;',
+  '\\iota': '&iota;',
+  '\\kappa': '&kappa;',
+  '\\varkappa': '&#x03F0;',
   '\\lambda': '&lambda;',
-  '\\Lambda': '&Lambda;',
   '\\mu': '&mu;',
+  '\\nu': '&nu;',
+  '\\xi': '&xi;',
   '\\pi': '&pi;',
-  '\\Pi': '&Pi;',
+  '\\varpi': '&#x03D6;',
   '\\rho': '&rho;',
+  '\\varrho': '&#x03F1;',
   '\\sigma': '&sigma;',
-  '\\Sigma': '&Sigma;',
+  '\\varsigma': '&sigmaf;',
   '\\tau': '&tau;',
+  '\\upsilon': '&upsilon;',
   '\\phi': '&phi;',
-  '\\Phi': '&Phi;',
+  '\\varphi': '&#x03D5;',
+  '\\chi': '&chi;',
+  '\\psi': '&psi;',
   '\\omega': '&omega;',
+
+  // Uppercase Greek
+  '\\Gamma': '&Gamma;',
+  '\\Delta': '&Delta;',
+  '\\Theta': '&Theta;',
+  '\\Lambda': '&Lambda;',
+  '\\Xi': '&Xi;',
+  '\\Pi': '&Pi;',
+  '\\Sigma': '&Sigma;',
+  '\\Upsilon': '&Upsilon;',
+  '\\Phi': '&Phi;',
+  '\\Psi': '&Psi;',
   '\\Omega': '&Omega;'
 };
 
 const MATH_OPERATORS = {
+  // Arrows & Implication
   '\\Longleftrightarrow': '&hArr;',
   '\\longleftrightarrow': '&harr;',
   '\\Longrightarrow': '&rArr;',
@@ -48,33 +71,97 @@ const MATH_OPERATORS = {
   '\\Rightarrow': '&rArr;',
   '\\leftarrow': '&larr;',
   '\\rightarrow': '&rarr;',
+  '\\gets': '&larr;',
   '\\implies': '&rArr;',
+  '\\impliedby': '&lArr;',
   '\\iff': '&hArr;',
   '\\to': '&rarr;',
+  '\\mapsto': '&#x21A6;',
   '\\uparrow': '&uarr;',
   '\\downarrow': '&darr;',
+  '\\Uparrow': '&#x21D1;',
+  '\\Downarrow': '&#x21D3;',
+  '\\updownarrow': '&#x2195;',
+  '\\Updownarrow': '&#x21D5;',
+
+  // Spacing
   '\\qquad': '&emsp;&emsp;',
   '\\quad': '&emsp;',
+  '\\thinspace': '&thinsp;',
+  '\\enspace': '&ensp;',
+  '\\,': '&thinsp;',
+  '\\;': '&ensp;',
+  '\\:': '&ensp;',
+  '\\!': '',
+  '\\ ': '&nbsp;',
+  '~': '&nbsp;',
+
+  // Relations & Comparison
   '\\thickapprox': '&asymp;',
   '\\approxeq': '&asymp;',
   '\\approx': '&asymp;',
   '\\equiv': '&equiv;',
+  '\\cong': '&cong;',
+  '\\sim': '&sim;',
+  '\\simeq': '&#x2243;',
+  '\\asymp': '&asymp;',
   '\\propto': '&prop;',
+  '\\varpropto': '&prop;',
+  '\\neq': '&ne;',
+  '\\ne': '&ne;',
+  '\\leq': '&le;',
+  '\\geq': '&ge;',
+  '\\le': '&le;',
+  '\\ge': '&ge;',
+  '\\ll': '&lang;&lang;',
+  '\\gg': '&rang;&rang;',
+  '\\llless': '&#x22D8;',
+  '\\gggtr': '&#x22D9;',
+  '\\doteq': '&#x2250;',
+  '\\coloneqq': '&#x2254;',
+  '\\eqqcolon': '&#x2255;',
+  '\\triangleq': '&#x225C;',
+  '\\parallel': '&#x2225;',
+  '\\nparallel': '&#x2226;',
+  '\\perp': '&perp;',
+
+  // Binary Arithmetic & Operations
   '\\times': '&times;',
   '\\cdot': '&middot;',
   '\\div': '&divide;',
   '\\pm': '&plusmn;',
   '\\mp': '&#x2213;',
-  '\\leq': '&le;',
-  '\\geq': '&ge;',
-  '\\neq': '&ne;',
-  '\\le': '&le;',
-  '\\ge': '&ge;',
-  '\\ne': '&ne;',
+  '\\ast': '&lowast;',
+  '\\star': '&#x22C6;',
+  '\\bullet': '&bull;',
+  '\\circ': '&deg;',
+  '\\degree': '&deg;',
+  '\\diamond': '&#x25C7;',
+  '\\boxdot': '&#x22A1;',
+  '\\boxplus': '&#x229E;',
+  '\\boxtimes': '&#x22A0;',
+
+  // Calculus, Del & Infinities
   '\\infty': '&infin;',
   '\\partial': '&part;',
   '\\nabla': '&nabla;',
-  // Set Theory & Logic Operators
+  '\\hbar': '&#x210F;',
+  '\\ell': '&#x2113;',
+  '\\Re': '&#x211C;',
+  '\\Im': '&#x2111;',
+  '\\wp': '&#x2118;',
+
+  // Integrals & Big Operators
+  '\\iiint': '<span class="text-lg leading-none italic font-serif font-bold">&int;&int;&int;</span>',
+  '\\iint': '<span class="text-lg leading-none italic font-serif font-bold">&int;&int;</span>',
+  '\\oint': '<span class="text-lg leading-none italic font-serif font-bold">&#x222E;</span>',
+  '\\int': '<span class="text-lg leading-none italic font-serif font-bold">&int;</span>',
+  '\\prod': '<span class="text-lg leading-none font-bold">&prod;</span>',
+  '\\coprod': '<span class="text-lg leading-none font-bold">&#x2210;</span>',
+  '\\sum': '<span class="text-lg leading-none font-bold">&sum;</span>',
+  '\\sqrt': '&radic;',
+
+  // Set Theory & Logic
   '\\smallsetminus': '&#x2216;',
   '\\setminus': '&#x2216;',
   '\\complement': '&#x2201;',
@@ -82,6 +169,9 @@ const MATH_OPERATORS = {
   '\\bigcap': '<span class="text-lg leading-none font-bold">&bigcap;</span>',
   '\\cup': '&cup;',
   '\\cap': '&cap;',
+  '\\uplus': '&#x228E;',
+  '\\sqcup': '&#x2294;',
+  '\\sqcap': '&#x2293;',
   '\\subsetneqq': '&#x2ACB;',
   '\\supsetneqq': '&#x2ACC;',
   '\\subsetneq': '&#x228A;',
@@ -118,45 +208,39 @@ const MATH_OPERATORS = {
   '\\neg': '&not;',
   '\\top': '&#x22A4;',
   '\\bot': '&#x22A5;',
+  '\\vdash': '&#x22A2;',
+  '\\dashv': '&#x22A3;',
+  '\\models': '&#x22A8;',
   '\\mid': '&#x2223;',
-  '\\aleph': '&alefsym;',
-  '\\beth': '&#x2136;',
-  '\\otimes': '&otimes;',
-  '\\oplus': '&oplus;',
-  '\\odot': '&#x2299;',
-  '\\degree': '&deg;',
-  '\\circ': '&deg;',
+  '\\nmid': '&#x2224;',
+
+  // Ellipses
   '\\ldots': '&hellip;',
   '\\cdots': '&hellip;',
   '\\dots': '&hellip;',
-  '\\iint': '<span class="text-lg leading-none italic font-serif font-bold">&int;&int;</span>',
-  '\\int': '<span class="text-lg leading-none italic font-serif font-bold">&int;</span>',
-  '\\prod': '<span class="text-lg leading-none font-bold">&prod;</span>',
-  '\\sum': '<span class="text-lg leading-none font-bold">&sum;</span>',
-  '\\sqrt': '&radic;',
-  '\\,': '&thinsp;',
-  '\\;': '&ensp;',
-  '\\:': '&ensp;',
-  '\\!': '',
-  '\\ ': '&nbsp;',
-  '~': '&nbsp;'
+  '\\vdots': '&#x22EE;',
+  '\\ddots': '&#x22EF;',
+
+  // Ring & Field Operators
+  '\\aleph': '&alefsym;',
+  '\\beth': '&#x2136;',
+  '\\gimel': '&#x2137;',
+  '\\daleth': '&#x2138;',
+  '\\otimes': '&otimes;',
+  '\\oplus': '&oplus;',
+  '\\odot': '&#x2299;',
+  '\\ominus': '&#x2296;',
+  '\\oslash': '&#x2298;',
+
+  // Geometry & Angles
+  '\\angle': '&ang;',
+  '\\measuredangle': '&#x2221;',
+  '\\sphericalangle': '&#x2222;',
+  '\\triangle': '&#x25B3;',
+  '\\square': '&#x25A1;'
 };
 
-function extractBalancedBraces(text, startIdx) {
-  if (startIdx >= text.length || text[startIdx] !== '{') return null;
-  let depth = 0;
-  const contentStart = startIdx + 1;
-  for (let i = startIdx; i < text.length; i++) {
-    if (text[i] === '{') depth++;
-    else if (text[i] === '}') {
-      depth--;
-      if (depth === 0) return { content: text.substring(contentStart, i), nextIdx: i + 1 };
-    }
-  }
-  return null;
-}
-
-export function parseMathSyntax(tex) {
+export export function parseMathSyntax(tex) {
   let s = (tex || '').trim();
   s = s.replace(/<br\s*\/?>/gi, ' ');
 
@@ -165,7 +249,55 @@ export function parseMathSyntax(tex) {
   s = s.replace(/\\right\s*([)\]}|.]|\\\})/g, (m, p) => p === '\\}' ? '}' : (p === '.' ? '' : p));
   s = s.replace(/\\(?:big|Big|bigg|Bigg)[lrm]?\s*([(\[{)|\]}])/g, '$1');
 
-  // 2. Fractions: \frac, \dfrac, \tfrac with balanced braces
+  // 2. Matrices & Environments: matrix, pmatrix, bmatrix, Bmatrix, vmatrix, Vmatrix, cases, aligned
+  s = s.replace(/\\begin\{(matrix|pmatrix|bmatrix|Bmatrix|vmatrix|Vmatrix|cases|aligned|array)\}([\s\S]*?)\\end\{\1\}/g, (match, env, inner) => {
+    const rows = inner.trim().split(/\\\\|\\cr/).map(r => r.trim()).filter(Boolean);
+    const parsedRows = rows.map(row => {
+      const cols = row.split('&').map(c => parseMathSyntax(c.trim()));
+      return cols.map(c => `<td class="px-1.5 py-0.5 text-center align-middle">${c}</td>`).join('');
+    });
+    const tableHtml = `<table class="inline-table border-collapse mx-1 my-0.5 align-middle text-xs sm:text-sm font-mono-math"><tbody>${parsedRows.map(r => `<tr>${r}</tr>`).join('')}</tbody></table>`;
+
+    if (env === 'pmatrix') {
+      return `<span class="inline-flex items-center align-middle mx-1"><span class="text-xl sm:text-2xl font-light scale-y-125 select-none">(</span>${tableHtml}<span class="text-xl sm:text-2xl font-light scale-y-125 select-none">)</span></span>`;
+    } else if (env === 'bmatrix') {
+      return `<span class="inline-flex items-center align-middle mx-1"><span class="text-xl sm:text-2xl font-light scale-y-125 select-none">[</span>${tableHtml}<span class="text-xl sm:text-2xl font-light scale-y-125 select-none">]</span></span>`;
+    } else if (env === 'Bmatrix') {
+      return `<span class="inline-flex items-center align-middle mx-1"><span class="text-xl sm:text-2xl font-light scale-y-125 select-none">{</span>${tableHtml}<span class="text-xl sm:text-2xl font-light scale-y-125 select-none">}</span></span>`;
+    } else if (env === 'vmatrix') {
+      return `<span class="inline-flex items-center align-middle mx-1"><span class="border-l border-current pl-1 my-1"></span>${tableHtml}<span class="border-r border-current pr-1 my-1"></span></span>`;
+    } else if (env === 'Vmatrix') {
+      return `<span class="inline-flex items-center align-middle mx-1"><span class="border-l-2 border-double border-current pl-1 my-1"></span>${tableHtml}<span class="border-r-2 border-double border-current pr-1 my-1"></span></span>`;
+    } else if (env === 'cases') {
+      return `<span class="inline-flex items-center align-middle mx-1"><span class="text-2xl sm:text-3xl font-light scale-y-150 select-none -mr-0.5">{</span>${tableHtml}</span>`;
+    }
+    return tableHtml;
+  });
+
+  // 3. Binomial Coefficients: \binom{n}{k}, \dbinom{n}{k}, \tbinom{n}{k}
+  let binomPos = 0;
+  while (true) {
+    const m = s.substr(binomPos).match(/\\(?:d|t)?binom/);
+    if (!m) break;
+    const idx = binomPos + m.index;
+    let p = idx + m[0].length;
+    while (p < s.length && /\s/.test(s[p])) p++;
+    const topMatch = extractBalancedBraces(s, p);
+    if (topMatch) {
+      let q = topMatch.nextIdx;
+      while (q < s.length && /\s/.test(s[q])) q++;
+      const botMatch = extractBalancedBraces(s, q);
+      if (botMatch) {
+        const replacement = `<span class="inline-flex items-center align-middle mx-1 text-xs sm:text-sm font-mono-math"><span class="text-lg sm:text-xl font-light scale-y-125 select-none">(</span><span class="inline-flex flex-col text-center px-0.5 leading-tight"><span class="pb-0.5">${parseMathSyntax(topMatch.content)}</span><span class="pt-0.5">${parseMathSyntax(botMatch.content)}</span></span><span class="text-lg sm:text-xl font-light scale-y-125 select-none">)</span></span>`;
+        s = s.substring(0, idx) + replacement + s.substring(botMatch.nextIdx);
+        binomPos = idx + replacement.length;
+        continue;
+      }
+    }
+    binomPos = idx + m[0].length;
+  }
+
+  // 4. Fractions: \frac, \dfrac, \tfrac with balanced braces
   let fracPos = 0;
   while (true) {
     const m = s.substr(fracPos).match(/\\(?:d|t)?frac/);
@@ -188,20 +320,55 @@ export function parseMathSyntax(tex) {
     fracPos = idx + m[0].length;
   }
 
-  // 3. Square roots: \sqrt[n]{x} or \sqrt{x}
-  s = s.replace(/\\sqrt\[([^{}]+)\]\{([^{}]+)\}/g, (match, n, inner) => {
+  // 5. Square roots & Radicals: \sqrt[n]{x} or \sqrt{x}
+  s = s.replace(/\\sqrt\[([^{}\]]+)\]\{([^{}]+)\}/g, (match, n, inner) => {
     return `<span class="inline-flex items-center align-middle font-mono-math"><sup class="text-[9px] -mr-1">${parseMathSyntax(n)}</sup><span class="text-base leading-none">&radic;</span><span class="border-t border-current px-0.5 ml-0.5">${parseMathSyntax(inner)}</span></span>`;
   });
   s = s.replace(/\\sqrt\{([^{}]+)\}/g, (match, inner) => {
     return `<span class="inline-flex items-center align-middle font-mono-math"><span class="text-base leading-none">&radic;</span><span class="border-t border-current px-0.5 ml-0.5">${parseMathSyntax(inner)}</span></span>`;
   });
 
-  // 4. Vectors and bars
+  // 6. Limits, Big Operators with Subscripts: \lim, \max, \min, \sup, \inf
+  s = s.replace(/\\(lim|max|min|sup|inf)_\{([^{}]+)\}/g, (m, op, sub) => {
+    return `<span class="inline-flex flex-col text-center align-middle mx-1 font-mono-math"><span class="font-bold">${op}</span><span class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">${parseMathSyntax(sub)}</span></span>`;
+  });
+  s = s.replace(/\\(lim|max|min|sup|inf)_([0-9a-zA-Z])/g, (m, op, sub) => {
+    return `<span class="inline-flex flex-col text-center align-middle mx-1 font-mono-math"><span class="font-bold">${op}</span><span class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">${parseMathSyntax(sub)}</span></span>`;
+  });
+
+  // 7. Modulo & Operators: \pmod{m}, \bmod
+  s = s.replace(/\\pmod\{([^{}]+)\}/g, (m, inner) => `&nbsp;(<span class="font-sans">mod</span>&nbsp;${parseMathSyntax(inner)})`);
+  s = s.replace(/\\bmod/g, '&nbsp;<span class="font-sans">mod</span>&nbsp;');
+
+  // 8. Overline, Underline, Overset, Underset, Underbrace, Overbrace
+  s = s.replace(/\\overset\{([^{}]+)\}\{([^{}]+)\}/g, (m, over, base) => {
+    return `<span class="inline-flex flex-col text-center align-middle mx-0.5 font-mono-math"><sup class="text-[10px] leading-none">${parseMathSyntax(over)}</sup><span>${parseMathSyntax(base)}</span></span>`;
+  });
+  s = s.replace(/\\underset\{([^{}]+)\}\{([^{}]+)\}/g, (m, under, base) => {
+    return `<span class="inline-flex flex-col text-center align-middle mx-0.5 font-mono-math"><span>${parseMathSyntax(base)}</span><sub class="text-[10px] leading-none">${parseMathSyntax(under)}</sub></span>`;
+  });
+  s = s.replace(/\\overbrace\{([^{}]+)\}(?:\^\{([^{}]+)\})?/g, (m, base, label) => {
+    return `<span class="inline-flex flex-col text-center align-middle mx-1 font-mono-math">${label ? `<span class="text-[10px] text-slate-500">${parseMathSyntax(label)}</span>` : ''}<span class="border-t-2 border-current px-1">${parseMathSyntax(base)}</span></span>`;
+  });
+  s = s.replace(/\\underbrace\{([^{}]+)\}(?:_\{([^{}]+)\})?/g, (m, base, label) => {
+    return `<span class="inline-flex flex-col text-center align-middle mx-1 font-mono-math"><span class="border-b-2 border-current px-1">${parseMathSyntax(base)}</span>${label ? `<span class="text-[10px] text-slate-500">${parseMathSyntax(label)}</span>` : ''}</span>`;
+  });
+
+  // 9. Vectors, Accents, and Bars
   s = s.replace(/\\vec\{([^{}]+)\}/g, (match, inner) => `<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&rarr;</span><span>${inner}</span></span>`);
   s = s.replace(/\\hat\{([^{}]+)\}/g, (match, inner) => `<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">^</span><span>${inner}</span></span>`);
+  s = s.replace(/\\tilde\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">~</span><span>$1</span></span>');
+  s = s.replace(/\\dot\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&middot;</span><span>$1</span></span>');
+  s = s.replace(/\\ddot\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&middot;&middot;</span><span>$1</span></span>');
   s = s.replace(/\\overline\{([^{}]+)\}/g, '<span class="overline">$1</span>');
+  s = s.replace(/\\underline\{([^{}]+)\}/g, '<span class="underline">$1</span>');
 
-  // 5. Text & fonts: \text, \mathrm, \operatorname, \mathbf, \mathit
+  // 10. Floor, Ceil, Absolute values, Norms
+  s = s.replace(/\\lfloor\s*([^{}]+?)\s*\\rfloor/g, (m, inner) => `&lfloor;${parseMathSyntax(inner)}&rfloor;`);
+  s = s.replace(/\\lceil\s*([^{}]+?)\s*\\rceil/g, (m, inner) => `&lceil;${parseMathSyntax(inner)}&rceil;`);
+  s = s.replace(/\\lVert\s*([^{}]+?)\s*\\rVert/g, (m, inner) => `<span class="border-l border-r border-double border-current px-1 mx-0.5">${parseMathSyntax(inner)}</span>`);
+
+  // 11. Text & fonts: \text, \mathrm, \operatorname, \mathbf, \mathit, \cancel
   let textPos = 0;
   while (true) {
     const m = s.substr(textPos).match(/\\(?:text|mathrm|operatorname)\s*\{/);
@@ -223,12 +390,13 @@ export function parseMathSyntax(tex) {
     textPos = idx + m[0].length;
   }
 
+  s = s.replace(/\\cancel\{([^{}]+)\}/g, '<span class="line-through opacity-75">$1</span>');
   s = s.replace(/\\mathbf\{([^{}]+)\}/g, '<strong class="font-bold font-sans">$1</strong>');
   s = s.replace(/\\textbf\{([^{}]+)\}/g, '<strong class="font-bold font-sans">$1</strong>');
   s = s.replace(/\\mathit\{([^{}]+)\}/g, '<em class="italic">$1</em>');
   s = s.replace(/\\textit\{([^{}]+)\}/g, '<em class="italic">$1</em>');
 
-  // Blackboard Bold for standard number sets (R, N, Z, Q, C, P, etc.)
+  // Blackboard Bold for standard number sets
   const BB_MAP = {
     'A': '&#x1D538;', 'B': '&#x1D539;', 'C': '&#x2102;', 'D': '&#x1D53B;', 'E': '&#x1D53C;',
     'F': '&#x1D53D;', 'G': '&#x1D53E;', 'H': '&#x210D;', 'I': '&#x1D540;', 'J': '&#x1D541;',
@@ -240,17 +408,36 @@ export function parseMathSyntax(tex) {
   s = s.replace(/\\mathbb\{([A-Z])\}/g, (m, ch) => BB_MAP[ch] || `<strong class="font-serif">${ch}</strong>`);
   s = s.replace(/\\mathbb\{([^{}]+)\}/g, '<strong class="font-serif">$1</strong>');
 
-  // Calligraphic (e.g. \mathcal{P} for Power Set)
+  // Calligraphic (e.g. \mathcal{P} for Power Set, \mathcal{L} for Laplace)
   const CAL_MAP = {
-    'P': '&#x2118;', 'B': '&#x212C;', 'E': '&#x2130;', 'F': '&#x2131;', 'H': '&#x210B;',
-    'I': '&#x2110;', 'L': '&#x2112;', 'M': '&#x2133;', 'R': '&#x211B;'
+    'A': '&#x1D49C;', 'B': '&#x212C;', 'C': '&#x1D49E;', 'D': '&#x1D49F;', 'E': '&#x2130;',
+    'F': '&#x2131;', 'G': '&#x1D4A2;', 'H': '&#x210B;', 'I': '&#x2110;', 'J': '&#x1D4A5;',
+    'K': '&#x1D4A6;', 'L': '&#x2112;', 'M': '&#x2133;', 'N': '&#x1D4A9;', 'O': '&#x1D4AA;',
+    'P': '&#x2118;', 'Q': '&#x1D4AC;', 'R': '&#x211B;', 'S': '&#x1D4AE;', 'T': '&#x1D4AF;',
+    'U': '&#x1D4B0;', 'V': '&#x1D4B1;', 'W': '&#x1D4B2;', 'X': '&#x1D4B3;', 'Y': '&#x1D4B4;',
+    'Z': '&#x1D4B5;'
   };
   s = s.replace(/\\mathcal\{([A-Za-z]+)\}/g, (m, txt) => {
     if (txt.length === 1 && CAL_MAP[txt]) return CAL_MAP[txt];
     return `<span class="italic font-serif">${txt}</span>`;
   });
 
-  // 6. Superscripts & Subscripts: x^{2} / x^2, v_{0} / v_0
+  // Fraktur (e.g. \mathfrak{g})
+  s = s.replace(/\\mathfrak\{([^{}]+)\}/g, '<span class="font-serif italic font-bold">$1</span>');
+
+  // Standard Mathematical Functions (Trig, Log, Exp, Stats)
+  const STD_FUNCS = [
+    'sin', 'cos', 'tan', 'sec', 'csc', 'cot',
+    'arcsin', 'arccos', 'arctan', 'arcsec', 'arccsc', 'arccot',
+    'sinh', 'cosh', 'tanh', 'coth', 'sech', 'csch',
+    'ln', 'log', 'exp', 'det', 'gcd', 'lcm', 'deg', 'dim', 'ker', 'hom'
+  ];
+  for (const fn of STD_FUNCS) {
+    const re = new RegExp(`\\\\${fn}\\b`, 'g');
+    s = s.replace(re, `<span class="font-sans font-normal mx-0.5">${fn}</span>`);
+  }
+
+  // 12. Superscripts & Subscripts: x^{2} / x^2, v_{0} / v_0
   s = s.replace(/\^\{([^{}]+)\}/g, '<sup>$1</sup>');
   s = s.replace(/\^([0-9]+|[a-zA-Z])/g, '<sup>$1</sup>');
   s = s.replace(/_\{([^{}]+)\}/g, '<sub>$1</sub>');
@@ -259,7 +446,7 @@ export function parseMathSyntax(tex) {
   // Support LaTeX line breaks inside display math / matrices / aligned
   s = s.replace(/\\\\/g, '<br/>');
 
-  // 7. Greek Letters & Math Symbols
+  // 13. Greek Letters & Math Symbols
   for (const [key, val] of Object.entries(GREEK_SYMBOLS)) s = s.split(key).join(val);
   for (const [key, val] of Object.entries(MATH_OPERATORS)) s = s.split(key).join(val);
 

@@ -1,7 +1,7 @@
 {
-  "version": "1.6.2",
-  "updatedAt": "2026-10-07T21:47:20.391Z",
-  "announcement": "Refreshed 1 Reviewers, 14 Study Materials, 5 Deadlines, and 2 Quiz Banks.",
+  "version": "1.8.0",
+  "updatedAt": "2026-10-08T06:10:00.000000+00:00",
+  "announcement": "Refreshed 3 Reviewers (added Kasaysayan Reviewer), 13 Study Materials, and Deadlines.",
   "calendarEvents": [
     {
       "id": 1790325028547,
@@ -51,9 +51,260 @@
   ],
   "stemReviewers": [
     {
+      "id": "reviewer_1790341104344",
+      "subject": "Chemistry",
+      "tag": "Elective",
+      "color": "border-l-4 border-tagsci-600",
+      "title": "Intermolecular Forces of Attraction",
+      "summary": "Introduction to Intermolecular Forces",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Intermolecular Forces"
+        },
+        {
+          "type": "paragraph",
+          "text": "Intermolecular Forces are the attractive and repulsive forces that act between neighboring molecules."
+        },
+        {
+          "type": "paragraph",
+          "text": "They are much weaker than the intramolecular bonds (like covalent or ionic bonds) that hold atoms together inside a single molecule. Even though they are weak, these forces control the physical properties of matter, such as boiling points, melting points, viscosity (how thick a liquid is), and surface tension."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Van der Waals Forces"
+        },
+        {
+          "type": "paragraph",
+          "text": "The van der Waals force (sometimes van der Waals' force) is a distance-dependent interaction between atoms or molecules and one of the category of intermolecular force. Unlike ionic or covalent bonds, these attractions do not result from a chemical electronic bond; they are comparatively weak and therefore more susceptible to disturbance. The van der Waals force quickly vanishes at longer distances between interacting molecules."
+        },
+        {
+          "type": "paragraph",
+          "text": "Van der Waals forces were first postulated by the Dutch physicist Johannes Diderik van der Waals in 1873 when he introduced his equation of state for real gases"
+        },
+        {
+          "type": "table",
+          "title": "Comparison between IMFs and Van der Waals Forces",
+          "headers": [
+            "Feature",
+            "Intermolecular Forces (IMFs)",
+            "Van der Waals Forces"
+          ],
+          "rows": [
+            [
+              "Scope",
+              "All attractive forces between separate particles (molecules or ions).",
+              "Only forces between neutral molecules or atoms."
+            ],
+            [
+              "Includes Ions?",
+              "Yes (e.g., full ions attracting polar water molecules).",
+              "No (excludes full ionic charges)."
+            ],
+            [
+              "Includes H-Bonds?",
+              "Yes (the strongest common IMF type).",
+              "Usually No (often classified separately due to its unique strength)."
+            ],
+            [
+              "Core Examples",
+              "London dispersion, dipole-dipole, hydrogen bonding, ion-dipole, dipole-induced dipole, and ion-induced dipole.",
+              "London dispersion, dipole-dipole, and dipole-induced dipole."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Types of Intermolecular Forces"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "1. Forces Involving Fully Charged Ions"
+        },
+        {
+          "type": "paragraph",
+          "text": "These interactions require at least one particle to have a permanent, full ionic charge. Here are the list of interactions organized from strongest to weakest:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Ion-Dipole Interactions - Interacting particles: A full ion and a polar molecule (e.g., Na⁺ dissolved in H₂O). The full charge of an ion strongly attracts the opposite partial charge of a permanent dipole.",
+            "Ion-Induced Dipole Interactions - A full ion and a nonpolar molecule/atom (e.g., Fe²⁺ binding to nonpolar O₂). The strong charge of an ion deforms the electron cloud of a neutral, nonpolar particle to force a temporary, induced dipole."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "2. Forces Involving Permanent Dipoles (Polar Molecules)"
+        },
+        {
+          "type": "paragraph",
+          "text": "These forces occur between neutral molecules that possess a permanent asymmetry in their electron distribution."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Hydrogen Bonding - Polar molecules containing hydrogen bonded specifically to F, O, or N (e.g., H₂O, NH₃, HF). A uniquely strong, specialized subset of dipole-dipole attraction due to extreme electronegativity differences and the tiny size of the hydrogen atom.",
+            "Dipole-Dipole Interactions - Two polar molecules without specific H-bonding (e.g., HCl attracting another HCl, or SO₂). The permanent partial positive end of one molecule aligns with and attracts the permanent partial negative end of another."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "3. Forces Involving Temporary Dipoles (Nonpolar Particles)"
+        },
+        {
+          "type": "paragraph",
+          "text": "These forces exist in all matter but are the only forces keeping nonpolar particles together."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "London Dispersion Forces (Dispersion / Instantaneous Dipole-Induced Dipole) - All atoms and molecules, but specifically the sole force for nonpolar species (e.g., He, Ar, N₂, CH₄). Random, momentary fluctuations of electrons create a split-second \"instantaneous dipole\" in one molecule, which then induces a matching temporary dipole in its neighbor."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Formula for dipole moment"
+        },
+        {
+          "type": "paragraph",
+          "text": "Measures the polarity of a chemical bond or a system of separated electrical charges. When to Use the Formula:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Measuring Bond Polarity: Calculate the strength of a polar covalent or ionic bond when you know the partial charge (Q) and the bond length (r).",
+            "Finding Percentage Ionic Character: Compare a theoretically calculated ionic dipole moment with the experimental value to see how ionic a covalent bond is.",
+            "Solving Physics Charge Problems: Find the separation distance or magnitude of paired opposite charges in an electric field."
+          ]
+        },
+        {
+          "type": "formula",
+          "title": "Dipole moment formula",
+          "formula": "\\mu  = Qr",
+          "note": "𝜇 = The dipole moment, measured in Debye (D) or Coulomb-meters (C · m). Measures the overall polarity or \"pull\" strength of the system or molecule [Note: 1D = 3.336x10⁻³⁰ C · m] ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤQ = The magnitude of the partial charge (or charge at either end) in Coulombs (C). The amount of electrical charge that has been separated. [Note: 1e or +1e, -1e = 1.602x10⁻¹⁹ C]ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ r = The distance separating the centers of positive and negative charge (bond length) in meters (m). The spatial distance between the two centers of charge. [Note: 1Å = 1.00x10⁻¹⁰]"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Example Problem"
+        },
+        {
+          "type": "paragraph",
+          "text": "An ionic molecule consists of a +1e ion and a -1e ion separated by a bond distance of 1.20 Å. Calculate the dipole moment (μ) of this molecule in Debye (D)."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Given:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Charge (Q) = 1e = 1.602 x 10^-19 C",
+            "Distance (r) = 1.20 Å = 1.20 x 10^-10 m",
+            "Conversion Factor = 1 D = 3.336 x 10^-30 C · m"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Solution:"
+        },
+        {
+          "type": "paragraph",
+          "text": "1. Calculate the dipole moment in Coulomb-meters (C·m):"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "μ = Q x r",
+            "μ = (1.602 x 10^-19 C) x (1.20 x 10^-10 m)",
+            "μ = 1.9224 x 10^-29 C·m"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "2. Convert Coulomb-meters to Debye (D):"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "μ = (1.9224 x 10^-29 C·m) / (3.336 x 10^-30 C·m/D)",
+            "μ = 5.7626 D"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Answer:"
+        },
+        {
+          "type": "paragraph",
+          "text": "The dipole moment of the molecule is 5.76 D."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Effects of IMFs on physical properties of substances"
+        },
+        {
+          "type": "table",
+          "title": "Proportionality of IMFs on different physical properties of substances",
+          "headers": [
+            "types of physical properties",
+            "⬆ High IMFs"
+          ],
+          "rows": [
+            [
+              "Melting and Freezing Points",
+              "⬆ High (Directly Proportional)"
+            ],
+            [
+              "Boiling and Condensation Points",
+              "⬆ High (Directly Proportional)"
+            ],
+            [
+              "Viscosity (Resistance to Flow)",
+              "⬆ High (Directly Proportional)"
+            ],
+            [
+              "Surface Tension",
+              "⬆ High (Directly Proportional)"
+            ],
+            [
+              "Vapor Pressure",
+              "⬇ Low (Inversly Proportional)"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Why this is the case?"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Melting / Freezing Point: Strong forces act like tight glue. You need more heat to melt the solid into a liquid. When cooling down, the strong forces easily lock molecules back into a solid at a higher temperature.",
+            "Boiling / Condensation Point: Strong forces hold liquid molecules tightly together. You need more heat to break them apart into a gas. When cooling down, those strong forces easily snap the gas molecules back into a liquid at a higher temperature.",
+            "Viscosity: Strong forces cause molecules to cling tightly to their neighbors. They cannot slide past each other easily, making the liquid thick and slow-flowing.",
+            "Surface Tension: Molecules at the surface are pulled tightly inward by the molecules beneath them. Stronger forces make this inward tug stronger, creating a tougher, more elastic ",
+            "Vapor Pressure: Strong forces trap molecules tightly inside the liquid. Fewer molecules can escape into the air, creating fewer gas collisions and less pressure above the liquid."
+          ]
+        }
+      ]
+    },
+    {
       "id": "reviewer_summative_test_1_finite_math",
       "subject": "Finite Math",
-      "tag": "Main",
+      "tag": "Reviewer",
       "color": "border-l-4 border-purple-500",
       "title": "Summative Test 1 - Finite Math Reviewer",
       "summary": "High-yield compact exam reviewer covering Set Theory, Venn Diagrams & Inclusion-Exclusion, Fundamental Counting Principles, and Permutations & Combinations.",
@@ -345,7 +596,7 @@
         {
           "type": "heading",
           "level": "h2",
-          "text": "6. Permutation vs Combination"
+          "text": "6. Master Exam Decision Matrix: Permutation vs Combination"
         },
         {
           "type": "table",
@@ -410,268 +661,495 @@
           ]
         }
       ]
-    }
-  ],
-  "studyMaterials": [
+    },
     {
-      "id": "material_1791409567163",
-      "subject": "Chemistry",
-      "tag": "Study Material",
-      "color": "border-l-4 border-indigo-500",
-      "title": "Intermolecular Forces of Attraction",
-      "summary": "Detailed Introduction to Intermolecular Forces",
+      "id": "reviewer_summative_test_1_kasaysayan",
+      "subject": "Kasaysayan",
+      "tag": "Reviewer",
+      "color": "border-l-4 border-amber-600",
+      "title": "Summative Test 1 - Kasaysayan Reviewer",
+      "summary": "Mabilis at komprehensibong reviewer para sa Summative Test 1: Kamalayang Pilipino bago ang kolonyalismo, balangkas ni Salazar (Pamayanan-Bayan-Bansa), herarkiyang kolonyal, institusyon, at mga anyo ng pakikibaka at pakikiangkop.",
       "blocks": [
         {
           "type": "heading",
           "level": "h2",
-          "text": "Intermolecular Forces"
+          "text": "1. Saligang Kamalayan Bago ang Kolonyalismo"
         },
         {
           "type": "paragraph",
-          "text": "Intermolecular Forces are the attractive and repulsive forces that act between neighboring molecules."
-        },
-        {
-          "type": "paragraph",
-          "text": "They are much weaker than the intramolecular bonds (like covalent or ionic bonds) that hold atoms together inside a single molecule. Even though they are weak, these forces control the physical properties of matter, such as boiling points, melting points, viscosity (how thick a liquid is), and surface tension."
-        },
-        {
-          "type": "heading",
-          "level": "h2",
-          "text": "Van der Waals Forces"
-        },
-        {
-          "type": "paragraph",
-          "text": "The van der Waals force (sometimes van der Waals' force) is a distance-dependent interaction between atoms or molecules and one of the category of intermolecular force. Unlike ionic or covalent bonds, these attractions do not result from a chemical electronic bond; they are comparatively weak and therefore more susceptible to disturbance. The van der Waals force quickly vanishes at longer distances between interacting molecules."
-        },
-        {
-          "type": "paragraph",
-          "text": "Van der Waals forces were first postulated by the Dutch physicist Johannes Diderik van der Waals in 1873 when he introduced his equation of state for real gases"
-        },
-        {
-          "type": "paragraph",
-          "text": "**Comparison between IMFs and Van der Waals Forces**"
+          "text": "Bago ang pananakop ng mga Espanyol, may umiiral nang buo at organisadong kamalayan ang mga katutubo tungkol sa sarili, kapwa, at pamayanan na nakasalig sa ginhawa at tungkulin:"
         },
         {
           "type": "table",
-          "title": "",
+          "title": "Kaluluwa vs Ginhawa: Katutubong Dalumat ng Pagkatao",
           "headers": [
-            "Feature",
-            "Intermolecular Forces (IMFs)",
-            "Van der Waals Forces"
+            "Konsepto",
+            "Lokasyon sa Katawan",
+            "Kahulugan at Katangian",
+            "Pang-araw-araw na Paniniwala / Gamit"
           ],
           "rows": [
             [
-              "Scope",
-              "All attractive forces between separate particles (molecules or ions).",
-              "Only forces between neutral molecules or atoms."
+              "Kaluluwa",
+              "Utak / Ulo",
+              "Nagbibigay ng kalooban, katuwiran, at kaalaman; espiritwal na puwersa ng buhay.",
+              "Naglalakbay habang natutulog; kapag nagambala ay nagdudulot ng 'usog'. Pinoprotektahan ng gintong alahas ('kaliwanagan') ang mga butas ng katawan."
             ],
             [
-              "Includes Ions?",
-              "Yes (e.g., full ions attracting polar water molecules).",
-              "No (excludes full ionic charges)."
+              "Ginhawa",
+              "Atay / Sikmura",
+              "Magaan at komportableng pamumuhay, kapayapaan ng isip, at kalusugan ng pamilya.",
+              "Higit na pinahahalagahan kaysa kayamanan. Walang saysay ang yaman kung walang ginhawa."
             ],
             [
-              "Includes H-Bonds?",
-              "Yes (the strongest common IMF type).",
-              "Usually No (often classified separately due to its unique strength)."
-            ],
-            [
-              "Core Examples",
-              "London dispersion, dipole-dipole, hydrogen bonding, ion-dipole, dipole-induced dipole, and ion-induced dipole.",
-              "London dispersion, dipole-dipole, and dipole-induced dipole."
-            ]
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h2",
-          "text": "Types of Intermolecular Forces"
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "1. Forces Involving Fully Charged Ions"
-        },
-        {
-          "type": "paragraph",
-          "text": "These interactions require at least one particle to have a permanent, full ionic charge. Here are the list of interactions organized from strongest to weakest:"
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "Ion-Dipole Interactions - Interacting particles: A full ion and a polar molecule (e.g., Na⁺ dissolved in H₂O). The full charge of an ion strongly attracts the opposite partial charge of a permanent dipole.",
-            "Ion-Induced Dipole Interactions - A full ion and a nonpolar molecule/atom (e.g., Fe²⁺ binding to nonpolar O₂). The strong charge of an ion deforms the electron cloud of a neutral, nonpolar particle to force a temporary, induced dipole."
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "2. Forces Involving Permanent Dipoles (Polar Molecules)"
-        },
-        {
-          "type": "paragraph",
-          "text": "These forces occur between neutral molecules that possess a permanent asymmetry in their electron distribution."
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "Hydrogen Bonding - Polar molecules containing hydrogen bonded specifically to F, O, or N (e.g., H₂O, NH₃, HF). A uniquely strong, specialized subset of dipole-dipole attraction due to extreme electronegativity differences and the tiny size of the hydrogen atom.",
-            "Dipole-Dipole Interactions - Two polar molecules without specific H-bonding (e.g., HCl attracting another HCl, or SO₂). The permanent partial positive end of one molecule aligns with and attracts the permanent partial negative end of another."
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "3. Forces Involving Temporary Dipoles (Nonpolar Particles)"
-        },
-        {
-          "type": "paragraph",
-          "text": "These forces exist in all matter but are the only forces keeping nonpolar particles together."
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "London Dispersion Forces (Dispersion / Instantaneous Dipole-Induced Dipole) - All atoms and molecules, but specifically the sole force for nonpolar species (e.g., He, Ar, N₂, CH₄). Random, momentary fluctuations of electrons create a split-second \"instantaneous dipole\" in one molecule, which then induces a matching temporary dipole in its neighbor."
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h2",
-          "text": "Formula for dipole moment"
-        },
-        {
-          "type": "paragraph",
-          "text": "Measures the polarity of a chemical bond or a system of separated electrical charges. When to Use the Formula:"
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "Measuring Bond Polarity: Calculate the strength of a polar covalent or ionic bond when you know the partial charge (Q) and the bond length (r).",
-            "Finding Percentage Ionic Character: Compare a theoretically calculated ionic dipole moment with the experimental value to see how ionic a covalent bond is.",
-            "Solving Physics Charge Problems: Find the separation distance or magnitude of paired opposite charges in an electric field."
-          ]
-        },
-        {
-          "type": "formula",
-          "title": "Dipole moment formula",
-          "formula": "\\mu  = Qr",
-          "note": "𝜇 = The dipole moment, measured in Debye (D) or Coulomb-meters (C · m). Measures the overall polarity or \"pull\" strength of the system or molecule [Note: 1D = 3.336x10⁻³⁰ C · m] ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤQ = The magnitude of the partial charge (or charge at either end) in Coulombs (C). The amount of electrical charge that has been separated. [Note: 1e or +1e, -1e = 1.602x10⁻¹⁹ C]ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ r = The distance separating the centers of positive and negative charge (bond length) in meters (m). The spatial distance between the two centers of charge. [Note: 1Å = 1.00x10⁻¹⁰]"
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "Example Problem"
-        },
-        {
-          "type": "paragraph",
-          "text": "An ionic molecule consists of a +1e ion and a -1e ion separated by a bond distance of 1.20 Å. Calculate the dipole moment (μ) of this molecule in Debye (D)."
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "Given:"
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "Charge (Q) = 1e = 1.602 x 10^-19 C",
-            "Distance (r) = 1.20 Å = 1.20 x 10^-10 m",
-            "Conversion Factor = 1 D = 3.336 x 10^-30 C · m"
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "Solution:"
-        },
-        {
-          "type": "paragraph",
-          "text": "1. Calculate the dipole moment in Coulomb-meters (C·m):"
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "μ = Q x r",
-            "μ = (1.602 x 10^-19 C) x (1.20 x 10^-10 m)",
-            "μ = 1.9224 x 10^-29 C·m"
-          ]
-        },
-        {
-          "type": "paragraph",
-          "text": "2. Convert Coulomb-meters to Debye (D):"
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "μ = (1.9224 x 10^-29 C·m) / (3.336 x 10^-30 C·m/D)",
-            "μ = 5.7626 D"
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "Answer:"
-        },
-        {
-          "type": "paragraph",
-          "text": "The dipole moment of the molecule is 5.76 D."
-        },
-        {
-          "type": "heading",
-          "level": "h2",
-          "text": "Effects of IMFs on physical properties of substances"
-        },
-        {
-          "type": "paragraph",
-          "text": "**Proportionality of IMFs on different physical properties of substances**"
-        },
-        {
-          "type": "table",
-          "title": "",
-          "headers": [
-            "types of physical properties",
-            "⬆ High IMFs"
-          ],
-          "rows": [
-            [
-              "Melting and Freezing Points",
-              "⬆ High (Directly Proportional)"
-            ],
-            [
-              "Boiling and Condensation Points",
-              "⬆ High (Directly Proportional)"
-            ],
-            [
-              "Viscosity (Resistance to Flow)",
-              "⬆ High (Directly Proportional)"
-            ],
-            [
-              "Surface Tension",
-              "⬆ High (Directly Proportional)"
-            ],
-            [
-              "Vapor Pressure",
-              "⬇ Low (Inversly Proportional)"
+              "Kapwa at Sandugo",
+              "Loob / Dugo",
+              "Ang sarili ay hindi hiwalay sa iba kundi bahagi ng iisang kabuuan.",
+              "Ritwal ng sandugo: pagpapatibay ng kapatiran at katapatan ng dalawang panig sa pamamagitan ng dugo."
             ]
           ]
         },
         {
           "type": "heading",
           "level": "h3",
-          "text": "Why this is the case?"
+          "text": "Apat na Batayan ng Sinaunang Bayan"
         },
         {
-          "type": "bullets",
-          "items": [
-            "Melting / Freezing Point: Strong forces act like tight glue. You need more heat to melt the solid into a liquid. When cooling down, the strong forces easily lock molecules back into a solid at a higher temperature.",
-            "Boiling / Condensation Point: Strong forces hold liquid molecules tightly together. You need more heat to break them apart into a gas. When cooling down, those strong forces easily snap the gas molecules back into a liquid at a higher temperature.",
-            "Viscosity: Strong forces cause molecules to cling tightly to their neighbors. They cannot slide past each other easily, making the liquid thick and slow-flowing.",
-            "Surface Tension: Molecules at the surface are pulled tightly inward by the molecules beneath them. Stronger forces make this inward tug stronger, creating a tougher, more elastic",
-            "Vapor Pressure: Strong forces trap molecules tightly inside the liquid. Fewer molecules can escape into the air, creating fewer gas collisions and less pressure above the liquid."
+          "type": "table",
+          "title": "Apat na Tungkulin sa Sinaunang Lipunan (Salazar)",
+          "headers": [
+            "Tungkulin / Papel",
+            "Katangian at Pananagutan",
+            "Dulot sa Bayan",
+            "Kaugnayan sa Kasaysayan"
+          ],
+          "rows": [
+            [
+              "Datu / Hari",
+              "Namumuno sa pulitika at ekonomiya ng balangay o bayan.",
+              "Kaayusan at kagalingang pampulitika",
+              "Ugat ng Principalia (ginawang Gobernadorcillo noong panahon ng Espanyol)."
+            ],
+            [
+              "Babaylan",
+              "Tagapamagitan sa mga anito, ritwal, panggagamot, at astronomiya.",
+              "Espiritwal na ginhawa at kalusugan",
+              "Bumagsak ang katayuan sa pagpasok ng Simbahang Katolika at praylokrasya."
+            ],
+            [
+              "Bayani",
+              "Tagapagtanggol ng balangay laban sa kaaway (mula sa Malayong 'berani').",
+              "Seguridad at pagtatanggol sa bayan",
+              "Ugat ng marahas at armadong pakikibaka; matagal nang umiral bago ang Espanyol."
+            ],
+            [
+              "Panday / Manghahabi / Mamamalayok",
+              "Gumagawa ng sandata, bangka, kasangkapan, at kagamitang pangkabuhayan.",
+              "Materyal na ginhawa at kabuhayan",
+              "Pundasyon ng produksyon at suporta sa pagtatanggol at mapayapang pamumuhay."
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Susing Konsepto: Radikal na Pagkasira",
+          "text": "• **Sinaunang Sistema**: Nakabatay sa **TUNGKULIN** (datu-babaylan-bayani-panday) — may pagkakataong umangat ang may kakayahan at husay.\n• **Kolonyal na Sistema**: Nakabatay sa **LAHI** — hindi na makaaangat ang katutubo gaano man siya kagaling. Ito ang ugat ng 'krisis ng pamayanang Pilipino' (1588–1663)."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "2. Tatlong Yugto ng Kapilipinuhan & Dalawang Landas ng Bansa"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ayon sa Bagong Balangkas ni Dr. Zeus Salazar, ang kasaysayan ay hindi hiwa-hiwalay na digmaan kundi tuluy-tuloy na paglawak ng saklaw ng kabuuan:"
+        },
+        {
+          "type": "table",
+          "title": "Tatlong Yugto ng Kasaysayan ng Kapilipinuhan",
+          "headers": [
+            "Yugto",
+            "Sakop na Panahon",
+            "Pangunahing Katangian",
+            "Kaugnayan sa Aralin 4"
+          ],
+          "rows": [
+            [
+              "PAMAYANAN",
+              "h-k. 500,000 BK – 1588",
+              "Sinaunang bayan at estadong etniko (balangay $\\to$ bayan $\\to$ karahaan/sultanato).",
+              "Saligang kamalayan bago ang pananakop."
+            ],
+            [
+              "BAYAN",
+              "1588 – 1913",
+              "Krisis ng pamayanan sa ilalim ng banyaga; muling pagbubuo ng kabuuan sa ilalim ng kolonyalismo.",
+              "Sakop ng Aralin 4 (Espanyol, Amerikano, at Hapones)."
+            ],
+            [
+              "BANSA",
+              "1913 – Kasalukuyan",
+              "Pagbubuo ng pambansang estado mula sa magkatunggaling proyekto.",
+              "Modernong estadong nasyonal."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Dalawang Magkatunggaling Proyekto Patungo sa Bansa"
+        },
+        {
+          "type": "table",
+          "title": "Nación vs Inang Bayan / Haring Bayan",
+          "headers": [
+            "Pamantayan",
+            "Proyektong 'Nación' (Ilustrado)",
+            "Proyektong 'Inang Bayan' (Bonifacio / Katipunan)"
+          ],
+          "rows": [
+            [
+              "Pinagmulan at Ugat",
+              "Kanluranin / Europeo; hango sa estadong kolonyal ng Filipinas.",
+              "Taal na kalinangan at tradisyon ng Bayan (kapatiran, damayan, ginhawa)."
+            ],
+            [
+              "Pangunahing Pangkat",
+              "Kriyolyo, mestiso, ladinong paring sekular, at mga akulturadong ilustrado.",
+              "Masa, mga anak ng bayan, KKK, at mga manggagawa."
+            ],
+            [
+              "Layunin at Pamamaraan",
+              "Reporma at asimilasyon sa Espanya; intelektuwal at mapayapang pakikibaka.",
+              "Ganap na kasarinlan at paghiwalay; armadong rebolusyon at himagsikan."
+            ],
+            [
+              "Metapora / Konsepto",
+              "Nasyonal na estado ('Nación'); pormal na institusyon at batas.",
+              "'Inang Bayan' at mag-anak; pag-ibig sa bayan at kapatiran."
+            ],
+            [
+              "Makasaysayang Tagpo",
+              "Umagaw ng pamumuno sa Tejeros Convention (1897) sa pamumuno ni Aguinaldo.",
+              "Itinatag ang KKK (1892) at Haring Bayang Katagalugan (1896)."
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Tandaan sa Pagsusulit",
+          "text": "Ang **marahas vs. mapayapa** ay tumutukoy sa **PAMAMARAAN** ng pakikibaka; ang **Nación vs. Haring Bayan** ay tumutukoy sa **PROYEKTO** o uri ng bansang nais itatag."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "3. Kolonyalismong Espanyol: Herarkiya at Institusyon"
+        },
+        {
+          "type": "table",
+          "title": "Herarkiyang Panlipunan Batay sa Lahi (Kapanahunang Espanyol)",
+          "headers": [
+            "Antas ng Lahi",
+            "Paglalarawan at Katangian",
+            "Pribilehiyo at Tungkulin"
+          ],
+          "rows": [
+            [
+              "Peninsulares",
+              "Mga purong Espanyol na isinilang sa Espanya.",
+              "Pinakamataas na posisyon sa pamahalaan at simbahan; may legal na eksempsyon sa buwis at sapilitang paggawa."
+            ],
+            [
+              "Insulares (Creoles)",
+              "Mga purong Espanyol na isinilang sa Pilipinas.",
+              "May papel sa lokal na administrasyon, lupa, at negosyo; madalas hindi itinatalaga sa pinakamataas na pwesto."
+            ],
+            [
+              "Mestizo",
+              "May halong lahing Espanyol at katutubo, o Tsino at katutubo.",
+              "Umunlad sa kalakalan at komersyo; nakapag-aral ang mga anak (naging ugat ng mga Ilustrado)."
+            ],
+            [
+              "Principalia / Ilustrados",
+              "Lokal na uring namumuno (mula sa angkan ng datu) at edukadong Pilipino.",
+              "Naging gobernadorcillo at cabeza de barangay; labas sa purong herarkiya ng lahi."
+            ],
+            [
+              "Indio",
+              "Mga katutubong Pilipino; pinakailalim ng lipunan.",
+              "Walang kapangyarihang pampulitika; sapilitang pinagbayad ng tributo at pinagtrabaho sa polo y servicio."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Pangunahing Kolonyal na Institusyon"
+        },
+        {
+          "type": "table",
+          "title": "Edukasyon, Hustisya, at Kalayaang Sibil",
+          "headers": [
+            "Aspekto",
+            "Mga Patakaran at Institusyon",
+            "Epekto sa Mamamayan",
+            "Pagsusuring Kolonyal"
+          ],
+          "rows": [
+            [
+              "Edukasyon",
+              "Reducción (bajo el son de la campana); mga orden (Agustino, Pransiskano, Heswita, Dominiko); UST (1611); Education Decree of 1863.",
+              "Elitista at kontrolado ng katesismo. Ang Decree of 1863 ay nagdulot ng hindi inaasahang bunga: nagsilang ng mga Ilustrado na gumamit ng edukasyon para lumaban.",
+              "Limitasyon: Hindi pantay ang pag-access sa edukasyon."
+            ],
+            [
+              "Hustisya",
+              "Batayan: Siete Partidas, Nueva Recopilación, Leyes de las Indias. Apat na hukuman: Royal Audiencia (Korte Suprema), Territorial Audiencias, Courts of First Instance, Justice of the Peace.",
+              "Mabagal at hindi patas; ang Justice of the Peace ay pinatakbo ng personal na interes at padrino. Frailocracy (kapangyarihan ng prayle sa lupa at batas).",
+              "Kontrol: Ginamit ang batas upang panatilihin ang kapangyarihang kolonyal."
+            ],
+            [
+              "Kalayaang Sibil",
+              "Pagkakait ng kalayaan sa pamamahayag, pananalita, at pagtitipon; mahigpit na censorship; pagpapatapon (exile nina Del Pilar, Lopez Jaena, Rizal).",
+              "Ginamit ang Cavite Mutiny upang bitayin ang GomBurZa (1872) at patahimikin ang sekularisasyon; nagmulat sa pambansang damdamin.",
+              "Diskriminasyon at Panunupil: Sistemikong pagkakait ng karapatan sa mga Indio."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "4. Mga Anyo ng Pakikibaka at Pakikiangkop"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ipinamalas ng mga Pilipino ang iba't ibang estratehiya sa pagtugon sa pang-aapi at kolonyalismo sa paglipas ng panahon:"
+        },
+        {
+          "type": "table",
+          "title": "Talahanayan ng mga Anyo ng Pakikibaka",
+          "headers": [
+            "Anyo ng Pakikibaka",
+            "Katangian at Kahulugan",
+            "Makasaysayang Halimbawa",
+            "Pangunahing Bentahe at Panganib"
+          ],
+          "rows": [
+            [
+              "Armadong Pag-aalsa",
+              "Marahas na paglaban gamit ang armas upang ibagsak ang dayuhang kapangyarihan.",
+              "Katipunan (1892), Himagsikan ng 1896, Sigaw ng Pugad Lawin / Balintawak.",
+              "Bentahe: Tuwirang hinahamon ang kapangyarihan; Panganib: Mataas na bilang ng nasasawi at pinsala."
+            ],
+            [
+              "Konbensyonal na Digma",
+              "Pormal na labanan ng dalawang organisadong hukbo gamit ang estratehiyang militar.",
+              "Digmaang Pilipino-Amerikano (1899–1902) sa ilalim ng Unang Republika.",
+              "Bentahe: Kinikilalang estado; Panganib: Madaling matalo laban sa mas superyor na hukbo (pagdakip kay Aguinaldo sa Palanan 1901)."
+            ],
+            [
+              "Gerilya",
+              "Maliliit at mabilis na yunit na sumasalakay at umaasa sa suporta ng lokal na komunidad.",
+              "Pagpapatuloy nina Heneral Malvar at Macario Sakay; Hukbalahap at Wha-Chi (panahon ng Hapon).",
+              "Bentahe: Mahirap lipulin ng malalaking hukbo; Panganib: Paghihiganti ng kaaway sa mga sibilyan."
+            ],
+            [
+              "Intelektuwal na Pakikibaka",
+              "Paggamit ng panulat, sining, pamamahayag, at literatura upang humingi ng reporma o magmulat.",
+              "Kilusang Propaganda, La Solidaridad nina Rizal, Marcelo H. del Pilar, Graciano López Jaena; Balagtas at sarswela.",
+              "Bentahe: Nagbubuo ng pambansang kamalayan; Panganib: Censorship, pagpapatapon (exile), at pagbitay."
+            ],
+            [
+              "Pampolitika / Konstitusyonal",
+              "Pakikilahok sa halalan, batas, at institusyon ng pamahalaan.",
+              "Komonwelt ng Pilipinas (1935); mga batas sa sariling pamamahala mula 1913.",
+              "Bentahe: May pormal na proteksyon ng batas; Panganib: Maaaring maging kasangkapan ng kolonisador."
+            ],
+            [
+              "Pakikiangkop (Strategic Adaptation)",
+              "Estratehikong pakikibagay sa umiiral na sistema upang mapanatili ang buhay, pamayanan, at ugnayan.",
+              "Sultan Diamarol sa Mindanao; pakikipagtulungan ng ilang lider habang nag-aantay ng pagkakataon.",
+              "Bentahe: Nakapagliligtas ng buhay at kultura; Panganib: Maaaring mapagkamalang pagsuko o pagtataksil."
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Pakikiangkop: Estratehiya vs Pagsuko",
+          "text": "• **Matalinong Estratehiya**: Kapag ginagamit upang protektahan ang komunidad, panatilihin ang katapatan sa kapwa, at magpalakas habang hinihintay ang tamang panahon upang kumilos.\n• **Pagsuko**: Kapag tuluyan nang kinalimutan ang kapakanan ng bayan kapalit ng personal na pabor, kapangyarihan, at pribilehiyo."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "5. Konseptuwal na Pagsusuri & Past to Present"
+        },
+        {
+          "type": "table",
+          "title": "Anim na Konsepto sa Pagsusuri ng Sistemang Kolonyal",
+          "headers": [
+            "Konsepto",
+            "Paliwanag sa Panahon ng Espanyol",
+            "Kahalagahan sa Pagsusuri"
+          ],
+          "rows": [
+            [
+              "Herarkiya",
+              "Estrukturang panlipunan na nagbigay ng kapangyarihan sa Peninsulares at naglagay sa Indio sa ilalim.",
+              "Ipinakita kung paano pinanatili ang kapangyarihan sa pamamagitan ng paghahati-hati."
+            ],
+            [
+              "Limitasyon",
+              "Hindi pantay na akses sa de-kalidad na edukasyon, posisyon sa gobyerno, at yaman.",
+              "Nagpatunay na ang edukasyon ay ginamit muna bilang paraan ng pagpigil bago naging sandata ng paglaya."
+            ],
+            [
+              "Kontrol",
+              "Paggamit sa hukumang militar, simbahan, at justice of the peace upang patahimikin ang tumututol.",
+              "Nagpatibay sa kaayusang kolonyal sa pamamagitan ng institusyonal na pananakot."
+            ],
+            [
+              "Sistema",
+              "Magkakaugnay ang edukasyon, hustisya, at kalayaang sibil sa pagtataguyod ng pananakop.",
+              "Hindi hiwa-hiwalay ang mga suliranin; iisa ang makinaryang nagpapatakbo sa mga ito."
+            ],
+            [
+              "Diskriminasyon",
+              "Sistemikong pangmamaliit at pagpapataw ng mabibigat na pasanin (tributo, polo) sa mga katutubo.",
+              "Hindi lamang personal na hidwaan kundi batas at polisiya ng pamahalaan."
+            ],
+            [
+              "Kamalayan",
+              "Paggamit ng mga Ilustrado sa edukasyon upang imulat ang bayan at kuwestiyunin ang sistema.",
+              "Nagbunsod ng Kilusang Propaganda at naging mitsa ng Himagsikan."
+            ]
+          ]
+        },
+        {
+          "type": "table",
+          "title": "Past to Present: Pag-uugnay ng Nakaraan sa Kasalukuyan",
+          "headers": [
+            "Konseptong Kolonyal",
+            "Modernong Manipestasyon sa Lipunan",
+            "Kritikal na Pagsusuri"
+          ],
+          "rows": [
+            [
+              "Hirarkiya",
+              "Umiiral sa mga institusyon kung saan ang ilang pangkat ay may labis na pribilehiyo at kapangyarihan kaysa iba.",
+              "Nagdudulot ng elitismo sa pamamahala at kawalan ng boses ng karaniwang mamamayan."
+            ],
+            [
+              "Hindi-pagkakapantay-pantay",
+              "Hindi pantay na akses ng mamamayan sa de-kalidad na edukasyon, serbisyong pangkalusugan, at hanapbuhay.",
+              "Bunga ng agwat sa ekonomiya na nagpapatuloy mula sa kolonyal na estruktura."
+            ],
+            [
+              "Kalayaan",
+              "Karapatan sa pamamahayag, mapayapang pagtitipon, at paglahok sa mga usaping pampubliko.",
+              "Haligi ng isang demokratikong lipunan na ipinagkait noong panahon ng kolonyalismo."
+            ],
+            [
+              "Korupsiyon",
+              "Paggamit ng pampublikong kapangyarihan o katayuan para sa pansariling pakinabang at hindi patas na pabor.",
+              "Pinahihina ang katarungan at sumisira sa tiwala ng mamamayan sa pamahalaan."
+            ],
+            [
+              "Kritikal na Kamalayan",
+              "Paggamit sa pag-aaral ng kasaysayan upang suriin at unawain ang mga ugat ng kasalukuyang suliranin.",
+              "Pundasyon sa paghahanap ng pangmatagalang solusyon sa mga isyung panlipunan."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "6. Mabilisang Talasalitaan (Exam Cheat Sheet)"
+        },
+        {
+          "type": "table",
+          "title": "Glosaryo ng mga Mahahalagang Termino",
+          "headers": [
+            "Termino",
+            "Mabilisang Kahulugan para sa Pagsusulit"
+          ],
+          "rows": [
+            [
+              "Peninsulares",
+              "Espanyol na isinilang sa Espanya; may hawak ng pinakamataas na kapangyarihan."
+            ],
+            [
+              "Insulares",
+              "Espanyol na isinilang sa Pilipinas (tinatawag ding creoles)."
+            ],
+            [
+              "Mestizo",
+              "May halong lahing Espanyol at katutubo, o Tsino at katutubo."
+            ],
+            [
+              "Indio",
+              "Tawag ng mga Espanyol sa katutubong Pilipino; nasa pinakailalim ng antas ng lipunan."
+            ],
+            [
+              "Principalia",
+              "Lokal na uring namumuno; nagmula sa sinaunang angkan ng mga datu at naging gobernadorcillo."
+            ],
+            [
+              "Frailocracy",
+              "Paghahari o malawak na kapangyarihan at impluwensiya ng mga prayle sa pamahalaan at lipunan."
+            ],
+            [
+              "Reducción",
+              "Sapilitang pagtitipon ng mga pamayanan sa poblacion sa ilalim ng tunog ng kampana (bajo el son de la campana)."
+            ],
+            [
+              "Tributo",
+              "Buwis na ipinataw sa mga katutubong Pilipino bilang tanda ng pagpapasakop sa Espanya."
+            ],
+            [
+              "Polo y Servicio",
+              "Sapilitang paggawa na ipinataw sa mga kalalakihang indio (16–60 taong gulang)."
+            ],
+            [
+              "Royal Audiencia",
+              "Pinakamataas na hukuman sa kolonya na katumbas ng Korte Suprema ngayon."
+            ],
+            [
+              "Justice of the Peace",
+              "Lokal na hukom sa antas ng bayan para sa maliliit na kasong sibil at kriminal."
+            ],
+            [
+              "Leyes de Indias",
+              "Kalipunan ng mga batas na ipinatupad ng Espanya para sa pamamahala sa mga kolonya nito."
+            ],
+            [
+              "Education Decree of 1863",
+              "Batas na nag-utos ng libre at sapilitang primaryang edukasyon na may sekular na kurikulum."
+            ],
+            [
+              "GomBurZa",
+              "Tatlong paring sekular (Gomez, Burgos, Zamora) na binitay noong 17 Pebrero 1872 dahil sa Cavite Mutiny."
+            ],
+            [
+              "Ladinos",
+              "Mga katutubong natutong magsalita at magsulat sa wikang Espanyol na naging tagapamagitan ng prayle."
+            ],
+            [
+              "Puppet Government",
+              "Pamahalaang may pormal na estruktura ngunit kontrolado ng dayuhang hukbo (hal. panahon ng Hapon)."
+            ],
+            [
+              "Exile",
+              "Sapilitang pagpapatapon sa ibang lugar upang putulin ang impluwensiyang pampolitika."
+            ]
           ]
         }
       ]
-    },
+    }
+  ],
+  "studyMaterials": [
     {
       "id": "material_1791214094438",
       "subject": "Life and Career Skills",
@@ -1840,6 +2318,166 @@
       ]
     },
     {
+      "id": "material_1791225890120",
+      "subject": "Chemistry",
+      "tag": "Study Material",
+      "color": "border-l-4 border-indigo-500",
+      "title": "The Mole Concept: Balancing Equations & Mole Ratios",
+      "summary": "Core principles of the mole concept, Law of Conservation of Mass, balancing chemical equations, priority rules, and calculating stoichiometric mole ratios with step-by-step worked examples.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "1. The Mole Concept"
+        },
+        {
+          "type": "paragraph",
+          "text": "Moles are the standard International System of Units (SI) expressing the quantity or amount of a chemical substance. They are universally abbreviated as **\"mol\"**."
+        },
+        {
+          "type": "paragraph",
+          "text": "When balancing chemical equations, the **stoichiometric coefficients** (the whole numbers placed in front of each chemical formula) represent the lowest whole-number ratio of the number of moles of each substance required to completely react and form products."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "2. Balancing Chemical Equations"
+        },
+        {
+          "type": "paragraph",
+          "text": "Chemical equation balancing is fundamentally governed by the **Law of Conservation of Mass** formulated by Antoine Lavoisier, which states that *matter cannot be created nor destroyed in a chemical reaction*."
+        },
+        {
+          "type": "paragraph",
+          "text": "Any chemical reaction in the form $A + B \\rightarrow C + D$ or $A + B \\rightarrow C$, when balanced, has coefficients attached to the chemical formulas. These coefficients are what we call stoichiometric coefficients, converting raw equations into standard balanced stoichiometric forms:"
+        },
+        {
+          "type": "formula",
+          "title": "General Stoichiometric Form",
+          "formula": "aA + bB \\rightarrow cC + dD",
+          "note": "Lower-case letters (a, b, c, d) represent stoichiometric coefficients; upper-case letters represent chemical species."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Conservation of Atoms**: The total number of atoms of each individual element on the reactant side must exactly equal the total number of atoms on the product side.",
+            "**Subscripts vs. Coefficients**: Never modify the chemical formula subscripts (e.g., changing $\\text{H}_2\\text{O}$ to $\\text{H}_2\\text{O}_2$ alters the chemical identity of the substance). Only adjust the stoichiometric coefficients in front.",
+            "**Balancing Priority Rule**: In balancing reactions, **Hydrogen (H)** and **Oxygen (O)** atoms are generally the least priority and should be balanced last. Always balance unique metals and non-metals first."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "3. Balancing Examples & Step-by-Step Solutions"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Example 1**: Balance the chemical equation $\\text{Xe} + \\text{F}_2 \\rightarrow \\text{XeF}_6$ (Xenon gas reacts with Fluorine gas to synthesize Xenon Hexafluoride)."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Step-by-Step Solution for Example 1",
+          "text": "Notice that, on the reactant side, there is exactly $1\\text{ Xe}$ atom and $2\\text{ F}$ atoms. On the product side, there is also $1\\text{ Xe}$ atom, but there are $6\\text{ F}$ atoms.\n\nWhat we must do is to find a way for those $2\\text{ F}$ atoms on the reactant side to match the $6\\text{ F}$ atoms on the product side. In this case, we must multiply $\\text{F}_2$ by $3$ to create $6\\text{ F}$ atoms ($3 \\times 2 = 6$).\n\nAll-in-all, the final balanced chemical equation is:\n$$\\text{Xe} + 3\\text{F}_2 \\rightarrow \\text{XeF}_6$$"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Example 2**: Balance the chemical equation for the combustion of butane, given by $\\text{C}_4\\text{H}_{10} + \\text{O}_2 \\rightarrow \\text{CO}_2 + \\text{H}_2\\text{O}$."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Step-by-Step Solution for Example 2",
+          "text": "Similarly, we count the number of each atom on the reactant and product sides. Recall that $\\text{H}$ and $\\text{O}$ atoms are the least priority and balanced last:\n\n1. **Balance Carbon (C)**: There are $4\\text{ C}$ atoms on the left. Multiply $\\text{CO}_2$ on the right by $4$:\n$$\\text{C}_4\\text{H}_{10} + \\text{O}_2 \\rightarrow 4\\text{CO}_2 + \\text{H}_2\\text{O}$$\n\n2. **Balance Hydrogen (H)**: There are $10\\text{ H}$ atoms on the left. Multiply $\\text{H}_2\\text{O}$ on the right by $5$ ($5 \\times 2 = 10$):\n$$\\text{C}_4\\text{H}_{10} + \\text{O}_2 \\rightarrow 4\\text{CO}_2 + 5\\text{H}_2\\text{O}$$\n\n3. **Balance Oxygen (O)**: On the right side, there are $(4 \\times 2) + (5 \\times 1) = 8 + 5 = 13\\text{ O}$ atoms. To balance the $13\\text{ O}$ atoms on the left, we multiply $\\text{O}_2$ by $\\frac{13}{2}$:\n$$\\text{C}_4\\text{H}_{10} + \\frac{13}{2}\\text{O}_2 \\rightarrow 4\\text{CO}_2 + 5\\text{H}_2\\text{O}$$\n\n4. **Clear Fractional Coefficients**: Since stoichiometric coefficients must be whole numbers, multiply the entire equation by $2$:\n$$2\\text{C}_4\\text{H}_{10} + 13\\text{O}_2 \\rightarrow 8\\text{CO}_2 + 10\\text{H}_2\\text{O}$$"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "4. Mole Ratios"
+        },
+        {
+          "type": "paragraph",
+          "text": "As stoichiometric coefficients represent the lowest ratio of the number of molecules or moles needed for a complete reaction, if we know how many moles of one substance are going to be used or produced in a reaction, we can also determine how many moles of all other reactants and products are required."
+        },
+        {
+          "type": "paragraph",
+          "text": "A **mole ratio** is a conversion factor derived from the coefficients of a balanced chemical equation that relates the amounts in moles of any two substances involved in the reaction."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "5. Mole Ratio Worked Examples"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Example 3**: Given the balanced chemical equation $2\\text{H}_2 + \\text{O}_2 \\rightarrow 2\\text{H}_2\\text{O}$, how many moles of oxygen gas $(\\text{O}_2)$ are needed to completely synthesize $6\\text{ moles}$ of hydrogen gas into water? How many moles of water $(\\text{H}_2\\text{O})$ are then formed?"
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Step-by-Step Solution for Example 3",
+          "text": "As the given equation is already balanced, we simply formulate the mole ratios directly from the stoichiometric coefficients:\n$$\\frac{2\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{O}_2}, \\quad \\frac{2\\text{ mol }\\text{H}_2}{2\\text{ mol }\\text{H}_2\\text{O}} = \\frac{1\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{H}_2\\text{O}}, \\quad \\frac{1\\text{ mol }\\text{O}_2}{2\\text{ mol }\\text{H}_2\\text{O}}$$\n\nTo find the number of moles of each substance, we strictly adhere to these mole ratios:\n\n1. **Finding Moles of $\\text{O}_2$**:\n$$\\frac{6\\text{ mol }\\text{H}_2}{x\\text{ mol }\\text{O}_2} = \\frac{2\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{O}_2}$$\nCanceling units to simplify into a direct algebraic proportion:\n$$\\frac{6}{x} = \\frac{2}{1} \\implies 6 = 2x \\implies x = 3$$\nSo, **$3\\text{ moles}$ of oxygen gas $(\\text{O}_2)$ are needed**.\n\n2. **Finding Moles of $\\text{H}_2\\text{O}$ Produced**:\nSince $\\text{H}_2 : \\text{H}_2\\text{O}$ is in a $2 : 2$ (or $1 : 1$) ratio:\n$$\\frac{6\\text{ mol }\\text{H}_2}{y\\text{ mol }\\text{H}_2\\text{O}} = \\frac{1\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{H}_2\\text{O}} \\implies y = 6$$\nSo, **$6\\text{ moles}$ of water $(\\text{H}_2\\text{O})$ are formed**."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Example 4**: John combusts $4\\text{ moles}$ of butane, which follows the balanced chemical equation $2\\text{C}_4\\text{H}_{10} + 13\\text{O}_2 \\rightarrow 8\\text{CO}_2 + 10\\text{H}_2\\text{O}$. How many moles of oxygen gas $(\\text{O}_2)$ are needed to complete this combustion? How many moles of carbon dioxide $(\\text{CO}_2)$ and water $(\\text{H}_2\\text{O})$ are formed?"
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Step-by-Step Solution for Example 4",
+          "text": "Again, we can simply take the stoichiometric ratios:\n\n1. **Oxygen Gas $(\\text{O}_2)$ Needed**:\nThe ratio of $\\text{C}_4\\text{H}_{10}$ to $\\text{O}_2$ is $2 : 13$. For $4\\text{ moles}$ of butane:\n$$4 : x = 2 : 13 \\implies \\frac{4}{x} = \\frac{2}{13} \\implies 2x = 52 \\implies x = 26$$\nSo, **$26\\text{ moles}$ of oxygen gas $(\\text{O}_2)$ are required**.\n\n2. **Carbon Dioxide $(\\text{CO}_2)$ Formed**:\nThe mole ratio of $\\text{C}_4\\text{H}_{10}$ to $\\text{CO}_2$ is $2 : 8$, which simplifies to $1 : 4$. Setting up the proportion for $4\\text{ moles}$ of butane:\n$$4 : y = 1 : 4 \\implies \\frac{4}{y} = \\frac{1}{4} \\implies y = 16$$\nSo, **$16\\text{ moles}$ of carbon dioxide $(\\text{CO}_2)$ are formed**.\n\n3. **Water $(\\text{H}_2\\text{O})$ Formed**:\nThe mole ratio of $\\text{C}_4\\text{H}_{10}$ to $\\text{H}_2\\text{O}$ is $2 : 10$, which simplifies to $1 : 5$. Setting up the proportion for $4\\text{ moles}$ of butane:\n$$4 : z = 1 : 5 \\implies \\frac{4}{z} = \\frac{1}{5} \\implies z = 20$$\nSo, **$20\\text{ moles}$ of water $(\\text{H}_2\\text{O})$ are formed**."
+        },
+        {
+          "type": "table",
+          "title": "Summary of Butane Combustion Stoichiometry (Example 4)",
+          "headers": [
+            "Substance",
+            "Chemical Formula",
+            "Stoichiometric Coefficient",
+            "Mole Ratio vs Butane",
+            "Moles Reacted / Produced"
+          ],
+          "rows": [
+            [
+              "Butane (Reactant)",
+              "C4H10",
+              "2",
+              "1 : 1 (Basis)",
+              "4 mol"
+            ],
+            [
+              "Oxygen Gas (Reactant)",
+              "O2",
+              "13",
+              "13 : 2 (6.5x)",
+              "26 mol"
+            ],
+            [
+              "Carbon Dioxide (Product)",
+              "CO2",
+              "8",
+              "4 : 1 (4.0x)",
+              "16 mol"
+            ],
+            [
+              "Water (Product)",
+              "H2O",
+              "10",
+              "5 : 1 (5.0x)",
+              "20 mol"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Stoichiometry Pro-Tip: Ratio Cross-Multiplication",
+          "text": "Whenever solving for an unknown quantity $x$ in a chemical reaction:\n$$\\text{Moles of Unknown} = \\text{Moles of Given} \\times \\left( \\frac{\\text{Coefficient of Unknown}}{\\text{Coefficient of Given}} \\right)$$\nFor instance, in Example 4:\n$$\\text{Moles of }\\text{O}_2 = 4\\text{ mol }\\text{C}_4\\text{H}_{10} \\times \\left(\\frac{13\\text{ mol }\\text{O}_2}{2\\text{ mol }\\text{C}_4\\text{H}_{10}}\\right) = 26\\text{ mol }\\text{O}_2$$\nThis dimensional analysis approach ensures units cancel cleanly and avoids common inversion mistakes."
+        }
+      ]
+    },
+    {
       "id": "material_holland_riasec_theory",
       "subject": "Life and Career Skills",
       "tag": "Study Material",
@@ -2152,166 +2790,6 @@
           "style": "info",
           "title": "Key Exam Takeaway: Time vs. Fit",
           "text": "• **Ginzberg & Super** focus on the question: *'WHEN and HOW does an individual's career self-concept evolve across time?'* (Developmental / Longitudinal Approach).\n• **Holland** focuses on the question: *'WHERE and WITH WHOM does an individual fit best based on their personality archetype?'* (Typological / Structural Approach).\n• Modern vocational counseling pairs both paradigms: as an individual evolves through exploratory life stages (Super), their emerging competencies crystallize into a RIASEC profile (Holland) seeking congruent occupational environments."
-        }
-      ]
-    },
-    {
-      "id": "material_1791225890120",
-      "subject": "Chemistry",
-      "tag": "Study Material",
-      "color": "border-l-4 border-indigo-500",
-      "title": "The Mole Concept: Balancing Equations & Mole Ratios",
-      "summary": "Core principles of the mole concept, Law of Conservation of Mass, balancing chemical equations, priority rules, and calculating stoichiometric mole ratios with step-by-step worked examples.",
-      "blocks": [
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "1. The Mole Concept"
-        },
-        {
-          "type": "paragraph",
-          "text": "Moles are the standard International System of Units (SI) expressing the quantity or amount of a chemical substance. They are universally abbreviated as **\"mol\"**."
-        },
-        {
-          "type": "paragraph",
-          "text": "When balancing chemical equations, the **stoichiometric coefficients** (the whole numbers placed in front of each chemical formula) represent the lowest whole-number ratio of the number of moles of each substance required to completely react and form products."
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "2. Balancing Chemical Equations"
-        },
-        {
-          "type": "paragraph",
-          "text": "Chemical equation balancing is fundamentally governed by the **Law of Conservation of Mass** formulated by Antoine Lavoisier, which states that *matter cannot be created nor destroyed in a chemical reaction*."
-        },
-        {
-          "type": "paragraph",
-          "text": "Any chemical reaction in the form $A + B \\rightarrow C + D$ or $A + B \\rightarrow C$, when balanced, has coefficients attached to the chemical formulas. These coefficients are what we call stoichiometric coefficients, converting raw equations into standard balanced stoichiometric forms:"
-        },
-        {
-          "type": "formula",
-          "title": "General Stoichiometric Form",
-          "formula": "aA + bB \\rightarrow cC + dD",
-          "note": "Lower-case letters (a, b, c, d) represent stoichiometric coefficients; upper-case letters represent chemical species."
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "**Conservation of Atoms**: The total number of atoms of each individual element on the reactant side must exactly equal the total number of atoms on the product side.",
-            "**Subscripts vs. Coefficients**: Never modify the chemical formula subscripts (e.g., changing $\\text{H}_2\\text{O}$ to $\\text{H}_2\\text{O}_2$ alters the chemical identity of the substance). Only adjust the stoichiometric coefficients in front.",
-            "**Balancing Priority Rule**: In balancing reactions, **Hydrogen (H)** and **Oxygen (O)** atoms are generally the least priority and should be balanced last. Always balance unique metals and non-metals first."
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "3. Balancing Examples & Step-by-Step Solutions"
-        },
-        {
-          "type": "paragraph",
-          "text": "**Example 1**: Balance the chemical equation $\\text{Xe} + \\text{F}_2 \\rightarrow \\text{XeF}_6$ (Xenon gas reacts with Fluorine gas to synthesize Xenon Hexafluoride)."
-        },
-        {
-          "type": "callout",
-          "style": "info",
-          "title": "Step-by-Step Solution for Example 1",
-          "text": "Notice that, on the reactant side, there is exactly $1\\text{ Xe}$ atom and $2\\text{ F}$ atoms. On the product side, there is also $1\\text{ Xe}$ atom, but there are $6\\text{ F}$ atoms.\n\nWhat we must do is to find a way for those $2\\text{ F}$ atoms on the reactant side to match the $6\\text{ F}$ atoms on the product side. In this case, we must multiply $\\text{F}_2$ by $3$ to create $6\\text{ F}$ atoms ($3 \\times 2 = 6$).\n\nAll-in-all, the final balanced chemical equation is:\n$$\\text{Xe} + 3\\text{F}_2 \\rightarrow \\text{XeF}_6$$"
-        },
-        {
-          "type": "paragraph",
-          "text": "**Example 2**: Balance the chemical equation for the combustion of butane, given by $\\text{C}_4\\text{H}_{10} + \\text{O}_2 \\rightarrow \\text{CO}_2 + \\text{H}_2\\text{O}$."
-        },
-        {
-          "type": "callout",
-          "style": "info",
-          "title": "Step-by-Step Solution for Example 2",
-          "text": "Similarly, we count the number of each atom on the reactant and product sides. Recall that $\\text{H}$ and $\\text{O}$ atoms are the least priority and balanced last:\n\n1. **Balance Carbon (C)**: There are $4\\text{ C}$ atoms on the left. Multiply $\\text{CO}_2$ on the right by $4$:\n$$\\text{C}_4\\text{H}_{10} + \\text{O}_2 \\rightarrow 4\\text{CO}_2 + \\text{H}_2\\text{O}$$\n\n2. **Balance Hydrogen (H)**: There are $10\\text{ H}$ atoms on the left. Multiply $\\text{H}_2\\text{O}$ on the right by $5$ ($5 \\times 2 = 10$):\n$$\\text{C}_4\\text{H}_{10} + \\text{O}_2 \\rightarrow 4\\text{CO}_2 + 5\\text{H}_2\\text{O}$$\n\n3. **Balance Oxygen (O)**: On the right side, there are $(4 \\times 2) + (5 \\times 1) = 8 + 5 = 13\\text{ O}$ atoms. To balance the $13\\text{ O}$ atoms on the left, we multiply $\\text{O}_2$ by $\\frac{13}{2}$:\n$$\\text{C}_4\\text{H}_{10} + \\frac{13}{2}\\text{O}_2 \\rightarrow 4\\text{CO}_2 + 5\\text{H}_2\\text{O}$$\n\n4. **Clear Fractional Coefficients**: Since stoichiometric coefficients must be whole numbers, multiply the entire equation by $2$:\n$$2\\text{C}_4\\text{H}_{10} + 13\\text{O}_2 \\rightarrow 8\\text{CO}_2 + 10\\text{H}_2\\text{O}$$"
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "4. Mole Ratios"
-        },
-        {
-          "type": "paragraph",
-          "text": "As stoichiometric coefficients represent the lowest ratio of the number of molecules or moles needed for a complete reaction, if we know how many moles of one substance are going to be used or produced in a reaction, we can also determine how many moles of all other reactants and products are required."
-        },
-        {
-          "type": "paragraph",
-          "text": "A **mole ratio** is a conversion factor derived from the coefficients of a balanced chemical equation that relates the amounts in moles of any two substances involved in the reaction."
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "5. Mole Ratio Worked Examples"
-        },
-        {
-          "type": "paragraph",
-          "text": "**Example 3**: Given the balanced chemical equation $2\\text{H}_2 + \\text{O}_2 \\rightarrow 2\\text{H}_2\\text{O}$, how many moles of oxygen gas $(\\text{O}_2)$ are needed to completely synthesize $6\\text{ moles}$ of hydrogen gas into water? How many moles of water $(\\text{H}_2\\text{O})$ are then formed?"
-        },
-        {
-          "type": "callout",
-          "style": "info",
-          "title": "Step-by-Step Solution for Example 3",
-          "text": "As the given equation is already balanced, we simply formulate the mole ratios directly from the stoichiometric coefficients:\n$$\\frac{2\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{O}_2}, \\quad \\frac{2\\text{ mol }\\text{H}_2}{2\\text{ mol }\\text{H}_2\\text{O}} = \\frac{1\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{H}_2\\text{O}}, \\quad \\frac{1\\text{ mol }\\text{O}_2}{2\\text{ mol }\\text{H}_2\\text{O}}$$\n\nTo find the number of moles of each substance, we strictly adhere to these mole ratios:\n\n1. **Finding Moles of $\\text{O}_2$**:\n$$\\frac{6\\text{ mol }\\text{H}_2}{x\\text{ mol }\\text{O}_2} = \\frac{2\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{O}_2}$$\nCanceling units to simplify into a direct algebraic proportion:\n$$\\frac{6}{x} = \\frac{2}{1} \\implies 6 = 2x \\implies x = 3$$\nSo, **$3\\text{ moles}$ of oxygen gas $(\\text{O}_2)$ are needed**.\n\n2. **Finding Moles of $\\text{H}_2\\text{O}$ Produced**:\nSince $\\text{H}_2 : \\text{H}_2\\text{O}$ is in a $2 : 2$ (or $1 : 1$) ratio:\n$$\\frac{6\\text{ mol }\\text{H}_2}{y\\text{ mol }\\text{H}_2\\text{O}} = \\frac{1\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{H}_2\\text{O}} \\implies y = 6$$\nSo, **$6\\text{ moles}$ of water $(\\text{H}_2\\text{O})$ are formed**."
-        },
-        {
-          "type": "paragraph",
-          "text": "**Example 4**: John combusts $4\\text{ moles}$ of butane, which follows the balanced chemical equation $2\\text{C}_4\\text{H}_{10} + 13\\text{O}_2 \\rightarrow 8\\text{CO}_2 + 10\\text{H}_2\\text{O}$. How many moles of oxygen gas $(\\text{O}_2)$ are needed to complete this combustion? How many moles of carbon dioxide $(\\text{CO}_2)$ and water $(\\text{H}_2\\text{O})$ are formed?"
-        },
-        {
-          "type": "callout",
-          "style": "info",
-          "title": "Step-by-Step Solution for Example 4",
-          "text": "Again, we can simply take the stoichiometric ratios:\n\n1. **Oxygen Gas $(\\text{O}_2)$ Needed**:\nThe ratio of $\\text{C}_4\\text{H}_{10}$ to $\\text{O}_2$ is $2 : 13$. For $4\\text{ moles}$ of butane:\n$$4 : x = 2 : 13 \\implies \\frac{4}{x} = \\frac{2}{13} \\implies 2x = 52 \\implies x = 26$$\nSo, **$26\\text{ moles}$ of oxygen gas $(\\text{O}_2)$ are required**.\n\n2. **Carbon Dioxide $(\\text{CO}_2)$ Formed**:\nThe mole ratio of $\\text{C}_4\\text{H}_{10}$ to $\\text{CO}_2$ is $2 : 8$, which simplifies to $1 : 4$. Setting up the proportion for $4\\text{ moles}$ of butane:\n$$4 : y = 1 : 4 \\implies \\frac{4}{y} = \\frac{1}{4} \\implies y = 16$$\nSo, **$16\\text{ moles}$ of carbon dioxide $(\\text{CO}_2)$ are formed**.\n\n3. **Water $(\\text{H}_2\\text{O})$ Formed**:\nThe mole ratio of $\\text{C}_4\\text{H}_{10}$ to $\\text{H}_2\\text{O}$ is $2 : 10$, which simplifies to $1 : 5$. Setting up the proportion for $4\\text{ moles}$ of butane:\n$$4 : z = 1 : 5 \\implies \\frac{4}{z} = \\frac{1}{5} \\implies z = 20$$\nSo, **$20\\text{ moles}$ of water $(\\text{H}_2\\text{O})$ are formed**."
-        },
-        {
-          "type": "table",
-          "title": "Summary of Butane Combustion Stoichiometry (Example 4)",
-          "headers": [
-            "Substance",
-            "Chemical Formula",
-            "Stoichiometric Coefficient",
-            "Mole Ratio vs Butane",
-            "Moles Reacted / Produced"
-          ],
-          "rows": [
-            [
-              "Butane (Reactant)",
-              "C4H10",
-              "2",
-              "1 : 1 (Basis)",
-              "4 mol"
-            ],
-            [
-              "Oxygen Gas (Reactant)",
-              "O2",
-              "13",
-              "13 : 2 (6.5x)",
-              "26 mol"
-            ],
-            [
-              "Carbon Dioxide (Product)",
-              "CO2",
-              "8",
-              "4 : 1 (4.0x)",
-              "16 mol"
-            ],
-            [
-              "Water (Product)",
-              "H2O",
-              "10",
-              "5 : 1 (5.0x)",
-              "20 mol"
-            ]
-          ]
-        },
-        {
-          "type": "callout",
-          "style": "warning",
-          "title": "Stoichiometry Pro-Tip: Ratio Cross-Multiplication",
-          "text": "Whenever solving for an unknown quantity $x$ in a chemical reaction:\n$$\\text{Moles of Unknown} = \\text{Moles of Given} \\times \\left( \\frac{\\text{Coefficient of Unknown}}{\\text{Coefficient of Given}} \\right)$$\nFor instance, in Example 4:\n$$\\text{Moles of }\\text{O}_2 = 4\\text{ mol }\\text{C}_4\\text{H}_{10} \\times \\left(\\frac{13\\text{ mol }\\text{O}_2}{2\\text{ mol }\\text{C}_4\\text{H}_{10}}\\right) = 26\\text{ mol }\\text{O}_2$$\nThis dimensional analysis approach ensures units cancel cleanly and avoids common inversion mistakes."
         }
       ]
     },
@@ -2993,11 +3471,10 @@
           ]
         },
         {
-          "type": "image",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgMzYwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxtYXJrZXIgaWQ9ImFycm93LWJsdWUiIHZpZXdCb3g9IjAgMCAxMCAxMCIgcmVmWD0iNiIgcmVmWT0iNSIgbWFya2VyV2lkdGg9IjYiIG1hcmtlckhlaWdodD0iNiIgb3JpZW50PSJhdXRvLXN0YXJ0LXJldmVyc2UiPgogICAgICA8cGF0aCBkPSJNIDAgMS41IEwgOCA1IEwgMCA4LjUgeiIgZmlsbD0iIzNiODJmNiIvPgogICAgPC9tYXJrZXI+CiAgICA8bWFya2VyIGlkPSJhcnJvdy1lbWVyYWxkIiB2aWV3Qm94PSIwIDAgMTAgMTAiIHJlZlg9IjYiIHJlZlk9IjUiIG1hcmtlcldpZHRoPSI2IiBtYXJrZXJIZWlnaHQ9IjYiIG9yaWVudD0iYXV0by1zdGFydC1yZXZlcnNlIj4KICAgICAgPHBhdGggZD0iTSAwIDEuNSBMIDggNSBMIDAgOC41IHoiIGZpbGw9IiMxMGI5ODEiLz4KICAgIDwvbWFya2VyPgogICAgPG1hcmtlciBpZD0iYXJyb3ctYW1iZXIiIHZpZXdCb3g9IjAgMCAxMCAxMCIgcmVmWD0iNiIgcmVmWT0iNSIgbWFya2VyV2lkdGg9IjYiIG1hcmtlckhlaWdodD0iNiIgb3JpZW50PSJhdXRvLXN0YXJ0LXJldmVyc2UiPgogICAgICA8cGF0aCBkPSJNIDAgMS41IEwgOCA1IEwgMCA4LjUgeiIgZmlsbD0iI2Y1OWUwYiIvPgogICAgPC9tYXJrZXI+CiAgICA8bWFya2VyIGlkPSJhcnJvdy1yZWQiIHZpZXdCb3g9IjAgMCAxMCAxMCIgcmVmWD0iNiIgcmVmWT0iNSIgbWFya2VyV2lkdGg9IjYiIG1hcmtlckhlaWdodD0iNiIgb3JpZW50PSJhdXRvLXN0YXJ0LXJldmVyc2UiPgogICAgICA8cGF0aCBkPSJNIDAgMS41IEwgOCA1IEwgMCA4LjUgeiIgZmlsbD0iI2VmNDQ0NCIvPgogICAgPC9tYXJrZXI+CiAgPC9kZWZzPgoKICA8IS0tIEJhY2tncm91bmQgQ2FyZCAtLT4KICA8cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjM2MCIgcng9IjE2IiBmaWxsPSIjMGYxNzJhIiBzdHJva2U9IiMzMzQxNTUiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxyZWN0IHg9IjIwIiB5PSIxNiIgd2lkdGg9IjY2MCIgaGVpZ2h0PSI0MCIgcng9IjgiIGZpbGw9IiMxZTI5M2IiLz4KICA8dGV4dCB4PSIzNTAiIHk9IjQyIiBmaWxsPSIjMzhiZGY4IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+CiAgICBGcmVlLUJvZHkgRGlhZ3JhbTogVG9ycXVlICZhbXA7IE1vbWVudCBvZiBGb3JjZSAoz4QgPSByIEYgc2luIM64ID0gRiDCtyBkX+KKpSkKICA8L3RleHQ+CgogIDwhLS0gR3JvdW5kIC8gU3VwcG9ydCBoYXRjaCAtLT4KICA8bGluZSB4MT0iODAiIHkxPSIyNjAiIHgyPSIxNjAiIHkyPSIyNjAiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgPGxpbmUgeDE9Ijg1IiB5MT0iMjYwIiB4Mj0iNzUiIHkyPSIyNzIiIHN0cm9rZT0iIzQ3NTU2OSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjEwNSIgeTE9IjI2MCIgeDI9Ijk1IiB5Mj0iMjcyIiBzdHJva2U9IiM0NzU1NjkiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxsaW5lIHgxPSIxMjUiIHkxPSIyNjAiIHgyPSIxMTUiIHkyPSIyNzIiIHN0cm9rZT0iIzQ3NTU2OSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjE0NSIgeTE9IjI2MCIgeDI9IjEzNSIgeTI9IjI3MiIgc3Ryb2tlPSIjNDc1NTY5IiBzdHJva2Utd2lkdGg9IjIiLz4KCiAgPCEtLSBGdWxjcnVtIC8gUGl2b3QgVHJpYW5nbGUgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIxMjAsMjAwIDk1LDI2MCAxNDUsMjYwIiBmaWxsPSIjNDc1NTY5IiBzdHJva2U9IiM5NGEzYjgiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxjaXJjbGUgY3g9IjEyMCIgY3k9IjIwMCIgcj0iNyIgZmlsbD0iI2Y4ZmFmYyIgc3Ryb2tlPSIjMGYxNzJhIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSIxMjAiIHk9IjI4MCIgZmlsbD0iIzk0YTNiOCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9IjYwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UGl2b3QgUG9pbnQgKE8pPC90ZXh0PgoKICA8IS0tIFJpZ2lkIEJlYW0gLS0+CiAgPHJlY3QgeD0iMTEwIiB5PSIxOTIiIHdpZHRoPSI0NjAiIGhlaWdodD0iMTYiIHJ4PSI0IiBmaWxsPSIjMzM0MTU1IiBzdHJva2U9IiNjYmQ1ZTEiIHN0cm9rZS13aWR0aD0iMiIvPgoKICA8IS0tIFBvc2l0aW9uIHZlY3RvciByIC0tPgogIDxsaW5lIHgxPSIxMjAiIHkxPSIxNjUiIHgyPSI1MjAiIHkyPSIxNjUiIHN0cm9rZT0iIzM4YmRmOCIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1kYXNoYXJyYXk9IjYsNCIvPgogIDxsaW5lIHgxPSIxMjAiIHkxPSIxNTUiIHgyPSIxMjAiIHkyPSIxNzUiIHN0cm9rZT0iIzM4YmRmOCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjUyMCIgeTE9IjE1NSIgeDI9IjUyMCIgeTI9IjE3NSIgc3Ryb2tlPSIjMzhiZGY4IiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSIzMjAiIHk9IjE1NSIgZmlsbD0iIzM4YmRmOCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBvc2l0aW9uIFZlY3RvciByIChEaXN0YW5jZSBmcm9tIFBpdm90KTwvdGV4dD4KCiAgPCEtLSBBcHBsaWNhdGlvbiBwb2ludCBQIC0tPgogIDxjaXJjbGUgY3g9IjUyMCIgY3k9IjIwMCIgcj0iNiIgZmlsbD0iI2Y1OWUwYiIvPgogIDx0ZXh0IHg9IjUyMCIgeT0iMjI1IiBmaWxsPSIjZjU5ZTBiIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UG9pbnQgb2YgQXBwbGljYXRpb24gKFApPC90ZXh0PgoKICA8IS0tIExpbmUgb2YgYWN0aW9uIChkYXNoZWQpIC0tPgogIDxsaW5lIHgxPSI1MjAiIHkxPSIyMDAiIHgyPSI2MzAiIHkyPSI5MCIgc3Ryb2tlPSIjZjQzZjVlIiBzdHJva2Utd2lkdGg9IjEuOCIgc3Ryb2tlLWRhc2hhcnJheT0iNSw0Ii8+CgogIDwhLS0gQXBwbGllZCBGb3JjZSBWZWN0b3IgRiAtLT4KICA8bGluZSB4MT0iNTIwIiB5MT0iMjAwIiB4Mj0iNjE1IiB5Mj0iMTA1IiBzdHJva2U9IiNlZjQ0NDQiIHN0cm9rZS13aWR0aD0iMy41IiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93LXJlZCkiLz4KICA8dGV4dCB4PSI2MzUiIHk9IjExNSIgZmlsbD0iI2VmNDQ0NCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiPkZvcmNlIEY8L3RleHQ+CgogIDwhLS0gUGVycGVuZGljdWxhciBDb21wb25lbnQgRl9wZXJwID0gRiBzaW4gzrggLS0+CiAgPGxpbmUgeDE9IjUyMCIgeTE9IjIwMCIgeDI9IjUyMCIgeTI9IjEwMCIgc3Ryb2tlPSIjMTBiOTgxIiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjYXJyb3ctZW1lcmFsZCkiLz4KICA8dGV4dCB4PSI0NDUiIHk9Ijk1IiBmaWxsPSIjMTBiOTgxIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCI+Rl/iiqUgPSBGIHNpbiDOuDwvdGV4dD4KCiAgPCEtLSBQYXJhbGxlbCBDb21wb25lbnQgRl9wYXJhbGxlbCA9IEYgY29zIM64IC0tPgogIDxsaW5lIHgxPSI1MjAiIHkxPSIyMDAiIHgyPSI2MTUiIHkyPSIyMDAiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtZGFzaGFycmF5PSI0LDQiIG1hcmtlci1lbmQ9InVybCgjYXJyb3ctYmx1ZSkiLz4KICA8dGV4dCB4PSI2MzAiIHk9IjIxNSIgZmlsbD0iIzk0YTNiOCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiI+Rl98fCAoUHJvZHVjZXMgz4QgPSAwKTwvdGV4dD4KCiAgPCEtLSBBbmdsZSBhcmMgzrggLS0+CiAgPHBhdGggZD0iTSA1NjAsMjAwIEEgNDAsNDAgMCAwLDAgNTQ4LDE3MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZjU5ZTBiIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSI1NjgiIHk9IjE4NSIgZmlsbD0iI2Y1OWUwYiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZm9udC13ZWlnaHQ9ImJvbGQiPs64PC90ZXh0PgoKICA8IS0tIFJvdGF0aW9uIGRpcmVjdGlvbiBhcnJvdyAoQ291bnRlcmNsb2Nrd2lzZSAvIFBvc2l0aXZlKSAtLT4KICA8cGF0aCBkPSJNIDIzMCwyNDUgQSA1MCw1MCAwIDAsMCAxODAsMTc1IiBmaWxsPSJub25lIiBzdHJva2U9IiNhODU1ZjciIHN0cm9rZS13aWR0aD0iMyIgbWFya2VyLWVuZD0idXJsKCNhcnJvdy1hbWJlcikiLz4KICA8dGV4dCB4PSIyNTAiIHk9IjIxMCIgZmlsbD0iI2MwODRmYyIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZm9udC13ZWlnaHQ9ImJvbGQiPkNDVyAoK8+EKTwvdGV4dD4KCiAgPCEtLSBCb3R0b20gTGVnZW5kIC8gTm90ZSAtLT4KICA8cmVjdCB4PSIzMCIgeT0iMjk1IiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4IiByeD0iOCIgZmlsbD0iIzFlMjkzYiIgc3Ryb2tlPSIjMzM0MTU1Ii8+CiAgPHRleHQgeD0iMzUwIiB5PSIzMTUiIGZpbGw9IiNmMWY1ZjkiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiPgogICAg4oCiIFBlcnBlbmRpY3VsYXIgbGV2ZXIgYXJtOiBkX+KKpSA9IHIgwrcgc2luKM64KSAgfCAgVG9ycXVlIG1hZ25pdHVkZTogz4QgPSByIMK3IEZf4oqlID0gciDCtyBGIMK3IHNpbijOuCkKICA8L3RleHQ+CiAgPHRleHQgeD0iMzUwIiB5PSIzMzMiIGZpbGw9IiM5NGEzYjgiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIHRleHQtYW5jaG9yPSJtaWRkbGUiPgogICAgRm9yY2VzIHdob3NlIGxpbmVzIG9mIGFjdGlvbiBwYXNzIGRpcmVjdGx5IHRocm91Z2ggdGhlIHBpdm90ICjOuCA9IDDCsCBvciAxODDCsCkgZ2VuZXJhdGUgemVybyB0b3JxdWUgKM+EID0gMCkuCiAgPC90ZXh0Pgo8L3N2Zz4=",
-          "alt": "Free-Body Diagram of Torque and Moment of Force",
-          "caption": "Figure 1: Free-Body Diagram resolving an applied force into perpendicular (torque-producing) and parallel components relative to the position vector r.",
-          "size": "medium"
+          "type": "tikz",
+          "title": "Free-Body Diagram: Torque & Lever Arm Resolution",
+          "caption": "Figure 1: TikZ-FBD vector diagram illustrating position vector r from pivot O, applied force F at angle θ, and decomposition into F_⊥ = F sin θ and F_parallel.",
+          "code": "\\begin{tikzpicture}\n  \\node[point] (O) at (0,0) {Pivot $O$};\n  \\node[box,width=3.6,height=0.4] (beam) at (1.8,0) {};\n  \\node[point] (P) at (3.6,0) {$P$};\n  \\draw[force,->,red] (P) -- ++(1.4,1.8) node[above right] {$\\vec{F}$};\n  \\draw[force,->,emerald] (P) -- ++(0,1.8) node[above] {$F_\\perp = F\\sin\\theta$};\n  \\draw[force,->,dashed,blue] (P) -- ++(1.4,0) node[right] {$F_\\parallel$};\n  \\draw[force,->,amber] (O) -- (P) node[below] {Position $\\vec{r}$};\n\\end{tikzpicture}"
         },
         {
           "type": "callout",
@@ -3015,60 +3492,55 @@
           "text": "An object modeled as a particle only needs zero net force for static equilibrium. However, an **extended rigid body** (which has finite physical dimensions and mass distribution) can experience rotational acceleration even when the net external force is zero (such as a couple: two equal and opposite parallel forces separated by a distance)."
         },
         {
-          "type": "paragraph",
-          "text": "**The Two Fundamental Conditions of Static Equilibrium**"
-        },
-        {
           "type": "table",
-          "title": "",
+          "title": "The Two Fundamental Conditions of Static Equilibrium",
           "headers": [
             "Equilibrium Condition",
             "Mathematical Requirement",
             "Physical Guarantee",
             "Vector Components"
           ],
-          "rows": []
+          "rows": [
+            [
+              "**First Condition**\n(Translational Equilibrium)",
+              "$\\sum \\vec{F} = \\vec{0}$",
+              "No linear acceleration of the center of mass ($\\vec{a}_{\\text{cm}} = \\vec{0}$).",
+              "$\\sum F_x = 0$\n$\\sum F_y = 0$\n$\\sum F_z = 0$"
+            ],
+            [
+              "**Second Condition**\n(Rotational Equilibrium)",
+              "$\\sum \\vec{\\tau}_O = \\vec{0}$",
+              "No angular acceleration about any chosen pivot point $O$ ($\\vec{\\alpha} = \\vec{0}$).",
+              "$\\sum \\tau_{\\text{CCW}} = \\sum \\tau_{\\text{CW}}$\n(Calculated about any arbitrary reference point)"
+            ]
+          ]
+        },
+        {
+          "type": "tikz",
+          "title": "Free-Body Diagram: Static Equilibrium of a Crane Boom",
+          "caption": "Figure 2: TikZ-FBD diagram of a hinged horizontal boom in equilibrium showing pin reactions R_x, R_y, cable tension T, beam weight W_beam at center of mass, and payload W_load at tip.",
+          "code": "\\begin{tikzpicture}\n  \\node[point] (O) at (0,0) {Pin $O$};\n  \\node[box,width=4.0,height=0.4] (boom) at (2.0,0) {};\n  \\node[point] (CG) at (2.0,0) {};\n  \\node[point] (Tip) at (4.0,0) {};\n  \\draw[force,->,red] (CG) -- ++(0,-1.5) node[below] {$W_{\\text{beam}}$};\n  \\draw[force,->,red] (Tip) -- ++(0,-2.2) node[below] {$W_{\\text{load}}$};\n  \\draw[force,->,amber] (Tip) -- ++(-1.6,1.4) node[above left] {Tension $\\vec{T}$};\n  \\draw[force,->,cyan] (O) -- ++(1.2,0) node[right] {$R_x$};\n  \\draw[force,->,cyan] (O) -- ++(0,1.4) node[above] {$R_y$};\n\\end{tikzpicture}"
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Strategic Problem-Solving Tip: Choosing the Pivot Point",
+          "text": "When writing the torque equation $\\sum \\tau_O = 0$, you can choose **any point** as your pivot $O$. **Always place the pivot at the location of an unknown force** (such as the wall hinge pin). Because the lever arm for forces acting at the pivot is zero, those unknown reaction forces drop completely out of the torque equation, allowing you to solve directly for the remaining unknown (e.g., Cable Tension $T$)!"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Step-by-Step Worked Example: The Hinged Boom Problem"
         },
         {
           "type": "paragraph",
-          "text": "| **First Condition**"
-        },
-        {
-          "type": "paragraph",
-          "text": "(Translational Equilibrium) | $\\sum \\vec{F} = \\vec{0}$ | No linear acceleration of the center of mass ($\\vec{a}_{\\text{cm}} = \\vec{0}$). | $\\sum F_x = 0$"
-        },
-        {
-          "type": "paragraph",
-          "text": "$\\sum F_y = 0$"
-        },
-        {
-          "type": "paragraph",
-          "text": "$\\sum F_z = 0$ |"
-        },
-        {
-          "type": "paragraph",
-          "text": "| **Second Condition**"
-        },
-        {
-          "type": "paragraph",
-          "text": "(Rotational Equilibrium) | $\\sum \\vec{\\tau}_O = \\vec{0}$ | No angular acceleration about any chosen pivot point $O$ ($\\vec{\\alpha} = \\vec{0}$). | $\\sum \\tau_{\\text{CCW}} = \\sum \\tau_{\\text{CW}}$"
-        },
-        {
-          "type": "paragraph",
-          "text": "(Calculated about any arbitrary reference point) |"
-        },
-        {
-          "type": "image",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MjAgNDAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxtYXJrZXIgaWQ9ImVxLXJlZCIgdmlld0JveD0iMCAwIDEwIDEwIiByZWZYPSI2IiByZWZZPSI1IiBtYXJrZXJXaWR0aD0iNiIgbWFya2VySGVpZ2h0PSI2IiBvcmllbnQ9ImF1dG8tc3RhcnQtcmV2ZXJzZSI+CiAgICAgIDxwYXRoIGQ9Ik0gMCAxLjUgTCA4IDUgTCAwIDguNSB6IiBmaWxsPSIjZWY0NDQ0Ii8+CiAgICA8L21hcmtlcj4KICAgIDxtYXJrZXIgaWQ9ImVxLWJsdWUiIHZpZXdCb3g9IjAgMCAxMCAxMCIgcmVmWD0iNiIgcmVmWT0iNSIgbWFya2VyV2lkdGg9IjYiIG1hcmtlckhlaWdodD0iNiIgb3JpZW50PSJhdXRvLXN0YXJ0LXJldmVyc2UiPgogICAgICA8cGF0aCBkPSJNIDAgMS41IEwgOCA1IEwgMCA4LjUgeiIgZmlsbD0iIzNiODJmNiIvPgogICAgPC9tYXJrZXI+CiAgICA8bWFya2VyIGlkPSJlcS1ncmVlbiIgdmlld0JveD0iMCAwIDEwIDEwIiByZWZYPSI2IiByZWZZPSI1IiBtYXJrZXJXaWR0aD0iNiIgbWFya2VySGVpZ2h0PSI2IiBvcmllbnQ9ImF1dG8tc3RhcnQtcmV2ZXJzZSI+CiAgICAgIDxwYXRoIGQ9Ik0gMCAxLjUgTCA4IDUgTCAwIDguNSB6IiBmaWxsPSIjMTBiOTgxIi8+CiAgICA8L21hcmtlcj4KICAgIDxtYXJrZXIgaWQ9ImVxLWFtYmVyIiB2aWV3Qm94PSIwIDAgMTAgMTAiIHJlZlg9IjYiIHJlZlk9IjUiIG1hcmtlcldpZHRoPSI2IiBtYXJrZXJIZWlnaHQ9IjYiIG9yaWVudD0iYXV0by1zdGFydC1yZXZlcnNlIj4KICAgICAgPHBhdGggZD0iTSAwIDEuNSBMIDggNSBMIDAgOC41IHoiIGZpbGw9IiNmNTllMGIiLz4KICAgIDwvbWFya2VyPgogIDwvZGVmcz4KCiAgPCEtLSBCYWNrZ3JvdW5kIENhcmQgLS0+CiAgPHJlY3Qgd2lkdGg9IjcyMCIgaGVpZ2h0PSI0MDAiIHJ4PSIxNiIgZmlsbD0iIzBmMTcyYSIgc3Ryb2tlPSIjMzM0MTU1IiBzdHJva2Utd2lkdGg9IjIiLz4KICA8cmVjdCB4PSIyMCIgeT0iMTYiIHdpZHRoPSI2ODAiIGhlaWdodD0iNDIiIHJ4PSI4IiBmaWxsPSIjMWUyOTNiIi8+CiAgPHRleHQgeD0iMzYwIiB5PSI0MiIgZmlsbD0iIzM4YmRmOCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPgogICAgRnJlZS1Cb2R5IERpYWdyYW06IFN0YXRpYyBFcXVpbGlicml1bSBvZiBhIEhpbmdlZCBDcmFuZSBCZWFtCiAgPC90ZXh0PgoKICA8IS0tIFZlcnRpY2FsIFdhbGwgLS0+CiAgPHJlY3QgeD0iNzAiIHk9IjcwIiB3aWR0aD0iMzAiIGhlaWdodD0iMjgwIiBmaWxsPSIjMWUyOTNiIiBzdHJva2U9IiM0NzU1NjkiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxsaW5lIHgxPSI3MCIgeTE9IjkwIiB4Mj0iNTUiIHkyPSIxMDUiIHN0cm9rZT0iIzQ3NTU2OSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjcwIiB5MT0iMTMwIiB4Mj0iNTUiIHkyPSIxNDUiIHN0cm9rZT0iIzQ3NTU2OSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjcwIiB5MT0iMTcwIiB4Mj0iNTUiIHkyPSIxODUiIHN0cm9rZT0iIzQ3NTU2OSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjcwIiB5MT0iMjEwIiB4Mj0iNTUiIHkyPSIyMjUiIHN0cm9rZT0iIzQ3NTU2OSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjcwIiB5MT0iMjUwIiB4Mj0iNTUiIHkyPSIyNjUiIHN0cm9rZT0iIzQ3NTU2OSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjcwIiB5MT0iMjkwIiB4Mj0iNTUiIHkyPSIzMDUiIHN0cm9rZT0iIzQ3NTU2OSIgc3Ryb2tlLXdpZHRoPSIyIi8+CgogIDwhLS0gSGluZ2UgUGluIGF0IFdhbGwgKE8pIC0tPgogIDxjaXJjbGUgY3g9IjEwMCIgY3k9IjI2MCIgcj0iOCIgZmlsbD0iI2Y4ZmFmYyIgc3Ryb2tlPSIjMGYxNzJhIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSI4NSIgeT0iMjg1IiBmaWxsPSIjY2JkNWUxIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iYm9sZCI+UGluIChPKTwvdGV4dD4KCiAgPCEtLSBIb3Jpem9udGFsIEJlYW0gKExlbmd0aCBMKSAtLT4KICA8cmVjdCB4PSIxMDAiIHk9IjI1MiIgd2lkdGg9IjQ2MCIgaGVpZ2h0PSIxNiIgcng9IjQiIGZpbGw9IiMzMzQxNTUiIHN0cm9rZT0iIzk0YTNiOCIgc3Ryb2tlLXdpZHRoPSIyIi8+CgogIDwhLS0gQ2FibGUgZnJvbSBXYWxsIHRvIEJlYW0gRW5kIC0tPgogIDxsaW5lIHgxPSIxMDAiIHkxPSIxMDAiIHgyPSI1NjAiIHkyPSIyNTIiIHN0cm9rZT0iI2Y1OWUwYiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtZGFzaGFycmF5PSIyLDAiLz4KICA8IS0tIFRlbnNpb24gRm9yY2UgQXJyb3cgVCAtLT4KICA8bGluZSB4MT0iNTYwIiB5MT0iMjUyIiB4Mj0iNDMwIiB5Mj0iMjA5IiBzdHJva2U9IiNmNTllMGIiIHN0cm9rZS13aWR0aD0iMy41IiBtYXJrZXItZW5kPSJ1cmwoI2VxLWFtYmVyKSIvPgogIDx0ZXh0IHg9IjQzMCIgeT0iMTk1IiBmaWxsPSIjZmJiZjI0IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCI+VGVuc2lvbiBUPC90ZXh0PgoKICA8IS0tIFRlbnNpb24gQ29tcG9uZW50cyBhdCBUaXAgLS0+CiAgPGxpbmUgeDE9IjU2MCIgeTE9IjI1MiIgeDI9IjU2MCIgeTI9IjE3NSIgc3Ryb2tlPSIjMTBiOTgxIiBzdHJva2Utd2lkdGg9IjIuNSIgbWFya2VyLWVuZD0idXJsKCNlcS1ncmVlbikiLz4KICA8dGV4dCB4PSI1NjgiIHk9IjE4NSIgZmlsbD0iIzM0ZDM5OSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRfeSA9IFQgc2luIM64PC90ZXh0PgogIDxsaW5lIHgxPSI1NjAiIHkxPSIyNTIiIHgyPSI0NzUiIHkyPSIyNTIiIHN0cm9rZT0iIzNiODJmNiIgc3Ryb2tlLXdpZHRoPSIyLjUiIG1hcmtlci1lbmQ9InVybCgjZXEtYmx1ZSkiLz4KICA8dGV4dCB4PSI0NzUiIHk9IjI0MiIgZmlsbD0iIzYwYTVmYSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRfeCA9IFQgY29zIM64PC90ZXh0PgoKICA8IS0tIEFuZ2xlIM64IGF0IEJlYW0gdGlwIC0tPgogIDxwYXRoIGQ9Ik0gNTE1LDI1MiBBIDQ1LDQ1IDAgMCwxIDUyNSwyNDEiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZiYmYyNCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iNTAwIiB5PSIyNDUiIGZpbGw9IiNmYmJmMjQiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIj7OuDwvdGV4dD4KCiAgPCEtLSBCZWFtIENlbnRlciBvZiBHcmF2aXR5IChXX2JlYW0gYXQgTC8yKSAtLT4KICA8Y2lyY2xlIGN4PSIzMzAiIGN5PSIyNjAiIHI9IjYiIGZpbGw9IiNlZjQ0NDQiLz4KICA8bGluZSB4MT0iMzMwIiB5MT0iMjYwIiB4Mj0iMzMwIiB5Mj0iMzQwIiBzdHJva2U9IiNlZjQ0NDQiIHN0cm9rZS13aWR0aD0iMyIgbWFya2VyLWVuZD0idXJsKCNlcS1yZWQpIi8+CiAgPHRleHQgeD0iMzQwIiB5PSIzMzUiIGZpbGw9IiNmODcxNzEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIj5XX2JlYW0gKGF0IEwvMik8L3RleHQ+CgogIDwhLS0gSGFuZ2luZyBMb2FkIGF0IFRpcCAoV19sb2FkIGF0IEwpIC0tPgogIDxjaXJjbGUgY3g9IjU2MCIgY3k9IjI2MCIgcj0iNiIgZmlsbD0iI2VmNDQ0NCIvPgogIDxsaW5lIHgxPSI1NjAiIHkxPSIyNjAiIHgyPSI1NjAiIHkyPSIzNTAiIHN0cm9rZT0iI2VmNDQ0NCIgc3Ryb2tlLXdpZHRoPSIzIiBtYXJrZXItZW5kPSJ1cmwoI2VxLXJlZCkiLz4KICA8dGV4dCB4PSI1NzAiIHk9IjM0MCIgZmlsbD0iI2Y4NzE3MSIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZm9udC13ZWlnaHQ9ImJvbGQiPldfbG9hZCAoYXQgTCk8L3RleHQ+CgogIDwhLS0gUGluIFJlYWN0aW9uIEZvcmNlcyBhdCBQaXZvdCBPIC0tPgogIDwhLS0gSG9yaXpvbnRhbCBSZWFjdGlvbiBSX3ggLS0+CiAgPGxpbmUgeDE9IjEwMCIgeTE9IjI2MCIgeDI9IjE3NSIgeTI9IjI2MCIgc3Ryb2tlPSIjMzhiZGY4IiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjZXEtYmx1ZSkiLz4KICA8dGV4dCB4PSIxNDUiIHk9IjI1MCIgZmlsbD0iIzM4YmRmOCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiPlJfeDwvdGV4dD4KICA8IS0tIFZlcnRpY2FsIFJlYWN0aW9uIFJfeSAtLT4KICA8bGluZSB4MT0iMTAwIiB5MT0iMjYwIiB4Mj0iMTAwIiB5Mj0iMTg1IiBzdHJva2U9IiMzOGJkZjgiIHN0cm9rZS13aWR0aD0iMyIgbWFya2VyLWVuZD0idXJsKCNlcS1ibHVlKSIvPgogIDx0ZXh0IHg9IjExMCIgeT0iMTk1IiBmaWxsPSIjMzhiZGY4IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iYm9sZCI+Ul95PC90ZXh0PgoKICA8IS0tIEVxdWlsaWJyaXVtIENvbmRpdGlvbnMgQm90dG9tIEJhciAtLT4KICA8cmVjdCB4PSIyMCIgeT0iMzU4IiB3aWR0aD0iNjgwIiBoZWlnaHQ9IjMwIiByeD0iNiIgZmlsbD0iIzFlMjkzYiIvPgogIDx0ZXh0IHg9IjM2MCIgeT0iMzc4IiBmaWxsPSIjZjhmYWZjIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iNjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4KICAgIM6jRl94ID0gUl94IC0gVCBjb3MgzrggPSAwICB8ICDOo0ZfeSA9IFJfeSArIFQgc2luIM64IC0gV19iZWFtIC0gV19sb2FkID0gMCAgfCAgzqPPhF9PID0gKFQgc2luIM64KcK3TCAtIFdfYmVhbcK3KEwvMikgLSBXX2xvYWTCt0wgPSAwCiAgPC90ZXh0Pgo8L3N2Zz4=",
-          "alt": "Free-Body Diagram of a Hinged Crane Boom in Static Equilibrium",
-          "caption": "Figure 2: Complete Free-Body Diagram of a rigid horizontal beam hinged at a wall pin (O), supported by an angled cable (Tension T), and bearing its uniform weight W_beam plus an external payload W_load.",
-          "size": "medium"
+          "text": "A uniform horizontal steel beam of length $L = 6.0\\text{ m}$ and mass $m_{\\text{beam}} = 120\\text{ kg}$ is attached to a vertical wall by a friction-free hinge at point $O$. The far end of the beam is supported by a cable making an angle of $\\theta = 30^\\circ$ with the horizontal beam, and supports a crate of mass $m_{\\text{load}} = 200\\text{ kg}$ at the outer tip. (Take $g = 9.8\\text{ m/s}^2$)."
         },
         {
           "type": "callout",
           "style": "info",
-          "title": "Strategic Problem-Solving Tip: Choosing the Pivot Point",
-          "text": "When writing the torque equation $\\sum \\tau_O = 0$, you can choose **any point** as your pivot $O$. **Always place the pivot at the location of an unknown force** (such as the wall hinge pin). Because the lever arm for forces acting at the pivot is zero, those unknown reaction forces drop completely out of the torque equation, allowing you to solve directly for the remaining unknown (e.g., Cable Tension $T$)!"
+          "title": "Detailed Mathematical Solution",
+          "text": "1. **Determine the Weights**:\n• Beam weight acting at center of gravity ($x = L/2 = 3.0\\text{ m}$): $W_b = 120(9.8) = 1176\\text{ N}$.\n• Hanging crate weight acting at tip ($x = L = 6.0\\text{ m}$): $W_L = 200(9.8) = 1960\\text{ N}$.\n\n2. **Apply Second Condition of Equilibrium (Torque about Pivot O)**:\n$\\sum \\tau_O = (T \\sin 30^\\circ) L - W_b \\left(\\frac{L}{2}\\right) - W_L L = 0$\nDividing through by $L$:\n$T \\sin 30^\\circ - \\frac{1176}{2} - 1960 = 0$\n$T (0.50) = 588 + 1960 = 2548$\n$T = \\frac{2548}{0.50} = \\mathbf{5096\\text{ N}}$\n\n3. **Apply First Condition of Equilibrium (Force Balance)**:\n• Horizontal: $\\sum F_x = R_x - T \\cos 30^\\circ = 0 \\implies R_x = 5096 \\cos 30^\\circ = \\mathbf{4413.3\\text{ N}}$ (pointing right).\n• Vertical: $\\sum F_y = R_y + T \\sin 30^\\circ - W_b - W_L = 0$\n$R_y + 5096(0.50) - 1176 - 1960 = 0 \\implies R_y + 2548 - 3136 = 0 \\implies R_y = \\mathbf{588\\text{ N}}$ (pointing upward).\n• Total Hinge Reaction: $R = \\sqrt{R_x^2 + R_y^2} = \\sqrt{(4413.3)^2 + (588)^2} \\approx \\mathbf{4452.3\\text{ N}}$."
         },
         {
           "type": "heading",
@@ -3080,12 +3552,8 @@
           "text": "Inertia is the inherent tendency of an object to resist changes in its state of motion. In physics, we distinguish between an object's resistance to linear acceleration versus its resistance to angular acceleration."
         },
         {
-          "type": "paragraph",
-          "text": "**Translational vs. Rotational Dynamics Analogues**"
-        },
-        {
           "type": "table",
-          "title": "",
+          "title": "Translational vs. Rotational Dynamics Analogues",
           "headers": [
             "Property / Law",
             "Translational (Linear) Motion",
@@ -3147,11 +3615,10 @@
           "note": "Momentum p is in kg·m/s; Impulse J is in N·s (1 N·s = 1 kg·m/s)."
         },
         {
-          "type": "image",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MjAgMzgwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxtYXJrZXIgaWQ9Im1vbS1ibHVlIiB2aWV3Qm94PSIwIDAgMTAgMTAiIHJlZlg9IjYiIHJlZlk9IjUiIG1hcmtlcldpZHRoPSI2IiBtYXJrZXJIZWlnaHQ9IjYiIG9yaWVudD0iYXV0by1zdGFydC1yZXZlcnNlIj4KICAgICAgPHBhdGggZD0iTSAwIDEuNSBMIDggNSBMIDAgOC41IHoiIGZpbGw9IiMzYjgyZjYiLz4KICAgIDwvbWFya2VyPgogICAgPG1hcmtlciBpZD0ibW9tLWVtZXJhbGQiIHZpZXdCb3g9IjAgMCAxMCAxMCIgcmVmWD0iNiIgcmVmWT0iNSIgbWFya2VyV2lkdGg9IjYiIG1hcmtlckhlaWdodD0iNiIgb3JpZW50PSJhdXRvLXN0YXJ0LXJldmVyc2UiPgogICAgICA8cGF0aCBkPSJNIDAgMS41IEwgOCA1IEwgMCA4LjUgeiIgZmlsbD0iIzEwYjk4MSIvPgogICAgPC9tYXJrZXI+CiAgICA8bWFya2VyIGlkPSJtb20tcmVkIiB2aWV3Qm94PSIwIDAgMTAgMTAiIHJlZlg9IjYiIHJlZlk9IjUiIG1hcmtlcldpZHRoPSI2IiBtYXJrZXJIZWlnaHQ9IjYiIG9yaWVudD0iYXV0by1zdGFydC1yZXZlcnNlIj4KICAgICAgPHBhdGggZD0iTSAwIDEuNSBMIDggNSBMIDAgOC41IHoiIGZpbGw9IiNlZjQ0NDQiLz4KICAgIDwvbWFya2VyPgogICAgPG1hcmtlciBpZD0ibW9tLXB1cnBsZSIgdmlld0JveD0iMCAwIDEwIDEwIiByZWZYPSI2IiByZWZZPSI1IiBtYXJrZXJXaWR0aD0iNiIgbWFya2VySGVpZ2h0PSI2IiBvcmllbnQ9ImF1dG8tc3RhcnQtcmV2ZXJzZSI+CiAgICAgIDxwYXRoIGQ9Ik0gMCAxLjUgTCA4IDUgTCAwIDguNSB6IiBmaWxsPSIjYTg1NWY3Ii8+CiAgICA8L21hcmtlcj4KICA8L2RlZnM+CgogIDwhLS0gQmFja2dyb3VuZCBDYXJkIC0tPgogIDxyZWN0IHdpZHRoPSI3MjAiIGhlaWdodD0iMzgwIiByeD0iMTYiIGZpbGw9IiMwZjE3MmEiIHN0cm9rZT0iIzMzNDE1NSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHJlY3QgeD0iMjAiIHk9IjE2IiB3aWR0aD0iNjgwIiBoZWlnaHQ9IjQyIiByeD0iOCIgZmlsbD0iIzFlMjkzYiIvPgogIDx0ZXh0IHg9IjM2MCIgeT0iNDIiIGZpbGw9IiMzOGJkZjgiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4KICAgIExpbmVhciBNb21lbnR1bSAmYW1wOyBJbXB1bHNlLU1vbWVudHVtIFRoZW9yZW0gKHAgPSBtdiB8IEogPSDOlHAgPSBGX2F2ZyDCtyDOlHQpCiAgPC90ZXh0PgoKICA8IS0tIFNlY3Rpb24gMTogTW9tZW50dW0gVmVjdG9yIERlZmluaXRpb24gKFRvcCBMZWZ0KSAtLT4KICA8cmVjdCB4PSIzMCIgeT0iNzAiIHdpZHRoPSIzMTUiIGhlaWdodD0iMTM1IiByeD0iMTAiIGZpbGw9IiMxZTI5M2IiIHN0cm9rZT0iIzMzNDE1NSIvPgogIDx0ZXh0IHg9IjQ1IiB5PSI5NSIgZmlsbD0iI2ZiYmYyNCIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZm9udC13ZWlnaHQ9ImJvbGQiPjEuIE1vbWVudHVtIFZlY3RvcjogcCA9IG0gwrcgdjwvdGV4dD4KICA8IS0tIE1vdmluZyBzcGhlcmUgbSAtLT4KICA8Y2lyY2xlIGN4PSIxMDAiIGN5PSIxNDUiIHI9IjI2IiBmaWxsPSIjM2I4MmY2IiBzdHJva2U9IiM5M2M1ZmQiIHN0cm9rZS13aWR0aD0iMiIvPgogIDx0ZXh0IHg9IjEwMCIgeT0iMTUwIiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+bTwvdGV4dD4KICA8IS0tIFZlbG9jaXR5IGFycm93IC0tPgogIDxsaW5lIHgxPSIxMzAiIHkxPSIxNDUiIHgyPSIyMTAiIHkyPSIxNDUiIHN0cm9rZT0iIzYwYTVmYSIgc3Ryb2tlLXdpZHRoPSIzLjUiIG1hcmtlci1lbmQ9InVybCgjbW9tLWJsdWUpIi8+CiAgPHRleHQgeD0iMTY1IiB5PSIxMzUiIGZpbGw9IiM2MGE1ZmEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIj52PC90ZXh0PgogIDwhLS0gTW9tZW50dW0gdmVjdG9yIC0tPgogIDxsaW5lIHgxPSIxMDAiIHkxPSIxODIiIHgyPSIyNDAiIHkyPSIxODIiIHN0cm9rZT0iIzM4YmRmOCIgc3Ryb2tlLXdpZHRoPSIzIiBtYXJrZXItZW5kPSJ1cmwoI21vbS1ibHVlKSIvPgogIDx0ZXh0IHg9IjI1MCIgeT0iMTg2IiBmaWxsPSIjMzhiZGY4IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCI+cCA9IG12PC90ZXh0PgoKICA8IS0tIFNlY3Rpb24gMjogSW1wdWxzZSAoVG9wIFJpZ2h0KSAtLT4KICA8cmVjdCB4PSIzNzUiIHk9IjcwIiB3aWR0aD0iMzE1IiBoZWlnaHQ9IjEzNSIgcng9IjEwIiBmaWxsPSIjMWUyOTNiIiBzdHJva2U9IiMzMzQxNTUiLz4KICA8dGV4dCB4PSIzOTAiIHk9Ijk1IiBmaWxsPSIjZmJiZjI0IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCI+Mi4gSW1wdWxzZTogSiA9IEZfbmV0IMK3IM6UdCA9IM6UcDwvdGV4dD4KICA8IS0tIFdhbGwgaW1wYWN0IC0tPgogIDxyZWN0IHg9IjYzMCIgeT0iMTEwIiB3aWR0aD0iMTgiIGhlaWdodD0iODAiIGZpbGw9IiM0NzU1NjkiIHN0cm9rZT0iIzk0YTNiOCIvPgogIDxjaXJjbGUgY3g9IjU4NSIgY3k9IjE1MCIgcj0iMjIiIGZpbGw9IiNlZjQ0NDQiIHN0cm9rZT0iI2ZjYTVhNSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iNTg1IiB5PSIxNTUiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5tPC90ZXh0PgogIDwhLS0gSW1wYWN0IGZvcmNlIGFycm93cyAtLT4KICA8bGluZSB4MT0iNjI4IiB5MT0iMTUwIiB4Mj0iNTIwIiB5Mj0iMTUwIiBzdHJva2U9IiNmODcxNzEiIHN0cm9rZS13aWR0aD0iMy41IiBtYXJrZXItZW5kPSJ1cmwoI21vbS1yZWQpIi8+CiAgPHRleHQgeD0iNTE1IiB5PSIxMzUiIGZpbGw9IiNmODcxNzEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIj5GX2NvbnRhY3Q8L3RleHQ+CiAgPHRleHQgeD0iMzkwIiB5PSIxODUiIGZpbGw9IiNjYmQ1ZTEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiPkltcHVsc2UgYXJlYSB1bmRlciBGKHQpIGN1cnZlID0gY2hhbmdlIGluIHA8L3RleHQ+CgogIDwhLS0gU2VjdGlvbiAzOiBDb25zZXJ2YXRpb24gb2YgTGluZWFyIE1vbWVudHVtIChCb3R0b20pIC0tPgogIDxyZWN0IHg9IjMwIiB5PSIyMTUiIHdpZHRoPSI2NjAiIGhlaWdodD0iMTQ1IiByeD0iMTAiIGZpbGw9IiMxZTI5M2IiIHN0cm9rZT0iIzMzNDE1NSIvPgogIDx0ZXh0IHg9IjQ1IiB5PSIyNDAiIGZpbGw9IiMzNGQzOTkiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIj4KICAgIDMuIElzb2xhdGVkIENvbGxpc2lvbjogVG90YWwgTW9tZW50dW0gQ29uc2VydmVkICht4oKBduKCgeG1oiArIG3igoJ24oKC4bWiID0gbeKCgXbigoHwnZK7ICsgbeKCgnbigoLwnZK7KQogIDwvdGV4dD4KCiAgPCEtLSBTcGhlcmUgMSBCZWZvcmUgLS0+CiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iMjg1IiByPSIyMiIgZmlsbD0iIzNiODJmNiIgc3Ryb2tlPSIjYmZkYmZlIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSIxMDAiIHk9IjI5MCIgZmlsbD0iI2ZmZmZmZiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPm3igoE8L3RleHQ+CiAgPGxpbmUgeDE9IjEyNSIgeTE9IjI4NSIgeDI9IjE5NSIgeTI9IjI4NSIgc3Ryb2tlPSIjNjBhNWZhIiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjbW9tLWJsdWUpIi8+CiAgPHRleHQgeD0iMTU1IiB5PSIyNzUiIGZpbGw9IiM2MGE1ZmEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIj524oKB4bWiPC90ZXh0PgoKICA8IS0tIENvbGxpc2lvbiBQb2ludCAvIENvbnRhY3QgRm9yY2VzIChFcXVhbCAmIE9wcG9zaXRlIEFjdGlvbi1SZWFjdGlvbikgLS0+CiAgPGNpcmNsZSBjeD0iMzQwIiBjeT0iMjg1IiByPSIyMiIgZmlsbD0iIzNiODJmNiIgb3BhY2l0eT0iMC40Ii8+CiAgPGNpcmNsZSBjeD0iMzgwIiBjeT0iMjg1IiByPSIyMiIgZmlsbD0iIzEwYjk4MSIgb3BhY2l0eT0iMC40Ii8+CiAgPGxpbmUgeDE9IjM1NSIgeTE9IjI4NSIgeDI9IjMxMCIgeTI9IjI4NSIgc3Ryb2tlPSIjZjg3MTcxIiBzdHJva2Utd2lkdGg9IjIuNSIgbWFya2VyLWVuZD0idXJsKCNtb20tcmVkKSIvPgogIDx0ZXh0IHg9IjI5MCIgeT0iMjc1IiBmaWxsPSIjZjg3MTcxIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCI+RuKCguKCgTwvdGV4dD4KICA8bGluZSB4MT0iMzY1IiB5MT0iMjg1IiB4Mj0iNDEwIiB5Mj0iMjg1IiBzdHJva2U9IiNmODcxNzEiIHN0cm9rZS13aWR0aD0iMi41IiBtYXJrZXItZW5kPSJ1cmwoI21vbS1yZWQpIi8+CiAgPHRleHQgeD0iNDE1IiB5PSIyNzUiIGZpbGw9IiNmODcxNzEiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIj5G4oKB4oKCID0gLUbigoLigoE8L3RleHQ+CgogIDwhLS0gU3BoZXJlIDIgQmVmb3JlIC0tPgogIDxjaXJjbGUgY3g9IjYyMCIgY3k9IjI4NSIgcj0iMjIiIGZpbGw9IiMxMGI5ODEiIHN0cm9rZT0iI2E3ZjNkMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iNjIwIiB5PSIyOTAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5t4oKCPC90ZXh0PgogIDxsaW5lIHgxPSI1OTUiIHkxPSIyODUiIHgyPSI1MjUiIHkyPSIyODUiIHN0cm9rZT0iIzM0ZDM5OSIgc3Ryb2tlLXdpZHRoPSIzIiBtYXJrZXItZW5kPSJ1cmwoI21vbS1lbWVyYWxkKSIvPgogIDx0ZXh0IHg9IjU1NSIgeT0iMjc1IiBmaWxsPSIjMzRkMzk5IiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iYm9sZCI+duKCguG1ojwvdGV4dD4KCiAgPHRleHQgeD0iMzYwIiB5PSIzNDIiIGZpbGw9IiNmMWY1ZjkiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiPgogICAgTmV3dG9uJ3MgM3JkIExhdyAoRuKCgeKCgiA9IC1G4oKC4oKBKSBndWFyYW50ZWVzIHplcm8gbmV0IGV4dGVybmFsIGltcHVsc2Ugb24gc3lzdGVtOiDOlHBfdG90YWwgPSAwLgogIDwvdGV4dD4KPC9zdmc+",
-          "alt": "Illustration of Linear Momentum, Impulse, and Collision Dynamics",
-          "caption": "Figure 3: Free-Body representation of momentum vector p, wall impulse impact J = Δp, and action-reaction internal collision forces conserving total momentum.",
-          "size": "medium"
+          "type": "tikz",
+          "title": "Free-Body Diagram: Linear Momentum & Isolated Collision",
+          "caption": "Figure 3: TikZ-FBD diagram showing colliding bodies m₁ and m₂ with velocity vectors v₁, v₂ and vertical normal/gravity force balance.",
+          "code": "\\begin{tikzpicture}\n  \\node[circle,width=1.2,height=1.2] (m1) at (-2.0,0) {$m_1$};\n  \\node[circle,width=1.2,height=1.2] (m2) at (2.0,0) {$m_2$};\n  \\draw[force,->,blue] (m1) -- ++(1.6,0) node[above] {$\\vec{v}_1$};\n  \\draw[force,->,emerald] (m2) -- ++(-1.2,0) node[above] {$\\vec{v}_2$};\n  \\draw[force,->,dashed,red] (m1) -- ++(0,-1.5) node[below] {$m_1 \\vec{g}$};\n  \\draw[force,->,dashed,blue] (m1) -- ++(0,1.5) node[above] {$\\vec{F}_{N1}$};\n\\end{tikzpicture}"
         },
         {
           "type": "callout",
@@ -3169,12 +3636,8 @@
           "text": "In an **isolated system** (where the net external force is zero, $\\sum \\vec{F}_{\\text{ext}} = 0$), the total linear momentum remains constant over time regardless of internal collisions, explosions, or interactions."
         },
         {
-          "type": "paragraph",
-          "text": "**Comparison of Collision Types in Physics**"
-        },
-        {
           "type": "table",
-          "title": "",
+          "title": "Comparison of Collision Types in Physics",
           "headers": [
             "Collision Type",
             "Total Linear Momentum $\\vec{p}$",

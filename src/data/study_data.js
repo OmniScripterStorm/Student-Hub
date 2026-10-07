@@ -8,6 +8,8 @@ const SYNC_URL_KEY = 'tagsci_g11_sync_url';
 export const DEFAULT_OTA_URL = 'https://omniscripterstorm.github.io/Student-Hub/updates.json';
 
 export const SUBJECTS = [
+  { name: 'Kasaysayan', type: 'Main', color: 'border-l-4 border-amber-600', badgeClass: 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300' },
+  { name: 'Kasaysayan', type: 'Main', color: 'border-l-4 border-amber-600', badgeClass: 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300' },
   { name: 'TagSci', type: 'Institutional', color: 'border-l-4 border-tagsci-700', badgeClass: 'bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300' },
   { name: 'DepEd', type: 'DepEd', color: 'border-l-4 border-blue-600', badgeClass: 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300' },
   { name: 'Effective Communications', type: 'Main', color: 'border-l-4 border-blue-500', badgeClass: 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300' },
