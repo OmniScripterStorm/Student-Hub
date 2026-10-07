@@ -1,6 +1,6 @@
 {
   "version": "1.8.0",
-  "updatedAt": "2026-10-07T22:16:52.061Z",
+  "updatedAt": "2026-10-07T22:32:07.383Z",
   "announcement": "Refreshed 2 Reviewers, 14 Study Materials, 5 Deadlines, and 2 Quiz Banks.",
   "calendarEvents": [
     {
@@ -413,9 +413,9 @@
     },
     {
       "id": "reviewer_summative_test_1_kasaysayan",
-      "subject": "Custom",
+      "subject": "Kasaysayan",
       "tag": "Main",
-      "color": "border-l-4 border-tagsci-600",
+      "color": "border-l-4 border-amber-600",
       "title": "Summative Test 1 - Kasaysayan Reviewer",
       "summary": "Mabilis at komprehensibong reviewer para sa Summative Test 1: Kamalayang Pilipino bago ang kolonyalismo, balangkas ni Salazar (Pamayanan-Bayan-Bansa), herarkiyang kolonyal, institusyon, at mga anyo ng pakikibaka at pakikiangkop.",
       "blocks": [
