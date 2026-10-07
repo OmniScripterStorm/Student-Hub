@@ -240,7 +240,7 @@ const MATH_OPERATORS = {
   '\\square': '&#x25A1;'
 };
 
-export export function parseMathSyntax(tex) {
+export function parseMathSyntax(tex) {
   let s = (tex || '').trim();
   s = s.replace(/<br\s*\/?>/gi, ' ');
 
