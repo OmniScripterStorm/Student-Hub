@@ -3,7 +3,7 @@
    ========================================================= */
 
 import { STEM_REVIEWERS, STUDY_MATERIALS, QUIZ_SETS, getSubjectMeta } from '../data/study_data.js';
-import { renderMathInHtml, renderCartesianPlaneSvg } from './math_engine.js';
+import { renderMathInHtml, renderCartesianPlaneSvg, renderTikzFbdSvg } from './math_engine.js';
 import { navigateSection } from './navigation.js';
 
 let currentVaultTab = 'reviewers'; // 'reviewers' | 'materials' | 'quizzes'
@@ -95,6 +95,28 @@ export function renderBlocksToHtml(blocks) {
         } else {
           html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
         }
+      } else if (text.includes('```tikz') || text.includes('```fbd')) {
+        const tikzMatch = text.match(/```(?:tikz|fbd)\s*([\s\S]*?)\s*```/);
+        if (tikzMatch) {
+          const before = text.substring(0, tikzMatch.index).trim();
+          const after = text.substring(tikzMatch.index + tikzMatch[0].length).trim();
+          if (before) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(before)}</p>`;
+          html += renderTikzFbdSvg(tikzMatch[1]);
+          if (after) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(after)}</p>`;
+        } else {
+          html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
+        }
+      } else if (text.includes('\\begin{tikzpicture}')) {
+        const tikzMatch = text.match(/\\begin\{tikzpicture\}[\s\S]*?\\end\{tikzpicture\}/);
+        if (tikzMatch) {
+          const before = text.substring(0, tikzMatch.index).trim();
+          const after = text.substring(tikzMatch.index + tikzMatch[0].length).trim();
+          if (before) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(before)}</p>`;
+          html += renderTikzFbdSvg(tikzMatch[0]);
+          if (after) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(after)}</p>`;
+        } else {
+          html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
+        }
       } else if (text.includes('|') && text.split(/\r?\n/).some(l => l.trim().startsWith('|') && l.trim().endsWith('|'))) {
         html += renderMarkdownTable(text);
       } else if (text.includes('![') && text.includes('](')) {
@@ -122,6 +144,8 @@ export function renderBlocksToHtml(blocks) {
       html += renderTableBlock(b);
     } else if (b.type === 'cartesian' || b.type === 'plot') {
       html += renderCartesianPlaneSvg(b);
+    } else if (b.type === 'tikz' || b.type === 'fbd') {
+      html += renderTikzFbdSvg(b);
     } else if (b.type === 'image') {
       const url = b.url || '';
       const alt = b.alt || 'Figure diagram';
