@@ -1,7 +1,7 @@
 {
   "version": "1.8.0",
-  "updatedAt": "2026-10-08T06:10:00.000000+00:00",
-  "announcement": "Refreshed 3 Reviewers (added Kasaysayan Reviewer), 13 Study Materials, and Deadlines.",
+  "updatedAt": "2026-10-07T22:11:26.517Z",
+  "announcement": "Refreshed 2 Reviewers, 14 Study Materials, 5 Deadlines, and 2 Quiz Banks.",
   "calendarEvents": [
     {
       "id": 1790325028547,
@@ -51,260 +51,9 @@
   ],
   "stemReviewers": [
     {
-      "id": "reviewer_1790341104344",
-      "subject": "Chemistry",
-      "tag": "Elective",
-      "color": "border-l-4 border-tagsci-600",
-      "title": "Intermolecular Forces of Attraction",
-      "summary": "Introduction to Intermolecular Forces",
-      "blocks": [
-        {
-          "type": "heading",
-          "level": "h2",
-          "text": "Intermolecular Forces"
-        },
-        {
-          "type": "paragraph",
-          "text": "Intermolecular Forces are the attractive and repulsive forces that act between neighboring molecules."
-        },
-        {
-          "type": "paragraph",
-          "text": "They are much weaker than the intramolecular bonds (like covalent or ionic bonds) that hold atoms together inside a single molecule. Even though they are weak, these forces control the physical properties of matter, such as boiling points, melting points, viscosity (how thick a liquid is), and surface tension."
-        },
-        {
-          "type": "heading",
-          "level": "h2",
-          "text": "Van der Waals Forces"
-        },
-        {
-          "type": "paragraph",
-          "text": "The van der Waals force (sometimes van der Waals' force) is a distance-dependent interaction between atoms or molecules and one of the category of intermolecular force. Unlike ionic or covalent bonds, these attractions do not result from a chemical electronic bond; they are comparatively weak and therefore more susceptible to disturbance. The van der Waals force quickly vanishes at longer distances between interacting molecules."
-        },
-        {
-          "type": "paragraph",
-          "text": "Van der Waals forces were first postulated by the Dutch physicist Johannes Diderik van der Waals in 1873 when he introduced his equation of state for real gases"
-        },
-        {
-          "type": "table",
-          "title": "Comparison between IMFs and Van der Waals Forces",
-          "headers": [
-            "Feature",
-            "Intermolecular Forces (IMFs)",
-            "Van der Waals Forces"
-          ],
-          "rows": [
-            [
-              "Scope",
-              "All attractive forces between separate particles (molecules or ions).",
-              "Only forces between neutral molecules or atoms."
-            ],
-            [
-              "Includes Ions?",
-              "Yes (e.g., full ions attracting polar water molecules).",
-              "No (excludes full ionic charges)."
-            ],
-            [
-              "Includes H-Bonds?",
-              "Yes (the strongest common IMF type).",
-              "Usually No (often classified separately due to its unique strength)."
-            ],
-            [
-              "Core Examples",
-              "London dispersion, dipole-dipole, hydrogen bonding, ion-dipole, dipole-induced dipole, and ion-induced dipole.",
-              "London dispersion, dipole-dipole, and dipole-induced dipole."
-            ]
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h2",
-          "text": "Types of Intermolecular Forces"
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "1. Forces Involving Fully Charged Ions"
-        },
-        {
-          "type": "paragraph",
-          "text": "These interactions require at least one particle to have a permanent, full ionic charge. Here are the list of interactions organized from strongest to weakest:"
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "Ion-Dipole Interactions - Interacting particles: A full ion and a polar molecule (e.g., Na⁺ dissolved in H₂O). The full charge of an ion strongly attracts the opposite partial charge of a permanent dipole.",
-            "Ion-Induced Dipole Interactions - A full ion and a nonpolar molecule/atom (e.g., Fe²⁺ binding to nonpolar O₂). The strong charge of an ion deforms the electron cloud of a neutral, nonpolar particle to force a temporary, induced dipole."
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "2. Forces Involving Permanent Dipoles (Polar Molecules)"
-        },
-        {
-          "type": "paragraph",
-          "text": "These forces occur between neutral molecules that possess a permanent asymmetry in their electron distribution."
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "Hydrogen Bonding - Polar molecules containing hydrogen bonded specifically to F, O, or N (e.g., H₂O, NH₃, HF). A uniquely strong, specialized subset of dipole-dipole attraction due to extreme electronegativity differences and the tiny size of the hydrogen atom.",
-            "Dipole-Dipole Interactions - Two polar molecules without specific H-bonding (e.g., HCl attracting another HCl, or SO₂). The permanent partial positive end of one molecule aligns with and attracts the permanent partial negative end of another."
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "3. Forces Involving Temporary Dipoles (Nonpolar Particles)"
-        },
-        {
-          "type": "paragraph",
-          "text": "These forces exist in all matter but are the only forces keeping nonpolar particles together."
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "London Dispersion Forces (Dispersion / Instantaneous Dipole-Induced Dipole) - All atoms and molecules, but specifically the sole force for nonpolar species (e.g., He, Ar, N₂, CH₄). Random, momentary fluctuations of electrons create a split-second \"instantaneous dipole\" in one molecule, which then induces a matching temporary dipole in its neighbor."
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h2",
-          "text": "Formula for dipole moment"
-        },
-        {
-          "type": "paragraph",
-          "text": "Measures the polarity of a chemical bond or a system of separated electrical charges. When to Use the Formula:"
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "Measuring Bond Polarity: Calculate the strength of a polar covalent or ionic bond when you know the partial charge (Q) and the bond length (r).",
-            "Finding Percentage Ionic Character: Compare a theoretically calculated ionic dipole moment with the experimental value to see how ionic a covalent bond is.",
-            "Solving Physics Charge Problems: Find the separation distance or magnitude of paired opposite charges in an electric field."
-          ]
-        },
-        {
-          "type": "formula",
-          "title": "Dipole moment formula",
-          "formula": "\\mu  = Qr",
-          "note": "𝜇 = The dipole moment, measured in Debye (D) or Coulomb-meters (C · m). Measures the overall polarity or \"pull\" strength of the system or molecule [Note: 1D = 3.336x10⁻³⁰ C · m] ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤQ = The magnitude of the partial charge (or charge at either end) in Coulombs (C). The amount of electrical charge that has been separated. [Note: 1e or +1e, -1e = 1.602x10⁻¹⁹ C]ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ r = The distance separating the centers of positive and negative charge (bond length) in meters (m). The spatial distance between the two centers of charge. [Note: 1Å = 1.00x10⁻¹⁰]"
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "Example Problem"
-        },
-        {
-          "type": "paragraph",
-          "text": "An ionic molecule consists of a +1e ion and a -1e ion separated by a bond distance of 1.20 Å. Calculate the dipole moment (μ) of this molecule in Debye (D)."
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "Given:"
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "Charge (Q) = 1e = 1.602 x 10^-19 C",
-            "Distance (r) = 1.20 Å = 1.20 x 10^-10 m",
-            "Conversion Factor = 1 D = 3.336 x 10^-30 C · m"
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "Solution:"
-        },
-        {
-          "type": "paragraph",
-          "text": "1. Calculate the dipole moment in Coulomb-meters (C·m):"
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "μ = Q x r",
-            "μ = (1.602 x 10^-19 C) x (1.20 x 10^-10 m)",
-            "μ = 1.9224 x 10^-29 C·m"
-          ]
-        },
-        {
-          "type": "paragraph",
-          "text": "2. Convert Coulomb-meters to Debye (D):"
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "μ = (1.9224 x 10^-29 C·m) / (3.336 x 10^-30 C·m/D)",
-            "μ = 5.7626 D"
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "Answer:"
-        },
-        {
-          "type": "paragraph",
-          "text": "The dipole moment of the molecule is 5.76 D."
-        },
-        {
-          "type": "heading",
-          "level": "h2",
-          "text": "Effects of IMFs on physical properties of substances"
-        },
-        {
-          "type": "table",
-          "title": "Proportionality of IMFs on different physical properties of substances",
-          "headers": [
-            "types of physical properties",
-            "⬆ High IMFs"
-          ],
-          "rows": [
-            [
-              "Melting and Freezing Points",
-              "⬆ High (Directly Proportional)"
-            ],
-            [
-              "Boiling and Condensation Points",
-              "⬆ High (Directly Proportional)"
-            ],
-            [
-              "Viscosity (Resistance to Flow)",
-              "⬆ High (Directly Proportional)"
-            ],
-            [
-              "Surface Tension",
-              "⬆ High (Directly Proportional)"
-            ],
-            [
-              "Vapor Pressure",
-              "⬇ Low (Inversly Proportional)"
-            ]
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "Why this is the case?"
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "Melting / Freezing Point: Strong forces act like tight glue. You need more heat to melt the solid into a liquid. When cooling down, the strong forces easily lock molecules back into a solid at a higher temperature.",
-            "Boiling / Condensation Point: Strong forces hold liquid molecules tightly together. You need more heat to break them apart into a gas. When cooling down, those strong forces easily snap the gas molecules back into a liquid at a higher temperature.",
-            "Viscosity: Strong forces cause molecules to cling tightly to their neighbors. They cannot slide past each other easily, making the liquid thick and slow-flowing.",
-            "Surface Tension: Molecules at the surface are pulled tightly inward by the molecules beneath them. Stronger forces make this inward tug stronger, creating a tougher, more elastic ",
-            "Vapor Pressure: Strong forces trap molecules tightly inside the liquid. Fewer molecules can escape into the air, creating fewer gas collisions and less pressure above the liquid."
-          ]
-        }
-      ]
-    },
-    {
       "id": "reviewer_summative_test_1_finite_math",
       "subject": "Finite Math",
-      "tag": "Reviewer",
+      "tag": "Main",
       "color": "border-l-4 border-purple-500",
       "title": "Summative Test 1 - Finite Math Reviewer",
       "summary": "High-yield compact exam reviewer covering Set Theory, Venn Diagrams & Inclusion-Exclusion, Fundamental Counting Principles, and Permutations & Combinations.",
@@ -596,7 +345,7 @@
         {
           "type": "heading",
           "level": "h2",
-          "text": "6. Master Exam Decision Matrix: Permutation vs Combination"
+          "text": "6. Permutation vs Combination"
         },
         {
           "type": "table",
@@ -664,8 +413,8 @@
     },
     {
       "id": "reviewer_summative_test_1_kasaysayan",
-      "subject": "Kasaysayan",
-      "tag": "Reviewer",
+      "subject": "General Math",
+      "tag": "Main",
       "color": "border-l-4 border-amber-600",
       "title": "Summative Test 1 - Kasaysayan Reviewer",
       "summary": "Mabilis at komprehensibong reviewer para sa Summative Test 1: Kamalayang Pilipino bago ang kolonyalismo, balangkas ni Salazar (Pamayanan-Bayan-Bansa), herarkiyang kolonyal, institusyon, at mga anyo ng pakikibaka at pakikiangkop.",
@@ -1150,6 +899,265 @@
     }
   ],
   "studyMaterials": [
+    {
+      "id": "material_1791409567163",
+      "subject": "Chemistry",
+      "tag": "Study Material",
+      "color": "border-l-4 border-indigo-500",
+      "title": "Intermolecular Forces of Attraction",
+      "summary": "Detailed Introduction to Intermolecular Forces",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Intermolecular Forces"
+        },
+        {
+          "type": "paragraph",
+          "text": "Intermolecular Forces are the attractive and repulsive forces that act between neighboring molecules."
+        },
+        {
+          "type": "paragraph",
+          "text": "They are much weaker than the intramolecular bonds (like covalent or ionic bonds) that hold atoms together inside a single molecule. Even though they are weak, these forces control the physical properties of matter, such as boiling points, melting points, viscosity (how thick a liquid is), and surface tension."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Van der Waals Forces"
+        },
+        {
+          "type": "paragraph",
+          "text": "The van der Waals force (sometimes van der Waals' force) is a distance-dependent interaction between atoms or molecules and one of the category of intermolecular force. Unlike ionic or covalent bonds, these attractions do not result from a chemical electronic bond; they are comparatively weak and therefore more susceptible to disturbance. The van der Waals force quickly vanishes at longer distances between interacting molecules."
+        },
+        {
+          "type": "paragraph",
+          "text": "Van der Waals forces were first postulated by the Dutch physicist Johannes Diderik van der Waals in 1873 when he introduced his equation of state for real gases"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Comparison between IMFs and Van der Waals Forces**"
+        },
+        {
+          "type": "table",
+          "title": "",
+          "headers": [
+            "Feature",
+            "Intermolecular Forces (IMFs)",
+            "Van der Waals Forces"
+          ],
+          "rows": [
+            [
+              "Scope",
+              "All attractive forces between separate particles (molecules or ions).",
+              "Only forces between neutral molecules or atoms."
+            ],
+            [
+              "Includes Ions?",
+              "Yes (e.g., full ions attracting polar water molecules).",
+              "No (excludes full ionic charges)."
+            ],
+            [
+              "Includes H-Bonds?",
+              "Yes (the strongest common IMF type).",
+              "Usually No (often classified separately due to its unique strength)."
+            ],
+            [
+              "Core Examples",
+              "London dispersion, dipole-dipole, hydrogen bonding, ion-dipole, dipole-induced dipole, and ion-induced dipole.",
+              "London dispersion, dipole-dipole, and dipole-induced dipole."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Types of Intermolecular Forces"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "1. Forces Involving Fully Charged Ions"
+        },
+        {
+          "type": "paragraph",
+          "text": "These interactions require at least one particle to have a permanent, full ionic charge. Here are the list of interactions organized from strongest to weakest:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Ion-Dipole Interactions - Interacting particles: A full ion and a polar molecule (e.g., Na⁺ dissolved in H₂O). The full charge of an ion strongly attracts the opposite partial charge of a permanent dipole.",
+            "Ion-Induced Dipole Interactions - A full ion and a nonpolar molecule/atom (e.g., Fe²⁺ binding to nonpolar O₂). The strong charge of an ion deforms the electron cloud of a neutral, nonpolar particle to force a temporary, induced dipole."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "2. Forces Involving Permanent Dipoles (Polar Molecules)"
+        },
+        {
+          "type": "paragraph",
+          "text": "These forces occur between neutral molecules that possess a permanent asymmetry in their electron distribution."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Hydrogen Bonding - Polar molecules containing hydrogen bonded specifically to F, O, or N (e.g., H₂O, NH₃, HF). A uniquely strong, specialized subset of dipole-dipole attraction due to extreme electronegativity differences and the tiny size of the hydrogen atom.",
+            "Dipole-Dipole Interactions - Two polar molecules without specific H-bonding (e.g., HCl attracting another HCl, or SO₂). The permanent partial positive end of one molecule aligns with and attracts the permanent partial negative end of another."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "3. Forces Involving Temporary Dipoles (Nonpolar Particles)"
+        },
+        {
+          "type": "paragraph",
+          "text": "These forces exist in all matter but are the only forces keeping nonpolar particles together."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "London Dispersion Forces (Dispersion / Instantaneous Dipole-Induced Dipole) - All atoms and molecules, but specifically the sole force for nonpolar species (e.g., He, Ar, N₂, CH₄). Random, momentary fluctuations of electrons create a split-second \"instantaneous dipole\" in one molecule, which then induces a matching temporary dipole in its neighbor."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Formula for dipole moment"
+        },
+        {
+          "type": "paragraph",
+          "text": "Measures the polarity of a chemical bond or a system of separated electrical charges. When to Use the Formula:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Measuring Bond Polarity: Calculate the strength of a polar covalent or ionic bond when you know the partial charge (Q) and the bond length (r).",
+            "Finding Percentage Ionic Character: Compare a theoretically calculated ionic dipole moment with the experimental value to see how ionic a covalent bond is.",
+            "Solving Physics Charge Problems: Find the separation distance or magnitude of paired opposite charges in an electric field."
+          ]
+        },
+        {
+          "type": "formula",
+          "title": "Dipole moment formula",
+          "formula": "\\mu  = Qr",
+          "note": "𝜇 = The dipole moment, measured in Debye (D) or Coulomb-meters (C · m). Measures the overall polarity or \"pull\" strength of the system or molecule [Note: 1D = 3.336x10⁻³⁰ C · m] ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤQ = The magnitude of the partial charge (or charge at either end) in Coulombs (C). The amount of electrical charge that has been separated. [Note: 1e or +1e, -1e = 1.602x10⁻¹⁹ C]ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ r = The distance separating the centers of positive and negative charge (bond length) in meters (m). The spatial distance between the two centers of charge. [Note: 1Å = 1.00x10⁻¹⁰]"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Example Problem"
+        },
+        {
+          "type": "paragraph",
+          "text": "An ionic molecule consists of a +1e ion and a -1e ion separated by a bond distance of 1.20 Å. Calculate the dipole moment (μ) of this molecule in Debye (D)."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Given:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Charge (Q) = 1e = 1.602 x 10^-19 C",
+            "Distance (r) = 1.20 Å = 1.20 x 10^-10 m",
+            "Conversion Factor = 1 D = 3.336 x 10^-30 C · m"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Solution:"
+        },
+        {
+          "type": "paragraph",
+          "text": "1. Calculate the dipole moment in Coulomb-meters (C·m):"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "μ = Q x r",
+            "μ = (1.602 x 10^-19 C) x (1.20 x 10^-10 m)",
+            "μ = 1.9224 x 10^-29 C·m"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "2. Convert Coulomb-meters to Debye (D):"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "μ = (1.9224 x 10^-29 C·m) / (3.336 x 10^-30 C·m/D)",
+            "μ = 5.7626 D"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Answer:"
+        },
+        {
+          "type": "paragraph",
+          "text": "The dipole moment of the molecule is 5.76 D."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Effects of IMFs on physical properties of substances"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Proportionality of IMFs on different physical properties of substances**"
+        },
+        {
+          "type": "table",
+          "title": "",
+          "headers": [
+            "types of physical properties",
+            "⬆ High IMFs"
+          ],
+          "rows": [
+            [
+              "Melting and Freezing Points",
+              "⬆ High (Directly Proportional)"
+            ],
+            [
+              "Boiling and Condensation Points",
+              "⬆ High (Directly Proportional)"
+            ],
+            [
+              "Viscosity (Resistance to Flow)",
+              "⬆ High (Directly Proportional)"
+            ],
+            [
+              "Surface Tension",
+              "⬆ High (Directly Proportional)"
+            ],
+            [
+              "Vapor Pressure",
+              "⬇ Low (Inversly Proportional)"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Why this is the case?"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Melting / Freezing Point: Strong forces act like tight glue. You need more heat to melt the solid into a liquid. When cooling down, the strong forces easily lock molecules back into a solid at a higher temperature.",
+            "Boiling / Condensation Point: Strong forces hold liquid molecules tightly together. You need more heat to break them apart into a gas. When cooling down, those strong forces easily snap the gas molecules back into a liquid at a higher temperature.",
+            "Viscosity: Strong forces cause molecules to cling tightly to their neighbors. They cannot slide past each other easily, making the liquid thick and slow-flowing.",
+            "Surface Tension: Molecules at the surface are pulled tightly inward by the molecules beneath them. Stronger forces make this inward tug stronger, creating a tougher, more elastic",
+            "Vapor Pressure: Strong forces trap molecules tightly inside the liquid. Fewer molecules can escape into the air, creating fewer gas collisions and less pressure above the liquid."
+          ]
+        }
+      ]
+    },
     {
       "id": "material_1791214094438",
       "subject": "Life and Career Skills",
@@ -2318,166 +2326,6 @@
       ]
     },
     {
-      "id": "material_1791225890120",
-      "subject": "Chemistry",
-      "tag": "Study Material",
-      "color": "border-l-4 border-indigo-500",
-      "title": "The Mole Concept: Balancing Equations & Mole Ratios",
-      "summary": "Core principles of the mole concept, Law of Conservation of Mass, balancing chemical equations, priority rules, and calculating stoichiometric mole ratios with step-by-step worked examples.",
-      "blocks": [
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "1. The Mole Concept"
-        },
-        {
-          "type": "paragraph",
-          "text": "Moles are the standard International System of Units (SI) expressing the quantity or amount of a chemical substance. They are universally abbreviated as **\"mol\"**."
-        },
-        {
-          "type": "paragraph",
-          "text": "When balancing chemical equations, the **stoichiometric coefficients** (the whole numbers placed in front of each chemical formula) represent the lowest whole-number ratio of the number of moles of each substance required to completely react and form products."
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "2. Balancing Chemical Equations"
-        },
-        {
-          "type": "paragraph",
-          "text": "Chemical equation balancing is fundamentally governed by the **Law of Conservation of Mass** formulated by Antoine Lavoisier, which states that *matter cannot be created nor destroyed in a chemical reaction*."
-        },
-        {
-          "type": "paragraph",
-          "text": "Any chemical reaction in the form $A + B \\rightarrow C + D$ or $A + B \\rightarrow C$, when balanced, has coefficients attached to the chemical formulas. These coefficients are what we call stoichiometric coefficients, converting raw equations into standard balanced stoichiometric forms:"
-        },
-        {
-          "type": "formula",
-          "title": "General Stoichiometric Form",
-          "formula": "aA + bB \\rightarrow cC + dD",
-          "note": "Lower-case letters (a, b, c, d) represent stoichiometric coefficients; upper-case letters represent chemical species."
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "**Conservation of Atoms**: The total number of atoms of each individual element on the reactant side must exactly equal the total number of atoms on the product side.",
-            "**Subscripts vs. Coefficients**: Never modify the chemical formula subscripts (e.g., changing $\\text{H}_2\\text{O}$ to $\\text{H}_2\\text{O}_2$ alters the chemical identity of the substance). Only adjust the stoichiometric coefficients in front.",
-            "**Balancing Priority Rule**: In balancing reactions, **Hydrogen (H)** and **Oxygen (O)** atoms are generally the least priority and should be balanced last. Always balance unique metals and non-metals first."
-          ]
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "3. Balancing Examples & Step-by-Step Solutions"
-        },
-        {
-          "type": "paragraph",
-          "text": "**Example 1**: Balance the chemical equation $\\text{Xe} + \\text{F}_2 \\rightarrow \\text{XeF}_6$ (Xenon gas reacts with Fluorine gas to synthesize Xenon Hexafluoride)."
-        },
-        {
-          "type": "callout",
-          "style": "info",
-          "title": "Step-by-Step Solution for Example 1",
-          "text": "Notice that, on the reactant side, there is exactly $1\\text{ Xe}$ atom and $2\\text{ F}$ atoms. On the product side, there is also $1\\text{ Xe}$ atom, but there are $6\\text{ F}$ atoms.\n\nWhat we must do is to find a way for those $2\\text{ F}$ atoms on the reactant side to match the $6\\text{ F}$ atoms on the product side. In this case, we must multiply $\\text{F}_2$ by $3$ to create $6\\text{ F}$ atoms ($3 \\times 2 = 6$).\n\nAll-in-all, the final balanced chemical equation is:\n$$\\text{Xe} + 3\\text{F}_2 \\rightarrow \\text{XeF}_6$$"
-        },
-        {
-          "type": "paragraph",
-          "text": "**Example 2**: Balance the chemical equation for the combustion of butane, given by $\\text{C}_4\\text{H}_{10} + \\text{O}_2 \\rightarrow \\text{CO}_2 + \\text{H}_2\\text{O}$."
-        },
-        {
-          "type": "callout",
-          "style": "info",
-          "title": "Step-by-Step Solution for Example 2",
-          "text": "Similarly, we count the number of each atom on the reactant and product sides. Recall that $\\text{H}$ and $\\text{O}$ atoms are the least priority and balanced last:\n\n1. **Balance Carbon (C)**: There are $4\\text{ C}$ atoms on the left. Multiply $\\text{CO}_2$ on the right by $4$:\n$$\\text{C}_4\\text{H}_{10} + \\text{O}_2 \\rightarrow 4\\text{CO}_2 + \\text{H}_2\\text{O}$$\n\n2. **Balance Hydrogen (H)**: There are $10\\text{ H}$ atoms on the left. Multiply $\\text{H}_2\\text{O}$ on the right by $5$ ($5 \\times 2 = 10$):\n$$\\text{C}_4\\text{H}_{10} + \\text{O}_2 \\rightarrow 4\\text{CO}_2 + 5\\text{H}_2\\text{O}$$\n\n3. **Balance Oxygen (O)**: On the right side, there are $(4 \\times 2) + (5 \\times 1) = 8 + 5 = 13\\text{ O}$ atoms. To balance the $13\\text{ O}$ atoms on the left, we multiply $\\text{O}_2$ by $\\frac{13}{2}$:\n$$\\text{C}_4\\text{H}_{10} + \\frac{13}{2}\\text{O}_2 \\rightarrow 4\\text{CO}_2 + 5\\text{H}_2\\text{O}$$\n\n4. **Clear Fractional Coefficients**: Since stoichiometric coefficients must be whole numbers, multiply the entire equation by $2$:\n$$2\\text{C}_4\\text{H}_{10} + 13\\text{O}_2 \\rightarrow 8\\text{CO}_2 + 10\\text{H}_2\\text{O}$$"
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "4. Mole Ratios"
-        },
-        {
-          "type": "paragraph",
-          "text": "As stoichiometric coefficients represent the lowest ratio of the number of molecules or moles needed for a complete reaction, if we know how many moles of one substance are going to be used or produced in a reaction, we can also determine how many moles of all other reactants and products are required."
-        },
-        {
-          "type": "paragraph",
-          "text": "A **mole ratio** is a conversion factor derived from the coefficients of a balanced chemical equation that relates the amounts in moles of any two substances involved in the reaction."
-        },
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "5. Mole Ratio Worked Examples"
-        },
-        {
-          "type": "paragraph",
-          "text": "**Example 3**: Given the balanced chemical equation $2\\text{H}_2 + \\text{O}_2 \\rightarrow 2\\text{H}_2\\text{O}$, how many moles of oxygen gas $(\\text{O}_2)$ are needed to completely synthesize $6\\text{ moles}$ of hydrogen gas into water? How many moles of water $(\\text{H}_2\\text{O})$ are then formed?"
-        },
-        {
-          "type": "callout",
-          "style": "info",
-          "title": "Step-by-Step Solution for Example 3",
-          "text": "As the given equation is already balanced, we simply formulate the mole ratios directly from the stoichiometric coefficients:\n$$\\frac{2\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{O}_2}, \\quad \\frac{2\\text{ mol }\\text{H}_2}{2\\text{ mol }\\text{H}_2\\text{O}} = \\frac{1\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{H}_2\\text{O}}, \\quad \\frac{1\\text{ mol }\\text{O}_2}{2\\text{ mol }\\text{H}_2\\text{O}}$$\n\nTo find the number of moles of each substance, we strictly adhere to these mole ratios:\n\n1. **Finding Moles of $\\text{O}_2$**:\n$$\\frac{6\\text{ mol }\\text{H}_2}{x\\text{ mol }\\text{O}_2} = \\frac{2\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{O}_2}$$\nCanceling units to simplify into a direct algebraic proportion:\n$$\\frac{6}{x} = \\frac{2}{1} \\implies 6 = 2x \\implies x = 3$$\nSo, **$3\\text{ moles}$ of oxygen gas $(\\text{O}_2)$ are needed**.\n\n2. **Finding Moles of $\\text{H}_2\\text{O}$ Produced**:\nSince $\\text{H}_2 : \\text{H}_2\\text{O}$ is in a $2 : 2$ (or $1 : 1$) ratio:\n$$\\frac{6\\text{ mol }\\text{H}_2}{y\\text{ mol }\\text{H}_2\\text{O}} = \\frac{1\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{H}_2\\text{O}} \\implies y = 6$$\nSo, **$6\\text{ moles}$ of water $(\\text{H}_2\\text{O})$ are formed**."
-        },
-        {
-          "type": "paragraph",
-          "text": "**Example 4**: John combusts $4\\text{ moles}$ of butane, which follows the balanced chemical equation $2\\text{C}_4\\text{H}_{10} + 13\\text{O}_2 \\rightarrow 8\\text{CO}_2 + 10\\text{H}_2\\text{O}$. How many moles of oxygen gas $(\\text{O}_2)$ are needed to complete this combustion? How many moles of carbon dioxide $(\\text{CO}_2)$ and water $(\\text{H}_2\\text{O})$ are formed?"
-        },
-        {
-          "type": "callout",
-          "style": "info",
-          "title": "Step-by-Step Solution for Example 4",
-          "text": "Again, we can simply take the stoichiometric ratios:\n\n1. **Oxygen Gas $(\\text{O}_2)$ Needed**:\nThe ratio of $\\text{C}_4\\text{H}_{10}$ to $\\text{O}_2$ is $2 : 13$. For $4\\text{ moles}$ of butane:\n$$4 : x = 2 : 13 \\implies \\frac{4}{x} = \\frac{2}{13} \\implies 2x = 52 \\implies x = 26$$\nSo, **$26\\text{ moles}$ of oxygen gas $(\\text{O}_2)$ are required**.\n\n2. **Carbon Dioxide $(\\text{CO}_2)$ Formed**:\nThe mole ratio of $\\text{C}_4\\text{H}_{10}$ to $\\text{CO}_2$ is $2 : 8$, which simplifies to $1 : 4$. Setting up the proportion for $4\\text{ moles}$ of butane:\n$$4 : y = 1 : 4 \\implies \\frac{4}{y} = \\frac{1}{4} \\implies y = 16$$\nSo, **$16\\text{ moles}$ of carbon dioxide $(\\text{CO}_2)$ are formed**.\n\n3. **Water $(\\text{H}_2\\text{O})$ Formed**:\nThe mole ratio of $\\text{C}_4\\text{H}_{10}$ to $\\text{H}_2\\text{O}$ is $2 : 10$, which simplifies to $1 : 5$. Setting up the proportion for $4\\text{ moles}$ of butane:\n$$4 : z = 1 : 5 \\implies \\frac{4}{z} = \\frac{1}{5} \\implies z = 20$$\nSo, **$20\\text{ moles}$ of water $(\\text{H}_2\\text{O})$ are formed**."
-        },
-        {
-          "type": "table",
-          "title": "Summary of Butane Combustion Stoichiometry (Example 4)",
-          "headers": [
-            "Substance",
-            "Chemical Formula",
-            "Stoichiometric Coefficient",
-            "Mole Ratio vs Butane",
-            "Moles Reacted / Produced"
-          ],
-          "rows": [
-            [
-              "Butane (Reactant)",
-              "C4H10",
-              "2",
-              "1 : 1 (Basis)",
-              "4 mol"
-            ],
-            [
-              "Oxygen Gas (Reactant)",
-              "O2",
-              "13",
-              "13 : 2 (6.5x)",
-              "26 mol"
-            ],
-            [
-              "Carbon Dioxide (Product)",
-              "CO2",
-              "8",
-              "4 : 1 (4.0x)",
-              "16 mol"
-            ],
-            [
-              "Water (Product)",
-              "H2O",
-              "10",
-              "5 : 1 (5.0x)",
-              "20 mol"
-            ]
-          ]
-        },
-        {
-          "type": "callout",
-          "style": "warning",
-          "title": "Stoichiometry Pro-Tip: Ratio Cross-Multiplication",
-          "text": "Whenever solving for an unknown quantity $x$ in a chemical reaction:\n$$\\text{Moles of Unknown} = \\text{Moles of Given} \\times \\left( \\frac{\\text{Coefficient of Unknown}}{\\text{Coefficient of Given}} \\right)$$\nFor instance, in Example 4:\n$$\\text{Moles of }\\text{O}_2 = 4\\text{ mol }\\text{C}_4\\text{H}_{10} \\times \\left(\\frac{13\\text{ mol }\\text{O}_2}{2\\text{ mol }\\text{C}_4\\text{H}_{10}}\\right) = 26\\text{ mol }\\text{O}_2$$\nThis dimensional analysis approach ensures units cancel cleanly and avoids common inversion mistakes."
-        }
-      ]
-    },
-    {
       "id": "material_holland_riasec_theory",
       "subject": "Life and Career Skills",
       "tag": "Study Material",
@@ -2790,6 +2638,166 @@
           "style": "info",
           "title": "Key Exam Takeaway: Time vs. Fit",
           "text": "• **Ginzberg & Super** focus on the question: *'WHEN and HOW does an individual's career self-concept evolve across time?'* (Developmental / Longitudinal Approach).\n• **Holland** focuses on the question: *'WHERE and WITH WHOM does an individual fit best based on their personality archetype?'* (Typological / Structural Approach).\n• Modern vocational counseling pairs both paradigms: as an individual evolves through exploratory life stages (Super), their emerging competencies crystallize into a RIASEC profile (Holland) seeking congruent occupational environments."
+        }
+      ]
+    },
+    {
+      "id": "material_1791225890120",
+      "subject": "Chemistry",
+      "tag": "Study Material",
+      "color": "border-l-4 border-indigo-500",
+      "title": "The Mole Concept: Balancing Equations & Mole Ratios",
+      "summary": "Core principles of the mole concept, Law of Conservation of Mass, balancing chemical equations, priority rules, and calculating stoichiometric mole ratios with step-by-step worked examples.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "1. The Mole Concept"
+        },
+        {
+          "type": "paragraph",
+          "text": "Moles are the standard International System of Units (SI) expressing the quantity or amount of a chemical substance. They are universally abbreviated as **\"mol\"**."
+        },
+        {
+          "type": "paragraph",
+          "text": "When balancing chemical equations, the **stoichiometric coefficients** (the whole numbers placed in front of each chemical formula) represent the lowest whole-number ratio of the number of moles of each substance required to completely react and form products."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "2. Balancing Chemical Equations"
+        },
+        {
+          "type": "paragraph",
+          "text": "Chemical equation balancing is fundamentally governed by the **Law of Conservation of Mass** formulated by Antoine Lavoisier, which states that *matter cannot be created nor destroyed in a chemical reaction*."
+        },
+        {
+          "type": "paragraph",
+          "text": "Any chemical reaction in the form $A + B \\rightarrow C + D$ or $A + B \\rightarrow C$, when balanced, has coefficients attached to the chemical formulas. These coefficients are what we call stoichiometric coefficients, converting raw equations into standard balanced stoichiometric forms:"
+        },
+        {
+          "type": "formula",
+          "title": "General Stoichiometric Form",
+          "formula": "aA + bB \\rightarrow cC + dD",
+          "note": "Lower-case letters (a, b, c, d) represent stoichiometric coefficients; upper-case letters represent chemical species."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Conservation of Atoms**: The total number of atoms of each individual element on the reactant side must exactly equal the total number of atoms on the product side.",
+            "**Subscripts vs. Coefficients**: Never modify the chemical formula subscripts (e.g., changing $\\text{H}_2\\text{O}$ to $\\text{H}_2\\text{O}_2$ alters the chemical identity of the substance). Only adjust the stoichiometric coefficients in front.",
+            "**Balancing Priority Rule**: In balancing reactions, **Hydrogen (H)** and **Oxygen (O)** atoms are generally the least priority and should be balanced last. Always balance unique metals and non-metals first."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "3. Balancing Examples & Step-by-Step Solutions"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Example 1**: Balance the chemical equation $\\text{Xe} + \\text{F}_2 \\rightarrow \\text{XeF}_6$ (Xenon gas reacts with Fluorine gas to synthesize Xenon Hexafluoride)."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Step-by-Step Solution for Example 1",
+          "text": "Notice that, on the reactant side, there is exactly $1\\text{ Xe}$ atom and $2\\text{ F}$ atoms. On the product side, there is also $1\\text{ Xe}$ atom, but there are $6\\text{ F}$ atoms.\n\nWhat we must do is to find a way for those $2\\text{ F}$ atoms on the reactant side to match the $6\\text{ F}$ atoms on the product side. In this case, we must multiply $\\text{F}_2$ by $3$ to create $6\\text{ F}$ atoms ($3 \\times 2 = 6$).\n\nAll-in-all, the final balanced chemical equation is:\n$$\\text{Xe} + 3\\text{F}_2 \\rightarrow \\text{XeF}_6$$"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Example 2**: Balance the chemical equation for the combustion of butane, given by $\\text{C}_4\\text{H}_{10} + \\text{O}_2 \\rightarrow \\text{CO}_2 + \\text{H}_2\\text{O}$."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Step-by-Step Solution for Example 2",
+          "text": "Similarly, we count the number of each atom on the reactant and product sides. Recall that $\\text{H}$ and $\\text{O}$ atoms are the least priority and balanced last:\n\n1. **Balance Carbon (C)**: There are $4\\text{ C}$ atoms on the left. Multiply $\\text{CO}_2$ on the right by $4$:\n$$\\text{C}_4\\text{H}_{10} + \\text{O}_2 \\rightarrow 4\\text{CO}_2 + \\text{H}_2\\text{O}$$\n\n2. **Balance Hydrogen (H)**: There are $10\\text{ H}$ atoms on the left. Multiply $\\text{H}_2\\text{O}$ on the right by $5$ ($5 \\times 2 = 10$):\n$$\\text{C}_4\\text{H}_{10} + \\text{O}_2 \\rightarrow 4\\text{CO}_2 + 5\\text{H}_2\\text{O}$$\n\n3. **Balance Oxygen (O)**: On the right side, there are $(4 \\times 2) + (5 \\times 1) = 8 + 5 = 13\\text{ O}$ atoms. To balance the $13\\text{ O}$ atoms on the left, we multiply $\\text{O}_2$ by $\\frac{13}{2}$:\n$$\\text{C}_4\\text{H}_{10} + \\frac{13}{2}\\text{O}_2 \\rightarrow 4\\text{CO}_2 + 5\\text{H}_2\\text{O}$$\n\n4. **Clear Fractional Coefficients**: Since stoichiometric coefficients must be whole numbers, multiply the entire equation by $2$:\n$$2\\text{C}_4\\text{H}_{10} + 13\\text{O}_2 \\rightarrow 8\\text{CO}_2 + 10\\text{H}_2\\text{O}$$"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "4. Mole Ratios"
+        },
+        {
+          "type": "paragraph",
+          "text": "As stoichiometric coefficients represent the lowest ratio of the number of molecules or moles needed for a complete reaction, if we know how many moles of one substance are going to be used or produced in a reaction, we can also determine how many moles of all other reactants and products are required."
+        },
+        {
+          "type": "paragraph",
+          "text": "A **mole ratio** is a conversion factor derived from the coefficients of a balanced chemical equation that relates the amounts in moles of any two substances involved in the reaction."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "5. Mole Ratio Worked Examples"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Example 3**: Given the balanced chemical equation $2\\text{H}_2 + \\text{O}_2 \\rightarrow 2\\text{H}_2\\text{O}$, how many moles of oxygen gas $(\\text{O}_2)$ are needed to completely synthesize $6\\text{ moles}$ of hydrogen gas into water? How many moles of water $(\\text{H}_2\\text{O})$ are then formed?"
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Step-by-Step Solution for Example 3",
+          "text": "As the given equation is already balanced, we simply formulate the mole ratios directly from the stoichiometric coefficients:\n$$\\frac{2\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{O}_2}, \\quad \\frac{2\\text{ mol }\\text{H}_2}{2\\text{ mol }\\text{H}_2\\text{O}} = \\frac{1\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{H}_2\\text{O}}, \\quad \\frac{1\\text{ mol }\\text{O}_2}{2\\text{ mol }\\text{H}_2\\text{O}}$$\n\nTo find the number of moles of each substance, we strictly adhere to these mole ratios:\n\n1. **Finding Moles of $\\text{O}_2$**:\n$$\\frac{6\\text{ mol }\\text{H}_2}{x\\text{ mol }\\text{O}_2} = \\frac{2\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{O}_2}$$\nCanceling units to simplify into a direct algebraic proportion:\n$$\\frac{6}{x} = \\frac{2}{1} \\implies 6 = 2x \\implies x = 3$$\nSo, **$3\\text{ moles}$ of oxygen gas $(\\text{O}_2)$ are needed**.\n\n2. **Finding Moles of $\\text{H}_2\\text{O}$ Produced**:\nSince $\\text{H}_2 : \\text{H}_2\\text{O}$ is in a $2 : 2$ (or $1 : 1$) ratio:\n$$\\frac{6\\text{ mol }\\text{H}_2}{y\\text{ mol }\\text{H}_2\\text{O}} = \\frac{1\\text{ mol }\\text{H}_2}{1\\text{ mol }\\text{H}_2\\text{O}} \\implies y = 6$$\nSo, **$6\\text{ moles}$ of water $(\\text{H}_2\\text{O})$ are formed**."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Example 4**: John combusts $4\\text{ moles}$ of butane, which follows the balanced chemical equation $2\\text{C}_4\\text{H}_{10} + 13\\text{O}_2 \\rightarrow 8\\text{CO}_2 + 10\\text{H}_2\\text{O}$. How many moles of oxygen gas $(\\text{O}_2)$ are needed to complete this combustion? How many moles of carbon dioxide $(\\text{CO}_2)$ and water $(\\text{H}_2\\text{O})$ are formed?"
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Step-by-Step Solution for Example 4",
+          "text": "Again, we can simply take the stoichiometric ratios:\n\n1. **Oxygen Gas $(\\text{O}_2)$ Needed**:\nThe ratio of $\\text{C}_4\\text{H}_{10}$ to $\\text{O}_2$ is $2 : 13$. For $4\\text{ moles}$ of butane:\n$$4 : x = 2 : 13 \\implies \\frac{4}{x} = \\frac{2}{13} \\implies 2x = 52 \\implies x = 26$$\nSo, **$26\\text{ moles}$ of oxygen gas $(\\text{O}_2)$ are required**.\n\n2. **Carbon Dioxide $(\\text{CO}_2)$ Formed**:\nThe mole ratio of $\\text{C}_4\\text{H}_{10}$ to $\\text{CO}_2$ is $2 : 8$, which simplifies to $1 : 4$. Setting up the proportion for $4\\text{ moles}$ of butane:\n$$4 : y = 1 : 4 \\implies \\frac{4}{y} = \\frac{1}{4} \\implies y = 16$$\nSo, **$16\\text{ moles}$ of carbon dioxide $(\\text{CO}_2)$ are formed**.\n\n3. **Water $(\\text{H}_2\\text{O})$ Formed**:\nThe mole ratio of $\\text{C}_4\\text{H}_{10}$ to $\\text{H}_2\\text{O}$ is $2 : 10$, which simplifies to $1 : 5$. Setting up the proportion for $4\\text{ moles}$ of butane:\n$$4 : z = 1 : 5 \\implies \\frac{4}{z} = \\frac{1}{5} \\implies z = 20$$\nSo, **$20\\text{ moles}$ of water $(\\text{H}_2\\text{O})$ are formed**."
+        },
+        {
+          "type": "table",
+          "title": "Summary of Butane Combustion Stoichiometry (Example 4)",
+          "headers": [
+            "Substance",
+            "Chemical Formula",
+            "Stoichiometric Coefficient",
+            "Mole Ratio vs Butane",
+            "Moles Reacted / Produced"
+          ],
+          "rows": [
+            [
+              "Butane (Reactant)",
+              "C4H10",
+              "2",
+              "1 : 1 (Basis)",
+              "4 mol"
+            ],
+            [
+              "Oxygen Gas (Reactant)",
+              "O2",
+              "13",
+              "13 : 2 (6.5x)",
+              "26 mol"
+            ],
+            [
+              "Carbon Dioxide (Product)",
+              "CO2",
+              "8",
+              "4 : 1 (4.0x)",
+              "16 mol"
+            ],
+            [
+              "Water (Product)",
+              "H2O",
+              "10",
+              "5 : 1 (5.0x)",
+              "20 mol"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Stoichiometry Pro-Tip: Ratio Cross-Multiplication",
+          "text": "Whenever solving for an unknown quantity $x$ in a chemical reaction:\n$$\\text{Moles of Unknown} = \\text{Moles of Given} \\times \\left( \\frac{\\text{Coefficient of Unknown}}{\\text{Coefficient of Given}} \\right)$$\nFor instance, in Example 4:\n$$\\text{Moles of }\\text{O}_2 = 4\\text{ mol }\\text{C}_4\\text{H}_{10} \\times \\left(\\frac{13\\text{ mol }\\text{O}_2}{2\\text{ mol }\\text{C}_4\\text{H}_{10}}\\right) = 26\\text{ mol }\\text{O}_2$$\nThis dimensional analysis approach ensures units cancel cleanly and avoids common inversion mistakes."
         }
       ]
     },
