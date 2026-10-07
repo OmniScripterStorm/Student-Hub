@@ -1136,9 +1136,9 @@ function getSubjectMeta(subjectName) {
 
 // Default baseline data inlined from updates.json
 const DEFAULT_BASELINE = {
-  "version": "1.6.1",
-  "updatedAt": "2026-10-08T05:10:00.000000+00:00",
-  "announcement": "Refreshed 1 Reviewers, 10 Study Materials, 5 Deadlines, and 2 Quiz Banks.",
+  "version": "1.6.2",
+  "updatedAt": "2026-10-08T05:20:00.000000+00:00",
+  "announcement": "Refreshed 2 Reviewers (added Finite Math Reviewer), 13 Study Materials, 5 Deadlines, and 2 Quiz Banks.",
   "calendarEvents": [
     {
       "id": 1790325028547,
@@ -1434,6 +1434,367 @@ const DEFAULT_BASELINE = {
             "Viscosity: Strong forces cause molecules to cling tightly to their neighbors. They cannot slide past each other easily, making the liquid thick and slow-flowing.",
             "Surface Tension: Molecules at the surface are pulled tightly inward by the molecules beneath them. Stronger forces make this inward tug stronger, creating a tougher, more elastic ",
             "Vapor Pressure: Strong forces trap molecules tightly inside the liquid. Fewer molecules can escape into the air, creating fewer gas collisions and less pressure above the liquid."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reviewer_summative_test_1_finite_math",
+      "subject": "Finite Math",
+      "tag": "Reviewer",
+      "color": "border-l-4 border-purple-500",
+      "title": "Summative Test 1 - Finite Math Reviewer",
+      "summary": "High-yield compact exam reviewer covering Set Theory, Venn Diagrams & Inclusion-Exclusion, Fundamental Counting Principles, and Permutations & Combinations.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "1. Set Theory Essentials & Core Notation"
+        },
+        {
+          "type": "paragraph",
+          "text": "A set is a well-defined collection of distinct elements. Key mathematical notations, subset rules, and relationship definitions are tested heavily on counting exams:"
+        },
+        {
+          "type": "table",
+          "title": "Core Set Notation & Relations",
+          "headers": [
+            "Symbol / Concept",
+            "Meaning",
+            "Mathematical Definition",
+            "Exam Tip"
+          ],
+          "rows": [
+            [
+              "$x \\in A$",
+              "Element Inclusion",
+              "$x$ is a member of set $A$",
+              "Must be an individual element, not a set."
+            ],
+            [
+              "$x \\notin A$",
+              "Element Exclusion",
+              "$x$ is not a member of set $A$",
+              "Negation of set membership."
+            ],
+            [
+              "$\\emptyset$ or $\\{ \\}$",
+              "Empty / Null Set",
+              "Unique set containing 0 elements",
+              "$\\emptyset \\subseteq A$ is true for ANY set $A$; $n(\\emptyset) = 0$."
+            ],
+            [
+              "$A \\subseteq B$",
+              "Subset",
+              "Every element of $A$ is in $B$",
+              "Self-subset rule: $A \\subseteq A$ is always true."
+            ],
+            [
+              "$A \\subset B$",
+              "Proper Subset",
+              "$A \\subseteq B$ and $A \\neq B$",
+              "$B$ contains at least one element not present in $A$."
+            ],
+            [
+              "$2^n$",
+              "Total Subsets",
+              "Total subsets for a set with $n$ elements",
+              "Proper subsets = $2^n - 1$ (excludes the set itself)."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Four Fundamental Set Operations"
+        },
+        {
+          "type": "table",
+          "title": "Set Operations Summary",
+          "headers": [
+            "Operation",
+            "Notation",
+            "Logical Keyword",
+            "Set-Builder Definition",
+            "Venn Region"
+          ],
+          "rows": [
+            [
+              "Union",
+              "$A \\cup B$",
+              "**OR**",
+              "$\\{x \\mid x \\in A \\lor x \\in B\\}$",
+              "Entire combined shaded area of both circles."
+            ],
+            [
+              "Intersection",
+              "$A \\cap B$",
+              "**AND**",
+              "$\\{x \\mid x \\in A \\land x \\in B\\}$",
+              "Central overlapping football region only."
+            ],
+            [
+              "Difference",
+              "$A - B$",
+              "**ONLY in $A$**",
+              "$\\{x \\mid x \\in A \\land x \\notin B\\}$",
+              "Circle $A$ with intersection sliced out ($A \\setminus B$)."
+            ],
+            [
+              "Complement",
+              "$A'$ or $A^c$",
+              "**NOT in $A$**",
+              "$\\{x \\in U \\mid x \\notin A\\} = U - A$",
+              "Everything inside universal box $U$ outside circle $A$."
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Quick Mental Check: Disjoint Sets",
+          "text": "If two sets share no elements ($A \\cap B = \\emptyset$), they are **mutually exclusive (disjoint)**. For disjoint sets: $n(A \\cup B) = n(A) + n(B)$ and $A - B = A$."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "2. Principle of Inclusion-Exclusion (PIE) & Venn Diagrams"
+        },
+        {
+          "type": "paragraph",
+          "text": "When sets overlap, simple addition double-counts elements in the intersection. The Principle of Inclusion-Exclusion (PIE) subtracts duplicates to compute true cardinality:"
+        },
+        {
+          "type": "formula",
+          "title": "Two-Set Inclusion-Exclusion Formula",
+          "formula": "n(A \\cup B) = n(A) + n(B) - n(A \\cap B)",
+          "note": "Rearrangement for shared overlap: n(A ∩ B) = n(A) + n(B) - n(A ∪ B)"
+        },
+        {
+          "type": "formula",
+          "title": "Three-Set Inclusion-Exclusion Formula",
+          "formula": "n(A \\cup B \\cup C) = n(A) + n(B) + n(C) - [n(A \\cap B) + n(A \\cap C) + n(B \\cap C)] + n(A \\cap B \\cap C)",
+          "note": "Add single sets, subtract all 3 pairwise overlaps, and add back the central triple intersection."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Venn Diagram 4-Step Solving Protocol"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Step 1 (Innermost Center First)**: Always record the central 3-way intersection first: $n(A \\cap B \\cap C)$.",
+            "**Step 2 (Two-Way Overlaps Only)**: Subtract the center from each two-way intersection to find exclusive overlaps (e.g., $n(A \\cap B \\text{ only}) = n(A \\cap B) - n(A \\cap B \\cap C)$).",
+            "**Step 3 (Single-Category Only)**: For each category circle, subtract all three adjacent overlapping numbers from the circle total.",
+            "**Step 4 (Outside Region - Neither/None)**: Sum all 7 interior disjoint regions and subtract from universal total: $n(\\text{None}) = n(U) - n(A \\cup B \\cup C)$."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "3. Fundamental Counting Principle (FCP)"
+        },
+        {
+          "type": "paragraph",
+          "text": "The Fundamental Counting Principle determines the total number of outcomes for sequential or multi-stage events without listing sample spaces:"
+        },
+        {
+          "type": "formula",
+          "title": "Generalized Product Rule (FCP)",
+          "formula": "N = k_1 \\cdot k_2 \\cdot k_3 \\cdots k_m",
+          "note": "Where stage i has k_i independent outcomes. Key logical connector: AND (sequential stages)."
+        },
+        {
+          "type": "table",
+          "title": "Addition Rule vs Multiplication Rule",
+          "headers": [
+            "Rule",
+            "Key Logical Word",
+            "Operation",
+            "When to Apply",
+            "Example"
+          ],
+          "rows": [
+            [
+              "Multiplication (FCP)",
+              "**AND** (sequential)",
+              "Multiply ($\\times$)",
+              "Multi-stage process where ALL stages must be performed",
+              "Choose 1 shirt (4) **AND** 1 pants (3) $\\implies 4 \\times 3 = 12$"
+            ],
+            [
+              "Addition Rule",
+              "**OR** (alternatives)",
+              "Add ($+$)",
+              "Mutually exclusive single choices from separate categories",
+              "Ride a bus (3 lines) **OR** ride a train (2 lines) $\\implies 3 + 2 = 5$"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Watch Out: Replacement vs Non-Replacement",
+          "text": "• **With Repetition/Replacement**: Choices remain constant at each stage (e.g., 4-digit PIN with digits 0–9 $\\implies 10 \\times 10 \\times 10 \\times 10 = 10^4 = 10,000$).\n• **Without Repetition/Replacement**: Choices decrease by 1 at each stage (e.g., 4-digit PIN with unique digits $\\implies 10 \\times 9 \\times 8 \\times 7 = 5,040$)."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "4. Permutations: Order Matters"
+        },
+        {
+          "type": "paragraph",
+          "text": "A **permutation** is an ordered arrangement of distinct items. Changing sequence produces a different outcome. **Keywords**: *rankings, podium finishes, officers (Pres/VP/Sec), linear queues, anagrams, passcodes*."
+        },
+        {
+          "type": "formula",
+          "title": "Partial Permutation Formula (nPr)",
+          "formula": "P(n, r) = {}_n P_r = \\frac{n!}{(n - r)!}",
+          "note": "Selecting and arranging r items out of n available items (where 0! = 1)."
+        },
+        {
+          "type": "table",
+          "title": "Permutation Types & Formulas",
+          "headers": [
+            "Permutation Type",
+            "Formula",
+            "Condition / Scenario",
+            "Quick Example"
+          ],
+          "rows": [
+            [
+              "Full Set Arrangement",
+              "$P(n, n) = n!$",
+              "Arranging all $n$ distinct items into $n$ slots",
+              "Arrange 5 people in a line $\\implies 5! = 120$ ways"
+            ],
+            [
+              "Partial Subset ($nPr$)",
+              "$\\frac{n!}{(n - r)!}$",
+              "Picking and arranging $r$ items from $n$",
+              "1st, 2nd, 3rd from 8 runners $\\implies P(8, 3) = 8 \\times 7 \\times 6 = 336$"
+            ],
+            [
+              "Distinguishable (Duplicates)",
+              "$\\frac{n!}{n_1! \\, n_2! \\cdots n_k!}$",
+              "Items with duplicate/identical elements (anagrams)",
+              "PHILIPPINES ($n=11$, three P's, three I's) $\\implies \\frac{11!}{3! \\times 3!} = 1,108,800$"
+            ],
+            [
+              "Circular Permutation",
+              "$(n - 1)!$",
+              "Arranging items in a closed circle (no fixed head)",
+              "6 people around a round table $\\implies (6 - 1)! = 5! = 120$"
+            ],
+            [
+              "Flippable Circular (Keyring/Necklace)",
+              "$\\frac{(n - 1)!}{2}$",
+              "Circular ring where front/back flip is indistinguishable",
+              "6 keys on a ring $\\implies \\frac{(6 - 1)!}{2} = \\frac{120}{2} = 60$"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "5. Combinations: Order Does NOT Matter"
+        },
+        {
+          "type": "paragraph",
+          "text": "A **combination** is a selection of items where grouping matters, but internal sequence does not. Changing order yields the exact same group: $\\{A, B, C\\} = \\{C, B, A\\}$. **Keywords**: *committees, teams, subsets, card hands, lottery draws, toppings, delegations*."
+        },
+        {
+          "type": "formula",
+          "title": "Combination Formula (nCr)",
+          "formula": "C(n, r) = {}_n C_r = \\binom{n}{r} = \\frac{n!}{r!(n - r)!} = \\frac{P(n, r)}{r!}",
+          "note": "Divides by r! to remove duplicate permutations of the identical group."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Crucial Combination Properties & Shortcuts"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Symmetry Property**: $C(n, r) = C(n, n - r)$. Choosing $r$ to keep is identical to choosing $n - r$ to exclude (e.g., $C(10, 8) = C(10, 2) = \\frac{10 \\times 9}{2} = 45$).",
+            "**Boundary Trivial Values**: $C(n, 0) = 1$, $C(n, 1) = n$, $C(n, n) = 1$.",
+            "**Total Subsets Identity**: $\\sum_{r=0}^n C(n, r) = C(n, 0) + C(n, 1) + \\dots + C(n, n) = 2^n$ (all possible subsets of any size).",
+            "**Combinations with Repetition**: $C_{\\text{rep}}(n, r) = C(n + r - 1, r) = \\frac{(n + r - 1)!}{r!(n - 1)!}$ (selecting $r$ items across $n$ flavors/types with reuse allowed)."
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Rapid Computation Trick for nCr",
+          "text": "Never compute full factorials like $10!$ by hand. Use the descending product cancellation method:\n$$C(10, 3) = \\frac{10 \\times 9 \\times 8}{3 \\times 2 \\times 1} = \\frac{720}{6} = 120$$\nWrite $r$ descending numbers in the numerator, divided by $r!$ in the denominator."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "6. Master Exam Decision Matrix: Permutation vs Combination"
+        },
+        {
+          "type": "table",
+          "title": "How to Instantly Classify Exam Problems",
+          "headers": [
+            "Problem Scenario",
+            "Does Order Matter?",
+            "Classification",
+            "Formula / Setup",
+            "Mental Diagnostic Check"
+          ],
+          "rows": [
+            [
+              "Electing President, VP, Secretary",
+              "Yes",
+              "Permutation",
+              "$P(n, 3) = n(n-1)(n-2)$",
+              "Different titles mean swapping persons creates a new outcome."
+            ],
+            [
+              "Choosing a 3-person study committee",
+              "No",
+              "Combination",
+              "$C(n, 3) = \\frac{n(n-1)(n-2)}{6}$",
+              "All 3 members hold equal status; roles are identical."
+            ],
+            [
+              "Forming a 4-digit security PIN",
+              "Yes",
+              "Permutation / FCP",
+              "$P(10, 4)$ or $10^4$",
+              "Code 1234 is not the same as 4321."
+            ],
+            [
+              "Selecting 5 lottery numbers out of 50",
+              "No",
+              "Combination",
+              "$C(50, 5)$",
+              "Numbers can be matched in any order on the ticket."
+            ],
+            [
+              "Arranging 5 books on a shelf",
+              "Yes",
+              "Permutation",
+              "$5! = 120$",
+              "Shelf displays items in spatial linear sequence."
+            ],
+            [
+              "Seating 6 people at a round table",
+              "Yes (circular)",
+              "Circular Permutation",
+              "$(6 - 1)! = 5! = 120$",
+              "Relative positions matter, but rotations are equivalent."
+            ],
+            [
+              "Committee with quotas (e.g., 3 men, 2 women)",
+              "No (within groups)",
+              "Compound Combination",
+              "$C(m, 3) \\times C(w, 2)$",
+              "Select sub-groups with $C$, then multiply totals using FCP."
+            ]
           ]
         }
       ]
@@ -4917,7 +5278,7 @@ function renderTikzFbdSvg(input, isDark = false) {
   if (!code.trim()) return '';
 
   const isDarkMode = isDark || (typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
-  const width = 500;
+  const width = 560;
   const height = 380;
   const cx = width / 2;
   const cy = height / 2;
@@ -4945,18 +5306,19 @@ function renderTikzFbdSvg(input, isDark = false) {
     return [0, 0];
   }
 
+  // Modern textbook palette (vibrant, accessible contrast against dark/light slate)
   const COLOR_MAP = {
-    red: '#f43f5e',
-    rose: '#f43f5e',
-    blue: '#3b82f6',
-    sky: '#0284c7',
-    emerald: '#10b981',
-    green: '#10b981',
-    purple: '#8b5cf6',
-    amber: '#f59e0b',
-    orange: '#f97316',
-    cyan: '#06b6d4',
-    teal: '#14b8a6',
+    red: isDarkMode ? '#f87171' : '#dc2626',
+    rose: isDarkMode ? '#fb7185' : '#e11d48',
+    blue: isDarkMode ? '#38bdf8' : '#0284c7',
+    sky: isDarkMode ? '#38bdf8' : '#0284c7',
+    emerald: isDarkMode ? '#34d399' : '#059669',
+    green: isDarkMode ? '#34d399' : '#16a34a',
+    purple: isDarkMode ? '#c084fc' : '#7c3aed',
+    amber: isDarkMode ? '#fbbf24' : '#d97706',
+    orange: isDarkMode ? '#fb923c' : '#ea580c',
+    cyan: isDarkMode ? '#22d3ee' : '#0891b2',
+    teal: isDarkMode ? '#2dd4bf' : '#0d9488',
     gray: isDarkMode ? '#94a3b8' : '#64748b',
     slate: isDarkMode ? '#94a3b8' : '#64748b'
   };
@@ -5050,6 +5412,7 @@ function renderTikzFbdSvg(input, isDark = false) {
     }
   });
 
+  // Calculate dynamic bounding box
   const allX = [];
   const allY = [];
   Object.values(nodes).forEach(n => {
@@ -5073,27 +5436,81 @@ function renderTikzFbdSvg(input, isDark = false) {
 
   const cxVal = (minX + maxX) / 2;
   const cyVal = (minY + maxY) / 2;
-  const spanX = Math.max(maxX - minX, 2.5);
+  const spanX = Math.max(maxX - minX, 3.0);
   const spanY = Math.max(maxY - minY, 2.5);
 
-  const scaleX = (width - 100) / spanX;
-  const scaleY = (height - 90) / spanY;
-  const scale = Math.min(scaleX, scaleY, 65.0);
+  const scaleX = (width - 120) / spanX;
+  const scaleY = (height - 100) / spanY;
+  const scale = Math.min(scaleX, scaleY, 68.0);
 
   const toSx = (x) => cx + (x - cxVal) * scale;
   const toSy = (y) => cy - (y - cyVal) * scale;
 
-  const bgBox = isDarkMode ? '#0f172a' : '#f8fafc';
-  const fgBox = isDarkMode ? '#38bdf8' : '#0284c7';
-  const textClr = isDarkMode ? '#f1f5f9' : '#0f172a';
-  const gridLineClr = isDarkMode ? '#1e293b' : '#f1f5f9';
+  // Theming colors
+  const bgCard = isDarkMode ? '#0f172a' : '#f8fafc';
+  const beamFill = isDarkMode ? '#1e293b' : '#e2e8f0';
+  const beamStroke = isDarkMode ? '#475569' : '#94a3b8';
+  const bodyFill = isDarkMode ? '#1e293b' : '#ffffff';
+  const bodyStroke = isDarkMode ? '#38bdf8' : '#0284c7';
+  const pinFill = isDarkMode ? '#38bdf8' : '#0284c7';
+  const textClr = isDarkMode ? '#f8fafc' : '#0f172a';
+  const gridDotClr = isDarkMode ? '#334155' : '#cbd5e1';
+  const groundHatchClr = isDarkMode ? '#475569' : '#94a3b8';
 
   let svgElements = [];
 
+  // Generate unique ID prefix for SVG marker defs
+  const uid = Math.random().toString(36).substring(2, 8);
+
+  // 1. Defs: Technical grid patterns and modern textbook stealth arrowheads
   svgElements.push(`
-    <line x1="20" y1="${height - 25}" x2="${width - 20}" y2="${height - 25}" stroke="${gridLineClr}" stroke-width="1.5" stroke-dasharray="4,4" />
+    <defs>
+      <!-- Technical Grid Pattern -->
+      <pattern id="dot-grid-${uid}" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.1" fill="${gridDotClr}" opacity="0.45" />
+      </pattern>
+
+      <!-- Diagonal Ground Surface Hatch Pattern -->
+      <pattern id="ground-hatch-${uid}" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="8" stroke="${groundHatchClr}" stroke-width="1.2" opacity="0.6" />
+      </pattern>
+
+      <!-- Stealth Textbook Arrowhead Markers -->
+      <marker id="arrow-stealth-default-${uid}" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+        <path d="M 0 1.5 L 9 5 L 0 8.5 L 2.5 5 Z" fill="${isDarkMode ? '#38bdf8' : '#0284c7'}" />
+      </marker>
+      ${Object.entries(COLOR_MAP).map(([cName, cHex]) => `
+        <marker id="arrow-stealth-${cName}-${uid}" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 L 2.5 5 Z" fill="${cHex}" />
+        </marker>
+      `).join('')}
+
+      <!-- Soft Drop Shadow for Objects & Badges -->
+      <filter id="fbd-shadow-${uid}" x="-10%" y="-10%" width="125%" height="125%">
+        <feDropShadow dx="0" dy="2.5" stdDeviation="3" flood-color="#000" flood-opacity="${isDarkMode ? '0.45' : '0.12'}" />
+      </filter>
+    </defs>
   `);
 
+  // 2. Blueprint / Engineering Coordinate Dot Grid Canvas
+  svgElements.push(`
+    <rect width="${width}" height="${height}" rx="14" fill="${bgCard}" />
+    <rect width="${width}" height="${height}" rx="14" fill="url(#dot-grid-${uid})" />
+  `);
+
+  // 3. Ground Plane Hatching (if there are pivot/ground references)
+  const hasGroundReference = Object.values(nodes).some(n => /plane|ramp|slope/i.test(n.shape) || /pivot|pin/i.test(n.label));
+  if (hasGroundReference) {
+    const groundY = height - 32;
+    svgElements.push(`
+      <g opacity="0.75">
+        <line x1="28" y1="${groundY}" x2="${width - 28}" y2="${groundY}" stroke="${groundHatchClr}" stroke-width="1.8" />
+        <rect x="28" y="${groundY}" width="${width - 56}" height="10" fill="url(#ground-hatch-${uid})" />
+      </g>
+    `);
+  }
+
+  // 4. Render Physical Nodes / Bodies
   Object.values(nodes).forEach(n => {
     const sx = toSx(n.x);
     const sy = toSy(n.y);
@@ -5103,88 +5520,123 @@ function renderTikzFbdSvg(input, isDark = false) {
     const rotAttr = rot ? `transform="rotate(${-rot} ${sx} ${sy})"` : '';
 
     if (n.shape === 'box') {
+      // Sleek physical beam or mass block with linear bevel
       svgElements.push(`
-        <rect x="${sx - w / 2}" y="${sy - h / 2}" width="${w}" height="${h}" rx="6" fill="${bgBox}" stroke="${fgBox}" stroke-width="2.2" ${rotAttr} />
+        <g filter="url(#fbd-shadow-${uid})" ${rotAttr}>
+          <rect x="${sx - w / 2}" y="${sy - h / 2}" width="${w}" height="${h}" rx="5" fill="${beamFill}" stroke="${beamStroke}" stroke-width="2.4" />
+          <line x1="${sx - w / 2 + 3}" y1="${sy}" x2="${sx + w / 2 - 3}" y2="${sy}" stroke="${beamStroke}" stroke-width="1" stroke-dasharray="3,3" opacity="0.6" />
+        </g>
       `);
     } else if (n.shape === 'circle' || n.shape === 'pulley') {
       const r = w / 2;
       svgElements.push(`
-        <circle cx="${sx}" cy="${sy}" r="${r}" fill="${bgBox}" stroke="${fgBox}" stroke-width="2.2" />
-        ${n.shape === 'pulley' ? `<circle cx="${sx}" cy="${sy}" r="4" fill="${fgBox}" />` : ''}
+        <g filter="url(#fbd-shadow-${uid})">
+          <circle cx="${sx}" cy="${sy}" r="${r}" fill="${bodyFill}" stroke="${bodyStroke}" stroke-width="2.5" />
+          ${n.shape === 'pulley' ? `
+            <circle cx="${sx}" cy="${sy}" r="5" fill="${bodyStroke}" />
+            <circle cx="${sx}" cy="${sy}" r="${r * 0.7}" fill="none" stroke="${bodyStroke}" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.7" />
+          ` : `
+            <circle cx="${sx}" cy="${sy}" r="3" fill="${bodyStroke}" />
+          `}
+        </g>
       `);
     } else if (n.shape === 'plane') {
-      const hw = w * 1.5;
+      const hw = w * 1.6;
       svgElements.push(`
-        <polygon points="${sx - hw},${sy + h/2} ${sx + hw},${sy + h/2} ${sx + hw},${sy - h/2}" fill="${bgBox}" stroke="${fgBox}" stroke-width="2" />
+        <g filter="url(#fbd-shadow-${uid})">
+          <polygon points="${sx - hw},${sy + h/2} ${sx + hw},${sy + h/2} ${sx + hw},${sy - h/2}" fill="${beamFill}" stroke="${beamStroke}" stroke-width="2.2" />
+          <polygon points="${sx - hw},${sy + h/2} ${sx + hw},${sy + h/2} ${sx + hw},${sy - h/2}" fill="url(#ground-hatch-${uid})" opacity="0.35" />
+        </g>
       `);
     } else if (n.shape === 'point') {
-      svgElements.push(`
-        <circle cx="${sx}" cy="${sy}" r="4.5" fill="${fgBox}" />
-      `);
+      // Mechanical Pin / Pivot support bracket
+      const isPivot = /pivot|pin|support|hinge/i.test(n.label);
+      if (isPivot) {
+        svgElements.push(`
+          <g filter="url(#fbd-shadow-${uid})">
+            <!-- Triangular mounting stand -->
+            <polygon points="${sx},${sy} ${sx - 12},${sy + 18} ${sx + 12},${sy + 18}" fill="${beamFill}" stroke="${beamStroke}" stroke-width="2" />
+            <!-- Mounting baseplate -->
+            <line x1="${sx - 18}" y1="${sy + 18}" x2="${sx + 18}" y2="${sy + 18}" stroke="${groundHatchClr}" stroke-width="2.5" />
+            <rect x="${sx - 18}" y="${sy + 18}" width="36" height="6" fill="url(#ground-hatch-${uid})" />
+            <!-- Pin hub center -->
+            <circle cx="${sx}" cy="${sy}" r="4.5" fill="${pinFill}" stroke="${bgCard}" stroke-width="1.5" />
+          </g>
+        `);
+      } else {
+        svgElements.push(`
+          <circle cx="${sx}" cy="${sy}" r="4.5" fill="${pinFill}" stroke="${bgCard}" stroke-width="1.5" />
+        `);
+      }
     }
 
     if (n.label) {
       const parsedLabel = renderMathInHtml(n.label);
+      const isPivot = /pivot|pin/i.test(n.label);
+      const labelY = isPivot ? sy + 25 : sy - 22;
       svgElements.push(`
-        <foreignObject x="${sx - 90}" y="${sy - 16}" width="180" height="32" class="overflow-visible pointer-events-none">
-          <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center text-xs font-bold font-mono-math" style="color: ${textClr}; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-            ${parsedLabel}
+        <foreignObject x="${sx - 80}" y="${labelY}" width="160" height="26" class="overflow-visible pointer-events-none">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center">
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-bold font-mono-math tracking-tight shadow-sm border border-slate-200/60 dark:border-slate-800/80 bg-white/95 dark:bg-slate-900/95" style="color: ${textClr};">
+              ${parsedLabel}
+            </span>
           </div>
         </foreignObject>
       `);
     }
   });
 
+  // 5. Render Force Vectors, Reactions & Dimension Lines
   draws.forEach(d => {
     if (d.coords.length < 2) return;
     const dashAttr = d.isDashed ? 'stroke-dasharray="5,4"' : '';
     const pointsStr = d.coords.map(([x, y]) => `${toSx(x).toFixed(1)},${toSy(y).toFixed(1)}`).join(' ');
 
+    let markerColorName = 'default';
+    for (const [cName, cHex] of Object.entries(COLOR_MAP)) {
+      if (cHex.toLowerCase() === d.color.toLowerCase()) {
+        markerColorName = cName;
+        break;
+      }
+    }
+    const markerAttr = d.isArrow ? `marker-end="url(#arrow-stealth-${markerColorName}-${uid})"` : '';
+
     if (d.isFill) {
       svgElements.push(`
-        <polygon points="${pointsStr}" fill="${d.color}" fill-opacity="0.15" stroke="${d.color}" stroke-width="1.8" />
+        <polygon points="${pointsStr}" fill="${d.color}" fill-opacity="0.18" stroke="${d.color}" stroke-width="1.8" />
       `);
     } else {
       svgElements.push(`
-        <polyline points="${pointsStr}" fill="none" stroke="${d.color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ${dashAttr} />
+        <polyline points="${pointsStr}" fill="none" stroke="${d.color}" stroke-width="${d.isDashed ? '2.0' : '2.8'}" stroke-linecap="round" stroke-linejoin="round" ${dashAttr} ${markerAttr} />
       `);
     }
 
-    if (d.isArrow && d.coords.length >= 2) {
+    // Label Badge with Math Rendering
+    if (d.label && d.coords.length >= 2) {
       const [x1, y1] = d.coords[d.coords.length - 2];
       const [x2, y2] = d.coords[d.coords.length - 1];
       const sx1 = toSx(x1), sy1 = toSy(y1);
       const sx2 = toSx(x2), sy2 = toSy(y2);
-      const angle = Math.atan2(sy2 - sy1, sx2 - sx1);
-      const arrowLen = 11;
-      const ax1 = sx2 - arrowLen * Math.cos(angle - Math.PI / 6);
-      const ay1 = sy2 - arrowLen * Math.sin(angle - Math.PI / 6);
-      const ax2 = sx2 - arrowLen * Math.cos(angle + Math.PI / 6);
-      const ay2 = sy2 - arrowLen * Math.sin(angle + Math.PI / 6);
 
+      let lx = sx2;
+      let ly = sy2;
+      const off = 20;
+
+      if (d.posDir.includes('above')) ly -= off;
+      if (d.posDir.includes('below')) ly += off;
+      if (d.posDir.includes('left')) lx -= (off + 8);
+      if (d.posDir.includes('right')) lx += (off + 8);
+
+      const parsedLabel = renderMathInHtml(d.label);
       svgElements.push(`
-        <polygon points="${sx2.toFixed(1)},${sy2.toFixed(1)} ${ax1.toFixed(1)},${ay1.toFixed(1)} ${ax2.toFixed(1)},${ay2.toFixed(1)}" fill="${d.color}" />
-      `);
-
-      if (d.label) {
-        let lx = sx2;
-        let ly = sy2;
-        const off = 22;
-
-        if (d.posDir.includes('above')) ly -= off;
-        if (d.posDir.includes('below')) ly += off;
-        if (d.posDir.includes('left')) lx -= off;
-        if (d.posDir.includes('right')) lx += off;
-
-        const parsedLabel = renderMathInHtml(d.label);
-        svgElements.push(`
-          <foreignObject x="${(lx - 75).toFixed(1)}" y="${(ly - 14).toFixed(1)}" width="150" height="28" class="overflow-visible pointer-events-none">
-            <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center text-xs font-bold font-mono-math" style="color: ${d.color};">
+        <foreignObject x="${(lx - 90).toFixed(1)}" y="${(ly - 13).toFixed(1)}" width="180" height="26" class="overflow-visible pointer-events-none">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center">
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-black font-mono-math tracking-tight shadow-sm border border-slate-200/60 dark:border-slate-800/80 bg-white/95 dark:bg-slate-900/95" style="color: ${d.color};">
               ${parsedLabel}
-            </div>
-          </foreignObject>
-        `);
-      }
+            </span>
+          </div>
+        </foreignObject>
+      `);
     }
   });
 
@@ -5194,7 +5646,7 @@ function renderTikzFbdSvg(input, isDark = false) {
       ${caption ? `<p class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">${renderMathInHtml(caption)}</p>` : ''}
       
       <div class="w-full flex justify-center items-center bg-slate-50/70 dark:bg-slate-900/50 rounded-xl p-3 border border-slate-100 dark:border-slate-800/80 overflow-x-auto">
-        <svg viewBox="0 0 ${width} ${height}" class="w-full max-w-lg h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 ${width} ${height}" class="w-full max-w-xl h-auto select-none" xmlns="http://www.w3.org/2000/svg">
           ${svgElements.join('\n')}
         </svg>
       </div>
@@ -5202,11 +5654,6 @@ function renderTikzFbdSvg(input, isDark = false) {
   `;
 }
 
-/* =========================================================
-   JSXGraph Interactive Physics & Math Board Renderer
-   - Local offline vendor: vendor/jsxgraph/jsxgraphcore.js
-   - Interactive vectors, geometries, coordinate boards & forces
-   ========================================================= */
 function renderJsxgraphBlock(input, isDark = false) {
   let code = '';
   let title = '';
@@ -5237,7 +5684,7 @@ function renderJsxgraphBlock(input, isDark = false) {
 
   // Backward-compatibility: if input is legacy TikZ code, route to TikZ SVG renderer
   if (code.includes('\\begin{tikzpicture}') || code.includes('\\node[')) {
-    return renderTikzFbdSvgLegacy({ code, title, caption }, isDark);
+    return renderTikzFbdSvg({ code, title, caption }, isDark);
   }
 
   const boardId = id ? `jxg-${id.replace(/[^a-zA-Z0-9_-]/g, '_')}` : `jxg-${Math.random().toString(36).slice(2, 10)}`;

@@ -1,7 +1,7 @@
 {
-  "version": "1.6.1",
-  "updatedAt": "2026-10-07T21:10:06.317608+00:00",
-  "announcement": "Refreshed 1 Reviewers, 10 Study Materials, 5 Deadlines, and 2 Quiz Banks.",
+  "version": "1.6.2",
+  "updatedAt": "2026-10-07T21:19:28.038131+00:00",
+  "announcement": "Refreshed 2 Reviewers (added Finite Math Reviewer), 13 Study Materials, and Deadlines.",
   "calendarEvents": [
     {
       "id": 1790325028547,
@@ -297,6 +297,367 @@
             "Viscosity: Strong forces cause molecules to cling tightly to their neighbors. They cannot slide past each other easily, making the liquid thick and slow-flowing.",
             "Surface Tension: Molecules at the surface are pulled tightly inward by the molecules beneath them. Stronger forces make this inward tug stronger, creating a tougher, more elastic ",
             "Vapor Pressure: Strong forces trap molecules tightly inside the liquid. Fewer molecules can escape into the air, creating fewer gas collisions and less pressure above the liquid."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reviewer_summative_test_1_finite_math",
+      "subject": "Finite Math",
+      "tag": "Reviewer",
+      "color": "border-l-4 border-purple-500",
+      "title": "Summative Test 1 - Finite Math Reviewer",
+      "summary": "High-yield compact exam reviewer covering Set Theory, Venn Diagrams & Inclusion-Exclusion, Fundamental Counting Principles, and Permutations & Combinations.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "1. Set Theory Essentials & Core Notation"
+        },
+        {
+          "type": "paragraph",
+          "text": "A set is a well-defined collection of distinct elements. Key mathematical notations, subset rules, and relationship definitions are tested heavily on counting exams:"
+        },
+        {
+          "type": "table",
+          "title": "Core Set Notation & Relations",
+          "headers": [
+            "Symbol / Concept",
+            "Meaning",
+            "Mathematical Definition",
+            "Exam Tip"
+          ],
+          "rows": [
+            [
+              "$x \\in A$",
+              "Element Inclusion",
+              "$x$ is a member of set $A$",
+              "Must be an individual element, not a set."
+            ],
+            [
+              "$x \\notin A$",
+              "Element Exclusion",
+              "$x$ is not a member of set $A$",
+              "Negation of set membership."
+            ],
+            [
+              "$\\emptyset$ or $\\{ \\}$",
+              "Empty / Null Set",
+              "Unique set containing 0 elements",
+              "$\\emptyset \\subseteq A$ is true for ANY set $A$; $n(\\emptyset) = 0$."
+            ],
+            [
+              "$A \\subseteq B$",
+              "Subset",
+              "Every element of $A$ is in $B$",
+              "Self-subset rule: $A \\subseteq A$ is always true."
+            ],
+            [
+              "$A \\subset B$",
+              "Proper Subset",
+              "$A \\subseteq B$ and $A \\neq B$",
+              "$B$ contains at least one element not present in $A$."
+            ],
+            [
+              "$2^n$",
+              "Total Subsets",
+              "Total subsets for a set with $n$ elements",
+              "Proper subsets = $2^n - 1$ (excludes the set itself)."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Four Fundamental Set Operations"
+        },
+        {
+          "type": "table",
+          "title": "Set Operations Summary",
+          "headers": [
+            "Operation",
+            "Notation",
+            "Logical Keyword",
+            "Set-Builder Definition",
+            "Venn Region"
+          ],
+          "rows": [
+            [
+              "Union",
+              "$A \\cup B$",
+              "**OR**",
+              "$\\{x \\mid x \\in A \\lor x \\in B\\}$",
+              "Entire combined shaded area of both circles."
+            ],
+            [
+              "Intersection",
+              "$A \\cap B$",
+              "**AND**",
+              "$\\{x \\mid x \\in A \\land x \\in B\\}$",
+              "Central overlapping football region only."
+            ],
+            [
+              "Difference",
+              "$A - B$",
+              "**ONLY in $A$**",
+              "$\\{x \\mid x \\in A \\land x \\notin B\\}$",
+              "Circle $A$ with intersection sliced out ($A \\setminus B$)."
+            ],
+            [
+              "Complement",
+              "$A'$ or $A^c$",
+              "**NOT in $A$**",
+              "$\\{x \\in U \\mid x \\notin A\\} = U - A$",
+              "Everything inside universal box $U$ outside circle $A$."
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Quick Mental Check: Disjoint Sets",
+          "text": "If two sets share no elements ($A \\cap B = \\emptyset$), they are **mutually exclusive (disjoint)**. For disjoint sets: $n(A \\cup B) = n(A) + n(B)$ and $A - B = A$."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "2. Principle of Inclusion-Exclusion (PIE) & Venn Diagrams"
+        },
+        {
+          "type": "paragraph",
+          "text": "When sets overlap, simple addition double-counts elements in the intersection. The Principle of Inclusion-Exclusion (PIE) subtracts duplicates to compute true cardinality:"
+        },
+        {
+          "type": "formula",
+          "title": "Two-Set Inclusion-Exclusion Formula",
+          "formula": "n(A \\cup B) = n(A) + n(B) - n(A \\cap B)",
+          "note": "Rearrangement for shared overlap: n(A ∩ B) = n(A) + n(B) - n(A ∪ B)"
+        },
+        {
+          "type": "formula",
+          "title": "Three-Set Inclusion-Exclusion Formula",
+          "formula": "n(A \\cup B \\cup C) = n(A) + n(B) + n(C) - [n(A \\cap B) + n(A \\cap C) + n(B \\cap C)] + n(A \\cap B \\cap C)",
+          "note": "Add single sets, subtract all 3 pairwise overlaps, and add back the central triple intersection."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Venn Diagram 4-Step Solving Protocol"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Step 1 (Innermost Center First)**: Always record the central 3-way intersection first: $n(A \\cap B \\cap C)$.",
+            "**Step 2 (Two-Way Overlaps Only)**: Subtract the center from each two-way intersection to find exclusive overlaps (e.g., $n(A \\cap B \\text{ only}) = n(A \\cap B) - n(A \\cap B \\cap C)$).",
+            "**Step 3 (Single-Category Only)**: For each category circle, subtract all three adjacent overlapping numbers from the circle total.",
+            "**Step 4 (Outside Region - Neither/None)**: Sum all 7 interior disjoint regions and subtract from universal total: $n(\\text{None}) = n(U) - n(A \\cup B \\cup C)$."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "3. Fundamental Counting Principle (FCP)"
+        },
+        {
+          "type": "paragraph",
+          "text": "The Fundamental Counting Principle determines the total number of outcomes for sequential or multi-stage events without listing sample spaces:"
+        },
+        {
+          "type": "formula",
+          "title": "Generalized Product Rule (FCP)",
+          "formula": "N = k_1 \\cdot k_2 \\cdot k_3 \\cdots k_m",
+          "note": "Where stage i has k_i independent outcomes. Key logical connector: AND (sequential stages)."
+        },
+        {
+          "type": "table",
+          "title": "Addition Rule vs Multiplication Rule",
+          "headers": [
+            "Rule",
+            "Key Logical Word",
+            "Operation",
+            "When to Apply",
+            "Example"
+          ],
+          "rows": [
+            [
+              "Multiplication (FCP)",
+              "**AND** (sequential)",
+              "Multiply ($\\times$)",
+              "Multi-stage process where ALL stages must be performed",
+              "Choose 1 shirt (4) **AND** 1 pants (3) $\\implies 4 \\times 3 = 12$"
+            ],
+            [
+              "Addition Rule",
+              "**OR** (alternatives)",
+              "Add ($+$)",
+              "Mutually exclusive single choices from separate categories",
+              "Ride a bus (3 lines) **OR** ride a train (2 lines) $\\implies 3 + 2 = 5$"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Watch Out: Replacement vs Non-Replacement",
+          "text": "• **With Repetition/Replacement**: Choices remain constant at each stage (e.g., 4-digit PIN with digits 0–9 $\\implies 10 \\times 10 \\times 10 \\times 10 = 10^4 = 10,000$).\n• **Without Repetition/Replacement**: Choices decrease by 1 at each stage (e.g., 4-digit PIN with unique digits $\\implies 10 \\times 9 \\times 8 \\times 7 = 5,040$)."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "4. Permutations: Order Matters"
+        },
+        {
+          "type": "paragraph",
+          "text": "A **permutation** is an ordered arrangement of distinct items. Changing sequence produces a different outcome. **Keywords**: *rankings, podium finishes, officers (Pres/VP/Sec), linear queues, anagrams, passcodes*."
+        },
+        {
+          "type": "formula",
+          "title": "Partial Permutation Formula (nPr)",
+          "formula": "P(n, r) = {}_n P_r = \\frac{n!}{(n - r)!}",
+          "note": "Selecting and arranging r items out of n available items (where 0! = 1)."
+        },
+        {
+          "type": "table",
+          "title": "Permutation Types & Formulas",
+          "headers": [
+            "Permutation Type",
+            "Formula",
+            "Condition / Scenario",
+            "Quick Example"
+          ],
+          "rows": [
+            [
+              "Full Set Arrangement",
+              "$P(n, n) = n!$",
+              "Arranging all $n$ distinct items into $n$ slots",
+              "Arrange 5 people in a line $\\implies 5! = 120$ ways"
+            ],
+            [
+              "Partial Subset ($nPr$)",
+              "$\\frac{n!}{(n - r)!}$",
+              "Picking and arranging $r$ items from $n$",
+              "1st, 2nd, 3rd from 8 runners $\\implies P(8, 3) = 8 \\times 7 \\times 6 = 336$"
+            ],
+            [
+              "Distinguishable (Duplicates)",
+              "$\\frac{n!}{n_1! \\, n_2! \\cdots n_k!}$",
+              "Items with duplicate/identical elements (anagrams)",
+              "PHILIPPINES ($n=11$, three P's, three I's) $\\implies \\frac{11!}{3! \\times 3!} = 1,108,800$"
+            ],
+            [
+              "Circular Permutation",
+              "$(n - 1)!$",
+              "Arranging items in a closed circle (no fixed head)",
+              "6 people around a round table $\\implies (6 - 1)! = 5! = 120$"
+            ],
+            [
+              "Flippable Circular (Keyring/Necklace)",
+              "$\\frac{(n - 1)!}{2}$",
+              "Circular ring where front/back flip is indistinguishable",
+              "6 keys on a ring $\\implies \\frac{(6 - 1)!}{2} = \\frac{120}{2} = 60$"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "5. Combinations: Order Does NOT Matter"
+        },
+        {
+          "type": "paragraph",
+          "text": "A **combination** is a selection of items where grouping matters, but internal sequence does not. Changing order yields the exact same group: $\\{A, B, C\\} = \\{C, B, A\\}$. **Keywords**: *committees, teams, subsets, card hands, lottery draws, toppings, delegations*."
+        },
+        {
+          "type": "formula",
+          "title": "Combination Formula (nCr)",
+          "formula": "C(n, r) = {}_n C_r = \\binom{n}{r} = \\frac{n!}{r!(n - r)!} = \\frac{P(n, r)}{r!}",
+          "note": "Divides by r! to remove duplicate permutations of the identical group."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Crucial Combination Properties & Shortcuts"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Symmetry Property**: $C(n, r) = C(n, n - r)$. Choosing $r$ to keep is identical to choosing $n - r$ to exclude (e.g., $C(10, 8) = C(10, 2) = \\frac{10 \\times 9}{2} = 45$).",
+            "**Boundary Trivial Values**: $C(n, 0) = 1$, $C(n, 1) = n$, $C(n, n) = 1$.",
+            "**Total Subsets Identity**: $\\sum_{r=0}^n C(n, r) = C(n, 0) + C(n, 1) + \\dots + C(n, n) = 2^n$ (all possible subsets of any size).",
+            "**Combinations with Repetition**: $C_{\\text{rep}}(n, r) = C(n + r - 1, r) = \\frac{(n + r - 1)!}{r!(n - 1)!}$ (selecting $r$ items across $n$ flavors/types with reuse allowed)."
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Rapid Computation Trick for nCr",
+          "text": "Never compute full factorials like $10!$ by hand. Use the descending product cancellation method:\n$$C(10, 3) = \\frac{10 \\times 9 \\times 8}{3 \\times 2 \\times 1} = \\frac{720}{6} = 120$$\nWrite $r$ descending numbers in the numerator, divided by $r!$ in the denominator."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "6. Master Exam Decision Matrix: Permutation vs Combination"
+        },
+        {
+          "type": "table",
+          "title": "How to Instantly Classify Exam Problems",
+          "headers": [
+            "Problem Scenario",
+            "Does Order Matter?",
+            "Classification",
+            "Formula / Setup",
+            "Mental Diagnostic Check"
+          ],
+          "rows": [
+            [
+              "Electing President, VP, Secretary",
+              "Yes",
+              "Permutation",
+              "$P(n, 3) = n(n-1)(n-2)$",
+              "Different titles mean swapping persons creates a new outcome."
+            ],
+            [
+              "Choosing a 3-person study committee",
+              "No",
+              "Combination",
+              "$C(n, 3) = \\frac{n(n-1)(n-2)}{6}$",
+              "All 3 members hold equal status; roles are identical."
+            ],
+            [
+              "Forming a 4-digit security PIN",
+              "Yes",
+              "Permutation / FCP",
+              "$P(10, 4)$ or $10^4$",
+              "Code 1234 is not the same as 4321."
+            ],
+            [
+              "Selecting 5 lottery numbers out of 50",
+              "No",
+              "Combination",
+              "$C(50, 5)$",
+              "Numbers can be matched in any order on the ticket."
+            ],
+            [
+              "Arranging 5 books on a shelf",
+              "Yes",
+              "Permutation",
+              "$5! = 120$",
+              "Shelf displays items in spatial linear sequence."
+            ],
+            [
+              "Seating 6 people at a round table",
+              "Yes (circular)",
+              "Circular Permutation",
+              "$(6 - 1)! = 5! = 120$",
+              "Relative positions matter, but rotations are equivalent."
+            ],
+            [
+              "Committee with quotas (e.g., 3 men, 2 women)",
+              "No (within groups)",
+              "Compound Combination",
+              "$C(m, 3) \\times C(w, 2)$",
+              "Select sub-groups with $C$, then multiply totals using FCP."
+            ]
           ]
         }
       ]

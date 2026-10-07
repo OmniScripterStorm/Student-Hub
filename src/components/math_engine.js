@@ -684,7 +684,7 @@ export function renderTikzFbdSvg(input, isDark = false) {
   if (!code.trim()) return '';
 
   const isDarkMode = isDark || (typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
-  const width = 500;
+  const width = 560;
   const height = 380;
   const cx = width / 2;
   const cy = height / 2;
@@ -712,19 +712,19 @@ export function renderTikzFbdSvg(input, isDark = false) {
     return [0, 0];
   }
 
-  // Color palette lookup
+  // Modern textbook palette (vibrant, accessible contrast against dark/light slate)
   const COLOR_MAP = {
-    red: '#f43f5e',
-    rose: '#f43f5e',
-    blue: '#3b82f6',
-    sky: '#0284c7',
-    emerald: '#10b981',
-    green: '#10b981',
-    purple: '#8b5cf6',
-    amber: '#f59e0b',
-    orange: '#f97316',
-    cyan: '#06b6d4',
-    teal: '#14b8a6',
+    red: isDarkMode ? '#f87171' : '#dc2626',
+    rose: isDarkMode ? '#fb7185' : '#e11d48',
+    blue: isDarkMode ? '#38bdf8' : '#0284c7',
+    sky: isDarkMode ? '#38bdf8' : '#0284c7',
+    emerald: isDarkMode ? '#34d399' : '#059669',
+    green: isDarkMode ? '#34d399' : '#16a34a',
+    purple: isDarkMode ? '#c084fc' : '#7c3aed',
+    amber: isDarkMode ? '#fbbf24' : '#d97706',
+    orange: isDarkMode ? '#fb923c' : '#ea580c',
+    cyan: isDarkMode ? '#22d3ee' : '#0891b2',
+    teal: isDarkMode ? '#2dd4bf' : '#0d9488',
     gray: isDarkMode ? '#94a3b8' : '#64748b',
     slate: isDarkMode ? '#94a3b8' : '#64748b'
   };
@@ -842,29 +842,81 @@ export function renderTikzFbdSvg(input, isDark = false) {
 
   const cxVal = (minX + maxX) / 2;
   const cyVal = (minY + maxY) / 2;
-  const spanX = Math.max(maxX - minX, 2.5);
+  const spanX = Math.max(maxX - minX, 3.0);
   const spanY = Math.max(maxY - minY, 2.5);
 
-  const scaleX = (width - 100) / spanX;
-  const scaleY = (height - 90) / spanY;
-  const scale = Math.min(scaleX, scaleY, 65.0);
+  const scaleX = (width - 120) / spanX;
+  const scaleY = (height - 100) / spanY;
+  const scale = Math.min(scaleX, scaleY, 68.0);
 
   const toSx = (x) => cx + (x - cxVal) * scale;
   const toSy = (y) => cy - (y - cyVal) * scale;
 
-  const bgBox = isDarkMode ? '#0f172a' : '#f8fafc';
-  const fgBox = isDarkMode ? '#38bdf8' : '#0284c7';
-  const textClr = isDarkMode ? '#f1f5f9' : '#0f172a';
-  const gridLineClr = isDarkMode ? '#1e293b' : '#f1f5f9';
+  // Theming colors
+  const bgCard = isDarkMode ? '#0f172a' : '#f8fafc';
+  const beamFill = isDarkMode ? '#1e293b' : '#e2e8f0';
+  const beamStroke = isDarkMode ? '#475569' : '#94a3b8';
+  const bodyFill = isDarkMode ? '#1e293b' : '#ffffff';
+  const bodyStroke = isDarkMode ? '#38bdf8' : '#0284c7';
+  const pinFill = isDarkMode ? '#38bdf8' : '#0284c7';
+  const textClr = isDarkMode ? '#f8fafc' : '#0f172a';
+  const gridDotClr = isDarkMode ? '#334155' : '#cbd5e1';
+  const groundHatchClr = isDarkMode ? '#475569' : '#94a3b8';
 
   let svgElements = [];
 
-  // Soft Coordinate / Ground Grid Reference
+  // Generate unique ID prefix for SVG marker defs
+  const uid = Math.random().toString(36).substring(2, 8);
+
+  // 1. Defs: Technical grid patterns and modern textbook stealth arrowheads
   svgElements.push(`
-    <line x1="20" y1="${height - 25}" x2="${width - 20}" y2="${height - 25}" stroke="${gridLineClr}" stroke-width="1.5" stroke-dasharray="4,4" />
+    <defs>
+      <!-- Technical Grid Pattern -->
+      <pattern id="dot-grid-${uid}" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.1" fill="${gridDotClr}" opacity="0.45" />
+      </pattern>
+
+      <!-- Diagonal Ground Surface Hatch Pattern -->
+      <pattern id="ground-hatch-${uid}" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="8" stroke="${groundHatchClr}" stroke-width="1.2" opacity="0.6" />
+      </pattern>
+
+      <!-- Stealth Textbook Arrowhead Markers -->
+      <marker id="arrow-stealth-default-${uid}" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+        <path d="M 0 1.5 L 9 5 L 0 8.5 L 2.5 5 Z" fill="${isDarkMode ? '#38bdf8' : '#0284c7'}" />
+      </marker>
+      ${Object.entries(COLOR_MAP).map(([cName, cHex]) => `
+        <marker id="arrow-stealth-${cName}-${uid}" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 L 2.5 5 Z" fill="${cHex}" />
+        </marker>
+      `).join('')}
+
+      <!-- Soft Drop Shadow for Objects & Badges -->
+      <filter id="fbd-shadow-${uid}" x="-10%" y="-10%" width="125%" height="125%">
+        <feDropShadow dx="0" dy="2.5" stdDeviation="3" flood-color="#000" flood-opacity="${isDarkMode ? '0.45' : '0.12'}" />
+      </filter>
+    </defs>
   `);
 
-  // 1. Render Nodes/Objects
+  // 2. Blueprint / Engineering Coordinate Dot Grid Canvas
+  svgElements.push(`
+    <rect width="${width}" height="${height}" rx="14" fill="${bgCard}" />
+    <rect width="${width}" height="${height}" rx="14" fill="url(#dot-grid-${uid})" />
+  `);
+
+  // 3. Ground Plane Hatching (if there are pivot/ground references)
+  const hasGroundReference = Object.values(nodes).some(n => /plane|ramp|slope/i.test(n.shape) || /pivot|pin/i.test(n.label));
+  if (hasGroundReference) {
+    const groundY = height - 32;
+    svgElements.push(`
+      <g opacity="0.75">
+        <line x1="28" y1="${groundY}" x2="${width - 28}" y2="${groundY}" stroke="${groundHatchClr}" stroke-width="1.8" />
+        <rect x="28" y="${groundY}" width="${width - 56}" height="10" fill="url(#ground-hatch-${uid})" />
+      </g>
+    `);
+  }
+
+  // 4. Render Physical Nodes / Bodies
   Object.values(nodes).forEach(n => {
     const sx = toSx(n.x);
     const sy = toSy(n.y);
@@ -874,91 +926,123 @@ export function renderTikzFbdSvg(input, isDark = false) {
     const rotAttr = rot ? `transform="rotate(${-rot} ${sx} ${sy})"` : '';
 
     if (n.shape === 'box') {
+      // Sleek physical beam or mass block with linear bevel
       svgElements.push(`
-        <rect x="${sx - w / 2}" y="${sy - h / 2}" width="${w}" height="${h}" rx="6" fill="${bgBox}" stroke="${fgBox}" stroke-width="2.2" ${rotAttr} />
+        <g filter="url(#fbd-shadow-${uid})" ${rotAttr}>
+          <rect x="${sx - w / 2}" y="${sy - h / 2}" width="${w}" height="${h}" rx="5" fill="${beamFill}" stroke="${beamStroke}" stroke-width="2.4" />
+          <line x1="${sx - w / 2 + 3}" y1="${sy}" x2="${sx + w / 2 - 3}" y2="${sy}" stroke="${beamStroke}" stroke-width="1" stroke-dasharray="3,3" opacity="0.6" />
+        </g>
       `);
     } else if (n.shape === 'circle' || n.shape === 'pulley') {
       const r = w / 2;
       svgElements.push(`
-        <circle cx="${sx}" cy="${sy}" r="${r}" fill="${bgBox}" stroke="${fgBox}" stroke-width="2.2" />
-        ${n.shape === 'pulley' ? `<circle cx="${sx}" cy="${sy}" r="4" fill="${fgBox}" />` : ''}
+        <g filter="url(#fbd-shadow-${uid})">
+          <circle cx="${sx}" cy="${sy}" r="${r}" fill="${bodyFill}" stroke="${bodyStroke}" stroke-width="2.5" />
+          ${n.shape === 'pulley' ? `
+            <circle cx="${sx}" cy="${sy}" r="5" fill="${bodyStroke}" />
+            <circle cx="${sx}" cy="${sy}" r="${r * 0.7}" fill="none" stroke="${bodyStroke}" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.7" />
+          ` : `
+            <circle cx="${sx}" cy="${sy}" r="3" fill="${bodyStroke}" />
+          `}
+        </g>
       `);
     } else if (n.shape === 'plane') {
-      const hw = w * 1.5;
+      const hw = w * 1.6;
       svgElements.push(`
-        <polygon points="${sx - hw},${sy + h/2} ${sx + hw},${sy + h/2} ${sx + hw},${sy - h/2}" fill="${bgBox}" stroke="${fgBox}" stroke-width="2" />
+        <g filter="url(#fbd-shadow-${uid})">
+          <polygon points="${sx - hw},${sy + h/2} ${sx + hw},${sy + h/2} ${sx + hw},${sy - h/2}" fill="${beamFill}" stroke="${beamStroke}" stroke-width="2.2" />
+          <polygon points="${sx - hw},${sy + h/2} ${sx + hw},${sy + h/2} ${sx + hw},${sy - h/2}" fill="url(#ground-hatch-${uid})" opacity="0.35" />
+        </g>
       `);
     } else if (n.shape === 'point') {
-      svgElements.push(`
-        <circle cx="${sx}" cy="${sy}" r="4.5" fill="${fgBox}" />
-      `);
+      // Mechanical Pin / Pivot support bracket
+      const isPivot = /pivot|pin|support|hinge/i.test(n.label);
+      if (isPivot) {
+        svgElements.push(`
+          <g filter="url(#fbd-shadow-${uid})">
+            <!-- Triangular mounting stand -->
+            <polygon points="${sx},${sy} ${sx - 12},${sy + 18} ${sx + 12},${sy + 18}" fill="${beamFill}" stroke="${beamStroke}" stroke-width="2" />
+            <!-- Mounting baseplate -->
+            <line x1="${sx - 18}" y1="${sy + 18}" x2="${sx + 18}" y2="${sy + 18}" stroke="${groundHatchClr}" stroke-width="2.5" />
+            <rect x="${sx - 18}" y="${sy + 18}" width="36" height="6" fill="url(#ground-hatch-${uid})" />
+            <!-- Pin hub center -->
+            <circle cx="${sx}" cy="${sy}" r="4.5" fill="${pinFill}" stroke="${bgCard}" stroke-width="1.5" />
+          </g>
+        `);
+      } else {
+        svgElements.push(`
+          <circle cx="${sx}" cy="${sy}" r="4.5" fill="${pinFill}" stroke="${bgCard}" stroke-width="1.5" />
+        `);
+      }
     }
 
     if (n.label) {
       const parsedLabel = renderMathInHtml(n.label);
+      const isPivot = /pivot|pin/i.test(n.label);
+      const labelY = isPivot ? sy + 25 : sy - 22;
       svgElements.push(`
-        <foreignObject x="${sx - 90}" y="${sy - 16}" width="180" height="32" class="overflow-visible pointer-events-none">
-          <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center text-xs font-bold font-mono-math" style="color: ${textClr}; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-            ${parsedLabel}
+        <foreignObject x="${sx - 80}" y="${labelY}" width="160" height="26" class="overflow-visible pointer-events-none">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center">
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-bold font-mono-math tracking-tight shadow-sm border border-slate-200/60 dark:border-slate-800/80 bg-white/95 dark:bg-slate-900/95" style="color: ${textClr};">
+              ${parsedLabel}
+            </span>
           </div>
         </foreignObject>
       `);
     }
   });
 
-  // 2. Render Draws / Force Vectors
+  // 5. Render Force Vectors, Reactions & Dimension Lines
   draws.forEach(d => {
     if (d.coords.length < 2) return;
     const dashAttr = d.isDashed ? 'stroke-dasharray="5,4"' : '';
     const pointsStr = d.coords.map(([x, y]) => `${toSx(x).toFixed(1)},${toSy(y).toFixed(1)}`).join(' ');
 
+    let markerColorName = 'default';
+    for (const [cName, cHex] of Object.entries(COLOR_MAP)) {
+      if (cHex.toLowerCase() === d.color.toLowerCase()) {
+        markerColorName = cName;
+        break;
+      }
+    }
+    const markerAttr = d.isArrow ? `marker-end="url(#arrow-stealth-${markerColorName}-${uid})"` : '';
+
     if (d.isFill) {
       svgElements.push(`
-        <polygon points="${pointsStr}" fill="${d.color}" fill-opacity="0.15" stroke="${d.color}" stroke-width="1.8" />
+        <polygon points="${pointsStr}" fill="${d.color}" fill-opacity="0.18" stroke="${d.color}" stroke-width="1.8" />
       `);
     } else {
       svgElements.push(`
-        <polyline points="${pointsStr}" fill="none" stroke="${d.color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ${dashAttr} />
+        <polyline points="${pointsStr}" fill="none" stroke="${d.color}" stroke-width="${d.isDashed ? '2.0' : '2.8'}" stroke-linecap="round" stroke-linejoin="round" ${dashAttr} ${markerAttr} />
       `);
     }
 
-    // Arrowhead
-    if (d.isArrow && d.coords.length >= 2) {
+    // Label Badge with Math Rendering
+    if (d.label && d.coords.length >= 2) {
       const [x1, y1] = d.coords[d.coords.length - 2];
       const [x2, y2] = d.coords[d.coords.length - 1];
       const sx1 = toSx(x1), sy1 = toSy(y1);
       const sx2 = toSx(x2), sy2 = toSy(y2);
-      const angle = Math.atan2(sy2 - sy1, sx2 - sx1);
-      const arrowLen = 11;
-      const ax1 = sx2 - arrowLen * Math.cos(angle - Math.PI / 6);
-      const ay1 = sy2 - arrowLen * Math.sin(angle - Math.PI / 6);
-      const ax2 = sx2 - arrowLen * Math.cos(angle + Math.PI / 6);
-      const ay2 = sy2 - arrowLen * Math.sin(angle + Math.PI / 6);
 
+      let lx = sx2;
+      let ly = sy2;
+      const off = 20;
+
+      if (d.posDir.includes('above')) ly -= off;
+      if (d.posDir.includes('below')) ly += off;
+      if (d.posDir.includes('left')) lx -= (off + 8);
+      if (d.posDir.includes('right')) lx += (off + 8);
+
+      const parsedLabel = renderMathInHtml(d.label);
       svgElements.push(`
-        <polygon points="${sx2.toFixed(1)},${sy2.toFixed(1)} ${ax1.toFixed(1)},${ay1.toFixed(1)} ${ax2.toFixed(1)},${ay2.toFixed(1)}" fill="${d.color}" />
-      `);
-
-      // Label with math rendering
-      if (d.label) {
-        let lx = sx2;
-        let ly = sy2;
-        const off = 22;
-
-        if (d.posDir.includes('above')) ly -= off;
-        if (d.posDir.includes('below')) ly += off;
-        if (d.posDir.includes('left')) lx -= off;
-        if (d.posDir.includes('right')) lx += off;
-
-        const parsedLabel = renderMathInHtml(d.label);
-        svgElements.push(`
-          <foreignObject x="${(lx - 75).toFixed(1)}" y="${(ly - 14).toFixed(1)}" width="150" height="28" class="overflow-visible pointer-events-none">
-            <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center text-xs font-bold font-mono-math" style="color: ${d.color};">
+        <foreignObject x="${(lx - 90).toFixed(1)}" y="${(ly - 13).toFixed(1)}" width="180" height="26" class="overflow-visible pointer-events-none">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center">
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-black font-mono-math tracking-tight shadow-sm border border-slate-200/60 dark:border-slate-800/80 bg-white/95 dark:bg-slate-900/95" style="color: ${d.color};">
               ${parsedLabel}
-            </div>
-          </foreignObject>
-        `);
-      }
+            </span>
+          </div>
+        </foreignObject>
+      `);
     }
   });
 
@@ -968,7 +1052,7 @@ export function renderTikzFbdSvg(input, isDark = false) {
       ${caption ? `<p class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">${renderMathInHtml(caption)}</p>` : ''}
       
       <div class="w-full flex justify-center items-center bg-slate-50/70 dark:bg-slate-900/50 rounded-xl p-3 border border-slate-100 dark:border-slate-800/80 overflow-x-auto">
-        <svg viewBox="0 0 ${width} ${height}" class="w-full max-w-lg h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 ${width} ${height}" class="w-full max-w-xl h-auto select-none" xmlns="http://www.w3.org/2000/svg">
           ${svgElements.join('\n')}
         </svg>
       </div>
@@ -976,11 +1060,6 @@ export function renderTikzFbdSvg(input, isDark = false) {
   `;
 }
 
-/* =========================================================
-   JSXGraph Interactive Physics & Math Board Renderer
-   - Local offline vendor: vendor/jsxgraph/jsxgraphcore.js
-   - Interactive vectors, geometries, coordinate boards & forces
-   ========================================================= */
 export function renderJsxgraphBlock(input, isDark = false) {
   let code = '';
   let title = '';
@@ -1011,7 +1090,7 @@ export function renderJsxgraphBlock(input, isDark = false) {
 
   // Backward-compatibility: if input is legacy TikZ code, route to TikZ SVG renderer
   if (code.includes('\\begin{tikzpicture}') || code.includes('\\node[')) {
-    return renderTikzFbdSvgLegacy({ code, title, caption }, isDark);
+    return renderTikzFbdSvg({ code, title, caption }, isDark);
   }
 
   const boardId = id ? `jxg-${id.replace(/[^a-zA-Z0-9_-]/g, '_')}` : `jxg-${Math.random().toString(36).slice(2, 10)}`;
