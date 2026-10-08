@@ -1,6 +1,6 @@
 {
   "version": "1.8.3",
-  "updatedAt": "2026-10-08T01:52:10.470Z",
+  "updatedAt": "2026-10-08T01:57:32.523Z",
   "announcement": "Refreshed 3 Reviewers, 14 Study Materials, 5 Deadlines, and 2 Quiz Banks.",
   "calendarEvents": [
     {
@@ -56,7 +56,7 @@
       "tag": "Main",
       "color": "border-l-4 border-purple-500",
       "title": "Summative Test 1 - Finite Math Reviewer",
-      "summary": "High-yield compact exam reviewer covering Set Theory, Venn Diagrams & Inclusion-Exclusion, Fundamental Counting Principles, and Permutations & Combinations.",
+      "summary": "Compact, high-yield exam reviewer covering Set Theory, Venn Diagrams & Inclusion-Exclusion, Fundamental Counting Principles, and Permutations & Combinations.",
       "blocks": [
         {
           "type": "heading",
@@ -417,7 +417,7 @@
       "tag": "Main",
       "color": "border-l-4 border-amber-600",
       "title": "Summative Test 1 - Kasaysayan Reviewer",
-      "summary": "Mabilis at komprehensibong reviewer para sa Summative Test 1: Kamalayang Pilipino bago ang kolonyalismo, balangkas ni Salazar (Pamayanan-Bayan-Bansa), herarkiyang kolonyal, institusyon, at mga anyo ng pakikibaka at pakikiangkop.",
+      "summary": "Reviewer para sa Summative Test 1: Kamalayang Pilipino bago ang kolonyalismo, balangkas ni Salazar (Pamayanan-Bayan-Bansa), herarkiyang kolonyal, institusyon, at mga anyo ng pakikibaka at pakikiangkop.",
       "blocks": [
         {
           "type": "heading",
