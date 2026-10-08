@@ -131,6 +131,10 @@ export let QUIZ_SETS = cachedData.quizSets || DEFAULT_BASELINE.quizSets;
 export let STUDY_MATERIALS = cachedData.studyMaterials || DEFAULT_BASELINE.studyMaterials;
 export let CURRENT_APP_VERSION = cachedData.version || DEFAULT_BASELINE.version;
 
+export function getLocalStudyData() {
+  return cachedData || JSON.parse(localStorage.getItem(CACHE_KEY) || 'null') || DEFAULT_BASELINE;
+}
+
 export const INITIAL_TASKS = [];
 
 const CREDITS_CACHE_KEY = 'tagsci_g11_credits_cache';

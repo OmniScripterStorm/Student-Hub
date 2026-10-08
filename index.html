@@ -4990,6 +4990,10 @@ let QUIZ_SETS = cachedData.quizSets || DEFAULT_BASELINE.quizSets;
 let STUDY_MATERIALS = cachedData.studyMaterials || DEFAULT_BASELINE.studyMaterials;
 let CURRENT_APP_VERSION = cachedData.version || DEFAULT_BASELINE.version;
 
+function getLocalStudyData() {
+  return cachedData || JSON.parse(localStorage.getItem(CACHE_KEY) || 'null') || DEFAULT_BASELINE;
+}
+
 const INITIAL_TASKS = [];
 
 const CREDITS_CACHE_KEY = 'tagsci_g11_credits_cache';
