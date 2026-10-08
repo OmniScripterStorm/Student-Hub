@@ -5302,6 +5302,24 @@ const MATH_OPERATORS = {
   '\\square': '&#x25A1;'
 };
 
+function extractBalancedBraces(str, startIdx) {
+  if (str[startIdx] !== '{') return null;
+  let depth = 0;
+  for (let i = startIdx; i < str.length; i++) {
+    if (str[i] === '{') depth++;
+    else if (str[i] === '}') {
+      depth--;
+      if (depth === 0) {
+        return {
+          content: str.substring(startIdx + 1, i),
+          nextIdx: i + 1
+        };
+      }
+    }
+  }
+  return null;
+}
+
 function parseMathSyntax(tex) {
   let s = (tex || '').trim();
   s = s.replace(/<br\s*\/?>/gi, ' ');
