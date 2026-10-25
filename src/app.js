@@ -9,18 +9,15 @@ import { navigateSection, toggleSidebar, closeSidebar, switchMobileTab, checkRes
 import { checkOtaUpdates, initAutoSyncEngine, saveOtaSettings, resetOtaUrl, handleClearCache, submitEditorialApplication } from './components/ota_sync.js';
 import { renderMathInHtml, renderMathInElement, parseMathSyntax } from './components/math_engine.js';
 import { 
-  startQuiz, 
-  selectQuizOption, 
-  selectTrueFalse, 
-  submitIdentificationAnswer, 
-  toggleMultiSelectOption, 
-  submitMultiSelectAnswer, 
-  submitNumericalAnswer, 
-  flipFlashcard, 
-  rateFlashcard, 
-  prevQuizQuestion, 
-  nextQuizQuestion, 
-  exitQuiz 
+  renderFlashcardsView,
+  startFlashcardSession,
+  flipFlashcard,
+  toggleFlashcardHint,
+  rateFlashcard,
+  prevFlashcard,
+  nextFlashcard,
+  shuffleCurrentDeck,
+  exitFlashcardSession
 } from './components/quiz_engine.js';
 import { initPwaInstallPrompt, triggerPwaInstall, dismissPwaPrompt, manualTriggerPwaPrompt, updateSettingsPwaStatus } from './components/pwa_installer.js';
 import { 
@@ -59,18 +56,19 @@ window.App = {
   renderMathInHtml,
   renderMathInElement,
   parseMathSyntax,
-  startQuiz,
-  selectQuizOption,
-  selectTrueFalse,
-  submitIdentificationAnswer,
-  toggleMultiSelectOption,
-  submitMultiSelectAnswer,
-  submitNumericalAnswer,
+  renderFlashcardsView,
+  startFlashcardSession,
   flipFlashcard,
+  toggleFlashcardHint,
   rateFlashcard,
-  prevQuizQuestion,
-  nextQuizQuestion,
-  exitQuiz,
+  prevFlashcard,
+  nextFlashcard,
+  shuffleCurrentDeck,
+  exitFlashcardSession,
+  // Backwards compatibility aliases
+  renderQuizSetsView: renderFlashcardsView,
+  startQuiz: (id) => startFlashcardSession(id, 'all'),
+  exitQuiz: exitFlashcardSession,
   triggerPwaInstall,
   dismissPwaPrompt,
   manualTriggerPwaPrompt,

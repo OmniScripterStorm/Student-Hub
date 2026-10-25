@@ -2,7 +2,7 @@ import { getSyncUrl, setSyncUrl, resetSyncUrlToDefault, clearAppCache, saveSynce
 import { renderMaterials } from './reviewers.js';
 import { renderCalendar } from './calendar.js';
 import { renderMaterialsView, renderReviewersView, getCurrentSection } from './navigation.js';
-import { renderQuizSetsView } from './quiz_engine.js';
+import { renderFlashcardsView as renderQuizSetsView } from './quiz_engine.js';
 
 let otaPollerInterval = null;
 let isSyncInProgress = false;
@@ -73,7 +73,7 @@ export async function checkOtaUpdates(isSilent = false) {
         JSON.stringify(currentCache.stemReviewers || []) !== JSON.stringify(data.stemReviewers || []) ||
         JSON.stringify(currentCache.studyMaterials || []) !== JSON.stringify(data.studyMaterials || []) ||
         JSON.stringify(currentCache.calendarEvents || []) !== JSON.stringify(data.calendarEvents || []) ||
-        JSON.stringify(currentCache.quizSets || []) !== JSON.stringify(data.quizSets || []);
+        JSON.stringify(currentCache.flashcardDecks || []) !== JSON.stringify(data.flashcardDecks || []);
 
       if (isNewUpdate) {
         saveSyncedData(data);
@@ -127,7 +127,7 @@ function showAutoUpdateNotification(data, isManual = false) {
   
   const revCount = data.stemReviewers ? data.stemReviewers.length : 0;
   const matCount = data.studyMaterials ? data.studyMaterials.length : 0;
-  const quizCount = data.quizSets ? data.quizSets.length : 0;
+  const flashcardCount = data.flashcardDecks ? data.flashcardDecks.length : 0;
   const eventCount = data.calendarEvents ? data.calendarEvents.length : 0;
 
   toast.innerHTML = `
@@ -148,7 +148,7 @@ function showAutoUpdateNotification(data, isManual = false) {
         <span>•</span>
         <span>📚 ${matCount} Mats</span>
         <span>•</span>
-        <span>🎯 ${quizCount} Quizzes</span>
+        <span>🎯 ${quizCount} Flashcard Decks</span>
         <span>•</span>
         <span>📅 ${eventCount} Events</span>
       </div>
@@ -184,7 +184,7 @@ function showUpToDateNotification(data) {
         <h4 class="text-xs font-bold text-white uppercase tracking-wider">Already Up to Date</h4>
         <span class="text-[10px] font-mono-math text-emerald-400">v${data.version || '1.4'}</span>
       </div>
-      <p class="text-[11px] text-slate-300 mt-0.5 leading-snug">All curriculum notes, reviewers, quizzes, and deadlines are currently synced.</p>
+      <p class="text-[11px] text-slate-300 mt-0.5 leading-snug">All curriculum notes, reviewers, flashcards, and deadlines are currently synced.</p>
     </div>
     <button onclick="document.getElementById('auto-update-toast')?.remove()" class="text-slate-400 hover:text-white text-xs p-1">✕</button>
   `;

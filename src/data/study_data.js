@@ -27,11 +27,11 @@ export function getSubjectMeta(subjectName) {
   return found || { name: subjectName, type: 'Main', color: 'border-l-4 border-tagsci-600', badgeClass: 'bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300' };
 }
 
-// Default baseline data inlined from updates.json
+// Default baseline data
 const DEFAULT_BASELINE = {
-  "version": "1.4.1",
-  "updatedAt": "2026-09-24T02:43:37.166Z",
-  "announcement": "Refreshed General Math & Physics Reviewers, First Summative Exam schedule, and Quiz Banks.",
+  "version": "1.9.0",
+  "updatedAt": "2026-10-25T19:30:00.000Z",
+  "announcement": "Active Recall Flashcards & Spaced Repetition engine is now active.",
   "calendarEvents": [
     {
       "id": 1790208692100,
@@ -43,78 +43,83 @@ const DEFAULT_BASELINE = {
       "desc": "First Quarter Summative Examination coverage across all academic subjects."
     }
   ],
-  "stemReviewers": [
-    {
-      "id": "gen_math_functions",
-      "subject": "General Math",
-      "tag": "Main",
-      "color": "border-l-4 border-g11pink-500",
-      "title": "Functions, Rational Equations & Inverses",
-      "summary": "Domain, range, rational functions, asymptotes, and inverse function properties.",
-      "blocks": [
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "1. Rational Functions & Asymptotes"
-        },
-        {
-          "type": "paragraph",
-          "text": "A rational function is defined as a fraction of polynomials $f(x) = \\frac{P(x)}{Q(x)}$ where $Q(x) \\neq 0$."
-        },
-        {
-          "type": "formula",
-          "title": "Standard Rational Form",
-          "formula": "f(x) = \\frac{a_n x^n + \\dots}{b_m x^m + \\dots}",
-          "note": "Compare degree n and degree m to find horizontal asymptotes."
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "Vertical Asymptote: Values of x where denominator Q(x) = 0.",
-            "Horizontal Asymptote: If n < m, y = 0. If n = m, y = \\frac{a_n}{b_m}."
-          ]
-        }
-      ]
-    }
-  ],
+  "stemReviewers": [],
   "studyMaterials": [],
   "problemSets": [],
-  "quizSets": [
+  "flashcardDecks": [
     {
-      "id": "quiz_1790208718271",
-      "subject": "Effective Communications",
+      "id": "deck_kasaysayan_aralin_1",
+      "subject": "Kasaysayan",
       "tag": "Main",
-      "title": "Effective Communications Quiz Drill",
-      "desc": "Key concepts and practice questions for Effective Communications.",
-      "timeLimitMinutes": 15,
-      "questions": [
+      "color": "border-l-4 border-amber-600",
+      "title": "Summative 1: Zeus Salazar & Konsepto ng Kasaysayan",
+      "desc": "Active recall on Pantayong Pananaw, Tatlong Yugto ng Kasaysayan, and historical methodologies.",
+      "cards": [
         {
-          "type": "true_false",
-          "topic": "Communication Fundamentals",
-          "prompt": "Communication is a linear process with no feedback loop.",
-          "answerBoolean": false,
-          "explanation": "Communication is an interactive/transactional process that requires active feedback between sender and receiver."
+          "id": "kas_01",
+          "topic": "Batayang Kahulugan",
+          "front": "Ano ang depinisyon ng **Kasaysayan** ayon sa Pantayong Pananaw ni Dr. Zeus Salazar?",
+          "back": "Ang kasaysayan ay **salaysay na may saysay para sa sinasalaysayang grupo ng tao** (kailangang may saysay para sa sariling kabuuan).",
+          "hint": "Tandaan ang dalawang salitang-ugat: Salaysay (kuwento) at Saysay (katuturan o kabuluhan)."
         },
         {
-          "type": "mcq",
-          "topic": "Communication Models",
-          "prompt": "Which element in the communication process refers to the medium through which a message is transmitted?",
-          "options": [
-            "Channel",
-            "Receiver",
-            "Encoding",
-            "Feedback"
-          ],
-          "answerIndex": 0,
-          "explanation": "The Channel is the medium or vehicle through which the encoded message is conveyed."
+          "id": "kas_02",
+          "topic": "Pananaw sa Kasaysayan",
+          "front": "Ano ang pagkakaiba ng **Pangkaming Pananaw** sa **Pantayong Pananaw**?",
+          "back": "• **Pangkami**: Mula sa Pilipino tungo sa banyagang tagapakinig/mambabasa gamit ang banyagang wika (pagpapaliwanag sa iba).\n• **Pantayo**: Mula sa Pilipino para sa sariling kapwa Pilipino gamit ang wikang nauunawaan ng lahat sa loob ng sariling kultura.",
+          "hint": "Sino ang kausap? Taga-labas o sariling kapwa Pilipino?"
         },
         {
-          "type": "identification",
-          "topic": "Barriers",
-          "prompt": "What term describes anything that distorts, interrupts, or impedes the message between sender and receiver?",
-          "correctText": "Noise",
-          "aliases": "interference, barrier",
-          "explanation": "Noise is any physical, psychological, or semantic interference in the communication channel."
+          "id": "kas_03",
+          "topic": "Tatlong Yugto",
+          "front": "Ano ang **Tatlong Yugto ng Kasaysayan ng Kapilipinuhan** ayon sa Bagong Balangkas?",
+          "back": "1. **Unang Yugto**: Pamayanan (bago ang 1588 / kolonyalismo)\n2. **Ikalawang Yugto**: Bayan (pagbuo ng kamalayang Pilipino noong ika-19 na dantaon hanggang Himagsikan)\n3. **Ikatlong Yugto**: Bansa (Republika at pangkalahatang kaisahan ng Kapilipinuhan).",
+          "hint": "Pamayanan -> Bayan -> Bansa."
+        },
+        {
+          "id": "kas_04",
+          "topic": "Metodolohiya",
+          "front": "Ano ang kaibahan ng **Primaryang Batis** sa **Sekondaryang Batis**?",
+          "back": "• **Primaryang Batis**: Direktang ebidensya o saksi mula sa mismong panahong pinag-aaralan (e.g. talaarawan, liham, batas, artifacts, ulat ng saksi).\n• **Sekondaryang Batis**: Pagsusuri, interpretasyon, o pagtalakay batay sa mga primaryang batis (e.g. aklat-aralin, artikulong pangkasaysayan).",
+          "hint": "Mismong saksi ba o komentaryo/pagsusuri lang pagkatapos ng pangyayari?"
+        }
+      ]
+    },
+    {
+      "id": "deck_imfa_chem_flashcards",
+      "subject": "General Chemistry",
+      "tag": "Flashcard Deck",
+      "color": "border-l-4 border-emerald-500",
+      "title": "Intermolecular Forces & Physical Properties (Active Recall)",
+      "desc": "Master London dispersion, dipole-dipole, hydrogen bonding, and their effects on boiling points and vapor pressure.",
+      "cards": [
+        {
+          "id": "chem_01",
+          "topic": "Intermolecular Forces",
+          "front": "What is the primary condition required for **Hydrogen Bonding** to form between molecules?",
+          "back": "A hydrogen atom covalently bonded to a strongly electronegative atom with small atomic radius ($\\text{N}$, $\\text{O}$, or $\\text{F}$) interacts with a lone pair on a nearby $\\text{N}$, $\\text{O}$, or $\\text{F}$ atom.",
+          "hint": "Think of the acronym: FON (Fluorine, Oxygen, Nitrogen)."
+        },
+        {
+          "id": "chem_02",
+          "topic": "Dispersion Forces",
+          "front": "How does molecular size / molar mass affect the strength of **London Dispersion Forces (LDF)**?",
+          "back": "Larger molecules with higher molar mass have larger electron clouds, increasing **polarizability**, which produces stronger temporary dipoles and higher boiling points.",
+          "hint": "More electrons = easier to distort the electron cloud."
+        },
+        {
+          "id": "chem_03",
+          "topic": "Ion-Dipole Forces",
+          "front": "How do water ($\\text{H}_2\\text{O}$) molecules orient around a $\\text{Na}^+$ cation vs a $\\text{Cl}^-$ anion during hydration?",
+          "back": "Around $\\text{Na}^+$, water orients its partially negative Oxygen atom ($\\delta^- \\text{O}$). Around $\\text{Cl}^-$, water orients its partially positive Hydrogen atoms ($\\delta^+ \\text{H}$).",
+          "hint": "Opposite charges attract: $\\delta^-$ toward (+) and $\\delta^+$ toward (-)."
+        },
+        {
+          "id": "chem_04",
+          "topic": "Physical Properties",
+          "front": "What is the relationship between Intermolecular Force (IMF) strength and **Vapor Pressure** at a given temperature?",
+          "back": "**Inversely proportional**: Stronger IMFs $\\implies$ Fewer surface molecules can escape into gas phase $\\implies$ **Lower Vapor Pressure** (and Higher Boiling Point).",
+          "hint": "If molecules stick tightly together, can they easily evaporate into vapor?"
         }
       ]
     }
@@ -124,10 +129,29 @@ const DEFAULT_BASELINE = {
 // Load cached data if available (survives updates & syncs), or fallback to baseline
 let cachedData = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null') || DEFAULT_BASELINE;
 
+// Normalize flashcardDecks if old cache had quizSets
+if (!cachedData.flashcardDecks && cachedData.quizSets) {
+  cachedData.flashcardDecks = cachedData.quizSets.map(q => ({
+    id: q.id,
+    subject: q.subject,
+    tag: q.tag,
+    color: q.color,
+    title: q.title,
+    desc: q.desc,
+    cards: (q.questions || []).map((card, idx) => ({
+      id: card.id || `card_${idx}`,
+      topic: card.topic || 'General',
+      front: card.front || card.prompt || '',
+      back: card.back || card.explanation || '',
+      hint: card.hint || ''
+    }))
+  }));
+}
+
 export let CALENDAR_EVENTS = cachedData.calendarEvents || DEFAULT_BASELINE.calendarEvents;
 export let STEM_REVIEWERS = cachedData.stemReviewers || DEFAULT_BASELINE.stemReviewers;
 export let PROBLEM_SETS = cachedData.problemSets || DEFAULT_BASELINE.problemSets;
-export let QUIZ_SETS = cachedData.quizSets || DEFAULT_BASELINE.quizSets;
+export let FLASHCARD_DECKS = cachedData.flashcardDecks || DEFAULT_BASELINE.flashcardDecks;
 export let STUDY_MATERIALS = cachedData.studyMaterials || DEFAULT_BASELINE.studyMaterials;
 export let CURRENT_APP_VERSION = cachedData.version || DEFAULT_BASELINE.version;
 
@@ -183,13 +207,13 @@ export function clearAppCache() {
 
 export function saveSyncedData(newData) {
   cachedData = {
-    version: newData.version || '1.4.1',
+    version: newData.version || '1.9.0',
     updatedAt: newData.updatedAt || new Date().toISOString(),
     announcement: newData.announcement || '',
     calendarEvents: newData.calendarEvents || [],
     stemReviewers: newData.stemReviewers || [],
     problemSets: newData.problemSets || [],
-    quizSets: newData.quizSets || [],
+    flashcardDecks: newData.flashcardDecks || [],
     studyMaterials: newData.studyMaterials || []
   };
 
@@ -199,7 +223,7 @@ export function saveSyncedData(newData) {
   CALENDAR_EVENTS = cachedData.calendarEvents;
   STEM_REVIEWERS = cachedData.stemReviewers;
   PROBLEM_SETS = cachedData.problemSets;
-  QUIZ_SETS = cachedData.quizSets;
+  FLASHCARD_DECKS = cachedData.flashcardDecks;
   STUDY_MATERIALS = cachedData.studyMaterials;
   CURRENT_APP_VERSION = cachedData.version;
 }

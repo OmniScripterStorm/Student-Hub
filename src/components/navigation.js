@@ -1,6 +1,6 @@
-import { STEM_REVIEWERS, STUDY_MATERIALS, QUIZ_SETS, getCachedCreditsMarkdown, saveCachedCreditsMarkdown, DEFAULT_CREDITS_URL, getSyncUrl, CURRENT_APP_VERSION, getSubjectMeta } from '../data/study_data.js';
+import { STEM_REVIEWERS, STUDY_MATERIALS, FLASHCARD_DECKS, getCachedCreditsMarkdown, saveCachedCreditsMarkdown, DEFAULT_CREDITS_URL, getSyncUrl, CURRENT_APP_VERSION, getSubjectMeta } from '../data/study_data.js';
 import { renderMathInHtml } from './math_engine.js';
-import { renderQuizSetsView } from './quiz_engine.js';
+import { renderFlashcardsView as renderQuizSetsView } from './quiz_engine.js';
 import { updateSettingsPwaStatus } from './pwa_installer.js';
 
 let currentSection = 'overview'; // overview, materials, reviewers, quiz_sets, credits, settings

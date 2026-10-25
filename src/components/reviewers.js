@@ -2,7 +2,7 @@
    TagSci G11 Study WebApp - Study Vault & Reviewers Engine
    ========================================================= */
 
-import { STEM_REVIEWERS, STUDY_MATERIALS, QUIZ_SETS, getSubjectMeta } from '../data/study_data.js';
+import { STEM_REVIEWERS, STUDY_MATERIALS, FLASHCARD_DECKS, getSubjectMeta } from '../data/study_data.js';
 import { renderMathInHtml, renderCartesianPlaneSvg, renderJsxgraphBlock, renderTikzFbdSvg, initializeJsxgraphBoards } from './math_engine.js';
 import { navigateSection } from './navigation.js';
 
@@ -227,7 +227,7 @@ function updateVaultTabButtons() {
 
   if (bRev) bRev.innerText = (STEM_REVIEWERS || []).length;
   if (bMat) bMat.innerText = (STUDY_MATERIALS || []).length;
-  if (bQuiz) bQuiz.innerText = (QUIZ_SETS || []).length;
+  if (bQuiz) bQuiz.innerText = (FLASHCARD_DECKS || []).length;
 
   tabs.forEach(t => {
     const btn = document.getElementById(`btnVaultTab-${t}`);
@@ -246,8 +246,8 @@ function updateVaultTabButtons() {
     if (iconEl) iconEl.innerHTML = '&#x1F4DA;';
     if (titleEl) titleEl.innerText = 'Study Materials';
   } else if (currentVaultTab === 'quizzes') {
-    if (iconEl) iconEl.innerHTML = '&#x2753;';
-    if (titleEl) titleEl.innerText = 'Self-Tests & Quizzes';
+    if (iconEl) iconEl.innerHTML = '&#x1F0CF;';
+    if (titleEl) titleEl.innerText = 'Flashcards & Active Recall';
   }
 }
 
@@ -288,7 +288,7 @@ export function renderMaterials() {
   let sourceList = [];
   if (currentVaultTab === 'reviewers') sourceList = STEM_REVIEWERS || [];
   else if (currentVaultTab === 'materials') sourceList = STUDY_MATERIALS || [];
-  else if (currentVaultTab === 'quizzes') sourceList = QUIZ_SETS || [];
+  else if (currentVaultTab === 'quizzes') sourceList = FLASHCARD_DECKS || [];
 
   // Filter by search query
   let filtered = sourceList;
@@ -314,8 +314,8 @@ export function renderMaterials() {
   }
 
   if (displayItems.length === 0) {
-    const emptyIcon = currentVaultTab === 'reviewers' ? '&#x1F52C;' : (currentVaultTab === 'materials' ? '&#x1F4DA;' : '&#x2753;');
-    const emptyName = currentVaultTab === 'reviewers' ? 'reviewers' : (currentVaultTab === 'materials' ? 'study materials' : 'quiz banks');
+    const emptyIcon = currentVaultTab === 'reviewers' ? '&#x1F52C;' : (currentVaultTab === 'materials' ? '&#x1F4DA;' : '&#x1F0CF;');
+    const emptyName = currentVaultTab === 'reviewers' ? 'reviewers' : (currentVaultTab === 'materials' ? 'study materials' : 'flashcard decks');
     grid.innerHTML = `
       <div class="py-8 text-center text-slate-400 dark:text-slate-500 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 p-4">
         <span class="text-2xl block mb-1">${emptyIcon}</span>
