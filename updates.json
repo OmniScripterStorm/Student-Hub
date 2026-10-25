@@ -1,6 +1,6 @@
 {
   "version": "1.8.3",
-  "updatedAt": "2026-10-08T01:57:32.523Z",
+  "updatedAt": "2026-10-25T09:39:12.482Z",
   "announcement": "Refreshed 3 Reviewers, 14 Study Materials, 5 Deadlines, and 2 Quiz Banks.",
   "calendarEvents": [
     {
@@ -4101,7 +4101,7 @@
         {
           "type": "tikz",
           "title": "Free-Body Diagram: Static Equilibrium of a Crane Boom",
-          "caption": "Figure 2: TikZ-FBD diagram of a hinged horizontal boom in equilibrium showing pin reactions R_x, R_y, cable tension T, beam weight W_beam at center of mass, and payload W_load at tip.",
+          "caption": "Figure 2: Diagram of a hinged horizontal boom in equilibrium showing pin reactions R_x, R_y, cable tension T, beam weight W_beam at center of mass, and payload W_load at tip.",
           "code": "\\begin{tikzpicture}\n  \\node[point] (O) at (0,0) {Pin $O$};\n  \\node[box,width=4.0,height=0.4] (boom) at (2.0,0) {};\n  \\node[point] (CG) at (2.0,0) {};\n  \\node[point] (Tip) at (4.0,0) {};\n  \\draw[force,->,red] (CG) -- ++(0,-1.5) node[below] {$W_{\\text{beam}}$};\n  \\draw[force,->,red] (Tip) -- ++(0,-2.2) node[below] {$W_{\\text{load}}$};\n  \\draw[force,->,amber] (Tip) -- ++(-1.6,1.4) node[above left] {Tension $\\vec{T}$};\n  \\draw[force,->,cyan] (O) -- ++(1.2,0) node[right] {$R_x$};\n  \\draw[force,->,cyan] (O) -- ++(0,1.4) node[above] {$R_y$};\n\\end{tikzpicture}"
         },
         {
