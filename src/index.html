@@ -47,6 +47,110 @@
       }
     };
   </script>
+  <!-- In-App Browser Auto-Breakout (Messenger / Instagram / WebViews) -->
+  <script>
+    (function initInAppBrowserBreakout() {
+      try {
+        var isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                           Boolean(window.navigator.standalone) ||
+                           (document.referrer && document.referrer.indexOf('android-app://') !== -1);
+        if (isStandalone) return;
+
+        var ua = navigator.userAgent || navigator.vendor || window.opera || '';
+        var isFB = /FBAN|FBAV|FB_IAB|Messenger/i.test(ua);
+        var isIG = /Instagram/i.test(ua);
+        var isOtherInApp = /Line|Twitter|Snapchat|TikTok|MicroMessenger/i.test(ua);
+
+        if (!isFB && !isIG && !isOtherInApp) return;
+
+        var isAndroid = /Android/i.test(ua);
+        var isIOS = /iPhone|iPad|iPod/i.test(ua);
+        var currentUrl = window.location.href;
+
+        // 1. Android: Attempt automatic Chrome Intent launch
+        if (isAndroid) {
+          var cleanUrl = currentUrl.replace(/^https?:\/\//i, '');
+          var intentUrl = 'intent://' + cleanUrl + '#Intent;scheme=https;package=com.android.chrome;end';
+
+          // Session guard to prevent infinite refresh loops if user returns to WebView
+          var hasAttempted = sessionStorage.getItem('tagsci_inapp_intent_attempted');
+          if (!hasAttempted) {
+            sessionStorage.setItem('tagsci_inapp_intent_attempted', 'true');
+            window.location.replace(intentUrl);
+          }
+        }
+
+        // 2. Banner / Modal for iOS and Android fallback
+        function showInAppBreakoutModal() {
+          if (document.getElementById('in-app-breakout-modal')) return;
+
+          var modal = document.createElement('div');
+          modal.id = 'in-app-breakout-modal';
+          modal.className = 'fixed inset-x-0 top-0 z-[100000] p-3 sm:p-4 bg-slate-900/95 text-white backdrop-blur-md border-b-2 border-amber-500 shadow-2xl transition-all';
+          modal.innerHTML = [
+            '<div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">',
+            '  <div class="flex items-start gap-2.5">',
+            '    <div class="p-2 rounded-xl bg-amber-500/20 text-amber-400 shrink-0 mt-0.5">',
+            '      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">',
+            '        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>',
+            '      </svg>',
+            '    </div>',
+            '    <div>',
+            '      <h4 class="font-black text-xs sm:text-sm text-amber-400 flex items-center gap-1.5">',
+            '        Open in System Browser (' + (isIOS ? 'Safari' : 'Chrome') + ')',
+            '      </h4>',
+            '      <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5 leading-snug">',
+            '        Messenger/In-App browser prevents offline downloads and installable PWA features.',
+            '        Tap <strong class="text-white underline font-bold">···</strong> in the top-right corner and select <strong class="text-white font-bold">"Open in ' + (isIOS ? 'Safari' : 'Default Browser') + '"</strong>.',
+            '      </p>',
+            '    </div>',
+            '  </div>',
+            '  <div class="flex items-center gap-2 w-full sm:w-auto shrink-0 mt-1 sm:mt-0">',
+            '    <button id="in-app-copy-btn" class="flex-1 sm:flex-none px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition active:scale-95">',
+            '      Copy Link',
+            '    </button>',
+            '    <button id="in-app-dismiss-btn" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-semibold">',
+            '      Dismiss',
+            '    </button>',
+            '  </div>',
+            '</div>'
+          ].join('');
+
+          document.body.prepend(modal);
+
+          var dismissBtn = document.getElementById('in-app-dismiss-btn');
+          if (dismissBtn) {
+            dismissBtn.addEventListener('click', function() {
+              modal.remove();
+            });
+          }
+
+          var copyBtn = document.getElementById('in-app-copy-btn');
+          if (copyBtn) {
+            copyBtn.addEventListener('click', function() {
+              if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(currentUrl).then(function() {
+                  copyBtn.innerText = 'Copied! Open ' + (isIOS ? 'Safari' : 'Chrome');
+                }).catch(function() {
+                  prompt('Copy this link and open in your browser:', currentUrl);
+                });
+              } else {
+                prompt('Copy this link and open in your browser:', currentUrl);
+              }
+            });
+          }
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', showInAppBreakoutModal);
+        } else {
+          showInAppBreakoutModal();
+        }
+      } catch (e) {
+        console.warn('In-app browser breakout initialization notice:', e);
+      }
+    })();
+  </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap');
     
