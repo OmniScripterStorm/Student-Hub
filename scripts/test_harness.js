@@ -69,11 +69,10 @@
       assert('window.App exists', typeof window.App === 'object' && window.App !== null);
       if (!window.App) throw new Error('window.App is not defined');
 
-      // 2. Hydrate study data from local updates.json if currently empty
+      // 2. Optional hydration check with timeout
       try {
-        sendLog('Checking study data hydration...');
-        const res = await fetch('/updates.json');
-        if (res.ok) {
+        const res = await fetch('/updates.json', { signal: AbortSignal.timeout(1500) }).catch(() => null);
+        if (res && res.ok) {
           const payload = await res.json();
           if (typeof window.App.saveSyncedData === 'function') {
             window.App.saveSyncedData(payload);

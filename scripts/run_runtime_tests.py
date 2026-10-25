@@ -242,6 +242,7 @@ def run_isolated_tests(timeout_sec=15):
                     shutil.rmtree(temp_profile_dir, ignore_errors=True)
                 except Exception:
                     pass
+                time.sleep(0.8)
 
         return all_passed
 
