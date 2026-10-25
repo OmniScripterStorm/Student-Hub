@@ -47,6 +47,110 @@
       }
     };
   </script>
+  <!-- In-App Browser Auto-Breakout (Messenger / Instagram / WebViews) -->
+  <script>
+    (function initInAppBrowserBreakout() {
+      try {
+        var isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                           Boolean(window.navigator.standalone) ||
+                           (document.referrer && document.referrer.indexOf('android-app://') !== -1);
+        if (isStandalone) return;
+
+        var ua = navigator.userAgent || navigator.vendor || window.opera || '';
+        var isFB = /FBAN|FBAV|FB_IAB|Messenger/i.test(ua);
+        var isIG = /Instagram/i.test(ua);
+        var isOtherInApp = /Line|Twitter|Snapchat|TikTok|MicroMessenger/i.test(ua);
+
+        if (!isFB && !isIG && !isOtherInApp) return;
+
+        var isAndroid = /Android/i.test(ua);
+        var isIOS = /iPhone|iPad|iPod/i.test(ua);
+        var currentUrl = window.location.href;
+
+        // 1. Android: Attempt automatic Chrome Intent launch
+        if (isAndroid) {
+          var cleanUrl = currentUrl.replace(/^https?:\/\//i, '');
+          var intentUrl = 'intent://' + cleanUrl + '#Intent;scheme=https;package=com.android.chrome;end';
+
+          // Session guard to prevent infinite refresh loops if user returns to WebView
+          var hasAttempted = sessionStorage.getItem('tagsci_inapp_intent_attempted');
+          if (!hasAttempted) {
+            sessionStorage.setItem('tagsci_inapp_intent_attempted', 'true');
+            window.location.replace(intentUrl);
+          }
+        }
+
+        // 2. Banner / Modal for iOS and Android fallback
+        function showInAppBreakoutModal() {
+          if (document.getElementById('in-app-breakout-modal')) return;
+
+          var modal = document.createElement('div');
+          modal.id = 'in-app-breakout-modal';
+          modal.className = 'fixed inset-x-0 top-0 z-[100000] p-3 sm:p-4 bg-slate-900/95 text-white backdrop-blur-md border-b-2 border-amber-500 shadow-2xl transition-all';
+          modal.innerHTML = [
+            '<div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">',
+            '  <div class="flex items-start gap-2.5">',
+            '    <div class="p-2 rounded-xl bg-amber-500/20 text-amber-400 shrink-0 mt-0.5">',
+            '      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">',
+            '        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>',
+            '      </svg>',
+            '    </div>',
+            '    <div>',
+            '      <h4 class="font-black text-xs sm:text-sm text-amber-400 flex items-center gap-1.5">',
+            '        Open in System Browser (' + (isIOS ? 'Safari' : 'Chrome') + ')',
+            '      </h4>',
+            '      <p class="text-[11px] sm:text-xs text-slate-300 mt-0.5 leading-snug">',
+            '        Messenger/In-App browser prevents offline downloads and installable PWA features.',
+            '        Tap <strong class="text-white underline font-bold">···</strong> in the top-right corner and select <strong class="text-white font-bold">"Open in ' + (isIOS ? 'Safari' : 'Default Browser') + '"</strong>.',
+            '      </p>',
+            '    </div>',
+            '  </div>',
+            '  <div class="flex items-center gap-2 w-full sm:w-auto shrink-0 mt-1 sm:mt-0">',
+            '    <button id="in-app-copy-btn" class="flex-1 sm:flex-none px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition active:scale-95">',
+            '      Copy Link',
+            '    </button>',
+            '    <button id="in-app-dismiss-btn" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-semibold">',
+            '      Dismiss',
+            '    </button>',
+            '  </div>',
+            '</div>'
+          ].join('');
+
+          document.body.prepend(modal);
+
+          var dismissBtn = document.getElementById('in-app-dismiss-btn');
+          if (dismissBtn) {
+            dismissBtn.addEventListener('click', function() {
+              modal.remove();
+            });
+          }
+
+          var copyBtn = document.getElementById('in-app-copy-btn');
+          if (copyBtn) {
+            copyBtn.addEventListener('click', function() {
+              if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(currentUrl).then(function() {
+                  copyBtn.innerText = 'Copied! Open ' + (isIOS ? 'Safari' : 'Chrome');
+                }).catch(function() {
+                  prompt('Copy this link and open in your browser:', currentUrl);
+                });
+              } else {
+                prompt('Copy this link and open in your browser:', currentUrl);
+              }
+            });
+          }
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', showInAppBreakoutModal);
+        } else {
+          showInAppBreakoutModal();
+        }
+      } catch (e) {
+        console.warn('In-app browser breakout initialization notice:', e);
+      }
+    })();
+  </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap');
     
@@ -277,8 +381,13 @@
       </button>
 
       <button id="navItem-quiz_sets" onclick="navigateSection('quiz_sets')" class="w-full flex items-center space-x-3 px-3.5 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition font-medium">
-        <span class="text-base">&#x2753;</span>
-        <span>Quiz Sets & Self-Tests</span>
+        <span class="text-base">&#x1F4C7;</span>
+        <span>Flashcards & Active Recall</span>
+      </button>
+
+      <button id="navItem-formulas" onclick="navigateSection('formulas')" class="w-full flex items-center space-x-3 px-3.5 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition font-medium">
+        <span class="text-base">&#x1F4D0;</span>
+        <span>STEM Formula Vault</span>
       </button>
 
       <!-- Category: Student Hub -->
@@ -515,18 +624,23 @@
       <div id="reviewersListContainer"></div>
     </div>
 
-    <!-- 4. QUIZ SETS VIEW -->
+    <!-- 4. FLASHCARDS & ACTIVE RECALL VIEW -->
     <div id="viewSection-quiz_sets" class="hidden space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
         <div>
           <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-            <span>&#x2753;</span>
-            <span>Quiz Sets & Self-Assessment</span>
+            <span>&#x1F4C7;</span>
+            <span>Flashcards & Active Recall</span>
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Test your mastery before exams with practice quiz collections</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400">3D flip flashcards and spaced repetition active recall for STEM mastery</p>
         </div>
       </div>
       <div id="quizSetsListContainer"></div>
+    </div>
+
+    <!-- 5. STEM FORMULA VAULT VIEW -->
+    <div id="viewSection-formulas" class="hidden space-y-4">
+      <div id="formulaVaultContainer"></div>
     </div>
 
     <!-- 6. ACADEMIC COMMITTEE & CREDITS VIEW -->
@@ -1113,6 +1227,7 @@ const SYNC_URL_KEY = 'tagsci_g11_sync_url';
 const DEFAULT_OTA_URL = 'https://omniscripterstorm.github.io/Student-Hub/updates.json';
 
 const SUBJECTS = [
+  { name: 'Kasaysayan', type: 'Main', color: 'border-l-4 border-amber-600', badgeClass: 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300' },
   { name: 'TagSci', type: 'Institutional', color: 'border-l-4 border-tagsci-700', badgeClass: 'bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300' },
   { name: 'DepEd', type: 'DepEd', color: 'border-l-4 border-blue-600', badgeClass: 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300' },
   { name: 'Effective Communications', type: 'Main', color: 'border-l-4 border-blue-500', badgeClass: 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300' },
@@ -1131,11 +1246,11 @@ function getSubjectMeta(subjectName) {
   return found || { name: subjectName, type: 'Main', color: 'border-l-4 border-tagsci-600', badgeClass: 'bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300' };
 }
 
-// Default baseline data inlined from updates.json
+// Default baseline data
 const DEFAULT_BASELINE = {
-  "version": "1.4.1",
-  "updatedAt": "2026-09-24T02:43:37.166Z",
-  "announcement": "Refreshed General Math & Physics Reviewers, First Summative Exam schedule, and Quiz Banks.",
+  "version": "1.9.0",
+  "updatedAt": "2026-10-25T19:30:00.000Z",
+  "announcement": "Active Recall Flashcards & Spaced Repetition engine is now active.",
   "calendarEvents": [
     {
       "id": 1790208692100,
@@ -1147,78 +1262,83 @@ const DEFAULT_BASELINE = {
       "desc": "First Quarter Summative Examination coverage across all academic subjects."
     }
   ],
-  "stemReviewers": [
-    {
-      "id": "gen_math_functions",
-      "subject": "General Math",
-      "tag": "Main",
-      "color": "border-l-4 border-g11pink-500",
-      "title": "Functions, Rational Equations & Inverses",
-      "summary": "Domain, range, rational functions, asymptotes, and inverse function properties.",
-      "blocks": [
-        {
-          "type": "heading",
-          "level": "h3",
-          "text": "1. Rational Functions & Asymptotes"
-        },
-        {
-          "type": "paragraph",
-          "text": "A rational function is defined as a fraction of polynomials $f(x) = \\frac{P(x)}{Q(x)}$ where $Q(x) \\neq 0$."
-        },
-        {
-          "type": "formula",
-          "title": "Standard Rational Form",
-          "formula": "f(x) = \\frac{a_n x^n + \\dots}{b_m x^m + \\dots}",
-          "note": "Compare degree n and degree m to find horizontal asymptotes."
-        },
-        {
-          "type": "bullets",
-          "items": [
-            "Vertical Asymptote: Values of x where denominator Q(x) = 0.",
-            "Horizontal Asymptote: If n < m, y = 0. If n = m, y = \\frac{a_n}{b_m}."
-          ]
-        }
-      ]
-    }
-  ],
+  "stemReviewers": [],
   "studyMaterials": [],
   "problemSets": [],
-  "quizSets": [
+  "flashcardDecks": [
     {
-      "id": "quiz_1790208718271",
-      "subject": "Effective Communications",
+      "id": "deck_kasaysayan_aralin_1",
+      "subject": "Kasaysayan",
       "tag": "Main",
-      "title": "Effective Communications Quiz Drill",
-      "desc": "Key concepts and practice questions for Effective Communications.",
-      "timeLimitMinutes": 15,
-      "questions": [
+      "color": "border-l-4 border-amber-600",
+      "title": "Summative 1: Zeus Salazar & Konsepto ng Kasaysayan",
+      "desc": "Active recall on Pantayong Pananaw, Tatlong Yugto ng Kasaysayan, and historical methodologies.",
+      "cards": [
         {
-          "type": "true_false",
-          "topic": "Communication Fundamentals",
-          "prompt": "Communication is a linear process with no feedback loop.",
-          "answerBoolean": false,
-          "explanation": "Communication is an interactive/transactional process that requires active feedback between sender and receiver."
+          "id": "kas_01",
+          "topic": "Batayang Kahulugan",
+          "front": "Ano ang depinisyon ng **Kasaysayan** ayon sa Pantayong Pananaw ni Dr. Zeus Salazar?",
+          "back": "Ang kasaysayan ay **salaysay na may saysay para sa sinasalaysayang grupo ng tao** (kailangang may saysay para sa sariling kabuuan).",
+          "hint": "Tandaan ang dalawang salitang-ugat: Salaysay (kuwento) at Saysay (katuturan o kabuluhan)."
         },
         {
-          "type": "mcq",
-          "topic": "Communication Models",
-          "prompt": "Which element in the communication process refers to the medium through which a message is transmitted?",
-          "options": [
-            "Channel",
-            "Receiver",
-            "Encoding",
-            "Feedback"
-          ],
-          "answerIndex": 0,
-          "explanation": "The Channel is the medium or vehicle through which the encoded message is conveyed."
+          "id": "kas_02",
+          "topic": "Pananaw sa Kasaysayan",
+          "front": "Ano ang pagkakaiba ng **Pangkaming Pananaw** sa **Pantayong Pananaw**?",
+          "back": "• **Pangkami**: Mula sa Pilipino tungo sa banyagang tagapakinig/mambabasa gamit ang banyagang wika (pagpapaliwanag sa iba).\n• **Pantayo**: Mula sa Pilipino para sa sariling kapwa Pilipino gamit ang wikang nauunawaan ng lahat sa loob ng sariling kultura.",
+          "hint": "Sino ang kausap? Taga-labas o sariling kapwa Pilipino?"
         },
         {
-          "type": "identification",
-          "topic": "Barriers",
-          "prompt": "What term describes anything that distorts, interrupts, or impedes the message between sender and receiver?",
-          "correctText": "Noise",
-          "aliases": "interference, barrier",
-          "explanation": "Noise is any physical, psychological, or semantic interference in the communication channel."
+          "id": "kas_03",
+          "topic": "Tatlong Yugto",
+          "front": "Ano ang **Tatlong Yugto ng Kasaysayan ng Kapilipinuhan** ayon sa Bagong Balangkas?",
+          "back": "1. **Unang Yugto**: Pamayanan (bago ang 1588 / kolonyalismo)\n2. **Ikalawang Yugto**: Bayan (pagbuo ng kamalayang Pilipino noong ika-19 na dantaon hanggang Himagsikan)\n3. **Ikatlong Yugto**: Bansa (Republika at pangkalahatang kaisahan ng Kapilipinuhan).",
+          "hint": "Pamayanan -> Bayan -> Bansa."
+        },
+        {
+          "id": "kas_04",
+          "topic": "Metodolohiya",
+          "front": "Ano ang kaibahan ng **Primaryang Batis** sa **Sekondaryang Batis**?",
+          "back": "• **Primaryang Batis**: Direktang ebidensya o saksi mula sa mismong panahong pinag-aaralan (e.g. talaarawan, liham, batas, artifacts, ulat ng saksi).\n• **Sekondaryang Batis**: Pagsusuri, interpretasyon, o pagtalakay batay sa mga primaryang batis (e.g. aklat-aralin, artikulong pangkasaysayan).",
+          "hint": "Mismong saksi ba o komentaryo/pagsusuri lang pagkatapos ng pangyayari?"
+        }
+      ]
+    },
+    {
+      "id": "deck_imfa_chem_flashcards",
+      "subject": "General Chemistry",
+      "tag": "Flashcard Deck",
+      "color": "border-l-4 border-emerald-500",
+      "title": "Intermolecular Forces & Physical Properties (Active Recall)",
+      "desc": "Master London dispersion, dipole-dipole, hydrogen bonding, and their effects on boiling points and vapor pressure.",
+      "cards": [
+        {
+          "id": "chem_01",
+          "topic": "Intermolecular Forces",
+          "front": "What is the primary condition required for **Hydrogen Bonding** to form between molecules?",
+          "back": "A hydrogen atom covalently bonded to a strongly electronegative atom with small atomic radius ($\\text{N}$, $\\text{O}$, or $\\text{F}$) interacts with a lone pair on a nearby $\\text{N}$, $\\text{O}$, or $\\text{F}$ atom.",
+          "hint": "Think of the acronym: FON (Fluorine, Oxygen, Nitrogen)."
+        },
+        {
+          "id": "chem_02",
+          "topic": "Dispersion Forces",
+          "front": "How does molecular size / molar mass affect the strength of **London Dispersion Forces (LDF)**?",
+          "back": "Larger molecules with higher molar mass have larger electron clouds, increasing **polarizability**, which produces stronger temporary dipoles and higher boiling points.",
+          "hint": "More electrons = easier to distort the electron cloud."
+        },
+        {
+          "id": "chem_03",
+          "topic": "Ion-Dipole Forces",
+          "front": "How do water ($\\text{H}_2\\text{O}$) molecules orient around a $\\text{Na}^+$ cation vs a $\\text{Cl}^-$ anion during hydration?",
+          "back": "Around $\\text{Na}^+$, water orients its partially negative Oxygen atom ($\\delta^- \\text{O}$). Around $\\text{Cl}^-$, water orients its partially positive Hydrogen atoms ($\\delta^+ \\text{H}$).",
+          "hint": "Opposite charges attract: $\\delta^-$ toward (+) and $\\delta^+$ toward (-)."
+        },
+        {
+          "id": "chem_04",
+          "topic": "Physical Properties",
+          "front": "What is the relationship between Intermolecular Force (IMF) strength and **Vapor Pressure** at a given temperature?",
+          "back": "**Inversely proportional**: Stronger IMFs $\\implies$ Fewer surface molecules can escape into gas phase $\\implies$ **Lower Vapor Pressure** (and Higher Boiling Point).",
+          "hint": "If molecules stick tightly together, can they easily evaporate into vapor?"
         }
       ]
     }
@@ -1228,12 +1348,35 @@ const DEFAULT_BASELINE = {
 // Load cached data if available (survives updates & syncs), or fallback to baseline
 let cachedData = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null') || DEFAULT_BASELINE;
 
+// Normalize flashcardDecks if old cache had quizSets
+if (!cachedData.flashcardDecks && cachedData.quizSets) {
+  cachedData.flashcardDecks = cachedData.quizSets.map(q => ({
+    id: q.id,
+    subject: q.subject,
+    tag: q.tag,
+    color: q.color,
+    title: q.title,
+    desc: q.desc,
+    cards: (q.questions || []).map((card, idx) => ({
+      id: card.id || `card_${idx}`,
+      topic: card.topic || 'General',
+      front: card.front || card.prompt || '',
+      back: card.back || card.explanation || '',
+      hint: card.hint || ''
+    }))
+  }));
+}
+
 let CALENDAR_EVENTS = cachedData.calendarEvents || DEFAULT_BASELINE.calendarEvents;
 let STEM_REVIEWERS = cachedData.stemReviewers || DEFAULT_BASELINE.stemReviewers;
 let PROBLEM_SETS = cachedData.problemSets || DEFAULT_BASELINE.problemSets;
-let QUIZ_SETS = cachedData.quizSets || DEFAULT_BASELINE.quizSets;
+let FLASHCARD_DECKS = cachedData.flashcardDecks || DEFAULT_BASELINE.flashcardDecks;
 let STUDY_MATERIALS = cachedData.studyMaterials || DEFAULT_BASELINE.studyMaterials;
 let CURRENT_APP_VERSION = cachedData.version || DEFAULT_BASELINE.version;
+
+function getLocalStudyData() {
+  return cachedData || JSON.parse(localStorage.getItem(CACHE_KEY) || 'null') || DEFAULT_BASELINE;
+}
 
 const INITIAL_TASKS = [];
 
@@ -1283,13 +1426,13 @@ function clearAppCache() {
 
 function saveSyncedData(newData) {
   cachedData = {
-    version: newData.version || '1.4.1',
+    version: newData.version || '1.9.0',
     updatedAt: newData.updatedAt || new Date().toISOString(),
     announcement: newData.announcement || '',
     calendarEvents: newData.calendarEvents || [],
     stemReviewers: newData.stemReviewers || [],
     problemSets: newData.problemSets || [],
-    quizSets: newData.quizSets || [],
+    flashcardDecks: newData.flashcardDecks || [],
     studyMaterials: newData.studyMaterials || []
   };
 
@@ -1299,7 +1442,7 @@ function saveSyncedData(newData) {
   CALENDAR_EVENTS = cachedData.calendarEvents;
   STEM_REVIEWERS = cachedData.stemReviewers;
   PROBLEM_SETS = cachedData.problemSets;
-  QUIZ_SETS = cachedData.quizSets;
+  FLASHCARD_DECKS = cachedData.flashcardDecks;
   STUDY_MATERIALS = cachedData.studyMaterials;
   CURRENT_APP_VERSION = cachedData.version;
 }
@@ -1318,111 +1461,466 @@ function saveSyncedData(newData) {
    ========================================================= */
 
 const GREEK_SYMBOLS = {
+  // Lowercase Greek
   '\\alpha': '&alpha;',
   '\\beta': '&beta;',
   '\\gamma': '&gamma;',
   '\\delta': '&delta;',
-  '\\Delta': '&Delta;',
   '\\epsilon': '&epsilon;',
   '\\varepsilon': '&#x03B5;',
+  '\\zeta': '&zeta;',
+  '\\eta': '&eta;',
   '\\theta': '&theta;',
-  '\\Theta': '&Theta;',
+  '\\vartheta': '&#x03D1;',
+  '\\iota': '&iota;',
+  '\\kappa': '&kappa;',
+  '\\varkappa': '&#x03F0;',
   '\\lambda': '&lambda;',
-  '\\Lambda': '&Lambda;',
   '\\mu': '&mu;',
+  '\\nu': '&nu;',
+  '\\xi': '&xi;',
   '\\pi': '&pi;',
-  '\\Pi': '&Pi;',
+  '\\varpi': '&#x03D6;',
   '\\rho': '&rho;',
+  '\\varrho': '&#x03F1;',
   '\\sigma': '&sigma;',
-  '\\Sigma': '&Sigma;',
+  '\\varsigma': '&sigmaf;',
   '\\tau': '&tau;',
+  '\\upsilon': '&upsilon;',
   '\\phi': '&phi;',
-  '\\Phi': '&Phi;',
+  '\\varphi': '&#x03D5;',
+  '\\chi': '&chi;',
+  '\\psi': '&psi;',
   '\\omega': '&omega;',
+
+  // Uppercase Greek
+  '\\Gamma': '&Gamma;',
+  '\\Delta': '&Delta;',
+  '\\Theta': '&Theta;',
+  '\\Lambda': '&Lambda;',
+  '\\Xi': '&Xi;',
+  '\\Pi': '&Pi;',
+  '\\Sigma': '&Sigma;',
+  '\\Upsilon': '&Upsilon;',
+  '\\Phi': '&Phi;',
+  '\\Psi': '&Psi;',
   '\\Omega': '&Omega;'
 };
 
 const MATH_OPERATORS = {
-  '\\cdot': '&middot;',
-  '\\times': '&times;',
-  '\\pm': '&plusmn;',
-  '\\mp': '&#x2213;',
+  // Arrows & Implication
+  '\\Longleftrightarrow': '&hArr;',
+  '\\longleftrightarrow': '&harr;',
+  '\\Longrightarrow': '&rArr;',
+  '\\longrightarrow': '&rarr;',
+  '\\longleftarrow': '&larr;',
+  '\\rightleftharpoons': '&#x21CC;',
+  '\\leftrightharpoons': '&#x21CC;',
+  '\\leftrightarrow': '&harr;',
+  '\\Leftarrow': '&lArr;',
+  '\\Rightarrow': '&rArr;',
+  '\\leftarrow': '&larr;',
+  '\\rightarrow': '&rarr;',
+  '\\gets': '&larr;',
+  '\\implies': '&rArr;',
+  '\\impliedby': '&lArr;',
+  '\\iff': '&hArr;',
+  '\\to': '&rarr;',
+  '\\mapsto': '&#x21A6;',
+  '\\uparrow': '&uarr;',
+  '\\downarrow': '&darr;',
+  '\\Uparrow': '&#x21D1;',
+  '\\Downarrow': '&#x21D3;',
+  '\\updownarrow': '&#x2195;',
+  '\\Updownarrow': '&#x21D5;',
+
+  // Spacing
+  '\\qquad': '&emsp;&emsp;',
+  '\\quad': '&emsp;',
+  '\\thinspace': '&thinsp;',
+  '\\enspace': '&ensp;',
+  '\\,': '&thinsp;',
+  '\\;': '&ensp;',
+  '\\:': '&ensp;',
+  '\\!': '',
+  '\\ ': '&nbsp;',
+  '~': '&nbsp;',
+
+  // Relations & Comparison
+  '\\thickapprox': '&asymp;',
+  '\\approxeq': '&asymp;',
   '\\approx': '&asymp;',
+  '\\equiv': '&equiv;',
+  '\\cong': '&cong;',
+  '\\sim': '&sim;',
+  '\\simeq': '&#x2243;',
+  '\\asymp': '&asymp;',
+  '\\propto': '&prop;',
+  '\\varpropto': '&prop;',
   '\\neq': '&ne;',
+  '\\ne': '&ne;',
+  '\\leq': '&le;',
+  '\\geq': '&ge;',
   '\\le': '&le;',
   '\\ge': '&ge;',
+  '\\ll': '&lang;&lang;',
+  '\\gg': '&rang;&rang;',
+  '\\llless': '&#x22D8;',
+  '\\gggtr': '&#x22D9;',
+  '\\doteq': '&#x2250;',
+  '\\coloneqq': '&#x2254;',
+  '\\eqqcolon': '&#x2255;',
+  '\\triangleq': '&#x225C;',
+  '\\parallel': '&#x2225;',
+  '\\nparallel': '&#x2226;',
+  '\\perp': '&perp;',
+
+  // Binary Arithmetic & Operations
+  '\\times': '&times;',
+  '\\cdot': '&middot;',
+  '\\div': '&divide;',
+  '\\pm': '&plusmn;',
+  '\\mp': '&#x2213;',
+  '\\ast': '&lowast;',
+  '\\star': '&#x22C6;',
+  '\\bullet': '&bull;',
+  '\\circ': '&deg;',
+  '\\degree': '&deg;',
+  '\\diamond': '&#x25C7;',
+  '\\boxdot': '&#x22A1;',
+  '\\boxplus': '&#x229E;',
+  '\\boxtimes': '&#x22A0;',
+
+  // Calculus, Del & Infinities
   '\\infty': '&infin;',
   '\\partial': '&part;',
   '\\nabla': '&nabla;',
+  '\\hbar': '&#x210F;',
+  '\\ell': '&#x2113;',
+  '\\Re': '&#x211C;',
+  '\\Im': '&#x2111;',
+  '\\wp': '&#x2118;',
+
+  // Integrals & Big Operators
+  '\\iiint': '<span class="text-lg leading-none italic font-serif font-bold">&int;&int;&int;</span>',
+  '\\iint': '<span class="text-lg leading-none italic font-serif font-bold">&int;&int;</span>',
+  '\\oint': '<span class="text-lg leading-none italic font-serif font-bold">&#x222E;</span>',
+  '\\int': '<span class="text-lg leading-none italic font-serif font-bold">&int;</span>',
+  '\\prod': '<span class="text-lg leading-none font-bold">&prod;</span>',
+  '\\coprod': '<span class="text-lg leading-none font-bold">&#x2210;</span>',
+  '\\sum': '<span class="text-lg leading-none font-bold">&sum;</span>',
+  '\\sqrt': '&radic;',
+
+  // Set Theory & Logic
+  '\\smallsetminus': '&#x2216;',
+  '\\setminus': '&#x2216;',
+  '\\complement': '&#x2201;',
+  '\\bigcup': '<span class="text-lg leading-none font-bold">&bigcup;</span>',
+  '\\bigcap': '<span class="text-lg leading-none font-bold">&bigcap;</span>',
+  '\\cup': '&cup;',
+  '\\cap': '&cap;',
+  '\\uplus': '&#x228E;',
+  '\\sqcup': '&#x2294;',
+  '\\sqcap': '&#x2293;',
+  '\\subsetneqq': '&#x2ACB;',
+  '\\supsetneqq': '&#x2ACC;',
+  '\\subsetneq': '&#x228A;',
+  '\\supsetneq': '&#x228B;',
+  '\\nsubseteq': '&#x2288;',
+  '\\nsupseteq': '&#x2289;',
+  '\\nsubset': '&#x2284;',
+  '\\nsupset': '&#x2285;',
+  '\\subseteqq': '&#x2AC5;',
+  '\\supseteqq': '&#x2AC6;',
+  '\\subseteq': '&sube;',
+  '\\supseteq': '&supe;',
+  '\\sqsubseteq': '&#x2291;',
+  '\\sqsupseteq': '&#x2292;',
+  '\\sqsubset': '&#x228F;',
+  '\\sqsupset': '&#x2290;',
+  '\\subset': '&sub;',
+  '\\supset': '&sup;',
+  '\\varnothing': '&#x2205;',
+  '\\emptyset': '&empty;',
+  '\\notni': '&#x220C;',
+  '\\notin': '&notin;',
+  '\\owns': '&ni;',
+  '\\ni': '&ni;',
+  '\\in': '&isin;',
+  '\\nexists': '&#x2204;',
   '\\forall': '&forall;',
   '\\exists': '&exist;',
-  '\\in': '&isin;',
-  '\\notin': '&notin;',
-  '\\rightarrow': '&rarr;',
-  '\\leftarrow': '&larr;',
-  '\\Rightarrow': '&rArr;',
-  '\\Leftarrow': '&lArr;',
-  '\\leftrightarrow': '&harr;',
-  '\\int': '<span class="text-lg leading-none italic font-serif font-bold">&int;</span>',
-  '\\iint': '<span class="text-lg leading-none italic font-serif font-bold">&int;&int;</span>',
-  '\\sum': '<span class="text-lg leading-none font-bold">&sum;</span>',
-  '\\prod': '<span class="text-lg leading-none font-bold">&prod;</span>',
-  '\\sqrt': '&radic;'
+  '\\wedge': '&and;',
+  '\\land': '&and;',
+  '\\vee': '&or;',
+  '\\lor': '&or;',
+  '\\lnot': '&not;',
+  '\\neg': '&not;',
+  '\\top': '&#x22A4;',
+  '\\bot': '&#x22A5;',
+  '\\vdash': '&#x22A2;',
+  '\\dashv': '&#x22A3;',
+  '\\models': '&#x22A8;',
+  '\\mid': '&#x2223;',
+  '\\nmid': '&#x2224;',
+
+  // Ellipses
+  '\\ldots': '&hellip;',
+  '\\cdots': '&hellip;',
+  '\\dots': '&hellip;',
+  '\\vdots': '&#x22EE;',
+  '\\ddots': '&#x22EF;',
+
+  // Ring & Field Operators
+  '\\aleph': '&alefsym;',
+  '\\beth': '&#x2136;',
+  '\\gimel': '&#x2137;',
+  '\\daleth': '&#x2138;',
+  '\\otimes': '&otimes;',
+  '\\oplus': '&oplus;',
+  '\\odot': '&#x2299;',
+  '\\ominus': '&#x2296;',
+  '\\oslash': '&#x2298;',
+
+  // Geometry & Angles
+  '\\angle': '&ang;',
+  '\\measuredangle': '&#x2221;',
+  '\\sphericalangle': '&#x2222;',
+  '\\triangle': '&#x25B3;',
+  '\\square': '&#x25A1;'
 };
 
+function extractBalancedBraces(str, startIdx) {
+  if (str[startIdx] !== '{') return null;
+  let depth = 0;
+  for (let i = startIdx; i < str.length; i++) {
+    if (str[i] === '{') depth++;
+    else if (str[i] === '}') {
+      depth--;
+      if (depth === 0) {
+        return {
+          content: str.substring(startIdx + 1, i),
+          nextIdx: i + 1
+        };
+      }
+    }
+  }
+  return null;
+}
+
 function parseMathSyntax(tex) {
-  let s = tex.trim();
+  let s = (tex || '').trim();
+  s = s.replace(/<br\s*\/?>/gi, ' ');
 
-  // 1. Fractions: \frac{num}{den} -> stacked visual fraction
-  s = s.replace(/\\frac\s*\{([^{}]+)\}\s*\{([^{}]+)\}/g, (match, num, den) => {
-    return `<span class="inline-flex flex-col text-center align-middle mx-1 text-xs sm:text-sm font-mono-math">
-      <span class="border-b border-current pb-0.5 px-1">${parseMathSyntax(num)}</span>
-      <span class="pt-0.5 px-1">${parseMathSyntax(den)}</span>
-    </span>`;
+  // 1. Strip LaTeX sizing commands for brackets
+  s = s.replace(/\\left\s*([(\[{|.]|\\\{)/g, (m, p) => p === '\\{' ? '{' : (p === '.' ? '' : p));
+  s = s.replace(/\\right\s*([)\]}|.]|\\\})/g, (m, p) => p === '\\}' ? '}' : (p === '.' ? '' : p));
+  s = s.replace(/\\(?:big|Big|bigg|Bigg)[lrm]?\s*([(\[{)|\]}])/g, '$1');
+
+  // 2. Matrices & Environments: matrix, pmatrix, bmatrix, Bmatrix, vmatrix, Vmatrix, cases, aligned
+  s = s.replace(/\\begin\{(matrix|pmatrix|bmatrix|Bmatrix|vmatrix|Vmatrix|cases|aligned|array)\}([\s\S]*?)\\end\{\1\}/g, (match, env, inner) => {
+    const rows = inner.trim().split(/\\\\|\\cr/).map(r => r.trim()).filter(Boolean);
+    const parsedRows = rows.map(row => {
+      const cols = row.split('&').map(c => parseMathSyntax(c.trim()));
+      return cols.map(c => `<td class="px-1.5 py-0.5 text-center align-middle">${c}</td>`).join('');
+    });
+    const tableHtml = `<table class="inline-table border-collapse mx-1 my-0.5 align-middle text-xs sm:text-sm font-mono-math"><tbody>${parsedRows.map(r => `<tr>${r}</tr>`).join('')}</tbody></table>`;
+
+    if (env === 'pmatrix') {
+      return `<span class="inline-flex items-center align-middle mx-1"><span class="text-xl sm:text-2xl font-light scale-y-125 select-none">(</span>${tableHtml}<span class="text-xl sm:text-2xl font-light scale-y-125 select-none">)</span></span>`;
+    } else if (env === 'bmatrix') {
+      return `<span class="inline-flex items-center align-middle mx-1"><span class="text-xl sm:text-2xl font-light scale-y-125 select-none">[</span>${tableHtml}<span class="text-xl sm:text-2xl font-light scale-y-125 select-none">]</span></span>`;
+    } else if (env === 'Bmatrix') {
+      return `<span class="inline-flex items-center align-middle mx-1"><span class="text-xl sm:text-2xl font-light scale-y-125 select-none">{</span>${tableHtml}<span class="text-xl sm:text-2xl font-light scale-y-125 select-none">}</span></span>`;
+    } else if (env === 'vmatrix') {
+      return `<span class="inline-flex items-center align-middle mx-1"><span class="border-l border-current pl-1 my-1"></span>${tableHtml}<span class="border-r border-current pr-1 my-1"></span></span>`;
+    } else if (env === 'Vmatrix') {
+      return `<span class="inline-flex items-center align-middle mx-1"><span class="border-l-2 border-double border-current pl-1 my-1"></span>${tableHtml}<span class="border-r-2 border-double border-current pr-1 my-1"></span></span>`;
+    } else if (env === 'cases') {
+      return `<span class="inline-flex items-center align-middle mx-1"><span class="text-2xl sm:text-3xl font-light scale-y-150 select-none -mr-0.5">{</span>${tableHtml}</span>`;
+    }
+    return tableHtml;
   });
 
-  // 2. Square roots: \sqrt[n]{x} or \sqrt{x}
-  s = s.replace(/\\sqrt\[([^{}]+)\]\{([^{}]+)\}/g, (match, n, inner) => {
-    return `<span class="inline-flex items-center align-middle font-mono-math">
-      <sup class="text-[9px] -mr-1">${parseMathSyntax(n)}</sup>
-      <span class="text-base leading-none">&radic;</span>
-      <span class="border-t border-current px-0.5 ml-0.5">${parseMathSyntax(inner)}</span>
-    </span>`;
-  });
+  // 3. Binomial Coefficients: \binom{n}{k}, \dbinom{n}{k}, \tbinom{n}{k}
+  let binomPos = 0;
+  while (true) {
+    const m = s.substr(binomPos).match(/\\(?:d|t)?binom/);
+    if (!m) break;
+    const idx = binomPos + m.index;
+    let p = idx + m[0].length;
+    while (p < s.length && /\s/.test(s[p])) p++;
+    const topMatch = extractBalancedBraces(s, p);
+    if (topMatch) {
+      let q = topMatch.nextIdx;
+      while (q < s.length && /\s/.test(s[q])) q++;
+      const botMatch = extractBalancedBraces(s, q);
+      if (botMatch) {
+        const replacement = `<span class="inline-flex items-center align-middle mx-1 text-xs sm:text-sm font-mono-math"><span class="text-lg sm:text-xl font-light scale-y-125 select-none">(</span><span class="inline-flex flex-col text-center px-0.5 leading-tight"><span class="pb-0.5">${parseMathSyntax(topMatch.content)}</span><span class="pt-0.5">${parseMathSyntax(botMatch.content)}</span></span><span class="text-lg sm:text-xl font-light scale-y-125 select-none">)</span></span>`;
+        s = s.substring(0, idx) + replacement + s.substring(botMatch.nextIdx);
+        binomPos = idx + replacement.length;
+        continue;
+      }
+    }
+    binomPos = idx + m[0].length;
+  }
 
+  // 4. Fractions: \frac, \dfrac, \tfrac with balanced braces
+  let fracPos = 0;
+  while (true) {
+    const m = s.substr(fracPos).match(/\\(?:d|t)?frac/);
+    if (!m) break;
+    const idx = fracPos + m.index;
+    let p = idx + m[0].length;
+    while (p < s.length && /\s/.test(s[p])) p++;
+    const numMatch = extractBalancedBraces(s, p);
+    if (numMatch) {
+      let q = numMatch.nextIdx;
+      while (q < s.length && /\s/.test(s[q])) q++;
+      const denMatch = extractBalancedBraces(s, q);
+      if (denMatch) {
+        const replacement = `<span class="inline-flex flex-col text-center align-middle mx-1 text-xs sm:text-sm font-mono-math"><span class="border-b border-current pb-0.5 px-1">${parseMathSyntax(numMatch.content)}</span><span class="pt-0.5 px-1">${parseMathSyntax(denMatch.content)}</span></span>`;
+        s = s.substring(0, idx) + replacement + s.substring(denMatch.nextIdx);
+        fracPos = idx + replacement.length;
+        continue;
+      }
+    }
+    fracPos = idx + m[0].length;
+  }
+
+  // 5. Square roots & Radicals: \sqrt[n]{x} or \sqrt{x}
+  s = s.replace(/\\sqrt\[([^{}\]]+)\]\{([^{}]+)\}/g, (match, n, inner) => {
+    return `<span class="inline-flex items-center align-middle font-mono-math"><sup class="text-[9px] -mr-1">${parseMathSyntax(n)}</sup><span class="text-base leading-none">&radic;</span><span class="border-t border-current px-0.5 ml-0.5">${parseMathSyntax(inner)}</span></span>`;
+  });
   s = s.replace(/\\sqrt\{([^{}]+)\}/g, (match, inner) => {
-    return `<span class="inline-flex items-center align-middle font-mono-math">
-      <span class="text-base leading-none">&radic;</span>
-      <span class="border-t border-current px-0.5 ml-0.5">${parseMathSyntax(inner)}</span>
-    </span>`;
+    return `<span class="inline-flex items-center align-middle font-mono-math"><span class="text-base leading-none">&radic;</span><span class="border-t border-current px-0.5 ml-0.5">${parseMathSyntax(inner)}</span></span>`;
   });
 
-  // 3. Vectors: \vec{v} or \hat{i}
-  s = s.replace(/\\vec\{([^{}]+)\}/g, (match, inner) => {
-    return `<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&rarr;</span><span>${inner}</span></span>`;
+  // 6. Limits, Big Operators with Subscripts: \lim, \max, \min, \sup, \inf
+  s = s.replace(/\\(lim|max|min|sup|inf)_\{([^{}]+)\}/g, (m, op, sub) => {
+    return `<span class="inline-flex flex-col text-center align-middle mx-1 font-mono-math"><span class="font-bold">${op}</span><span class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">${parseMathSyntax(sub)}</span></span>`;
+  });
+  s = s.replace(/\\(lim|max|min|sup|inf)_([0-9a-zA-Z])/g, (m, op, sub) => {
+    return `<span class="inline-flex flex-col text-center align-middle mx-1 font-mono-math"><span class="font-bold">${op}</span><span class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">${parseMathSyntax(sub)}</span></span>`;
   });
 
-  s = s.replace(/\\hat\{([^{}]+)\}/g, (match, inner) => {
-    return `<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">^</span><span>${inner}</span></span>`;
+  // 7. Modulo & Operators: \pmod{m}, \bmod
+  s = s.replace(/\\pmod\{([^{}]+)\}/g, (m, inner) => `&nbsp;(<span class="font-sans">mod</span>&nbsp;${parseMathSyntax(inner)})`);
+  s = s.replace(/\\bmod/g, '&nbsp;<span class="font-sans">mod</span>&nbsp;');
+
+  // 8. Overline, Underline, Overset, Underset, Underbrace, Overbrace
+  s = s.replace(/\\overset\{([^{}]+)\}\{([^{}]+)\}/g, (m, over, base) => {
+    return `<span class="inline-flex flex-col text-center align-middle mx-0.5 font-mono-math"><sup class="text-[10px] leading-none">${parseMathSyntax(over)}</sup><span>${parseMathSyntax(base)}</span></span>`;
+  });
+  s = s.replace(/\\underset\{([^{}]+)\}\{([^{}]+)\}/g, (m, under, base) => {
+    return `<span class="inline-flex flex-col text-center align-middle mx-0.5 font-mono-math"><span>${parseMathSyntax(base)}</span><sub class="text-[10px] leading-none">${parseMathSyntax(under)}</sub></span>`;
+  });
+  s = s.replace(/\\overbrace\{([^{}]+)\}(?:\^\{([^{}]+)\})?/g, (m, base, label) => {
+    return `<span class="inline-flex flex-col text-center align-middle mx-1 font-mono-math">${label ? `<span class="text-[10px] text-slate-500">${parseMathSyntax(label)}</span>` : ''}<span class="border-t-2 border-current px-1">${parseMathSyntax(base)}</span></span>`;
+  });
+  s = s.replace(/\\underbrace\{([^{}]+)\}(?:_\{([^{}]+)\})?/g, (m, base, label) => {
+    return `<span class="inline-flex flex-col text-center align-middle mx-1 font-mono-math"><span class="border-b-2 border-current px-1">${parseMathSyntax(base)}</span>${label ? `<span class="text-[10px] text-slate-500">${parseMathSyntax(label)}</span>` : ''}</span>`;
   });
 
-  // 4. Superscripts & Subscripts: x^{2} / x^2, v_{0} / v_0
+  // 9. Vectors, Accents, and Bars
+  s = s.replace(/\\vec\{([^{}]+)\}/g, (match, inner) => `<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&rarr;</span><span>${inner}</span></span>`);
+  s = s.replace(/\\hat\{([^{}]+)\}/g, (match, inner) => `<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">^</span><span>${inner}</span></span>`);
+  s = s.replace(/\\tilde\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">~</span><span>$1</span></span>');
+  s = s.replace(/\\dot\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&middot;</span><span>$1</span></span>');
+  s = s.replace(/\\ddot\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&middot;&middot;</span><span>$1</span></span>');
+  s = s.replace(/\\overline\{([^{}]+)\}/g, '<span class="overline">$1</span>');
+  s = s.replace(/\\underline\{([^{}]+)\}/g, '<span class="underline">$1</span>');
+
+  // 10. Floor, Ceil, Absolute values, Norms
+  s = s.replace(/\\lfloor\s*([^{}]+?)\s*\\rfloor/g, (m, inner) => `&lfloor;${parseMathSyntax(inner)}&rfloor;`);
+  s = s.replace(/\\lceil\s*([^{}]+?)\s*\\rceil/g, (m, inner) => `&lceil;${parseMathSyntax(inner)}&rceil;`);
+  s = s.replace(/\\lVert\s*([^{}]+?)\s*\\rVert/g, (m, inner) => `<span class="border-l border-r border-double border-current px-1 mx-0.5">${parseMathSyntax(inner)}</span>`);
+
+  // 11. Text & fonts: \text, \mathrm, \operatorname, \mathbf, \mathit, \cancel
+  let textPos = 0;
+  while (true) {
+    const m = s.substr(textPos).match(/\\(?:text|mathrm|operatorname)\s*\{/);
+    if (!m) break;
+    const idx = textPos + m.index;
+    const p = idx + m[0].length - 1;
+    const bMatch = extractBalancedBraces(s, p);
+    if (bMatch) {
+      let innerParsed = bMatch.content;
+      innerParsed = innerParsed.replace(/_\{([^{}]+)\}/g, '<sub>$1</sub>');
+      innerParsed = innerParsed.replace(/_([0-9]+|[a-zA-Z])/g, '<sub>$1</sub>');
+      innerParsed = innerParsed.replace(/\^\{([^{}]+)\}/g, '<sup>$1</sup>');
+      innerParsed = innerParsed.replace(/\^([0-9]+|[a-zA-Z])/g, '<sup>$1</sup>');
+      const replacement = `<span class="font-sans font-normal">${innerParsed}</span>`;
+      s = s.substring(0, idx) + replacement + s.substring(bMatch.nextIdx);
+      textPos = idx + replacement.length;
+      continue;
+    }
+    textPos = idx + m[0].length;
+  }
+
+  s = s.replace(/\\cancel\{([^{}]+)\}/g, '<span class="line-through opacity-75">$1</span>');
+  s = s.replace(/\\mathbf\{([^{}]+)\}/g, '<strong class="font-bold font-sans">$1</strong>');
+  s = s.replace(/\\textbf\{([^{}]+)\}/g, '<strong class="font-bold font-sans">$1</strong>');
+  s = s.replace(/\\mathit\{([^{}]+)\}/g, '<em class="italic">$1</em>');
+  s = s.replace(/\\textit\{([^{}]+)\}/g, '<em class="italic">$1</em>');
+
+  // Blackboard Bold for standard number sets
+  const BB_MAP = {
+    'A': '&#x1D538;', 'B': '&#x1D539;', 'C': '&#x2102;', 'D': '&#x1D53B;', 'E': '&#x1D53C;',
+    'F': '&#x1D53D;', 'G': '&#x1D53E;', 'H': '&#x210D;', 'I': '&#x1D540;', 'J': '&#x1D541;',
+    'K': '&#x1D542;', 'L': '&#x1D543;', 'M': '&#x1D544;', 'N': '&#x2115;', 'O': '&#x1D546;',
+    'P': '&#x2119;', 'Q': '&#x211A;', 'R': '&#x211D;', 'S': '&#x1D54A;', 'T': '&#x1D54B;',
+    'U': '&#x1D54C;', 'V': '&#x1D54D;', 'W': '&#x1D54E;', 'X': '&#x1D54F;', 'Y': '&#x1D550;',
+    'Z': '&#x2124;'
+  };
+  s = s.replace(/\\mathbb\{([A-Z])\}/g, (m, ch) => BB_MAP[ch] || `<strong class="font-serif">${ch}</strong>`);
+  s = s.replace(/\\mathbb\{([^{}]+)\}/g, '<strong class="font-serif">$1</strong>');
+
+  // Calligraphic (e.g. \mathcal{P} for Power Set, \mathcal{L} for Laplace)
+  const CAL_MAP = {
+    'A': '&#x1D49C;', 'B': '&#x212C;', 'C': '&#x1D49E;', 'D': '&#x1D49F;', 'E': '&#x2130;',
+    'F': '&#x2131;', 'G': '&#x1D4A2;', 'H': '&#x210B;', 'I': '&#x2110;', 'J': '&#x1D4A5;',
+    'K': '&#x1D4A6;', 'L': '&#x2112;', 'M': '&#x2133;', 'N': '&#x1D4A9;', 'O': '&#x1D4AA;',
+    'P': '&#x2118;', 'Q': '&#x1D4AC;', 'R': '&#x211B;', 'S': '&#x1D4AE;', 'T': '&#x1D4AF;',
+    'U': '&#x1D4B0;', 'V': '&#x1D4B1;', 'W': '&#x1D4B2;', 'X': '&#x1D4B3;', 'Y': '&#x1D4B4;',
+    'Z': '&#x1D4B5;'
+  };
+  s = s.replace(/\\mathcal\{([A-Za-z]+)\}/g, (m, txt) => {
+    if (txt.length === 1 && CAL_MAP[txt]) return CAL_MAP[txt];
+    return `<span class="italic font-serif">${txt}</span>`;
+  });
+
+  // Fraktur (e.g. \mathfrak{g})
+  s = s.replace(/\\mathfrak\{([^{}]+)\}/g, '<span class="font-serif italic font-bold">$1</span>');
+
+  // Standard Mathematical Functions (Trig, Log, Exp, Stats)
+  const STD_FUNCS = [
+    'sin', 'cos', 'tan', 'sec', 'csc', 'cot',
+    'arcsin', 'arccos', 'arctan', 'arcsec', 'arccsc', 'arccot',
+    'sinh', 'cosh', 'tanh', 'coth', 'sech', 'csch',
+    'ln', 'log', 'exp', 'det', 'gcd', 'lcm', 'deg', 'dim', 'ker', 'hom'
+  ];
+  for (const fn of STD_FUNCS) {
+    const re = new RegExp(`\\\\${fn}\\b`, 'g');
+    s = s.replace(re, `<span class="font-sans font-normal mx-0.5">${fn}</span>`);
+  }
+
+  // 12. Superscripts & Subscripts: x^{2} / x^2, v_{0} / v_0
   s = s.replace(/\^\{([^{}]+)\}/g, '<sup>$1</sup>');
-  s = s.replace(/\^([a-zA-Z0-9+\-&;]+)/g, '<sup>$1</sup>');
+  s = s.replace(/\^([0-9]+|[a-zA-Z])/g, '<sup>$1</sup>');
   s = s.replace(/_\{([^{}]+)\}/g, '<sub>$1</sub>');
-  s = s.replace(/_([a-zA-Z0-9+\-&;]+)/g, '<sub>$1</sub>');
+  s = s.replace(/_([0-9]+|[a-zA-Z])/g, '<sub>$1</sub>');
 
-  // 5. Greek Letters & Math Symbols
-  for (const [key, val] of Object.entries(GREEK_SYMBOLS)) {
-    s = s.split(key).join(val);
-  }
+  // Support LaTeX line breaks inside display math / matrices / aligned
+  s = s.replace(/\\\\/g, '<br/>');
 
-  for (const [key, val] of Object.entries(MATH_OPERATORS)) {
-    s = s.split(key).join(val);
-  }
+  // 13. Greek Letters & Math Symbols
+  for (const [key, val] of Object.entries(GREEK_SYMBOLS)) s = s.split(key).join(val);
+  for (const [key, val] of Object.entries(MATH_OPERATORS)) s = s.split(key).join(val);
 
-  // 6. Text inside math: \text{...}
-  s = s.replace(/\\text\{([^{}]+)\}/g, '<span class="font-sans font-normal">$1</span>');
+  // Set literal braces \{ ... \}
+  s = s.replace(/\\\{/g, '{');
+  s = s.replace(/\\\}/g, '}');
 
   return s;
 }
@@ -1487,16 +1985,22 @@ function renderMathInHtml(htmlString) {
 
   // Step 1: Protect math formulas into placeholders before rich text processing
   const mathBlocks = [];
-  text = text.replace(/\$\$([\s\S]*?)\$\$/g, (match, tex) => {
+  // Support both $$...$$ and \[...\]
+  text = text.replace(/(?:\$\$([\s\S]*?)\$\$|\\\[([\s\S]*?)\\\])/g, (match, tex1, tex2) => {
+    const rawTex = (tex1 !== undefined ? tex1 : tex2) || '';
+    const cleanTex = rawTex.replace(/<br\s*\/?>/gi, ' ').trim();
     const idx = mathBlocks.length;
-    mathBlocks.push(tex);
+    mathBlocks.push(cleanTex);
     return `\x00MATH_BLOCK_${idx}\x00`;
   });
 
   const mathInlines = [];
-  text = text.replace(/\$([^\$\n]+?)\$/g, (match, tex) => {
+  // Support both $...$ and \(...\)
+  text = text.replace(/(?:(?<!\\)\$([^\$\n]+?)(?<!\\)\$|\\\(([\s\S]*?)\\\))/g, (match, tex1, tex2) => {
+    const rawTex = (tex1 !== undefined ? tex1 : tex2) || '';
+    const cleanTex = rawTex.replace(/<br\s*\/?>/gi, ' ').trim();
     const idx = mathInlines.length;
-    mathInlines.push(tex);
+    mathInlines.push(cleanTex);
     return `\x00MATH_INLINE_${idx}\x00`;
   });
 
@@ -1811,10 +2315,569 @@ function renderCartesianPlaneSvg(block) {
   `;
 }
 
+/* =========================================================
+   TikZ-FBD Native SVG Renderer
+   ========================================================= */
+function renderTikzFbdSvg(input, isDark = false) {
+  let code = '';
+  let title = '';
+  let caption = '';
 
-    
+  if (typeof input === 'object' && input !== null) {
+    code = input.code || input.tikz || '';
+    title = input.title || '';
+    caption = input.caption || '';
+  } else {
+    code = String(input || '');
+  }
 
-const now = new Date();
+  // Fallback to JSXGraph if code is actually JSXGraph script
+  if (code.includes('board.create') || code.includes('JXG.')) {
+    return renderJsxgraphBlock(input, isDark);
+  }
+
+  if (!code.trim()) return '';
+
+  const isDarkMode = isDark || (typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
+  const width = 560;
+  const height = 380;
+  const cx = width / 2;
+  const cy = height / 2;
+
+  // Clean and extract TikZ statements
+  let raw = code
+    .replace(/\\begin\{tikzpicture\}(\[[^\]]*\])?/g, '')
+    .replace(/\\end\{tikzpicture\}/g, '');
+
+  const statements = raw.split(';').map(s => s.trim()).filter(Boolean);
+  const nodes = {};
+  const draws = [];
+
+  function parseCoords(str) {
+    const s = str.trim().replace(/^\(|\)$/g, '');
+    if (s.includes(':')) {
+      const parts = s.split(':');
+      const angle = (parseFloat(parts[0]) || 0) * (Math.PI / 180);
+      const r = parseFloat(parts[1]) || 0;
+      return [r * Math.cos(angle), r * Math.sin(angle)];
+    } else if (s.includes(',')) {
+      const parts = s.split(',');
+      return [parseFloat(parts[0]) || 0, parseFloat(parts[1]) || 0];
+    }
+    return [0, 0];
+  }
+
+  // Modern textbook palette (vibrant, accessible contrast against dark/light slate)
+  const COLOR_MAP = {
+    red: isDarkMode ? '#f87171' : '#dc2626',
+    rose: isDarkMode ? '#fb7185' : '#e11d48',
+    blue: isDarkMode ? '#38bdf8' : '#0284c7',
+    sky: isDarkMode ? '#38bdf8' : '#0284c7',
+    emerald: isDarkMode ? '#34d399' : '#059669',
+    green: isDarkMode ? '#34d399' : '#16a34a',
+    purple: isDarkMode ? '#c084fc' : '#7c3aed',
+    amber: isDarkMode ? '#fbbf24' : '#d97706',
+    orange: isDarkMode ? '#fb923c' : '#ea580c',
+    cyan: isDarkMode ? '#22d3ee' : '#0891b2',
+    teal: isDarkMode ? '#2dd4bf' : '#0d9488',
+    gray: isDarkMode ? '#94a3b8' : '#64748b',
+    slate: isDarkMode ? '#94a3b8' : '#64748b'
+  };
+
+  statements.forEach(stmt => {
+    if (stmt.startsWith('\\node') || stmt.startsWith('\\coordinate')) {
+      const optMatch = stmt.match(/\\node\s*(\[[^\]]*\])?/);
+      const options = (optMatch && optMatch[1]) ? optMatch[1].slice(1, -1) : '';
+      const nameMatch = stmt.match(/\(([\w\d_-]+)\)/);
+      const name = nameMatch ? nameMatch[1] : `node_${Object.keys(nodes).length}`;
+      const atMatch = stmt.match(/at\s*\(([^)]+)\)/);
+      const [x, y] = atMatch ? parseCoords(atMatch[1]) : [0, 0];
+      const labelMatch = stmt.match(/\{([\s\S]*)\}/);
+      const label = labelMatch ? labelMatch[1].trim() : '';
+
+      let shape = 'point';
+      let rotate = 0;
+      let widthVal = 1.6;
+      let heightVal = 1.2;
+
+      options.split(',').map(o => o.trim()).forEach(opt => {
+        if (/box|rectangle/i.test(opt)) shape = 'box';
+        else if (/circle/i.test(opt)) shape = 'circle';
+        else if (/plane|slope|incline/i.test(opt)) shape = 'plane';
+        else if (/pulley/i.test(opt)) shape = 'pulley';
+        else if (opt.startsWith('rotate=')) rotate = parseFloat(opt.split('=')[1]) || 0;
+        else if (opt.startsWith('width=')) widthVal = parseFloat(opt.split('=')[1]) || 1.6;
+        else if (opt.startsWith('height=')) heightVal = parseFloat(opt.split('=')[1]) || 1.2;
+      });
+
+      nodes[name] = { name, x, y, shape, rotate, width: widthVal, height: heightVal, label, options };
+    } else if (stmt.startsWith('\\draw') || stmt.startsWith('\\fill')) {
+      const isArrow = stmt.includes('->') || stmt.includes('-latex') || stmt.includes('force');
+      const isDashed = stmt.includes('dashed');
+      const isFill = stmt.startsWith('\\fill');
+
+      let color = isDarkMode ? '#38bdf8' : '#0284c7';
+      for (const [cName, cHex] of Object.entries(COLOR_MAP)) {
+        const re = new RegExp(`\\b${cName}\\b`, 'i');
+        if (re.test(stmt)) {
+          color = cHex;
+          break;
+        }
+      }
+
+      const nodeMatch = stmt.match(/node\s*(\[[^\]]*\])?\s*\{([\s\S]*?)\}/);
+      const label = nodeMatch ? nodeMatch[2].trim() : '';
+      let posDir = 'above';
+      if (nodeMatch && nodeMatch[1]) {
+        const nOpts = nodeMatch[1].slice(1, -1);
+        const dirs = ['above right', 'above left', 'below right', 'below left', 'above', 'below', 'left', 'right'];
+        for (const d of dirs) {
+          if (nOpts.includes(d)) {
+            posDir = d;
+            break;
+          }
+        }
+      }
+
+      const cleanStmt = stmt.replace(/node\s*(\[[^\]]*\])?\s*\{[\s\S]*?\}/g, '');
+      const pts = cleanStmt.match(/(\+\+\([^\)]+\)|\([^\)]+\)|--\s*cycle)/g) || [];
+      const coords = [];
+      let curX = 0, curY = 0;
+
+      pts.forEach(p => {
+        const tr = p.trim();
+        if (tr === '-- cycle' || tr === 'cycle') {
+          if (coords.length > 0) coords.push([...coords[0]]);
+          return;
+        }
+        if (tr.startsWith('++')) {
+          const [dx, dy] = parseCoords(tr.substring(2));
+          curX += dx;
+          curY += dy;
+          coords.push([curX, curY]);
+        } else {
+          const rawCoord = tr.replace(/^\(|\)$/g, '');
+          if (nodes[rawCoord]) {
+            curX = nodes[rawCoord].x;
+            curY = nodes[rawCoord].y;
+          } else {
+            const [nx, ny] = parseCoords(rawCoord);
+            curX = nx;
+            curY = ny;
+          }
+          coords.push([curX, curY]);
+        }
+      });
+
+      draws.push({ coords, isArrow, isDashed, isFill, color, label, posDir, raw: stmt });
+    }
+  });
+
+  // Calculate dynamic bounding box
+  const allX = [];
+  const allY = [];
+  Object.values(nodes).forEach(n => {
+    allX.push(n.x - n.width / 2, n.x + n.width / 2);
+    allY.push(n.y - n.height / 2, n.y + n.height / 2);
+  });
+  draws.forEach(d => {
+    d.coords.forEach(([x, y]) => {
+      allX.push(x);
+      allY.push(y);
+    });
+  });
+
+  if (allX.length === 0) { allX.push(-2, 2); }
+  if (allY.length === 0) { allY.push(-2, 2); }
+
+  const minX = Math.min(...allX) - 1.2;
+  const maxX = Math.max(...allX) + 1.2;
+  const minY = Math.min(...allY) - 1.2;
+  const maxY = Math.max(...allY) + 1.2;
+
+  const cxVal = (minX + maxX) / 2;
+  const cyVal = (minY + maxY) / 2;
+  const spanX = Math.max(maxX - minX, 3.0);
+  const spanY = Math.max(maxY - minY, 2.5);
+
+  const scaleX = (width - 120) / spanX;
+  const scaleY = (height - 100) / spanY;
+  const scale = Math.min(scaleX, scaleY, 68.0);
+
+  const toSx = (x) => cx + (x - cxVal) * scale;
+  const toSy = (y) => cy - (y - cyVal) * scale;
+
+  // Theming colors
+  const bgCard = isDarkMode ? '#0f172a' : '#f8fafc';
+  const beamFill = isDarkMode ? '#1e293b' : '#e2e8f0';
+  const beamStroke = isDarkMode ? '#475569' : '#94a3b8';
+  const bodyFill = isDarkMode ? '#1e293b' : '#ffffff';
+  const bodyStroke = isDarkMode ? '#38bdf8' : '#0284c7';
+  const pinFill = isDarkMode ? '#38bdf8' : '#0284c7';
+  const textClr = isDarkMode ? '#f8fafc' : '#0f172a';
+  const gridDotClr = isDarkMode ? '#334155' : '#cbd5e1';
+  const groundHatchClr = isDarkMode ? '#475569' : '#94a3b8';
+
+  let svgElements = [];
+
+  // Generate unique ID prefix for SVG marker defs
+  const uid = Math.random().toString(36).substring(2, 8);
+
+  // 1. Defs: Technical grid patterns and modern textbook stealth arrowheads
+  svgElements.push(`
+    <defs>
+      <!-- Technical Grid Pattern -->
+      <pattern id="dot-grid-${uid}" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.1" fill="${gridDotClr}" opacity="0.45" />
+      </pattern>
+
+      <!-- Diagonal Ground Surface Hatch Pattern -->
+      <pattern id="ground-hatch-${uid}" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="8" stroke="${groundHatchClr}" stroke-width="1.2" opacity="0.6" />
+      </pattern>
+
+      <!-- Stealth Textbook Arrowhead Markers -->
+      <marker id="arrow-stealth-default-${uid}" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+        <path d="M 0 1.5 L 9 5 L 0 8.5 L 2.5 5 Z" fill="${isDarkMode ? '#38bdf8' : '#0284c7'}" />
+      </marker>
+      ${Object.entries(COLOR_MAP).map(([cName, cHex]) => `
+        <marker id="arrow-stealth-${cName}-${uid}" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 9 5 L 0 8.5 L 2.5 5 Z" fill="${cHex}" />
+        </marker>
+      `).join('')}
+
+      <!-- Soft Drop Shadow for Objects & Badges -->
+      <filter id="fbd-shadow-${uid}" x="-10%" y="-10%" width="125%" height="125%">
+        <feDropShadow dx="0" dy="2.5" stdDeviation="3" flood-color="#000" flood-opacity="${isDarkMode ? '0.45' : '0.12'}" />
+      </filter>
+    </defs>
+  `);
+
+  // 2. Blueprint / Engineering Coordinate Dot Grid Canvas
+  svgElements.push(`
+    <rect width="${width}" height="${height}" rx="14" fill="${bgCard}" />
+    <rect width="${width}" height="${height}" rx="14" fill="url(#dot-grid-${uid})" />
+  `);
+
+  // 3. Ground Plane Hatching (if there are pivot/ground references)
+  const hasGroundReference = Object.values(nodes).some(n => /plane|ramp|slope/i.test(n.shape) || /pivot|pin/i.test(n.label));
+  if (hasGroundReference) {
+    const groundY = height - 32;
+    svgElements.push(`
+      <g opacity="0.75">
+        <line x1="28" y1="${groundY}" x2="${width - 28}" y2="${groundY}" stroke="${groundHatchClr}" stroke-width="1.8" />
+        <rect x="28" y="${groundY}" width="${width - 56}" height="10" fill="url(#ground-hatch-${uid})" />
+      </g>
+    `);
+  }
+
+  // 4. Render Physical Nodes / Bodies
+  Object.values(nodes).forEach(n => {
+    const sx = toSx(n.x);
+    const sy = toSy(n.y);
+    const w = n.width * scale;
+    const h = n.height * scale;
+    const rot = n.rotate;
+    const rotAttr = rot ? `transform="rotate(${-rot} ${sx} ${sy})"` : '';
+
+    if (n.shape === 'box') {
+      // Sleek physical beam or mass block with linear bevel
+      svgElements.push(`
+        <g filter="url(#fbd-shadow-${uid})" ${rotAttr}>
+          <rect x="${sx - w / 2}" y="${sy - h / 2}" width="${w}" height="${h}" rx="5" fill="${beamFill}" stroke="${beamStroke}" stroke-width="2.4" />
+          <line x1="${sx - w / 2 + 3}" y1="${sy}" x2="${sx + w / 2 - 3}" y2="${sy}" stroke="${beamStroke}" stroke-width="1" stroke-dasharray="3,3" opacity="0.6" />
+        </g>
+      `);
+    } else if (n.shape === 'circle' || n.shape === 'pulley') {
+      const r = w / 2;
+      svgElements.push(`
+        <g filter="url(#fbd-shadow-${uid})">
+          <circle cx="${sx}" cy="${sy}" r="${r}" fill="${bodyFill}" stroke="${bodyStroke}" stroke-width="2.5" />
+          ${n.shape === 'pulley' ? `
+            <circle cx="${sx}" cy="${sy}" r="5" fill="${bodyStroke}" />
+            <circle cx="${sx}" cy="${sy}" r="${r * 0.7}" fill="none" stroke="${bodyStroke}" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.7" />
+          ` : `
+            <circle cx="${sx}" cy="${sy}" r="3" fill="${bodyStroke}" />
+          `}
+        </g>
+      `);
+    } else if (n.shape === 'plane') {
+      const hw = w * 1.6;
+      svgElements.push(`
+        <g filter="url(#fbd-shadow-${uid})">
+          <polygon points="${sx - hw},${sy + h/2} ${sx + hw},${sy + h/2} ${sx + hw},${sy - h/2}" fill="${beamFill}" stroke="${beamStroke}" stroke-width="2.2" />
+          <polygon points="${sx - hw},${sy + h/2} ${sx + hw},${sy + h/2} ${sx + hw},${sy - h/2}" fill="url(#ground-hatch-${uid})" opacity="0.35" />
+        </g>
+      `);
+    } else if (n.shape === 'point') {
+      // Mechanical Pin / Pivot support bracket
+      const isPivot = /pivot|pin|support|hinge/i.test(n.label);
+      if (isPivot) {
+        svgElements.push(`
+          <g filter="url(#fbd-shadow-${uid})">
+            <!-- Triangular mounting stand -->
+            <polygon points="${sx},${sy} ${sx - 12},${sy + 18} ${sx + 12},${sy + 18}" fill="${beamFill}" stroke="${beamStroke}" stroke-width="2" />
+            <!-- Mounting baseplate -->
+            <line x1="${sx - 18}" y1="${sy + 18}" x2="${sx + 18}" y2="${sy + 18}" stroke="${groundHatchClr}" stroke-width="2.5" />
+            <rect x="${sx - 18}" y="${sy + 18}" width="36" height="6" fill="url(#ground-hatch-${uid})" />
+            <!-- Pin hub center -->
+            <circle cx="${sx}" cy="${sy}" r="4.5" fill="${pinFill}" stroke="${bgCard}" stroke-width="1.5" />
+          </g>
+        `);
+      } else {
+        svgElements.push(`
+          <circle cx="${sx}" cy="${sy}" r="4.5" fill="${pinFill}" stroke="${bgCard}" stroke-width="1.5" />
+        `);
+      }
+    }
+
+    if (n.label) {
+      const parsedLabel = renderMathInHtml(n.label);
+      const isPivot = /pivot|pin/i.test(n.label);
+      const labelY = isPivot ? sy + 25 : sy - 22;
+      svgElements.push(`
+        <foreignObject x="${sx - 80}" y="${labelY}" width="160" height="26" class="overflow-visible pointer-events-none">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center">
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-bold font-mono-math tracking-tight shadow-sm border border-slate-200/60 dark:border-slate-800/80 bg-white/95 dark:bg-slate-900/95" style="color: ${textClr};">
+              ${parsedLabel}
+            </span>
+          </div>
+        </foreignObject>
+      `);
+    }
+  });
+
+  // 5. Render Force Vectors, Reactions & Dimension Lines
+  draws.forEach(d => {
+    if (d.coords.length < 2) return;
+    const dashAttr = d.isDashed ? 'stroke-dasharray="5,4"' : '';
+    const pointsStr = d.coords.map(([x, y]) => `${toSx(x).toFixed(1)},${toSy(y).toFixed(1)}`).join(' ');
+
+    let markerColorName = 'default';
+    for (const [cName, cHex] of Object.entries(COLOR_MAP)) {
+      if (cHex.toLowerCase() === d.color.toLowerCase()) {
+        markerColorName = cName;
+        break;
+      }
+    }
+    const markerAttr = d.isArrow ? `marker-end="url(#arrow-stealth-${markerColorName}-${uid})"` : '';
+
+    if (d.isFill) {
+      svgElements.push(`
+        <polygon points="${pointsStr}" fill="${d.color}" fill-opacity="0.18" stroke="${d.color}" stroke-width="1.8" />
+      `);
+    } else {
+      svgElements.push(`
+        <polyline points="${pointsStr}" fill="none" stroke="${d.color}" stroke-width="${d.isDashed ? '2.0' : '2.8'}" stroke-linecap="round" stroke-linejoin="round" ${dashAttr} ${markerAttr} />
+      `);
+    }
+
+    // Label Badge with Math Rendering
+    if (d.label && d.coords.length >= 2) {
+      const [x1, y1] = d.coords[d.coords.length - 2];
+      const [x2, y2] = d.coords[d.coords.length - 1];
+      const sx1 = toSx(x1), sy1 = toSy(y1);
+      const sx2 = toSx(x2), sy2 = toSy(y2);
+
+      let lx = sx2;
+      let ly = sy2;
+      const off = 20;
+
+      if (d.posDir.includes('above')) ly -= off;
+      if (d.posDir.includes('below')) ly += off;
+      if (d.posDir.includes('left')) lx -= (off + 8);
+      if (d.posDir.includes('right')) lx += (off + 8);
+
+      const parsedLabel = renderMathInHtml(d.label);
+      svgElements.push(`
+        <foreignObject x="${(lx - 90).toFixed(1)}" y="${(ly - 13).toFixed(1)}" width="180" height="26" class="overflow-visible pointer-events-none">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="w-full h-full flex items-center justify-center">
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-black font-mono-math tracking-tight shadow-sm border border-slate-200/60 dark:border-slate-800/80 bg-white/95 dark:bg-slate-900/95" style="color: ${d.color};">
+              ${parsedLabel}
+            </span>
+          </div>
+        </foreignObject>
+      `);
+    }
+  });
+
+  return `
+    <div class="my-4 p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+      ${title ? `<h4 class="font-black text-xs sm:text-sm text-slate-900 dark:text-white mb-1 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-tagsci-600"></span>${renderMathInHtml(title)}</h4>` : ''}
+      ${caption ? `<p class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">${renderMathInHtml(caption)}</p>` : ''}
+      
+      <div class="w-full flex justify-center items-center bg-slate-50/70 dark:bg-slate-900/50 rounded-xl p-3 border border-slate-100 dark:border-slate-800/80 overflow-x-auto">
+        <svg viewBox="0 0 ${width} ${height}" class="w-full max-w-xl h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+          ${svgElements.join('\n')}
+        </svg>
+      </div>
+    </div>
+  `;
+}
+
+function renderJsxgraphBlock(input, isDark = false) {
+  let code = '';
+  let title = '';
+  let caption = '';
+  let bBox = [-5, 5, 5, -5];
+  let showAxes = false;
+  let showGrid = false;
+  let id = '';
+
+  if (typeof input === 'object' && input !== null) {
+    code = input.code || input.jsxgraph || input.jxg || input.tikz || '';
+    title = input.title || '';
+    caption = input.caption || '';
+    if (Array.isArray(input.boundingBox) && input.boundingBox.length === 4) {
+      bBox = input.boundingBox;
+    } else if (Array.isArray(input.bBox) && input.bBox.length === 4) {
+      bBox = input.bBox;
+    }
+    if (input.axis !== undefined) showAxes = !!input.axis;
+    if (input.axes !== undefined) showAxes = !!input.axes;
+    if (input.grid !== undefined) showGrid = !!input.grid;
+    id = input.id || '';
+  } else {
+    code = String(input || '');
+  }
+
+  if (!code.trim()) return '';
+
+  // Backward-compatibility: if input is legacy TikZ code, route to TikZ SVG renderer
+  if (code.includes('\\begin{tikzpicture}') || code.includes('\\node[')) {
+    return renderTikzFbdSvg({ code, title, caption }, isDark);
+  }
+
+  const boardId = id ? `jxg-${id.replace(/[^a-zA-Z0-9_-]/g, '_')}` : `jxg-${Math.random().toString(36).slice(2, 10)}`;
+  const encodedCode = encodeURIComponent(code);
+  const encodedBbox = encodeURIComponent(JSON.stringify(bBox));
+
+  return `
+    <div class="my-4 p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+      ${title ? `<h4 class="font-black text-xs sm:text-sm text-slate-900 dark:text-white mb-1 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>${renderMathInHtml(title)}</h4>` : ''}
+      ${caption ? `<p class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">${renderMathInHtml(caption)}</p>` : ''}
+      
+      <div class="w-full flex justify-center items-center bg-slate-50/70 dark:bg-slate-900/50 rounded-xl p-3 border border-slate-100 dark:border-slate-800/80 overflow-x-auto">
+        <div id="${boardId}" class="jxgbox w-full max-w-xl aspect-[4/3] rounded-xl overflow-hidden select-none border border-slate-200/50 dark:border-slate-800/50 shadow-inner !bg-white dark:!bg-slate-900 min-h-[300px] sm:min-h-[360px]" style="min-height: 320px;"
+          data-jxg-code="${encodedCode}"
+          data-jxg-bbox="${encodedBbox}"
+          data-jxg-axes="${showAxes}"
+          data-jxg-grid="${showGrid}">
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function initializeJsxgraphBoards(container = document) {
+  if (typeof window === 'undefined') return;
+  if (!window.JXG) {
+    setTimeout(() => initializeJsxgraphBoards(container), 80);
+    return;
+  }
+
+  const root = (container && container.querySelectorAll) ? container : document;
+  const boardEls = root.querySelectorAll('[data-jxg-code]');
+  if (!boardEls || boardEls.length === 0) return;
+
+  const isDarkMode = (typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
+  const colors = {
+    bg: isDarkMode ? '#0f172a' : '#f8fafc',
+    axis: isDarkMode ? '#64748b' : '#94a3b8',
+    grid: isDarkMode ? '#1e293b' : '#e2e8f0',
+    primary: isDarkMode ? '#34d399' : '#059669',
+    secondary: isDarkMode ? '#38bdf8' : '#0284c7',
+    accent: isDarkMode ? '#f472b6' : '#db2777',
+    warning: isDarkMode ? '#fbbf24' : '#d97706',
+    danger: isDarkMode ? '#f87171' : '#dc2626',
+    text: isDarkMode ? '#f1f5f9' : '#0f172a'
+  };
+
+  boardEls.forEach(el => {
+    if (el._jxgBoard) {
+      try {
+        if (el.clientWidth > 0 && el.clientHeight > 0) {
+          el._jxgBoard.resizeContainer(el.clientWidth, el.clientHeight);
+          if (typeof el._jxgBoard.fullUpdate === 'function') el._jxgBoard.fullUpdate();
+        }
+      } catch (e) {}
+      return;
+    }
+
+    // If container element is currently detached or has zero dimensions, defer until layout resolves
+    if (el.clientWidth === 0 && el.clientHeight === 0 && !el.offsetParent) {
+      setTimeout(() => initializeJsxgraphBoards(el.parentElement || container), 60);
+      return;
+    }
+
+    try {
+      const rawCode = el.getAttribute('data-jxg-code');
+      const code = rawCode ? decodeURIComponent(rawCode) : '';
+      if (!code.trim()) return;
+
+      let bBox = [-5, 5, 5, -5];
+      const rawBbox = el.getAttribute('data-jxg-bbox');
+      if (rawBbox) {
+        try {
+          bBox = JSON.parse(decodeURIComponent(rawBbox));
+        } catch (e) {
+          bBox = [-5, 5, 5, -5];
+        }
+      }
+
+      const showAxes = el.getAttribute('data-jxg-axes') === 'true';
+      const showGrid = el.getAttribute('data-jxg-grid') === 'true';
+
+      if (window.JXG.boards && window.JXG.boards[el.id]) {
+        try {
+          window.JXG.JSXGraph.freeBoard(el.id);
+        } catch (e) {}
+      }
+
+      el.innerHTML = '';
+
+      const board = window.JXG.JSXGraph.initBoard(el.id, {
+        boundingbox: bBox,
+        axis: showAxes,
+        grid: showGrid,
+        showNavigation: false,
+        showCopyright: false,
+        keepaspectratio: false,
+        resize: { enabled: true, throttle: 20 },
+        renderer: 'svg'
+      });
+
+      // Provide responsive fallback dimensions if container layout hasn't set pixel dimensions yet
+      if ((board.canvasWidth <= 0 || board.canvasHeight <= 0) && el.clientWidth > 0 && el.clientHeight > 0) {
+        board.resizeContainer(el.clientWidth, el.clientHeight, true);
+      }
+
+      const runner = new Function('board', 'JXG', 'colors', 'isDark', code);
+      runner(board, window.JXG, colors, isDarkMode);
+
+      if (typeof board.fullUpdate === 'function') {
+        board.fullUpdate();
+      }
+
+      el._jxgBoard = board;
+    } catch (err) {
+      console.error('JSXGraph init failed on', el.id, err);
+      el.innerHTML = `<div class="p-3 text-xs text-rose-500 font-mono">Diagram render error: ${err.message}</div>`;
+    }
+  });
+}
+
+const renderTikzFbdSvgLegacy = renderTikzFbdSvg;
+
+if (typeof window !== 'undefined') {
+  window.renderJsxgraphBlock = renderJsxgraphBlock;
+  window.initializeJsxgraphBoards = initializeJsxgraphBoards;
+  window.renderTikzFbdSvg = renderTikzFbdSvg;
+  window.renderTikzFbdSvgLegacy = renderTikzFbdSvg;
+}
+
+
+    const now = new Date();
 let currentYear = now.getFullYear();
 let currentMonth = now.getMonth();
 
@@ -1954,10 +3017,6 @@ function renderEventsList() {
    TagSci G11 Study WebApp - Study Vault & Reviewers Engine
    ========================================================= */
 
-
-
-
-
 let currentVaultTab = 'reviewers'; // 'reviewers' | 'materials' | 'quizzes'
 
 function renderTableBlock(b) {
@@ -2047,6 +3106,39 @@ function renderBlocksToHtml(blocks) {
         } else {
           html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
         }
+      } else if (text.includes('```jsxgraph') || text.includes('```jxg')) {
+        const jxgMatch = text.match(/```(?:jsxgraph|jxg)\s*([\s\S]*?)\s*```/);
+        if (jxgMatch) {
+          const before = text.substring(0, jxgMatch.index).trim();
+          const after = text.substring(jxgMatch.index + jxgMatch[0].length).trim();
+          if (before) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(before)}</p>`;
+          html += renderJsxgraphBlock(jxgMatch[1]);
+          if (after) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(after)}</p>`;
+        } else {
+          html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
+        }
+      } else if (text.includes('```tikz') || text.includes('```fbd')) {
+        const tikzMatch = text.match(/```(?:tikz|fbd)\s*([\s\S]*?)\s*```/);
+        if (tikzMatch) {
+          const before = text.substring(0, tikzMatch.index).trim();
+          const after = text.substring(tikzMatch.index + tikzMatch[0].length).trim();
+          if (before) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(before)}</p>`;
+          html += renderTikzFbdSvg(tikzMatch[1]);
+          if (after) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(after)}</p>`;
+        } else {
+          html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
+        }
+      } else if (text.includes('\\begin{tikzpicture}')) {
+        const tikzMatch = text.match(/\\begin\{tikzpicture\}[\s\S]*?\\end\{tikzpicture\}/);
+        if (tikzMatch) {
+          const before = text.substring(0, tikzMatch.index).trim();
+          const after = text.substring(tikzMatch.index + tikzMatch[0].length).trim();
+          if (before) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(before)}</p>`;
+          html += renderTikzFbdSvg(tikzMatch[0]);
+          if (after) html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(after)}</p>`;
+        } else {
+          html += `<p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed my-2">${renderMathInHtml(text)}</p>`;
+        }
       } else if (text.includes('|') && text.split(/\r?\n/).some(l => l.trim().startsWith('|') && l.trim().endsWith('|'))) {
         html += renderMarkdownTable(text);
       } else if (text.includes('![') && text.includes('](')) {
@@ -2074,6 +3166,10 @@ function renderBlocksToHtml(blocks) {
       html += renderTableBlock(b);
     } else if (b.type === 'cartesian' || b.type === 'plot') {
       html += renderCartesianPlaneSvg(b);
+    } else if (b.type === 'tikz' || b.type === 'fbd') {
+      html += renderTikzFbdSvg(b);
+    } else if (b.type === 'jsxgraph' || b.type === 'jxg') {
+      html += renderJsxgraphBlock(b);
     } else if (b.type === 'image') {
       const url = b.url || '';
       const alt = b.alt || 'Figure diagram';
@@ -2142,7 +3238,7 @@ function updateVaultTabButtons() {
 
   if (bRev) bRev.innerText = (STEM_REVIEWERS || []).length;
   if (bMat) bMat.innerText = (STUDY_MATERIALS || []).length;
-  if (bQuiz) bQuiz.innerText = (QUIZ_SETS || []).length;
+  if (bQuiz) bQuiz.innerText = (FLASHCARD_DECKS || []).length;
 
   tabs.forEach(t => {
     const btn = document.getElementById(`btnVaultTab-${t}`);
@@ -2161,8 +3257,8 @@ function updateVaultTabButtons() {
     if (iconEl) iconEl.innerHTML = '&#x1F4DA;';
     if (titleEl) titleEl.innerText = 'Study Materials';
   } else if (currentVaultTab === 'quizzes') {
-    if (iconEl) iconEl.innerHTML = '&#x2753;';
-    if (titleEl) titleEl.innerText = 'Self-Tests & Quizzes';
+    if (iconEl) iconEl.innerHTML = '&#x1F0CF;';
+    if (titleEl) titleEl.innerText = 'Flashcards & Active Recall';
   }
 }
 
@@ -2203,7 +3299,7 @@ function renderMaterials() {
   let sourceList = [];
   if (currentVaultTab === 'reviewers') sourceList = STEM_REVIEWERS || [];
   else if (currentVaultTab === 'materials') sourceList = STUDY_MATERIALS || [];
-  else if (currentVaultTab === 'quizzes') sourceList = QUIZ_SETS || [];
+  else if (currentVaultTab === 'quizzes') sourceList = FLASHCARD_DECKS || [];
 
   // Filter by search query
   let filtered = sourceList;
@@ -2229,8 +3325,8 @@ function renderMaterials() {
   }
 
   if (displayItems.length === 0) {
-    const emptyIcon = currentVaultTab === 'reviewers' ? '&#x1F52C;' : (currentVaultTab === 'materials' ? '&#x1F4DA;' : '&#x2753;');
-    const emptyName = currentVaultTab === 'reviewers' ? 'reviewers' : (currentVaultTab === 'materials' ? 'study materials' : 'quiz banks');
+    const emptyIcon = currentVaultTab === 'reviewers' ? '&#x1F52C;' : (currentVaultTab === 'materials' ? '&#x1F4DA;' : '&#x1F0CF;');
+    const emptyName = currentVaultTab === 'reviewers' ? 'reviewers' : (currentVaultTab === 'materials' ? 'study materials' : 'flashcard decks');
     grid.innerHTML = `
       <div class="py-8 text-center text-slate-400 dark:text-slate-500 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 p-4">
         <span class="text-2xl block mb-1">${emptyIcon}</span>
@@ -2336,8 +3432,22 @@ function openReviewer(id) {
     finalHtml = `<p class="text-xs text-slate-400 italic">No content available in this material draft.</p>`;
   }
 
-  if (modalContent) modalContent.innerHTML = finalHtml;
   if (modal) modal.classList.remove('hidden');
+  if (modalContent) {
+    modalContent.innerHTML = finalHtml;
+    const triggerInit = () => {
+      if (typeof initializeJsxgraphBoards === 'function') {
+        initializeJsxgraphBoards(modalContent);
+      } else if (typeof window !== 'undefined' && typeof window.initializeJsxgraphBoards === 'function') {
+        window.initializeJsxgraphBoards(modalContent);
+      }
+    };
+    requestAnimationFrame(() => {
+      triggerInit();
+      setTimeout(triggerInit, 60);
+      setTimeout(triggerInit, 250);
+    });
+  }
 }
 
 function closeModal() {
@@ -2351,9 +3461,7 @@ if (typeof window !== 'undefined') {
 }
 
 
-    
-
-const STORAGE_KEY = 'tagsci_g11_tasks';
+    const STORAGE_KEY = 'tagsci_g11_tasks';
 
 let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || INITIAL_TASKS;
 
@@ -2411,717 +3519,816 @@ function renderTasks() {
 
 
     /* =========================================================
-   TagSci G11 Study WebApp - 6-in-1 Interactive Quiz Engine
+   TagSci G11 Study WebApp - Active Recall Flashcard Engine
    Supports:
-   1. Multiple Choice (mcq)
-   2. True or False (true_false)
-   3. Direct Identification (identification)
-   4. Numerical with Tolerances (numerical)
-   5. Multi-Select Checkboxes (multi_select)
-   6. Active Recall Flashcards (flashcard)
+   - 3D Card Flip (Touch, Click, Spacebar)
+   - 3-Tier Leitner Spaced Repetition (Box 1: Again, Box 2: Good, Box 3: Mastered)
+   - Shuffling & Unmastered Filter Mode
+   - LaTeX & Markdown rendering on Front & Back
+   - Keyboard Shortcuts (Space: Flip, 1: Again, 2: Good, 3: Mastered, H: Hint)
    ========================================================= */
 
+let currentDeck = null;
+let currentDeckCards = [];
+let currentCardIndex = 0;
+let isCardFlipped = false;
+let isHintVisible = false;
+let practiceFilter = 'all'; // 'all' | 'unmastered'
 
+const STORAGE_LEITNER_PREFIX = 'tagsci_leitner_deck_';
 
+function getLeitnerStore(deckId) {
+  try {
+    const raw = localStorage.getItem(STORAGE_LEITNER_PREFIX + deckId);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
 
-let currentQuiz = null;
-let currentQuestionIdx = 0;
-let userAnswers = []; // array of user responses (index, string, boolean, or array)
-let isPracticeMode = true;
-let timerInterval = null;
-let secondsRemaining = 0;
+function saveLeitnerCard(deckId, cardId, box) {
+  try {
+    const store = getLeitnerStore(deckId);
+    store[cardId] = {
+      box: Math.max(1, Math.min(3, box)),
+      lastReviewed: new Date().toISOString()
+    };
+    localStorage.setItem(STORAGE_LEITNER_PREFIX + deckId, JSON.stringify(store));
+  } catch (e) {
+    console.warn('Could not save Leitner card status:', e);
+  }
+}
 
-function renderQuizSetsView() {
-  const container = document.getElementById('quizSetsListContainer');
+function renderFlashcardsView() {
+  const container = document.getElementById('flashcardsListContainer') || document.getElementById('quizSetsListContainer');
   if (!container) return;
 
-  if (!QUIZ_SETS || QUIZ_SETS.length === 0) {
+  const decks = FLASHCARD_DECKS || [];
+
+  if (decks.length === 0) {
     container.innerHTML = `
       <div class="py-12 text-center text-slate-400 dark:text-slate-500 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
-        <span class="text-3xl block mb-2">&#x2753;</span>
-        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-200">No Practice Quizzes Published Yet</h4>
-        <p class="text-xs text-slate-400 mt-1">Interactive self-test quiz banks will be available here once synced.</p>
+        <span class="text-3xl block mb-2">&#x1F0CF;</span>
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-200">No Flashcard Decks Published Yet</h4>
+        <p class="text-xs text-slate-400 mt-1">Active recall flashcard decks will appear here once authored or synced.</p>
       </div>
     `;
     return;
   }
 
   container.innerHTML = `
-    <!-- Quiz Selection Grid -->
-    <div id="quizDeckGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      ${QUIZ_SETS.map(q => `
-        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 ${q.color || 'border-l-4 border-tagsci-600'} shadow-sm flex flex-col justify-between hover:shadow-md transition">
-          <div>
-            <div class="flex items-center justify-between">
-              <span class="text-[9px] font-bold uppercase px-2 py-0.5 rounded-full bg-tagsci-100 dark:bg-tagsci-950 text-tagsci-800 dark:text-tagsci-300">
-                ${q.tag || q.subject || 'STEM'}
-              </span>
-              <span class="text-xs text-slate-400 font-mono-math">${q.questions ? q.questions.length : 0} Items</span>
-            </div>
-            <h3 class="text-sm font-bold text-slate-900 dark:text-white mt-2">${renderMathInHtml(q.title || 'Untitled Quiz')}</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${renderMathInHtml(q.desc || '')}</p>
-          </div>
+    <!-- Flashcard Decks Grid -->
+    <div id="flashcardDeckGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      ${decks.map(deck => {
+        const store = getLeitnerStore(deck.id);
+        const cards = deck.cards || [];
+        let b1 = 0, b2 = 0, b3 = 0;
+        cards.forEach(c => {
+          const b = store[c.id] ? store[c.id].box : 1;
+          if (b === 3) b3++;
+          else if (b === 2) b2++;
+          else b1++;
+        });
 
-          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
-            <button onclick="startQuiz('${q.id}', true)" class="flex-1 py-2 rounded-xl bg-tagsci-50 dark:bg-tagsci-950 hover:bg-tagsci-100 dark:hover:bg-tagsci-900 text-tagsci-700 dark:text-tagsci-300 font-bold text-xs transition border border-tagsci-200 dark:border-tagsci-800">
-              ⚡ Practice Mode
-            </button>
-            <button onclick="startQuiz('${q.id}', false)" class="flex-1 py-2 rounded-xl bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold text-xs transition shadow-sm">
-              ⏱️ Timed Test
-            </button>
+        const percentMastered = cards.length ? Math.round((b3 / cards.length) * 100) : 0;
+
+        return `
+          <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 ${deck.color || 'border-l-4 border-amber-500'} shadow-sm flex flex-col justify-between hover:shadow-md transition">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-[9.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">
+                  ${deck.tag || deck.subject || 'Core Deck'}
+                </span>
+                <span class="text-xs text-slate-400 font-mono-math">${cards.length} Cards</span>
+              </div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-2.5">
+                ${renderMathInHtml(deck.title || 'Untitled Deck')}
+              </h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                ${renderMathInHtml(deck.desc || '')}
+              </p>
+
+              <!-- Mastery Progress Bar -->
+              <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
+                <div class="flex items-center justify-between text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
+                  <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+                    <span>${percentMastered}% Mastered</span>
+                  </span>
+                  <span class="font-mono-math text-[10px] text-slate-400">
+                    Box 3: ${b3} | Box 2: ${b2} | Box 1: ${b1}
+                  </span>
+                </div>
+                <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1.5 overflow-hidden flex">
+                  <div class="bg-emerald-500 h-1.5 transition-all duration-300" style="width: ${cards.length ? (b3 / cards.length) * 100 : 0}%"></div>
+                  <div class="bg-amber-400 h-1.5 transition-all duration-300" style="width: ${cards.length ? (b2 / cards.length) * 100 : 0}%"></div>
+                  <div class="bg-rose-400 h-1.5 transition-all duration-300" style="width: ${cards.length ? (b1 / cards.length) * 100 : 0}%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2">
+              <button onclick="startFlashcardSession('${deck.id}', 'all')" class="flex-1 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                <span>&#x25B6;</span>
+                <span>Practice All</span>
+              </button>
+              ${b1 + b2 > 0 ? `
+                <button onclick="startFlashcardSession('${deck.id}', 'unmastered')" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs transition" title="Practice only cards that need review">
+                  Review (${b1 + b2})
+                </button>
+              ` : ''}
+            </div>
           </div>
-        </div>
-      `).join('')}
+        `;
+      }).join('')}
     </div>
 
-    <!-- Active Player Container -->
-    <div id="quizPlayerContainer" class="hidden space-y-4"></div>
-
-    <!-- Quiz Results Container -->
-    <div id="quizResultsContainer" class="hidden space-y-6"></div>
+    <!-- Active Flashcard Player Workspace -->
+    <div id="flashcardPlayerContainer" class="hidden space-y-4"></div>
   `;
 }
 
-function startQuiz(quizId, practiceMode) {
-  currentQuiz = QUIZ_SETS.find(q => q.id === quizId);
-  if (!currentQuiz || !currentQuiz.questions || currentQuiz.questions.length === 0) return;
+function startFlashcardSession(deckId, mode = 'all') {
+  currentDeck = (FLASHCARD_DECKS || []).find(d => d.id === deckId);
+  if (!currentDeck || !currentDeck.cards || currentDeck.cards.length === 0) return;
 
-  currentQuestionIdx = 0;
-  userAnswers = new Array(currentQuiz.questions.length).fill(null);
-  isPracticeMode = practiceMode;
+  const store = getLeitnerStore(currentDeck.id);
+  practiceFilter = mode;
 
-  const deckGrid = document.getElementById('quizDeckGrid');
-  const player = document.getElementById('quizPlayerContainer');
-  const results = document.getElementById('quizResultsContainer');
+  if (mode === 'unmastered') {
+    currentDeckCards = currentDeck.cards.filter(c => {
+      const b = store[c.id] ? store[c.id].box : 1;
+      return b < 3;
+    });
+    if (currentDeckCards.length === 0) {
+      currentDeckCards = [...currentDeck.cards];
+    }
+  } else {
+    currentDeckCards = [...currentDeck.cards];
+  }
+
+  currentCardIndex = 0;
+  isCardFlipped = false;
+  isHintVisible = false;
+
+  const deckGrid = document.getElementById('flashcardDeckGrid') || document.getElementById('quizDeckGrid');
+  const player = document.getElementById('flashcardPlayerContainer') || document.getElementById('quizPlayerContainer');
 
   if (deckGrid) deckGrid.classList.add('hidden');
-  if (results) results.classList.add('hidden');
-  if (player) player.classList.remove('hidden');
+  if (player) {
+    player.classList.remove('hidden');
+    renderCurrentFlashcard();
+  }
 
-  if (!isPracticeMode && currentQuiz.timeLimitMinutes) {
-    startTimer(currentQuiz.timeLimitMinutes * 60);
+  // Hook keyboard listener
+  window.removeEventListener('keydown', handleFlashcardKeydown);
+  window.addEventListener('keydown', handleFlashcardKeydown);
+}
+
+function handleFlashcardKeydown(e) {
+  const player = document.getElementById('flashcardPlayerContainer') || document.getElementById('quizPlayerContainer');
+  if (!player || player.classList.contains('hidden')) return;
+
+  // Don't trigger if user is typing in an input
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+  if (e.code === 'Space' || e.key === ' ') {
+    e.preventDefault();
+    flipFlashcard();
+  } else if (e.key === '1') {
+    e.preventDefault();
+    rateFlashcard(1);
+  } else if (e.key === '2') {
+    e.preventDefault();
+    rateFlashcard(2);
+  } else if (e.key === '3') {
+    e.preventDefault();
+    rateFlashcard(3);
+  } else if (e.key.toLowerCase() === 'h') {
+    e.preventDefault();
+    toggleFlashcardHint();
+  } else if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    prevFlashcard();
+  } else if (e.key === 'ArrowRight') {
+    e.preventDefault();
+    nextFlashcard();
+  } else if (e.key === 'Escape') {
+    e.preventDefault();
+    exitFlashcardSession();
+  }
+}
+
+function flipFlashcard() {
+  isCardFlipped = !isCardFlipped;
+  const cardInner = document.getElementById('flashcard-flipper');
+  if (cardInner) {
+    cardInner.classList.toggle('flipped', isCardFlipped);
+  }
+
+  const controls = document.getElementById('flashcard-rating-controls');
+  if (controls) {
+    controls.classList.toggle('hidden', !isCardFlipped);
+  }
+}
+
+function toggleFlashcardHint() {
+  isHintVisible = !isHintVisible;
+  const hintEl = document.getElementById('flashcard-hint-box');
+  if (hintEl) {
+    hintEl.classList.toggle('hidden', !isHintVisible);
+  }
+}
+
+function rateFlashcard(boxNumber) {
+  if (!currentDeck || !currentDeckCards[currentCardIndex]) return;
+
+  const card = currentDeckCards[currentCardIndex];
+  saveLeitnerCard(currentDeck.id, card.id, boxNumber);
+
+  // Advance to next card or finish session
+  if (currentCardIndex < currentDeckCards.length - 1) {
+    currentCardIndex++;
+    isCardFlipped = false;
+    isHintVisible = false;
+    renderCurrentFlashcard();
   } else {
-    clearInterval(timerInterval);
+    renderFlashcardSessionSummary();
   }
-
-  renderCurrentQuestion();
 }
 
-function startTimer(seconds) {
-  clearInterval(timerInterval);
-  secondsRemaining = seconds;
-
-  timerInterval = setInterval(() => {
-    secondsRemaining--;
-    const display = document.getElementById('timerDisplay');
-    if (display) {
-      const min = Math.floor(secondsRemaining / 60);
-      const sec = secondsRemaining % 60;
-      display.textContent = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
-    }
-
-    if (secondsRemaining <= 0) {
-      clearInterval(timerInterval);
-      alert('⏰ Time is up! Submitting your test now.');
-      showResults();
-    }
-  }, 1000);
+function prevFlashcard() {
+  if (currentCardIndex > 0) {
+    currentCardIndex--;
+    isCardFlipped = false;
+    isHintVisible = false;
+    renderCurrentFlashcard();
+  }
 }
 
-function evaluateAnswer(q, userAns) {
-  if (userAns === null || userAns === undefined) return false;
-  const qType = q.type || 'mcq';
-
-  if (qType === 'mcq') {
-    return userAns === q.answerIndex;
+function nextFlashcard() {
+  if (currentCardIndex < currentDeckCards.length - 1) {
+    currentCardIndex++;
+    isCardFlipped = false;
+    isHintVisible = false;
+    renderCurrentFlashcard();
+  } else {
+    renderFlashcardSessionSummary();
   }
-
-  if (qType === 'true_false') {
-    const targetBool = q.answerBoolean === true || q.answerBoolean === 'true' || q.answerBoolean === 1;
-    return userAns === targetBool;
-  }
-
-  if (qType === 'identification') {
-    const rawUser = String(userAns).trim().toLowerCase();
-    const target = String(q.correctText || '').trim().toLowerCase();
-    if (rawUser === target && target !== '') return true;
-
-    // Check aliases
-    if (q.aliases) {
-      const aliasList = String(q.aliases).split(',').map(a => a.trim().toLowerCase());
-      if (aliasList.includes(rawUser)) return true;
-    }
-    return false;
-  }
-
-  if (qType === 'numerical') {
-    const userNum = parseFloat(userAns);
-    const targetNum = parseFloat(q.correctValue);
-    const tol = parseFloat(q.tolerance || '0.05');
-    if (isNaN(userNum) || isNaN(targetNum)) return false;
-    return Math.abs(userNum - targetNum) <= (Math.abs(targetNum) * tol + 0.01);
-  }
-
-  if (qType === 'multi_select') {
-    if (!Array.isArray(userAns)) return false;
-    const targetIndices = (q.answerIndices || []).map(Number).sort((a, b) => a - b);
-    const selectedIndices = [...userAns].map(Number).sort((a, b) => a - b);
-    return JSON.stringify(targetIndices) === JSON.stringify(selectedIndices);
-  }
-
-  if (qType === 'flashcard') {
-    return userAns === true;
-  }
-
-  return false;
 }
 
-function renderCurrentQuestion() {
-  const player = document.getElementById('quizPlayerContainer');
-  if (!player || !currentQuiz) return;
-
-  const q = currentQuiz.questions[currentQuestionIdx];
-  const total = currentQuiz.questions.length;
-  const pct = Math.round(((currentQuestionIdx + 1) / total) * 100);
-  const qType = q.type || 'mcq';
-  const userAns = userAnswers[currentQuestionIdx];
-
-  const min = Math.floor(secondsRemaining / 60);
-  const sec = secondsRemaining % 60;
-  const timerText = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
-
-  let answerInputMarkup = '';
-
-  // 1. MULTIPLE CHOICE (mcq)
-  if (qType === 'mcq') {
-    answerInputMarkup = `
-      <div class="space-y-2.5">
-        ${(q.options || []).map((opt, idx) => {
-          const isSelected = userAns === idx;
-          let optClass = 'w-full p-3 sm:p-3.5 rounded-xl border text-left text-xs sm:text-sm font-mono-math flex items-center justify-between transition cursor-pointer ';
-
-          if (isPracticeMode && userAns !== null) {
-            if (idx === q.answerIndex) {
-              optClass += 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-500 text-emerald-800 dark:text-emerald-200 font-bold';
-            } else if (isSelected) {
-              optClass += 'bg-rose-50 dark:bg-rose-950/60 border-rose-400 text-rose-800 dark:text-rose-200';
-            } else {
-              optClass += 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 opacity-60';
-            }
-          } else {
-            if (isSelected) {
-              optClass += 'bg-tagsci-800 text-white border-tagsci-600 shadow-sm font-bold';
-            } else {
-              optClass += 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100';
-            }
-          }
-
-          return `
-            <button onclick="selectQuizOption(${idx})" class="${optClass}">
-              <span>${renderMathInHtml(opt)}</span>
-              ${isSelected ? '<span class="text-sm font-bold ml-2">&#x2714;</span>' : ''}
-            </button>
-          `;
-        }).join('')}
-      </div>
-    `;
+function shuffleCurrentDeck() {
+  for (let i = currentDeckCards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [currentDeckCards[i], currentDeckCards[j]] = [currentDeckCards[j], currentDeckCards[i]];
   }
+  currentCardIndex = 0;
+  isCardFlipped = false;
+  isHintVisible = false;
+  renderCurrentFlashcard();
+}
 
-  // 2. TRUE OR FALSE (true_false)
-  else if (qType === 'true_false') {
-    const isAnswered = userAns !== null;
-    const targetBool = q.answerBoolean === true || q.answerBoolean === 'true' || q.answerBoolean === 1;
+function renderCurrentFlashcard() {
+  const player = document.getElementById('flashcardPlayerContainer') || document.getElementById('quizPlayerContainer');
+  if (!player || !currentDeckCards[currentCardIndex]) return;
 
-    let trueClass = 'flex-1 py-3.5 px-4 rounded-2xl border text-sm font-bold transition flex items-center justify-center gap-2 ';
-    let falseClass = 'flex-1 py-3.5 px-4 rounded-2xl border text-sm font-bold transition flex items-center justify-center gap-2 ';
+  const card = currentDeckCards[currentCardIndex];
+  const total = currentDeckCards.length;
+  const store = getLeitnerStore(currentDeck.id);
+  const currentBox = store[card.id] ? store[card.id].box : 1;
 
-    if (isPracticeMode && isAnswered) {
-      if (targetBool === true) {
-        trueClass += 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-500 text-emerald-800 dark:text-emerald-200';
-        falseClass += userAns === false ? 'bg-rose-50 dark:bg-rose-950/60 border-rose-400 text-rose-800 opacity-70' : 'opacity-40 border-slate-200';
-      } else {
-        falseClass += 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-500 text-emerald-800 dark:text-emerald-200';
-        trueClass += userAns === true ? 'bg-rose-50 dark:bg-rose-950/60 border-rose-400 text-rose-800 opacity-70' : 'opacity-40 border-slate-200';
-      }
-    } else {
-      if (userAns === true) {
-        trueClass += 'bg-tagsci-800 text-white border-tagsci-600 shadow-md';
-        falseClass += 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300';
-      } else if (userAns === false) {
-        falseClass += 'bg-tagsci-800 text-white border-tagsci-600 shadow-md';
-        trueClass += 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300';
-      } else {
-        trueClass += 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200';
-        falseClass += 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200';
-      }
-    }
+  const boxBadge = currentBox === 3
+    ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">Box 3: Mastered</span>'
+    : (currentBox === 2
+      ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Box 2: Reviewing</span>'
+      : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300">Box 1: Learning</span>');
 
-    answerInputMarkup = `
-      <div class="flex items-center gap-3 pt-2">
-        <button onclick="selectTrueFalse(true)" class="${trueClass}">
-          <span>✓</span> <span>TRUE</span>
+  const progressPercent = Math.round(((currentCardIndex + 1) / total) * 100);
+
+  player.innerHTML = `
+    <!-- Flashcard Top Meta Bar -->
+    <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+      <div class="flex items-center justify-between">
+        <button onclick="exitFlashcardSession()" class="text-xs font-semibold text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 flex items-center gap-1.5 transition">
+          <span>&larr;</span>
+          <span>Exit Session</span>
         </button>
-        <button onclick="selectTrueFalse(false)" class="${falseClass}">
-          <span>✗</span> <span>FALSE</span>
+        <div class="flex items-center gap-2">
+          <button onclick="shuffleCurrentDeck()" class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition flex items-center gap-1" title="Shuffle deck order">
+            <span>&#x1F500;</span>
+            <span class="hidden sm:inline">Shuffle</span>
+          </button>
+          <span class="text-xs font-mono-math text-slate-500 dark:text-slate-400">
+            Card <strong>${currentCardIndex + 1}</strong> of ${total}
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+            ${card.topic || currentDeck.subject || 'Core'}
+          </span>
+          ${boxBadge}
+        </div>
+        <span class="text-[11px] font-bold text-amber-500 font-mono-math">${progressPercent}%</span>
+      </div>
+
+      <!-- Linear Progress Bar -->
+      <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1.5 overflow-hidden">
+        <div class="bg-amber-500 h-1.5 transition-all duration-300 rounded-full" style="width: ${progressPercent}%"></div>
+      </div>
+    </div>
+
+    <!-- 3D Flip Card Container -->
+    <div class="flashcard-scene" onclick="flipFlashcard()">
+      <div id="flashcard-flipper" class="flashcard-card ${isCardFlipped ? 'flipped' : ''}">
+        
+        <!-- CARD FRONT -->
+        <div class="flashcard-face flashcard-front">
+          <div class="flex items-center justify-between w-full text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-4">
+            <span class="flex items-center gap-1">
+              <span>&#x1F50D;</span> Question / Prompt
+            </span>
+            <span class="text-amber-500/80">Tap to Flip &bull; [Space]</span>
+          </div>
+
+          <div class="flex-1 flex items-center justify-center text-center p-4">
+            <div class="text-base sm:text-xl font-bold text-slate-900 dark:text-white leading-relaxed">
+              ${renderMathInHtml(card.front || '')}
+            </div>
+          </div>
+
+          <div class="w-full text-center pt-2 border-t border-slate-100 dark:border-slate-800/80 text-[11px] text-slate-400">
+            Tap anywhere to reveal back
+          </div>
+        </div>
+
+        <!-- CARD BACK -->
+        <div class="flashcard-face flashcard-back">
+          <div class="flex items-center justify-between w-full text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-4">
+            <span class="flex items-center gap-1">
+              <span>&#x1F4A1;</span> Solution & Concept
+            </span>
+            <span class="text-slate-400">Tap to Flip &bull; [Space]</span>
+          </div>
+
+          <div class="flex-1 flex items-center justify-center text-center p-4">
+            <div class="text-sm sm:text-lg font-semibold text-slate-800 dark:text-slate-100 leading-relaxed max-w-xl">
+              ${renderMathInHtml(card.back || '')}
+            </div>
+          </div>
+
+          <div class="w-full text-center pt-2 border-t border-slate-100 dark:border-slate-800/80 text-[11px] text-slate-400">
+            How well did you know this? Rate below
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Optional Hint Bar -->
+    ${card.hint ? `
+      <div class="text-center">
+        <button onclick="event.stopPropagation(); toggleFlashcardHint();" class="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline inline-flex items-center gap-1">
+          <span>&#x1F4A1;</span>
+          <span>${isHintVisible ? 'Hide Hint [H]' : 'Need a Hint? [H]'}</span>
+        </button>
+        <div id="flashcard-hint-box" class="${isHintVisible ? '' : 'hidden'} mt-2 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/40 text-xs text-amber-900 dark:text-amber-200 max-w-lg mx-auto leading-relaxed">
+          ${renderMathInHtml(card.hint)}
+        </div>
+      </div>
+    ` : ''}
+
+    <!-- Bottom Actions: Rating Controls (shown after flip) vs Navigation Controls -->
+    <div id="flashcard-rating-controls" class="${isCardFlipped ? '' : 'hidden'} space-y-2 pt-1">
+      <div class="text-center text-[11px] font-bold uppercase tracking-wider text-slate-400">
+        Rate Your Active Recall (Leitner Spaced Repetition)
+      </div>
+      <div class="grid grid-cols-3 gap-2 sm:gap-3">
+        <button onclick="event.stopPropagation(); rateFlashcard(1);" class="p-3 sm:p-4 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/50 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 font-bold text-xs sm:text-sm transition flex flex-col items-center justify-center shadow-sm active:scale-95">
+          <span class="text-base sm:text-lg mb-0.5">&#x1F534;</span>
+          <span>Again (Box 1)</span>
+          <span class="text-[9.5px] opacity-75 font-normal hidden sm:inline">Press [1]</span>
+        </button>
+
+        <button onclick="event.stopPropagation(); rateFlashcard(2);" class="p-3 sm:p-4 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/50 dark:hover:bg-amber-900/60 border border-amber-200 dark:border-amber-900 text-amber-700 dark:text-amber-300 font-bold text-xs sm:text-sm transition flex flex-col items-center justify-center shadow-sm active:scale-95">
+          <span class="text-base sm:text-lg mb-0.5">&#x1F7E1;</span>
+          <span>Good (Box 2)</span>
+          <span class="text-[9.5px] opacity-75 font-normal hidden sm:inline">Press [2]</span>
+        </button>
+
+        <button onclick="event.stopPropagation(); rateFlashcard(3);" class="p-3 sm:p-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:hover:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-300 font-bold text-xs sm:text-sm transition flex flex-col items-center justify-center shadow-sm active:scale-95">
+          <span class="text-base sm:text-lg mb-0.5">&#x1F7E2;</span>
+          <span>Mastered (Box 3)</span>
+          <span class="text-[9.5px] opacity-75 font-normal hidden sm:inline">Press [3]</span>
         </button>
       </div>
-    `;
-  }
+    </div>
 
-  // 3. IDENTIFICATION / FILL-IN-THE-BLANK (identification)
-  else if (qType === 'identification') {
-    const isAnswered = userAns !== null;
-    const isCorrect = evaluateAnswer(q, userAns);
+    <!-- Stepper Navigation Controls -->
+    <div class="flex items-center justify-between pt-2">
+      <button onclick="prevFlashcard()" ${currentCardIndex === 0 ? 'disabled' : ''} class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1">
+        <span>&larr;</span>
+        <span>Previous</span>
+      </button>
 
-    answerInputMarkup = `
-      <div class="space-y-3">
-        <div class="flex items-center space-x-2">
-          <input 
-            type="text" 
-            id="identInput" 
-            placeholder="Type your answer / term here..." 
-            value="${userAns !== null ? userAns : ''}"
-            ${isPracticeMode && isAnswered ? 'disabled' : ''}
-            onkeydown="if(event.key==='Enter') submitIdentificationAnswer()"
-            class="flex-1 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-mono-math text-slate-900 dark:text-white focus:ring-2 focus:ring-g11pink-400 focus:outline-none"
-          />
-          <button 
-            onclick="submitIdentificationAnswer()" 
-            class="px-4 py-2.5 rounded-xl bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold text-xs shadow-md transition"
-          >
-            Submit Answer
-          </button>
-        </div>
-        ${isPracticeMode && isAnswered && !isCorrect ? `
-          <p class="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">
-            Expected: ${q.correctText} ${q.aliases ? `(or ${q.aliases})` : ''}
-          </p>
-        ` : ''}
+      <button onclick="nextFlashcard()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition flex items-center gap-1">
+        <span>${currentCardIndex === total - 1 ? 'Finish' : 'Next'}</span>
+        <span>&rarr;</span>
+      </button>
+    </div>
+  `;
+}
+
+function renderFlashcardSessionSummary() {
+  const player = document.getElementById('flashcardPlayerContainer') || document.getElementById('quizPlayerContainer');
+  if (!player || !currentDeck) return;
+
+  const store = getLeitnerStore(currentDeck.id);
+  const cards = currentDeck.cards || [];
+  let b1 = 0, b2 = 0, b3 = 0;
+  cards.forEach(c => {
+    const b = store[c.id] ? store[c.id].box : 1;
+    if (b === 3) b3++;
+    else if (b === 2) b2++;
+    else b1++;
+  });
+
+  const percentMastered = cards.length ? Math.round((b3 / cards.length) * 100) : 0;
+
+  player.innerHTML = `
+    <div class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md text-center space-y-5">
+      <div class="w-16 h-16 mx-auto rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-3xl">
+        &#x1F3C6;
       </div>
-    `;
-  }
-
-  // 4. NUMERICAL INPUT (numerical)
-  else if (qType === 'numerical') {
-    const isAnswered = userAns !== null;
-    const isCorrect = evaluateAnswer(q, userAns);
-
-    answerInputMarkup = `
-      <div class="space-y-3">
-        <div class="flex items-center space-x-2">
-          <input 
-            type="number" 
-            step="any"
-            id="numericalInput" 
-            placeholder="Enter calculated value..." 
-            value="${userAns !== null ? userAns : ''}"
-            ${isPracticeMode && isAnswered ? 'disabled' : ''}
-            onkeydown="if(event.key==='Enter') submitNumericalAnswer()"
-            class="flex-1 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-mono-math text-slate-900 dark:text-white focus:ring-2 focus:ring-g11pink-400 focus:outline-none"
-          />
-          <button 
-            onclick="submitNumericalAnswer()" 
-            class="px-4 py-2.5 rounded-xl bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold text-xs shadow-md transition"
-          >
-            Check Value
-          </button>
-        </div>
-        <div class="flex items-center justify-between text-[11px] text-slate-400 font-mono-math">
-          ${q.unit ? `<span>Expected Unit: <b>${q.unit}</b></span>` : '<span>Exact decimal / rounded value</span>'}
-          ${q.tolerance ? `<span>Tolerance: ±${(parseFloat(q.tolerance)*100).toFixed(0)}%</span>` : ''}
-        </div>
-        ${isPracticeMode && isAnswered && !isCorrect ? `
-          <p class="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">
-            Target Value: ${q.correctValue} ${q.unit || ''}
-          </p>
-        ` : ''}
-      </div>
-    `;
-  }
-
-  // 5. MULTI-SELECT CHECKBOXES (multi_select)
-  else if (qType === 'multi_select') {
-    const currentSelections = Array.isArray(userAns) ? userAns : [];
-    const isSubmitted = userAns !== null && !Array.isArray(userAns._activeDraft);
-    const targetIndices = (q.answerIndices || []).map(Number);
-
-    answerInputMarkup = `
-      <div class="space-y-2.5">
-        <p class="text-[11px] font-bold text-g11pink-600 dark:text-g11pink-400 uppercase tracking-wider">
-          Select all correct options:
+      <div>
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+          Session Completed!
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          ${renderMathInHtml(currentDeck.title)}
         </p>
-        ${(q.options || []).map((opt, idx) => {
-          const isSelected = currentSelections.includes(idx);
-          const isTarget = targetIndices.includes(idx);
-          let itemClass = 'w-full p-3 sm:p-3.5 rounded-xl border text-left text-xs sm:text-sm font-mono-math flex items-center justify-between transition cursor-pointer ';
+      </div>
 
-          if (isPracticeMode && userAns !== null) {
-            if (isTarget) {
-              itemClass += 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-500 text-emerald-800 dark:text-emerald-200 font-bold';
-            } else if (isSelected) {
-              itemClass += 'bg-rose-50 dark:bg-rose-950/60 border-rose-400 text-rose-800 dark:text-rose-200';
-            } else {
-              itemClass += 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 opacity-60';
-            }
-          } else {
-            if (isSelected) {
-              itemClass += 'bg-tagsci-800 text-white border-tagsci-600 shadow-sm font-bold';
-            } else {
-              itemClass += 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100';
-            }
-          }
+      <!-- Leitner Breakdown Box -->
+      <div class="grid grid-cols-3 gap-2.5 max-w-md mx-auto pt-2">
+        <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 text-center">
+          <div class="text-xl font-bold font-mono-math text-emerald-600 dark:text-emerald-400">${b3}</div>
+          <div class="text-[10px] font-bold text-slate-500 uppercase mt-0.5">Box 3: Mastered</div>
+        </div>
 
+        <div class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 text-center">
+          <div class="text-xl font-bold font-mono-math text-amber-600 dark:text-amber-400">${b2}</div>
+          <div class="text-[10px] font-bold text-slate-500 uppercase mt-0.5">Box 2: Reviewing</div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-center">
+          <div class="text-xl font-bold font-mono-math text-rose-600 dark:text-rose-400">${b1}</div>
+          <div class="text-[10px] font-bold text-slate-500 uppercase mt-0.5">Box 1: Again</div>
+        </div>
+      </div>
+
+      <div class="max-w-xs mx-auto">
+        <div class="flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">
+          <span>Overall Mastery</span>
+          <span class="text-amber-500">${percentMastered}%</span>
+        </div>
+        <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
+          <div class="bg-emerald-500 h-2 rounded-full transition-all duration-500" style="width: ${percentMastered}%"></div>
+        </div>
+      </div>
+
+      <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-2.5">
+        <button onclick="startFlashcardSession('${currentDeck.id}', 'all')" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition active:scale-95 shadow-sm">
+          Restart Deck
+        </button>
+        ${b1 + b2 > 0 ? `
+          <button onclick="startFlashcardSession('${currentDeck.id}', 'unmastered')" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-slate-800 text-white hover:bg-slate-700 font-bold text-xs transition">
+            Review Unmastered (${b1 + b2})
+          </button>
+        ` : ''}
+        <button onclick="exitFlashcardSession()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs transition">
+          Back to Decks
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function exitFlashcardSession() {
+  window.removeEventListener('keydown', handleFlashcardKeydown);
+  const deckGrid = document.getElementById('flashcardDeckGrid') || document.getElementById('quizDeckGrid');
+  const player = document.getElementById('flashcardPlayerContainer') || document.getElementById('quizPlayerContainer');
+
+  if (player) player.classList.add('hidden');
+  if (deckGrid) deckGrid.classList.remove('hidden');
+
+  renderFlashcardsView();
+}
+
+const renderQuizSetsView = renderFlashcardsView;
+const startQuiz = (id) => startFlashcardSession(id, 'all');
+const exitQuiz = exitFlashcardSession;
+
+
+    /* =========================================================
+   TagSci G11 Study WebApp - Formula Vault Component
+   Aggregates mathematical equations & scientific laws across:
+   - STEM Reviewers (stemReviewers)
+   - Study Materials (studyMaterials)
+   Supports:
+   - Instant Search & Multi-Subject Filter Pills
+   - Pin / Star Favorite Equations (localStorage)
+   - Direct Jump to Topic in Reviewer
+   - One-Tap LaTeX Copy to Clipboard
+   - Print-Ready Formula Sheet Mode
+   ========================================================= */
+
+const STORAGE_PINNED_FORMULAS = 'tagsci_pinned_formulas';
+
+let activeSubjectFilter = 'all';
+let formulaSearchQuery = '';
+let showOnlyPinned = false;
+
+function getPinnedFormulaIds() {
+  try {
+    const raw = localStorage.getItem(STORAGE_PINNED_FORMULAS);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function togglePinFormula(formulaId) {
+  let pinned = getPinnedFormulaIds();
+  if (pinned.includes(formulaId)) {
+    pinned = pinned.filter(id => id !== formulaId);
+  } else {
+    pinned.push(formulaId);
+  }
+  try {
+    localStorage.setItem(STORAGE_PINNED_FORMULAS, JSON.stringify(pinned));
+  } catch (e) {
+    console.warn('Could not save pinned formula:', e);
+  }
+  renderFormulaVaultView();
+}
+
+function copyFormulaTeX(formulaIdOrTex, btnElement) {
+  let tex = formulaIdOrTex;
+  try {
+    const list = aggregateAllFormulas();
+    const item = list.find(f => f.id === formulaIdOrTex);
+    if (item && item.formula) tex = item.formula;
+  } catch (e) {}
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(tex).then(() => {
+      if (btnElement) {
+        const orig = btnElement.innerHTML;
+        btnElement.innerHTML = '<span>&#x2714;</span> <span>Copied!</span>';
+        setTimeout(() => { btnElement.innerHTML = orig; }, 1500);
+      }
+    }).catch(() => {
+      prompt('Copy LaTeX Formula:', tex);
+    });
+  } else {
+    prompt('Copy LaTeX Formula:', tex);
+  }
+}
+
+function aggregateAllFormulas() {
+  const formulas = [];
+  const seenKeys = new Set();
+
+  function processBlocks(blocks, parentItem, sourceKind) {
+    if (!blocks || !Array.isArray(blocks)) return;
+    blocks.forEach((b, idx) => {
+      if (b.type === 'formula' && b.formula) {
+        const key = `${parentItem.subject}::${b.title || ''}::${b.formula}`;
+        if (!seenKeys.has(key)) {
+          seenKeys.add(key);
+          formulas.push({
+            id: `f_${parentItem.id}_${idx}`,
+            parentId: parentItem.id,
+            sourceKind: sourceKind,
+            parentTitle: parentItem.title || 'Untitled',
+            subject: parentItem.subject || 'STEM',
+            title: b.title || 'Mathematical Formula',
+            formula: b.formula,
+            note: b.note || ''
+          });
+        }
+      }
+    });
+  }
+
+  (STEM_REVIEWERS || []).forEach(r => processBlocks(r.blocks, r, 'Reviewer'));
+  (STUDY_MATERIALS || []).forEach(m => processBlocks(m.blocks, m, 'Study Material'));
+
+  return formulas;
+}
+
+function setFormulaSubjectFilter(subj) {
+  activeSubjectFilter = subj;
+  renderFormulaVaultView();
+}
+
+function setFormulaSearchQuery(query) {
+  formulaSearchQuery = (query || '').toLowerCase().trim();
+  renderFormulaVaultView();
+}
+
+function togglePinnedOnlyFilter() {
+  showOnlyPinned = !showOnlyPinned;
+  renderFormulaVaultView();
+}
+
+function jumpToFormulaContext(parentId) {
+  openReviewer(parentId);
+}
+
+function printFormulaSheet() {
+  window.print();
+}
+
+function renderFormulaVaultView() {
+  const container = document.getElementById('formulaVaultContainer') || document.getElementById('viewSection-formulas');
+  if (!container) return;
+
+  const allFormulas = aggregateAllFormulas();
+  const pinnedIds = getPinnedFormulaIds();
+
+  // Extract unique subjects with formula counts
+  const subjectCounts = {};
+  allFormulas.forEach(f => {
+    subjectCounts[f.subject] = (subjectCounts[f.subject] || 0) + 1;
+  });
+  const subjects = Object.keys(subjectCounts).sort();
+
+  // Apply filters
+  let filtered = allFormulas.filter(f => {
+    if (activeSubjectFilter !== 'all' && f.subject !== activeSubjectFilter) return false;
+    if (showOnlyPinned && !pinnedIds.includes(f.id)) return false;
+    if (formulaSearchQuery) {
+      const matchTitle = (f.title || '').toLowerCase().includes(formulaSearchQuery);
+      const matchFormula = (f.formula || '').toLowerCase().includes(formulaSearchQuery);
+      const matchNote = (f.note || '').toLowerCase().includes(formulaSearchQuery);
+      const matchSource = (f.parentTitle || '').toLowerCase().includes(formulaSearchQuery);
+      const matchSubject = (f.subject || '').toLowerCase().includes(formulaSearchQuery);
+      return matchTitle || matchFormula || matchNote || matchSource || matchSubject;
+    }
+    return true;
+  });
+
+  const pinnedCount = allFormulas.filter(f => pinnedIds.includes(f.id)).length;
+
+  container.innerHTML = `
+    <!-- Header Controls & Search Bar -->
+    <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <span>&#x1F4D0;</span>
+            <span>STEM Formula Vault</span>
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            Quick-reference index of equations, laws, and definitions across Grade 11 modules
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 self-start sm:self-auto">
+          <button onclick="printFormulaSheet()" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition flex items-center gap-1.5" title="Print a physical formula cheat-sheet">
+            <span>&#x1F5A8;&#xFE0F;</span>
+            <span class="hidden sm:inline">Print Sheet</span>
+          </button>
+          <button onclick="togglePinnedOnlyFilter()" class="px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${showOnlyPinned ? 'bg-amber-500 text-slate-950' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200'}">
+            <span>&#x2B50;</span>
+            <span>Starred (${pinnedCount})</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Search Input -->
+      <div class="relative">
+        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">&#x1F50D;</span>
+        <input 
+          type="text" 
+          value="${formulaSearchQuery}"
+          oninput="setFormulaSearchQuery(this.value)"
+          placeholder="Search equations, variables (e.g. torque, tau, nCr, momentum, dipole)..."
+          class="w-full pl-9 pr-4 py-2 text-xs font-medium bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-tagsci-500 text-slate-900 dark:text-white"
+        />
+        ${formulaSearchQuery ? `
+          <button onclick="setFormulaSearchQuery('')" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+            &#x2715;
+          </button>
+        ` : ''}
+      </div>
+
+      <!-- Subject Filter Pills -->
+      <div class="flex items-center gap-1.5 flex-wrap pt-1 border-t border-slate-100 dark:border-slate-800/80">
+        <button 
+          onclick="setFormulaSubjectFilter('all')" 
+          class="px-2.5 py-1 rounded-lg text-xs font-bold transition ${activeSubjectFilter === 'all' ? 'bg-tagsci-800 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200'}"
+        >
+          All Subjects (${allFormulas.length})
+        </button>
+        ${subjects.map(s => `
+          <button 
+            onclick="setFormulaSubjectFilter('${s}')" 
+            class="px-2.5 py-1 rounded-lg text-xs font-bold transition ${activeSubjectFilter === s ? 'bg-tagsci-800 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200'}"
+          >
+            ${s} (${subjectCounts[s]})
+          </button>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- Formula Cards Grid -->
+    ${filtered.length === 0 ? `
+      <div class="py-12 text-center text-slate-400 dark:text-slate-500 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
+        <span class="text-3xl block mb-2">&#x1F4D0;</span>
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-200">No Formulas Match Your Filter</h4>
+        <p class="text-xs text-slate-400 mt-1">Try clearing your search query or switching subject categories.</p>
+      </div>
+    ` : `
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        ${filtered.map(f => {
+          const isPinned = pinnedIds.includes(f.id);
+          const meta = getSubjectMeta(f.subject);
           return `
-            <div onclick="toggleMultiSelectOption(${idx})" class="${itemClass}">
-              <div class="flex items-center gap-2.5">
-                <span class="w-4 h-4 rounded border flex items-center justify-center text-xs ${isSelected ? 'bg-tagsci-500 border-tagsci-600 text-white' : 'border-slate-400 bg-white dark:bg-slate-800'}">
-                  ${isSelected ? '✓' : ''}
-                </span>
-                <span>${renderMathInHtml(opt)}</span>
+            <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 ${meta.color || 'border-l-4 border-tagsci-600'} shadow-sm flex flex-col justify-between hover:shadow-md transition space-y-3">
+              <div>
+                <div class="flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-[9.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${meta.badgeClass || 'bg-slate-100 text-slate-700'}">
+                      ${f.subject}
+                    </span>
+                    <span class="text-[10px] text-slate-400 truncate max-w-[180px]">
+                      ${f.parentTitle}
+                    </span>
+                  </div>
+                  
+                  <div class="flex items-center gap-1">
+                    <button 
+                      onclick="togglePinFormula('${f.id}')" 
+                      class="p-1 rounded-lg text-slate-400 hover:text-amber-500 transition ${isPinned ? 'text-amber-500' : ''}" 
+                      title="${isPinned ? 'Unstar formula' : 'Star formula'}"
+                    >
+                      <span>${isPinned ? '&#x2B50;' : '&#x2606;'}</span>
+                    </button>
+                    <button 
+                      onclick="copyFormulaTeX('${f.id}', this)" 
+                      class="px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] font-bold transition flex items-center gap-1" 
+                      title="Copy raw LaTeX code"
+                    >
+                      <span>&#x1F4CB;</span>
+                      <span>TeX</span>
+                    </button>
+                  </div>
+                </div>
+
+                <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-2">
+                  ${renderMathInHtml(f.title)}
+                </h3>
+
+                <!-- Big Formula Display Box -->
+                <div class="mt-2.5 p-3 sm:p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 text-center overflow-x-auto text-base sm:text-lg font-bold font-mono-math text-slate-900 dark:text-emerald-400">
+                  ${renderMathInHtml(`$$${f.formula}$$`)}
+                </div>
+
+                <!-- Formula Variable Breakdown & Notes -->
+                ${f.note ? `
+                  <div class="mt-2 text-xs text-slate-600 dark:text-slate-400 leading-relaxed bg-amber-50/50 dark:bg-slate-800/40 p-2.5 rounded-lg border border-amber-100/60 dark:border-slate-800">
+                    <span class="font-bold text-[10px] uppercase text-amber-700 dark:text-amber-400 block mb-0.5">Note / Breakdown:</span>
+                    ${renderMathInHtml(f.note)}
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- Jump to source topic -->
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-[11px]">
+                <button 
+                  onclick="jumpToFormulaContext('${f.parentId}')" 
+                  class="font-semibold text-tagsci-700 dark:text-tagsci-400 hover:underline flex items-center gap-1"
+                >
+                  <span>&#x1F4D6;</span>
+                  <span>View in ${f.sourceKind}</span>
+                </button>
+                <span class="text-slate-400 text-[10px]">TagSci STEM</span>
               </div>
             </div>
           `;
         }).join('')}
-
-        <div class="pt-2">
-          <button 
-            onclick="submitMultiSelectAnswer()" 
-            class="w-full py-2.5 rounded-xl bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold text-xs shadow-md transition"
-          >
-            Confirm Multi-Select Selection
-          </button>
-        </div>
       </div>
-    `;
-  }
-
-  // 6. FLASHCARD (flashcard)
-  else if (qType === 'flashcard') {
-    const flipped = userAns !== null;
-    answerInputMarkup = `
-      <div class="space-y-4">
-        <div 
-          onclick="flipFlashcard()" 
-          class="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-100 to-white dark:from-slate-950 dark:to-slate-900 border-2 border-dashed border-tagsci-500/50 text-center cursor-pointer hover:shadow-lg transition flex flex-col items-center justify-center min-h-[160px]"
-        >
-          <span class="text-[10px] font-bold uppercase tracking-wider text-g11pink-600 dark:text-g11pink-400 mb-2">
-            ${flipped ? '&#x1F4A1; Solution & Formula (Back)' : '&#x1F504; Tap to Reveal Solution (Front)'}
-          </span>
-          <div class="text-sm sm:text-base font-bold text-slate-900 dark:text-white font-mono-math">
-            ${flipped ? renderMathInHtml(q.back || q.explanation || '') : renderMathInHtml(q.front || q.prompt || '')}
-          </div>
-        </div>
-
-        ${flipped ? `
-          <div class="flex items-center justify-center space-x-3 pt-2">
-            <button onclick="rateFlashcard(false)" class="flex-1 py-2 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-300 text-rose-700 dark:text-rose-300 font-bold text-xs transition">
-              🔁 Review Again
-            </button>
-            <button onclick="rateFlashcard(true)" class="flex-1 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 text-emerald-700 dark:text-emerald-300 font-bold text-xs transition">
-              👍 Mastered
-            </button>
-          </div>
-        ` : ''}
-      </div>
-    `;
-  }
-
-  // Explanation Box (In Practice Mode)
-  let explanationMarkup = '';
-  if (isPracticeMode && userAns !== null) {
-    const isCorrect = evaluateAnswer(q, userAns);
-
-    explanationMarkup = `
-      <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2 mt-4">
-        <div class="flex items-center space-x-2">
-          <span class="text-base">${isCorrect ? '&#x2705;' : '&#x274C;'}</span>
-          <h4 class="text-xs font-bold uppercase tracking-wider ${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-500'}">
-            ${isCorrect ? 'Correct!' : 'Incorrect / Needs Review'}
-          </h4>
-        </div>
-        <div class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-mono-math leading-relaxed pl-6">
-          ${renderMathInHtml(q.explanation || 'No step-by-step derivation provided for this item.')}
-        </div>
-      </div>
-    `;
-  }
-
-  player.innerHTML = `
-    <!-- Player Top Bar -->
-    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
-      <div>
-        <button onclick="exitQuiz()" class="text-xs font-semibold text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 flex items-center space-x-1">
-          <span>&larr; Exit Drill</span>
-        </button>
-        <h2 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-0.5">${renderMathInHtml(currentQuiz.title || 'Interactive Drill')}</h2>
-      </div>
-
-      <div class="flex items-center space-x-2">
-        <div class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-g11pink-100 text-g11pink-700 dark:bg-g11pink-950 dark:text-g11pink-300 border border-g11pink-300">
-          ${isPracticeMode ? 'Practice Mode' : 'Timed Exam'}
-        </div>
-        ${!isPracticeMode && currentQuiz.timeLimitMinutes ? `
-          <div class="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 font-mono-math text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center space-x-1">
-            <span>&#x23F1;</span>
-            <span id="timerDisplay">${timerText}</span>
-          </div>
-        ` : ''}
-      </div>
-    </div>
-
-    <!-- Progress Bar -->
-    <div class="space-y-1.5">
-      <div class="flex justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
-        <span>Question ${currentQuestionIdx + 1} of ${total} (${qType.replace('_', ' ').toUpperCase()})</span>
-        <span>${pct}%</span>
-      </div>
-      <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-        <div class="h-full bg-gradient-to-r from-tagsci-500 to-g11pink-500 transition-all duration-300" style="width: ${pct}%"></div>
-      </div>
-    </div>
-
-    <!-- Question Card -->
-    <div class="p-5 sm:p-7 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
-      <div>
-        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-tagsci-100 dark:bg-tagsci-950 text-tagsci-800 dark:text-tagsci-300">
-          ${q.topic || 'Item ' + (currentQuestionIdx + 1)}
-        </span>
-        <div class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white mt-2 leading-relaxed">
-          ${renderMathInHtml(q.prompt || '')}
-        </div>
-      </div>
-
-      <!-- Options / Answer Area -->
-      ${answerInputMarkup}
-
-      <!-- Explanation -->
-      ${explanationMarkup}
-
-      <!-- Controls -->
-      <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-        <button 
-          onclick="prevQuizQuestion()" 
-          ${currentQuestionIdx === 0 ? 'disabled' : ''}
-          class="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition disabled:opacity-40 disabled:pointer-events-none"
-        >
-          &larr; Previous
-        </button>
-
-        <button 
-          onclick="nextQuizQuestion()" 
-          class="px-5 py-2 rounded-xl bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-xs font-bold text-white shadow-md transition"
-        >
-          ${currentQuestionIdx === total - 1 ? 'Finish Drill & Review' : 'Next Question &rarr;'}
-        </button>
-      </div>
-    </div>
+    `}
   `;
 }
 
-function selectQuizOption(idx) {
-  if (isPracticeMode && userAnswers[currentQuestionIdx] !== null) return;
-  userAnswers[currentQuestionIdx] = idx;
-  renderCurrentQuestion();
-}
 
-function selectTrueFalse(boolVal) {
-  if (isPracticeMode && userAnswers[currentQuestionIdx] !== null) return;
-  userAnswers[currentQuestionIdx] = boolVal;
-  renderCurrentQuestion();
-}
-
-function submitIdentificationAnswer() {
-  const input = document.getElementById('identInput');
-  if (!input || !input.value.trim()) return;
-  userAnswers[currentQuestionIdx] = input.value.trim();
-  renderCurrentQuestion();
-}
-
-function submitNumericalAnswer() {
-  const input = document.getElementById('numericalInput');
-  if (!input || !input.value.trim()) return;
-  userAnswers[currentQuestionIdx] = input.value.trim();
-  renderCurrentQuestion();
-}
-
-function toggleMultiSelectOption(idx) {
-  if (isPracticeMode && userAnswers[currentQuestionIdx] !== null && !Array.isArray(userAnswers[currentQuestionIdx])) return;
-  
-  if (!Array.isArray(userAnswers[currentQuestionIdx])) {
-    userAnswers[currentQuestionIdx] = [];
-  }
-
-  const list = userAnswers[currentQuestionIdx];
-  const foundIdx = list.indexOf(idx);
-  if (foundIdx >= 0) {
-    list.splice(foundIdx, 1);
-  } else {
-    list.push(idx);
-  }
-  renderCurrentQuestion();
-}
-
-function submitMultiSelectAnswer() {
-  if (!Array.isArray(userAnswers[currentQuestionIdx])) {
-    userAnswers[currentQuestionIdx] = [];
-  }
-  renderCurrentQuestion();
-}
-
-function flipFlashcard() {
-  if (userAnswers[currentQuestionIdx] === null) {
-    userAnswers[currentQuestionIdx] = false;
-    renderCurrentQuestion();
-  }
-}
-
-function rateFlashcard(mastered) {
-  userAnswers[currentQuestionIdx] = mastered;
-  renderCurrentQuestion();
-}
-
-function prevQuizQuestion() {
-  if (currentQuestionIdx > 0) {
-    currentQuestionIdx--;
-    renderCurrentQuestion();
-  }
-}
-
-function nextQuizQuestion() {
-  if (currentQuestionIdx < currentQuiz.questions.length - 1) {
-    currentQuestionIdx++;
-    renderCurrentQuestion();
-  } else {
-    showResults();
-  }
-}
-
-function showResults() {
-  clearInterval(timerInterval);
-  const player = document.getElementById('quizPlayerContainer');
-  const results = document.getElementById('quizResultsContainer');
-
-  if (player) player.classList.add('hidden');
-  if (results) results.classList.remove('hidden');
-
-  let correctCount = 0;
-  const total = currentQuiz.questions.length;
-
-  const itemReviewMarkup = currentQuiz.questions.map((q, idx) => {
-    const userAns = userAnswers[idx];
-    const qType = q.type || 'mcq';
-    const isCorrect = evaluateAnswer(q, userAns);
-
-    if (isCorrect) correctCount++;
-
-    let responseDisplay = '<span class="text-slate-400 italic">Unanswered</span>';
-    let solutionDisplay = '';
-
-    if (qType === 'mcq') {
-      if (userAns !== null && q.options && q.options[userAns]) {
-        responseDisplay = renderMathInHtml(q.options[userAns]);
-      }
-      solutionDisplay = `<p class="text-emerald-600 dark:text-emerald-400"><span class="text-slate-400">Correct Option:</span> ${renderMathInHtml(q.options ? q.options[q.answerIndex] : '')}</p>`;
-    } else if (qType === 'true_false') {
-      responseDisplay = userAns !== null ? (userAns ? 'TRUE' : 'FALSE') : '<span class="text-slate-400 italic">Unanswered</span>';
-      solutionDisplay = `<p class="text-emerald-600 dark:text-emerald-400"><span class="text-slate-400">Correct Answer:</span> ${q.answerBoolean ? 'TRUE' : 'FALSE'}</p>`;
-    } else if (qType === 'identification') {
-      responseDisplay = userAns !== null ? userAns : '<span class="text-slate-400 italic">Unanswered</span>';
-      solutionDisplay = `<p class="text-emerald-600 dark:text-emerald-400"><span class="text-slate-400">Expected Term:</span> ${q.correctText} ${q.aliases ? `(or ${q.aliases})` : ''}</p>`;
-    } else if (qType === 'numerical') {
-      responseDisplay = userAns !== null ? `${userAns} ${q.unit || ''}` : '<span class="text-slate-400 italic">Unanswered</span>';
-      solutionDisplay = `<p class="text-emerald-600 dark:text-emerald-400"><span class="text-slate-400">Target Value:</span> ${q.correctValue} ${q.unit || ''}</p>`;
-    } else if (qType === 'multi_select') {
-      if (Array.isArray(userAns) && userAns.length > 0) {
-        responseDisplay = userAns.map(i => q.options[i]).join(', ');
-      }
-      const correctOpts = (q.answerIndices || []).map(i => q.options[i]).join(', ');
-      solutionDisplay = `<p class="text-emerald-600 dark:text-emerald-400"><span class="text-slate-400">Correct Options:</span> ${correctOpts}</p>`;
-    } else if (qType === 'flashcard') {
-      responseDisplay = userAns === true ? 'Mastered' : 'Reviewed';
-      solutionDisplay = `<p class="text-emerald-600 dark:text-emerald-400"><span class="text-slate-400">Back Side:</span> ${renderMathInHtml(q.back || q.explanation || '')}</p>`;
-    }
-
-    return `
-      <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border ${isCorrect ? 'border-emerald-200 dark:border-emerald-900/60' : 'border-rose-200 dark:border-rose-900/60'} shadow-sm space-y-2">
-        <div class="flex items-center justify-between text-xs">
-          <span class="font-bold text-slate-700 dark:text-slate-300">Item ${idx + 1} (${qType.replace('_', ' ').toUpperCase()})</span>
-          <span class="px-2 py-0.5 rounded-full font-bold uppercase text-[10px] ${isCorrect ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300'}">
-            ${isCorrect ? 'Correct &#x2714;' : 'Needs Review &#x2716;'}
-          </span>
-        </div>
-        <div class="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white">${renderMathInHtml(q.prompt || '')}</div>
-        <div class="text-xs font-mono-math p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 space-y-1">
-          <p><span class="text-slate-400">Your Response:</span> ${responseDisplay}</p>
-          ${!isCorrect ? solutionDisplay : ''}
-          <div class="pt-1.5 text-slate-500 dark:text-slate-400 border-t border-slate-200/50 dark:border-slate-800/50 text-[11px]">
-            <strong>Step-by-step Solution:</strong> ${renderMathInHtml(q.explanation || 'Refer to subject reviewer.')}
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  const pct = Math.round((correctCount / total) * 100);
-
-  results.innerHTML = `
-    <div class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md text-center space-y-4">
-      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-g11pink-100 dark:bg-g11pink-950 text-3xl">
-        &#x1F3C6;
-      </div>
-      <div>
-        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">Diagnostic Summary</h2>
-        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">${renderMathInHtml(currentQuiz.title || 'Interactive Drill')}</p>
-      </div>
-
-      <div class="py-4 border-y border-slate-100 dark:border-slate-800 flex justify-center items-baseline space-x-2">
-        <span class="text-4xl sm:text-5xl font-extrabold text-tagsci-700 dark:text-tagsci-400 font-mono-math">${correctCount}</span>
-        <span class="text-lg text-slate-400 font-mono-math">/ ${total}</span>
-        <span class="ml-3 px-3 py-1 rounded-full text-xs font-bold bg-g11pink-100 text-g11pink-700 dark:bg-g11pink-950 dark:text-g11pink-300">
-          ${pct}% Score
-        </span>
-      </div>
-
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-2 pt-2">
-        <button onclick="startQuiz('${currentQuiz.id}', ${isPracticeMode})" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-xs font-bold text-white transition">
-          &#x1F504; Retake Quiz
-        </button>
-        <button onclick="exitQuiz()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 transition">
-          Back to Quiz Bank
-        </button>
-      </div>
-    </div>
-
-    <div class="space-y-3">
-      <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-        <span>&#x1F50D;</span>
-        <span>Item Breakdown & Derivations</span>
-      </h3>
-      <div class="space-y-3">
-        ${itemReviewMarkup}
-      </div>
-    </div>
-  `;
-}
-
-function exitQuiz() {
-  clearInterval(timerInterval);
-  const deckGrid = document.getElementById('quizDeckGrid');
-  const player = document.getElementById('quizPlayerContainer');
-  const results = document.getElementById('quizResultsContainer');
-
-  if (player) player.classList.add('hidden');
-  if (results) results.classList.add('hidden');
-  if (deckGrid) deckGrid.classList.remove('hidden');
-}
-
-
-    
-
-
-
-
-let currentSection = 'overview'; // overview, materials, reviewers, quiz_sets, credits, settings
+    let currentSection = 'overview'; // overview, materials, reviewers, quiz_sets, credits, settings
 
 function getCurrentSection() {
   return currentSection;
@@ -3131,7 +4338,7 @@ function navigateSection(sectionId) {
   currentSection = sectionId;
 
   // Update Sidebar active indicators
-  const navItems = ['overview', 'materials', 'reviewers', 'quiz_sets', 'guidebook', 'credits', 'settings'];
+  const navItems = ['overview', 'materials', 'reviewers', 'quiz_sets', 'formulas', 'guidebook', 'credits', 'settings'];
   navItems.forEach(item => {
     const el = document.getElementById(`navItem-${item}`);
     if (el) {
@@ -3159,6 +4366,7 @@ function navigateSection(sectionId) {
   if (sectionId === 'materials') renderMaterialsView();
   if (sectionId === 'reviewers') renderReviewersView();
   if (sectionId === 'quiz_sets') renderQuizSetsView();
+  if (sectionId === 'formulas') renderFormulaVaultView();
   if (sectionId === 'credits') renderCreditsView();
   if (sectionId === 'settings') renderSettingsView();
 
@@ -3443,13 +4651,7 @@ function renderSettingsView() {
 }
 
 
-    
-
-
-
-
-
-let otaPollerInterval = null;
+    let otaPollerInterval = null;
 let isSyncInProgress = false;
 
 function refreshAllViews() {
@@ -3461,6 +4663,7 @@ function refreshAllViews() {
       if (sec === 'materials' && typeof renderMaterialsView === 'function') renderMaterialsView();
       if (sec === 'reviewers' && typeof renderReviewersView === 'function') renderReviewersView();
       if (sec === 'quiz_sets' && typeof renderQuizSetsView === 'function') renderQuizSetsView();
+      if (sec === 'formulas' && typeof renderFormulaVaultView === 'function') renderFormulaVaultView();
     }
   } catch (err) {
     console.warn('Auto-sync live refresh notice:', err);
@@ -3518,7 +4721,7 @@ async function checkOtaUpdates(isSilent = false) {
         JSON.stringify(currentCache.stemReviewers || []) !== JSON.stringify(data.stemReviewers || []) ||
         JSON.stringify(currentCache.studyMaterials || []) !== JSON.stringify(data.studyMaterials || []) ||
         JSON.stringify(currentCache.calendarEvents || []) !== JSON.stringify(data.calendarEvents || []) ||
-        JSON.stringify(currentCache.quizSets || []) !== JSON.stringify(data.quizSets || []);
+        JSON.stringify(currentCache.flashcardDecks || []) !== JSON.stringify(data.flashcardDecks || []);
 
       if (isNewUpdate) {
         saveSyncedData(data);
@@ -3572,7 +4775,7 @@ function showAutoUpdateNotification(data, isManual = false) {
   
   const revCount = data.stemReviewers ? data.stemReviewers.length : 0;
   const matCount = data.studyMaterials ? data.studyMaterials.length : 0;
-  const quizCount = data.quizSets ? data.quizSets.length : 0;
+  const flashcardCount = data.flashcardDecks ? data.flashcardDecks.length : 0;
   const eventCount = data.calendarEvents ? data.calendarEvents.length : 0;
 
   toast.innerHTML = `
@@ -3593,7 +4796,7 @@ function showAutoUpdateNotification(data, isManual = false) {
         <span>•</span>
         <span>📚 ${matCount} Mats</span>
         <span>•</span>
-        <span>🎯 ${quizCount} Quizzes</span>
+        <span>🎯 ${quizCount} Flashcard Decks</span>
         <span>•</span>
         <span>📅 ${eventCount} Events</span>
       </div>
@@ -3629,7 +4832,7 @@ function showUpToDateNotification(data) {
         <h4 class="text-xs font-bold text-white uppercase tracking-wider">Already Up to Date</h4>
         <span class="text-[10px] font-mono-math text-emerald-400">v${data.version || '1.4'}</span>
       </div>
-      <p class="text-[11px] text-slate-300 mt-0.5 leading-snug">All curriculum notes, reviewers, quizzes, and deadlines are currently synced.</p>
+      <p class="text-[11px] text-slate-300 mt-0.5 leading-snug">All curriculum notes, reviewers, flashcards, and deadlines are currently synced.</p>
     </div>
     <button onclick="document.getElementById('auto-update-toast')?.remove()" class="text-slate-400 hover:text-white text-xs p-1">✕</button>
   `;
@@ -3995,8 +5198,6 @@ function dismissPwaPrompt() {
    - Cross-tab & Background Lifecycle Orchestration
    ========================================================= */
 
-
-
 const STORAGE_NOTIFIED_KEY = 'tagsci_notified_deadlines';
 const STORAGE_NOTIF_PREF = 'tagsci_notif_enabled';
 
@@ -4289,18 +5490,18 @@ function initBackgroundEngine() {
    TagSci G11 Study WebApp - Main Bootstrap
    ========================================================= */
 
-
-
-
-
-
-
-
-
-
-
+// Expose public functions to window.App for inline HTML event handlers
 // Expose public functions to window.App for inline HTML event handlers
 window.App = {
+  renderFormulaVaultView,
+  setFormulaSubjectFilter,
+  setFormulaSearchQuery,
+  togglePinFormula,
+  togglePinnedOnlyFilter,
+  copyFormulaTeX,
+  jumpToFormulaContext,
+  printFormulaSheet,
+  saveSyncedData,
   navigateSection,
   toggleSidebar,
   closeSidebar,
@@ -4326,18 +5527,19 @@ window.App = {
   renderMathInHtml,
   renderMathInElement,
   parseMathSyntax,
-  startQuiz,
-  selectQuizOption,
-  selectTrueFalse,
-  submitIdentificationAnswer,
-  toggleMultiSelectOption,
-  submitMultiSelectAnswer,
-  submitNumericalAnswer,
+  renderFlashcardsView,
+  startFlashcardSession,
   flipFlashcard,
+  toggleFlashcardHint,
   rateFlashcard,
-  prevQuizQuestion,
-  nextQuizQuestion,
-  exitQuiz,
+  prevFlashcard,
+  nextFlashcard,
+  shuffleCurrentDeck,
+  exitFlashcardSession,
+  // Backwards compatibility aliases
+  renderQuizSetsView: renderFlashcardsView,
+  startQuiz: (id) => startFlashcardSession(id, 'all'),
+  exitQuiz: exitFlashcardSession,
   triggerPwaInstall,
   dismissPwaPrompt,
   manualTriggerPwaPrompt,

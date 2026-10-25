@@ -44,6 +44,14 @@ import { saveSyncedData } from './data/study_data.js';
 
 // Expose public functions to window.App for inline HTML event handlers
 window.App = {
+  renderFormulaVaultView,
+  setFormulaSubjectFilter,
+  setFormulaSearchQuery,
+  togglePinFormula,
+  togglePinnedOnlyFilter,
+  copyFormulaTeX,
+  jumpToFormulaContext,
+  printFormulaSheet,
   saveSyncedData,
   navigateSection,
   toggleSidebar,

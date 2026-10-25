@@ -509,3 +509,7 @@ export function exitFlashcardSession() {
 
   renderFlashcardsView();
 }
+
+export const renderQuizSetsView = renderFlashcardsView;
+export const startQuiz = (id) => startFlashcardSession(id, 'all');
+export const exitQuiz = exitFlashcardSession;

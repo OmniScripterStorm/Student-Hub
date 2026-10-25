@@ -16,9 +16,6 @@
   <link rel="icon" type="image/png" href="./tagsci logo.png" />
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- JSXGraph Local Offline Assets -->
-  <link rel="stylesheet" href="./vendor/jsxgraph/jsxgraph.css">
-  <script src="./vendor/jsxgraph/jsxgraphcore.js"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -288,59 +285,6 @@
     .pb-safe {
       padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
     }
-  
-    /* Flashcard 3D Flip & Active Recall Styles */
-    .flashcard-scene {
-      perspective: 1200px;
-      width: 100%;
-      cursor: pointer;
-    }
-    .flashcard-card {
-      position: relative;
-      width: 100%;
-      min-height: 280px;
-      transform-style: preserve-3d;
-      transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
-      border-radius: 1.25rem;
-    }
-    .flashcard-card.flipped {
-      transform: rotateY(180deg);
-    }
-    .flashcard-face {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      border-radius: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 1.5rem;
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-    }
-    .dark .flashcard-face {
-      border-color: rgba(30, 41, 59, 0.8);
-      box-shadow: 0 4px 25px -2px rgba(0, 0, 0, 0.3);
-    }
-    .flashcard-front {
-      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-    }
-    .dark .flashcard-front {
-      background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
-    }
-    .flashcard-back {
-      background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
-      transform: rotateY(180deg);
-      border-color: rgba(34, 197, 94, 0.3) !important;
-    }
-    .dark .flashcard-back {
-      background: linear-gradient(135deg, #062414 0%, #0f172a 100%);
-      border-color: rgba(34, 197, 94, 0.25) !important;
-    }
-    
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
@@ -437,7 +381,7 @@
       </button>
 
       <button id="navItem-quiz_sets" onclick="navigateSection('quiz_sets')" class="w-full flex items-center space-x-3 px-3.5 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition font-medium">
-        <span class="text-base">&#x1F0CF;</span>
+        <span class="text-base">&#x1F4C7;</span>
         <span>Flashcards & Active Recall</span>
       </button>
 
@@ -445,7 +389,6 @@
         <span class="text-base">&#x1F4D0;</span>
         <span>STEM Formula Vault</span>
       </button>
-
 
       <!-- Category: Student Hub -->
       <div class="pt-3 pb-1 px-3.5">
@@ -601,7 +544,7 @@
                 </button>
                 <button id="btnVaultTab-quizzes" onclick="switchVaultTab('quizzes')" class="min-w-0 py-1.5 px-1 sm:px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-semibold overflow-hidden">
                   <span class="shrink-0 text-xs sm:text-sm">&#x2753;</span>
-                  <span class="truncate">Flashcards</span>
+                  <span class="truncate">Self-Tests</span>
                   <span id="badgeVault-quizzes" class="text-[9px] sm:text-[9.5px] px-1 sm:px-1.5 py-0.5 rounded-full bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 font-mono-math shrink-0">0</span>
                 </button>
               </div>
@@ -681,15 +624,15 @@
       <div id="reviewersListContainer"></div>
     </div>
 
-    <!-- 4. QUIZ SETS VIEW -->
+    <!-- 4. FLASHCARDS & ACTIVE RECALL VIEW -->
     <div id="viewSection-quiz_sets" class="hidden space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
         <div>
           <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-            <span>&#x2753;</span>
+            <span>&#x1F4C7;</span>
             <span>Flashcards & Active Recall</span>
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Master definitions, formulas, and concepts with 3-tier Leitner active recall drills</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400">3D flip flashcards and spaced repetition active recall for STEM mastery</p>
         </div>
       </div>
       <div id="quizSetsListContainer"></div>
@@ -699,7 +642,6 @@
     <div id="viewSection-formulas" class="hidden space-y-4">
       <div id="formulaVaultContainer"></div>
     </div>
-
 
     <!-- 6. ACADEMIC COMMITTEE & CREDITS VIEW -->
     <div id="viewSection-credits" class="hidden space-y-6">
@@ -1304,7 +1246,7 @@ function getSubjectMeta(subjectName) {
   return found || { name: subjectName, type: 'Main', color: 'border-l-4 border-tagsci-600', badgeClass: 'bg-tagsci-100 text-tagsci-800 dark:bg-tagsci-950 dark:text-tagsci-300' };
 }
 
-// Default baseline data inlined from updates.json
+// Default baseline data
 const DEFAULT_BASELINE = {
   "version": "1.9.0",
   "updatedAt": "2026-10-25T19:30:00.000Z",
@@ -1374,7 +1316,7 @@ const DEFAULT_BASELINE = {
           "id": "chem_01",
           "topic": "Intermolecular Forces",
           "front": "What is the primary condition required for **Hydrogen Bonding** to form between molecules?",
-          "back": "A hydrogen atom covalently bonded to a strongly electronegative atom with small atomic radius ($\text{N}$, $\text{O}$, or $\text{F}$) interacts with a lone pair on a nearby $\text{N}$, $\text{O}$, or $\text{F}$ atom.",
+          "back": "A hydrogen atom covalently bonded to a strongly electronegative atom with small atomic radius ($\\text{N}$, $\\text{O}$, or $\\text{F}$) interacts with a lone pair on a nearby $\\text{N}$, $\\text{O}$, or $\\text{F}$ atom.",
           "hint": "Think of the acronym: FON (Fluorine, Oxygen, Nitrogen)."
         },
         {
@@ -1387,15 +1329,15 @@ const DEFAULT_BASELINE = {
         {
           "id": "chem_03",
           "topic": "Ion-Dipole Forces",
-          "front": "How do water ($\text{H}_2\text{O}$) molecules orient around a $\text{Na}^+$ cation vs a $\text{Cl}^-$ anion during hydration?",
-          "back": "Around $\text{Na}^+$, water orients its partially negative Oxygen atom ($\delta^- \text{O}$). Around $\text{Cl}^-$, water orients its partially positive Hydrogen atoms ($\delta^+ \text{H}$).",
-          "hint": "Opposite charges attract: $\delta^-$ toward (+) and $\delta^+$ toward (-)."
+          "front": "How do water ($\\text{H}_2\\text{O}$) molecules orient around a $\\text{Na}^+$ cation vs a $\\text{Cl}^-$ anion during hydration?",
+          "back": "Around $\\text{Na}^+$, water orients its partially negative Oxygen atom ($\\delta^- \\text{O}$). Around $\\text{Cl}^-$, water orients its partially positive Hydrogen atoms ($\\delta^+ \\text{H}$).",
+          "hint": "Opposite charges attract: $\\delta^-$ toward (+) and $\\delta^+$ toward (-)."
         },
         {
           "id": "chem_04",
           "topic": "Physical Properties",
           "front": "What is the relationship between Intermolecular Force (IMF) strength and **Vapor Pressure** at a given temperature?",
-          "back": "**Inversely proportional**: Stronger IMFs $\implies$ Fewer surface molecules can escape into gas phase $\implies$ **Lower Vapor Pressure** (and Higher Boiling Point).",
+          "back": "**Inversely proportional**: Stronger IMFs $\\implies$ Fewer surface molecules can escape into gas phase $\\implies$ **Lower Vapor Pressure** (and Higher Boiling Point).",
           "hint": "If molecules stick tightly together, can they easily evaporate into vapor?"
         }
       ]
@@ -1404,19 +1346,31 @@ const DEFAULT_BASELINE = {
 };
 
 // Load cached data if available (survives updates & syncs), or fallback to baseline
-let cachedData = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
-const cachedPhysics = cachedData?.studyMaterials?.find(m => m.id === 'material_physics_mechanics_moment_equilibrium_momentum');
-const hasStaleJsxgraph = cachedPhysics?.blocks?.some(b => b.type === 'jsxgraph');
-if (!cachedData || !cachedData.version || cachedData.version !== DEFAULT_BASELINE.version || hasStaleJsxgraph) {
-  cachedData = DEFAULT_BASELINE;
-  try { localStorage.setItem(CACHE_KEY, JSON.stringify(DEFAULT_BASELINE)); } catch(e) {}
+let cachedData = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null') || DEFAULT_BASELINE;
+
+// Normalize flashcardDecks if old cache had quizSets
+if (!cachedData.flashcardDecks && cachedData.quizSets) {
+  cachedData.flashcardDecks = cachedData.quizSets.map(q => ({
+    id: q.id,
+    subject: q.subject,
+    tag: q.tag,
+    color: q.color,
+    title: q.title,
+    desc: q.desc,
+    cards: (q.questions || []).map((card, idx) => ({
+      id: card.id || `card_${idx}`,
+      topic: card.topic || 'General',
+      front: card.front || card.prompt || '',
+      back: card.back || card.explanation || '',
+      hint: card.hint || ''
+    }))
+  }));
 }
 
 let CALENDAR_EVENTS = cachedData.calendarEvents || DEFAULT_BASELINE.calendarEvents;
 let STEM_REVIEWERS = cachedData.stemReviewers || DEFAULT_BASELINE.stemReviewers;
 let PROBLEM_SETS = cachedData.problemSets || DEFAULT_BASELINE.problemSets;
 let FLASHCARD_DECKS = cachedData.flashcardDecks || DEFAULT_BASELINE.flashcardDecks;
-let QUIZ_SETS = FLASHCARD_DECKS;
 let STUDY_MATERIALS = cachedData.studyMaterials || DEFAULT_BASELINE.studyMaterials;
 let CURRENT_APP_VERSION = cachedData.version || DEFAULT_BASELINE.version;
 
@@ -1472,14 +1426,13 @@ function clearAppCache() {
 
 function saveSyncedData(newData) {
   cachedData = {
-    version: newData.version || '1.4.1',
+    version: newData.version || '1.9.0',
     updatedAt: newData.updatedAt || new Date().toISOString(),
     announcement: newData.announcement || '',
     calendarEvents: newData.calendarEvents || [],
     stemReviewers: newData.stemReviewers || [],
     problemSets: newData.problemSets || [],
     flashcardDecks: newData.flashcardDecks || [],
-    quizSets: newData.flashcardDecks || [],
     studyMaterials: newData.studyMaterials || []
   };
 
@@ -1489,8 +1442,7 @@ function saveSyncedData(newData) {
   CALENDAR_EVENTS = cachedData.calendarEvents;
   STEM_REVIEWERS = cachedData.stemReviewers;
   PROBLEM_SETS = cachedData.problemSets;
-  FLASHCARD_DECKS = cachedData.flashcardDecks || [];
-  QUIZ_SETS = FLASHCARD_DECKS;
+  FLASHCARD_DECKS = cachedData.flashcardDecks;
   STUDY_MATERIALS = cachedData.studyMaterials;
   CURRENT_APP_VERSION = cachedData.version;
 }
@@ -2915,15 +2867,17 @@ function initializeJsxgraphBoards(container = document) {
   });
 }
 
-window.renderJsxgraphBlock = renderJsxgraphBlock;
-window.initializeJsxgraphBoards = initializeJsxgraphBoards;
-window.renderTikzFbdSvg = renderTikzFbdSvg;
-window.renderTikzFbdSvgLegacy = renderTikzFbdSvg;
+const renderTikzFbdSvgLegacy = renderTikzFbdSvg;
+
+if (typeof window !== 'undefined') {
+  window.renderJsxgraphBlock = renderJsxgraphBlock;
+  window.initializeJsxgraphBoards = initializeJsxgraphBoards;
+  window.renderTikzFbdSvg = renderTikzFbdSvg;
+  window.renderTikzFbdSvgLegacy = renderTikzFbdSvg;
+}
 
 
-    
-
-const now = new Date();
+    const now = new Date();
 let currentYear = now.getFullYear();
 let currentMonth = now.getMonth();
 
@@ -3062,10 +3016,6 @@ function renderEventsList() {
     /* =========================================================
    TagSci G11 Study WebApp - Study Vault & Reviewers Engine
    ========================================================= */
-
-
-
-
 
 let currentVaultTab = 'reviewers'; // 'reviewers' | 'materials' | 'quizzes'
 
@@ -3259,11 +3209,10 @@ function renderBlocksToHtml(blocks) {
       const calloutClass = isWarn 
         ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-800 text-amber-900 dark:text-amber-200' 
         : 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200';
-      const formattedText = (b.text || '').replace(/\r?\n/g, '<br>');
       html += `
         <div class="my-3 p-3.5 rounded-xl border ${calloutClass}">
           ${b.title ? `<div class="font-bold text-xs mb-1">${renderMathInHtml(b.title)}</div>` : ''}
-          <div class="text-xs leading-relaxed">${renderMathInHtml(formattedText)}</div>
+          <div class="text-xs leading-relaxed">${renderMathInHtml(b.text || '')}</div>
         </div>
       `;
     }
@@ -3308,7 +3257,7 @@ function updateVaultTabButtons() {
     if (iconEl) iconEl.innerHTML = '&#x1F4DA;';
     if (titleEl) titleEl.innerText = 'Study Materials';
   } else if (currentVaultTab === 'quizzes') {
-    if (iconEl) iconEl.innerHTML = '&#x2753;';
+    if (iconEl) iconEl.innerHTML = '&#x1F0CF;';
     if (titleEl) titleEl.innerText = 'Flashcards & Active Recall';
   }
 }
@@ -3376,7 +3325,7 @@ function renderMaterials() {
   }
 
   if (displayItems.length === 0) {
-    const emptyIcon = currentVaultTab === 'reviewers' ? '&#x1F52C;' : (currentVaultTab === 'materials' ? '&#x1F4DA;' : '&#x2753;');
+    const emptyIcon = currentVaultTab === 'reviewers' ? '&#x1F52C;' : (currentVaultTab === 'materials' ? '&#x1F4DA;' : '&#x1F0CF;');
     const emptyName = currentVaultTab === 'reviewers' ? 'reviewers' : (currentVaultTab === 'materials' ? 'study materials' : 'flashcard decks');
     grid.innerHTML = `
       <div class="py-8 text-center text-slate-400 dark:text-slate-500 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 p-4">
@@ -3441,10 +3390,10 @@ function renderMaterials() {
             <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">${renderMathInHtml(q.desc || '')}</p>
           </div>
           <div class="mt-2.5 pt-2 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between gap-1.5">
-            <button onclick="navigateSection('quiz_sets'); startFlashcardSession('${q.id}', 'all');" class="flex-1 py-1 rounded-lg bg-tagsci-100 dark:bg-tagsci-950 hover:bg-tagsci-200 text-tagsci-800 dark:text-tagsci-300 font-bold text-[10.5px] transition text-center border border-tagsci-300 dark:border-tagsci-800">
+            <button onclick="navigateSection('quiz_sets'); startQuiz('${q.id}', true);" class="flex-1 py-1 rounded-lg bg-tagsci-100 dark:bg-tagsci-950 hover:bg-tagsci-200 text-tagsci-800 dark:text-tagsci-300 font-bold text-[10.5px] transition text-center border border-tagsci-300 dark:border-tagsci-800">
               ⚡ Practice
             </button>
-            <button onclick="navigateSection('quiz_sets'); startFlashcardSession('${q.id}', 'unmastered');" class="flex-1 py-1 rounded-lg bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold text-[10.5px] transition shadow-sm text-center">
+            <button onclick="navigateSection('quiz_sets'); startQuiz('${q.id}', false);" class="flex-1 py-1 rounded-lg bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold text-[10.5px] transition shadow-sm text-center">
               ⏱️ Timed
             </button>
           </div>
@@ -3512,9 +3461,7 @@ if (typeof window !== 'undefined') {
 }
 
 
-    
-
-const STORAGE_KEY = 'tagsci_g11_tasks';
+    const STORAGE_KEY = 'tagsci_g11_tasks';
 
 let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || INITIAL_TASKS;
 
@@ -3572,20 +3519,6 @@ function renderTasks() {
 
 
     /* =========================================================
-   TagSci G11 Study WebApp - 6-in-1 Interactive Quiz Engine
-   Supports:
-   1. Multiple Choice (mcq)
-   2. True or False (true_false)
-   3. Direct Identification (identification)
-   4. Numerical with Tolerances (numerical)
-   5. Multi-Select Checkboxes (multi_select)
-   6. Active Recall Flashcards (flashcard)
-   ========================================================= */
-
-
-
-
-/* =========================================================
    TagSci G11 Study WebApp - Active Recall Flashcard Engine
    Supports:
    - 3D Card Flip (Touch, Click, Spacebar)
@@ -3594,6 +3527,7 @@ function renderTasks() {
    - LaTeX & Markdown rendering on Front & Back
    - Keyboard Shortcuts (Space: Flip, 1: Again, 2: Good, 3: Mastered, H: Hint)
    ========================================================= */
+
 let currentDeck = null;
 let currentDeckCards = [];
 let currentCardIndex = 0;
@@ -3624,6 +3558,7 @@ function saveLeitnerCard(deckId, cardId, box) {
     console.warn('Could not save Leitner card status:', e);
   }
 }
+
 function renderFlashcardsView() {
   const container = document.getElementById('flashcardsListContainer') || document.getElementById('quizSetsListContainer');
   if (!container) return;
@@ -3693,12 +3628,12 @@ function renderFlashcardsView() {
             </div>
 
             <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2">
-              <button onclick="window.App.startFlashcardSession('${deck.id}', 'all')" class="flex-1 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+              <button onclick="startFlashcardSession('${deck.id}', 'all')" class="flex-1 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
                 <span>&#x25B6;</span>
                 <span>Practice All</span>
               </button>
               ${b1 + b2 > 0 ? `
-                <button onclick="window.App.startFlashcardSession('${deck.id}', 'unmastered')" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs transition" title="Practice only cards that need review">
+                <button onclick="startFlashcardSession('${deck.id}', 'unmastered')" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs transition" title="Practice only cards that need review">
                   Review (${b1 + b2})
                 </button>
               ` : ''}
@@ -3712,6 +3647,7 @@ function renderFlashcardsView() {
     <div id="flashcardPlayerContainer" class="hidden space-y-4"></div>
   `;
 }
+
 function startFlashcardSession(deckId, mode = 'all') {
   currentDeck = (FLASHCARD_DECKS || []).find(d => d.id === deckId);
   if (!currentDeck || !currentDeck.cards || currentDeck.cards.length === 0) return;
@@ -3782,6 +3718,7 @@ function handleFlashcardKeydown(e) {
     exitFlashcardSession();
   }
 }
+
 function flipFlashcard() {
   isCardFlipped = !isCardFlipped;
   const cardInner = document.getElementById('flashcard-flipper');
@@ -3794,6 +3731,7 @@ function flipFlashcard() {
     controls.classList.toggle('hidden', !isCardFlipped);
   }
 }
+
 function toggleFlashcardHint() {
   isHintVisible = !isHintVisible;
   const hintEl = document.getElementById('flashcard-hint-box');
@@ -3801,6 +3739,7 @@ function toggleFlashcardHint() {
     hintEl.classList.toggle('hidden', !isHintVisible);
   }
 }
+
 function rateFlashcard(boxNumber) {
   if (!currentDeck || !currentDeckCards[currentCardIndex]) return;
 
@@ -3817,6 +3756,7 @@ function rateFlashcard(boxNumber) {
     renderFlashcardSessionSummary();
   }
 }
+
 function prevFlashcard() {
   if (currentCardIndex > 0) {
     currentCardIndex--;
@@ -3825,6 +3765,7 @@ function prevFlashcard() {
     renderCurrentFlashcard();
   }
 }
+
 function nextFlashcard() {
   if (currentCardIndex < currentDeckCards.length - 1) {
     currentCardIndex++;
@@ -3835,6 +3776,7 @@ function nextFlashcard() {
     renderFlashcardSessionSummary();
   }
 }
+
 function shuffleCurrentDeck() {
   for (let i = currentDeckCards.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -3867,12 +3809,12 @@ function renderCurrentFlashcard() {
     <!-- Flashcard Top Meta Bar -->
     <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
       <div class="flex items-center justify-between">
-        <button onclick="window.App.exitFlashcardSession()" class="text-xs font-semibold text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 flex items-center gap-1.5 transition">
+        <button onclick="exitFlashcardSession()" class="text-xs font-semibold text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 flex items-center gap-1.5 transition">
           <span>&larr;</span>
           <span>Exit Session</span>
         </button>
         <div class="flex items-center gap-2">
-          <button onclick="window.App.shuffleCurrentDeck()" class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition flex items-center gap-1" title="Shuffle deck order">
+          <button onclick="shuffleCurrentDeck()" class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition flex items-center gap-1" title="Shuffle deck order">
             <span>&#x1F500;</span>
             <span class="hidden sm:inline">Shuffle</span>
           </button>
@@ -3899,7 +3841,7 @@ function renderCurrentFlashcard() {
     </div>
 
     <!-- 3D Flip Card Container -->
-    <div class="flashcard-scene" onclick="window.App.flipFlashcard()">
+    <div class="flashcard-scene" onclick="flipFlashcard()">
       <div id="flashcard-flipper" class="flashcard-card ${isCardFlipped ? 'flipped' : ''}">
         
         <!-- CARD FRONT -->
@@ -3948,7 +3890,7 @@ function renderCurrentFlashcard() {
     <!-- Optional Hint Bar -->
     ${card.hint ? `
       <div class="text-center">
-        <button onclick="event.stopPropagation(); window.App.toggleFlashcardHint();" class="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline inline-flex items-center gap-1">
+        <button onclick="event.stopPropagation(); toggleFlashcardHint();" class="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline inline-flex items-center gap-1">
           <span>&#x1F4A1;</span>
           <span>${isHintVisible ? 'Hide Hint [H]' : 'Need a Hint? [H]'}</span>
         </button>
@@ -3964,19 +3906,19 @@ function renderCurrentFlashcard() {
         Rate Your Active Recall (Leitner Spaced Repetition)
       </div>
       <div class="grid grid-cols-3 gap-2 sm:gap-3">
-        <button onclick="event.stopPropagation(); window.App.rateFlashcard(1);" class="p-3 sm:p-4 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/50 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 font-bold text-xs sm:text-sm transition flex flex-col items-center justify-center shadow-sm active:scale-95">
+        <button onclick="event.stopPropagation(); rateFlashcard(1);" class="p-3 sm:p-4 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/50 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 font-bold text-xs sm:text-sm transition flex flex-col items-center justify-center shadow-sm active:scale-95">
           <span class="text-base sm:text-lg mb-0.5">&#x1F534;</span>
           <span>Again (Box 1)</span>
           <span class="text-[9.5px] opacity-75 font-normal hidden sm:inline">Press [1]</span>
         </button>
 
-        <button onclick="event.stopPropagation(); window.App.rateFlashcard(2);" class="p-3 sm:p-4 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/50 dark:hover:bg-amber-900/60 border border-amber-200 dark:border-amber-900 text-amber-700 dark:text-amber-300 font-bold text-xs sm:text-sm transition flex flex-col items-center justify-center shadow-sm active:scale-95">
+        <button onclick="event.stopPropagation(); rateFlashcard(2);" class="p-3 sm:p-4 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/50 dark:hover:bg-amber-900/60 border border-amber-200 dark:border-amber-900 text-amber-700 dark:text-amber-300 font-bold text-xs sm:text-sm transition flex flex-col items-center justify-center shadow-sm active:scale-95">
           <span class="text-base sm:text-lg mb-0.5">&#x1F7E1;</span>
           <span>Good (Box 2)</span>
           <span class="text-[9.5px] opacity-75 font-normal hidden sm:inline">Press [2]</span>
         </button>
 
-        <button onclick="event.stopPropagation(); window.App.rateFlashcard(3);" class="p-3 sm:p-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:hover:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-300 font-bold text-xs sm:text-sm transition flex flex-col items-center justify-center shadow-sm active:scale-95">
+        <button onclick="event.stopPropagation(); rateFlashcard(3);" class="p-3 sm:p-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:hover:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-300 font-bold text-xs sm:text-sm transition flex flex-col items-center justify-center shadow-sm active:scale-95">
           <span class="text-base sm:text-lg mb-0.5">&#x1F7E2;</span>
           <span>Mastered (Box 3)</span>
           <span class="text-[9.5px] opacity-75 font-normal hidden sm:inline">Press [3]</span>
@@ -3986,12 +3928,12 @@ function renderCurrentFlashcard() {
 
     <!-- Stepper Navigation Controls -->
     <div class="flex items-center justify-between pt-2">
-      <button onclick="window.App.prevFlashcard()" ${currentCardIndex === 0 ? 'disabled' : ''} class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1">
+      <button onclick="prevFlashcard()" ${currentCardIndex === 0 ? 'disabled' : ''} class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1">
         <span>&larr;</span>
         <span>Previous</span>
       </button>
 
-      <button onclick="window.App.nextFlashcard()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition flex items-center gap-1">
+      <button onclick="nextFlashcard()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition flex items-center gap-1">
         <span>${currentCardIndex === total - 1 ? 'Finish' : 'Next'}</span>
         <span>&rarr;</span>
       </button>
@@ -4058,21 +4000,22 @@ function renderFlashcardSessionSummary() {
       </div>
 
       <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-2.5">
-        <button onclick="window.App.startFlashcardSession('${currentDeck.id}', 'all')" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition active:scale-95 shadow-sm">
+        <button onclick="startFlashcardSession('${currentDeck.id}', 'all')" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition active:scale-95 shadow-sm">
           Restart Deck
         </button>
         ${b1 + b2 > 0 ? `
-          <button onclick="window.App.startFlashcardSession('${currentDeck.id}', 'unmastered')" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-slate-800 text-white hover:bg-slate-700 font-bold text-xs transition">
+          <button onclick="startFlashcardSession('${currentDeck.id}', 'unmastered')" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-slate-800 text-white hover:bg-slate-700 font-bold text-xs transition">
             Review Unmastered (${b1 + b2})
           </button>
         ` : ''}
-        <button onclick="window.App.exitFlashcardSession()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs transition">
+        <button onclick="exitFlashcardSession()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs transition">
           Back to Decks
         </button>
       </div>
     </div>
   `;
 }
+
 function exitFlashcardSession() {
   window.removeEventListener('keydown', handleFlashcardKeydown);
   const deckGrid = document.getElementById('flashcardDeckGrid') || document.getElementById('quizDeckGrid');
@@ -4084,20 +4027,308 @@ function exitFlashcardSession() {
   renderFlashcardsView();
 }
 
-
-// Backwards compatibility bridges
-function renderQuizSetsView() { renderFlashcardsView(); }
-function startQuiz(id, isPractice) { startFlashcardSession(id, isPractice ? 'all' : 'unmastered'); }
-function exitQuiz() { exitFlashcardSession(); }
+const renderQuizSetsView = renderFlashcardsView;
+const startQuiz = (id) => startFlashcardSession(id, 'all');
+const exitQuiz = exitFlashcardSession;
 
 
+    /* =========================================================
+   TagSci G11 Study WebApp - Formula Vault Component
+   Aggregates mathematical equations & scientific laws across:
+   - STEM Reviewers (stemReviewers)
+   - Study Materials (studyMaterials)
+   Supports:
+   - Instant Search & Multi-Subject Filter Pills
+   - Pin / Star Favorite Equations (localStorage)
+   - Direct Jump to Topic in Reviewer
+   - One-Tap LaTeX Copy to Clipboard
+   - Print-Ready Formula Sheet Mode
+   ========================================================= */
 
-    
+const STORAGE_PINNED_FORMULAS = 'tagsci_pinned_formulas';
+
+let activeSubjectFilter = 'all';
+let formulaSearchQuery = '';
+let showOnlyPinned = false;
+
+function getPinnedFormulaIds() {
+  try {
+    const raw = localStorage.getItem(STORAGE_PINNED_FORMULAS);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function togglePinFormula(formulaId) {
+  let pinned = getPinnedFormulaIds();
+  if (pinned.includes(formulaId)) {
+    pinned = pinned.filter(id => id !== formulaId);
+  } else {
+    pinned.push(formulaId);
+  }
+  try {
+    localStorage.setItem(STORAGE_PINNED_FORMULAS, JSON.stringify(pinned));
+  } catch (e) {
+    console.warn('Could not save pinned formula:', e);
+  }
+  renderFormulaVaultView();
+}
+
+function copyFormulaTeX(formulaIdOrTex, btnElement) {
+  let tex = formulaIdOrTex;
+  try {
+    const list = aggregateAllFormulas();
+    const item = list.find(f => f.id === formulaIdOrTex);
+    if (item && item.formula) tex = item.formula;
+  } catch (e) {}
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(tex).then(() => {
+      if (btnElement) {
+        const orig = btnElement.innerHTML;
+        btnElement.innerHTML = '<span>&#x2714;</span> <span>Copied!</span>';
+        setTimeout(() => { btnElement.innerHTML = orig; }, 1500);
+      }
+    }).catch(() => {
+      prompt('Copy LaTeX Formula:', tex);
+    });
+  } else {
+    prompt('Copy LaTeX Formula:', tex);
+  }
+}
+
+function aggregateAllFormulas() {
+  const formulas = [];
+  const seenKeys = new Set();
+
+  function processBlocks(blocks, parentItem, sourceKind) {
+    if (!blocks || !Array.isArray(blocks)) return;
+    blocks.forEach((b, idx) => {
+      if (b.type === 'formula' && b.formula) {
+        const key = `${parentItem.subject}::${b.title || ''}::${b.formula}`;
+        if (!seenKeys.has(key)) {
+          seenKeys.add(key);
+          formulas.push({
+            id: `f_${parentItem.id}_${idx}`,
+            parentId: parentItem.id,
+            sourceKind: sourceKind,
+            parentTitle: parentItem.title || 'Untitled',
+            subject: parentItem.subject || 'STEM',
+            title: b.title || 'Mathematical Formula',
+            formula: b.formula,
+            note: b.note || ''
+          });
+        }
+      }
+    });
+  }
+
+  (STEM_REVIEWERS || []).forEach(r => processBlocks(r.blocks, r, 'Reviewer'));
+  (STUDY_MATERIALS || []).forEach(m => processBlocks(m.blocks, m, 'Study Material'));
+
+  return formulas;
+}
+
+function setFormulaSubjectFilter(subj) {
+  activeSubjectFilter = subj;
+  renderFormulaVaultView();
+}
+
+function setFormulaSearchQuery(query) {
+  formulaSearchQuery = (query || '').toLowerCase().trim();
+  renderFormulaVaultView();
+}
+
+function togglePinnedOnlyFilter() {
+  showOnlyPinned = !showOnlyPinned;
+  renderFormulaVaultView();
+}
+
+function jumpToFormulaContext(parentId) {
+  openReviewer(parentId);
+}
+
+function printFormulaSheet() {
+  window.print();
+}
+
+function renderFormulaVaultView() {
+  const container = document.getElementById('formulaVaultContainer') || document.getElementById('viewSection-formulas');
+  if (!container) return;
+
+  const allFormulas = aggregateAllFormulas();
+  const pinnedIds = getPinnedFormulaIds();
+
+  // Extract unique subjects with formula counts
+  const subjectCounts = {};
+  allFormulas.forEach(f => {
+    subjectCounts[f.subject] = (subjectCounts[f.subject] || 0) + 1;
+  });
+  const subjects = Object.keys(subjectCounts).sort();
+
+  // Apply filters
+  let filtered = allFormulas.filter(f => {
+    if (activeSubjectFilter !== 'all' && f.subject !== activeSubjectFilter) return false;
+    if (showOnlyPinned && !pinnedIds.includes(f.id)) return false;
+    if (formulaSearchQuery) {
+      const matchTitle = (f.title || '').toLowerCase().includes(formulaSearchQuery);
+      const matchFormula = (f.formula || '').toLowerCase().includes(formulaSearchQuery);
+      const matchNote = (f.note || '').toLowerCase().includes(formulaSearchQuery);
+      const matchSource = (f.parentTitle || '').toLowerCase().includes(formulaSearchQuery);
+      const matchSubject = (f.subject || '').toLowerCase().includes(formulaSearchQuery);
+      return matchTitle || matchFormula || matchNote || matchSource || matchSubject;
+    }
+    return true;
+  });
+
+  const pinnedCount = allFormulas.filter(f => pinnedIds.includes(f.id)).length;
+
+  container.innerHTML = `
+    <!-- Header Controls & Search Bar -->
+    <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <span>&#x1F4D0;</span>
+            <span>STEM Formula Vault</span>
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            Quick-reference index of equations, laws, and definitions across Grade 11 modules
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 self-start sm:self-auto">
+          <button onclick="printFormulaSheet()" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition flex items-center gap-1.5" title="Print a physical formula cheat-sheet">
+            <span>&#x1F5A8;&#xFE0F;</span>
+            <span class="hidden sm:inline">Print Sheet</span>
+          </button>
+          <button onclick="togglePinnedOnlyFilter()" class="px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${showOnlyPinned ? 'bg-amber-500 text-slate-950' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200'}">
+            <span>&#x2B50;</span>
+            <span>Starred (${pinnedCount})</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Search Input -->
+      <div class="relative">
+        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">&#x1F50D;</span>
+        <input 
+          type="text" 
+          value="${formulaSearchQuery}"
+          oninput="setFormulaSearchQuery(this.value)"
+          placeholder="Search equations, variables (e.g. torque, tau, nCr, momentum, dipole)..."
+          class="w-full pl-9 pr-4 py-2 text-xs font-medium bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-tagsci-500 text-slate-900 dark:text-white"
+        />
+        ${formulaSearchQuery ? `
+          <button onclick="setFormulaSearchQuery('')" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+            &#x2715;
+          </button>
+        ` : ''}
+      </div>
+
+      <!-- Subject Filter Pills -->
+      <div class="flex items-center gap-1.5 flex-wrap pt-1 border-t border-slate-100 dark:border-slate-800/80">
+        <button 
+          onclick="setFormulaSubjectFilter('all')" 
+          class="px-2.5 py-1 rounded-lg text-xs font-bold transition ${activeSubjectFilter === 'all' ? 'bg-tagsci-800 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200'}"
+        >
+          All Subjects (${allFormulas.length})
+        </button>
+        ${subjects.map(s => `
+          <button 
+            onclick="setFormulaSubjectFilter('${s}')" 
+            class="px-2.5 py-1 rounded-lg text-xs font-bold transition ${activeSubjectFilter === s ? 'bg-tagsci-800 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200'}"
+          >
+            ${s} (${subjectCounts[s]})
+          </button>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- Formula Cards Grid -->
+    ${filtered.length === 0 ? `
+      <div class="py-12 text-center text-slate-400 dark:text-slate-500 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
+        <span class="text-3xl block mb-2">&#x1F4D0;</span>
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-200">No Formulas Match Your Filter</h4>
+        <p class="text-xs text-slate-400 mt-1">Try clearing your search query or switching subject categories.</p>
+      </div>
+    ` : `
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        ${filtered.map(f => {
+          const isPinned = pinnedIds.includes(f.id);
+          const meta = getSubjectMeta(f.subject);
+          return `
+            <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 ${meta.color || 'border-l-4 border-tagsci-600'} shadow-sm flex flex-col justify-between hover:shadow-md transition space-y-3">
+              <div>
+                <div class="flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-[9.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${meta.badgeClass || 'bg-slate-100 text-slate-700'}">
+                      ${f.subject}
+                    </span>
+                    <span class="text-[10px] text-slate-400 truncate max-w-[180px]">
+                      ${f.parentTitle}
+                    </span>
+                  </div>
+                  
+                  <div class="flex items-center gap-1">
+                    <button 
+                      onclick="togglePinFormula('${f.id}')" 
+                      class="p-1 rounded-lg text-slate-400 hover:text-amber-500 transition ${isPinned ? 'text-amber-500' : ''}" 
+                      title="${isPinned ? 'Unstar formula' : 'Star formula'}"
+                    >
+                      <span>${isPinned ? '&#x2B50;' : '&#x2606;'}</span>
+                    </button>
+                    <button 
+                      onclick="copyFormulaTeX('${f.id}', this)" 
+                      class="px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] font-bold transition flex items-center gap-1" 
+                      title="Copy raw LaTeX code"
+                    >
+                      <span>&#x1F4CB;</span>
+                      <span>TeX</span>
+                    </button>
+                  </div>
+                </div>
+
+                <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-2">
+                  ${renderMathInHtml(f.title)}
+                </h3>
+
+                <!-- Big Formula Display Box -->
+                <div class="mt-2.5 p-3 sm:p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 text-center overflow-x-auto text-base sm:text-lg font-bold font-mono-math text-slate-900 dark:text-emerald-400">
+                  ${renderMathInHtml(`$$${f.formula}$$`)}
+                </div>
+
+                <!-- Formula Variable Breakdown & Notes -->
+                ${f.note ? `
+                  <div class="mt-2 text-xs text-slate-600 dark:text-slate-400 leading-relaxed bg-amber-50/50 dark:bg-slate-800/40 p-2.5 rounded-lg border border-amber-100/60 dark:border-slate-800">
+                    <span class="font-bold text-[10px] uppercase text-amber-700 dark:text-amber-400 block mb-0.5">Note / Breakdown:</span>
+                    ${renderMathInHtml(f.note)}
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- Jump to source topic -->
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-[11px]">
+                <button 
+                  onclick="jumpToFormulaContext('${f.parentId}')" 
+                  class="font-semibold text-tagsci-700 dark:text-tagsci-400 hover:underline flex items-center gap-1"
+                >
+                  <span>&#x1F4D6;</span>
+                  <span>View in ${f.sourceKind}</span>
+                </button>
+                <span class="text-slate-400 text-[10px]">TagSci STEM</span>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `}
+  `;
+}
 
 
-
-
-let currentSection = 'overview'; // overview, materials, reviewers, quiz_sets, credits, settings
+    let currentSection = 'overview'; // overview, materials, reviewers, quiz_sets, credits, settings
 
 function getCurrentSection() {
   return currentSection;
@@ -4420,13 +4651,7 @@ function renderSettingsView() {
 }
 
 
-    
-
-
-
-
-
-let otaPollerInterval = null;
+    let otaPollerInterval = null;
 let isSyncInProgress = false;
 
 function refreshAllViews() {
@@ -4496,7 +4721,7 @@ async function checkOtaUpdates(isSilent = false) {
         JSON.stringify(currentCache.stemReviewers || []) !== JSON.stringify(data.stemReviewers || []) ||
         JSON.stringify(currentCache.studyMaterials || []) !== JSON.stringify(data.studyMaterials || []) ||
         JSON.stringify(currentCache.calendarEvents || []) !== JSON.stringify(data.calendarEvents || []) ||
-        JSON.stringify(currentCache.quizSets || []) !== JSON.stringify(data.quizSets || []);
+        JSON.stringify(currentCache.flashcardDecks || []) !== JSON.stringify(data.flashcardDecks || []);
 
       if (isNewUpdate) {
         saveSyncedData(data);
@@ -4550,7 +4775,7 @@ function showAutoUpdateNotification(data, isManual = false) {
   
   const revCount = data.stemReviewers ? data.stemReviewers.length : 0;
   const matCount = data.studyMaterials ? data.studyMaterials.length : 0;
-  const quizCount = data.quizSets ? data.quizSets.length : 0;
+  const flashcardCount = data.flashcardDecks ? data.flashcardDecks.length : 0;
   const eventCount = data.calendarEvents ? data.calendarEvents.length : 0;
 
   toast.innerHTML = `
@@ -4571,7 +4796,7 @@ function showAutoUpdateNotification(data, isManual = false) {
         <span>•</span>
         <span>📚 ${matCount} Mats</span>
         <span>•</span>
-        <span>🎯 ${quizCount} Quizzes</span>
+        <span>🎯 ${quizCount} Flashcard Decks</span>
         <span>•</span>
         <span>📅 ${eventCount} Events</span>
       </div>
@@ -4607,7 +4832,7 @@ function showUpToDateNotification(data) {
         <h4 class="text-xs font-bold text-white uppercase tracking-wider">Already Up to Date</h4>
         <span class="text-[10px] font-mono-math text-emerald-400">v${data.version || '1.4'}</span>
       </div>
-      <p class="text-[11px] text-slate-300 mt-0.5 leading-snug">All curriculum notes, reviewers, quizzes, and deadlines are currently synced.</p>
+      <p class="text-[11px] text-slate-300 mt-0.5 leading-snug">All curriculum notes, reviewers, flashcards, and deadlines are currently synced.</p>
     </div>
     <button onclick="document.getElementById('auto-update-toast')?.remove()" class="text-slate-400 hover:text-white text-xs p-1">✕</button>
   `;
@@ -4973,8 +5198,6 @@ function dismissPwaPrompt() {
    - Cross-tab & Background Lifecycle Orchestration
    ========================================================= */
 
-
-
 const STORAGE_NOTIFIED_KEY = 'tagsci_notified_deadlines';
 const STORAGE_NOTIF_PREF = 'tagsci_notif_enabled';
 
@@ -5267,302 +5490,8 @@ function initBackgroundEngine() {
    TagSci G11 Study WebApp - Main Bootstrap
    ========================================================= */
 
-
-
-
-
-
-
-
-
-
-
 // Expose public functions to window.App for inline HTML event handlers
-/* =========================================================
-   TagSci G11 Study WebApp - Formula Vault Component
-   Aggregates mathematical equations & scientific laws across:
-   - STEM Reviewers (stemReviewers)
-   - Study Materials (studyMaterials)
-   Supports:
-   - Instant Search & Multi-Subject Filter Pills
-   - Pin / Star Favorite Equations (localStorage)
-   - Direct Jump to Topic in Reviewer
-   - One-Tap LaTeX Copy to Clipboard
-   - Print-Ready Formula Sheet Mode
-   ========================================================= */
-const STORAGE_PINNED_FORMULAS = 'tagsci_pinned_formulas';
-
-let activeSubjectFilter = 'all';
-let formulaSearchQuery = '';
-let showOnlyPinned = false;
-
-function getPinnedFormulaIds() {
-  try {
-    const raw = localStorage.getItem(STORAGE_PINNED_FORMULAS);
-    return raw ? JSON.parse(raw) : [];
-  } catch (e) {
-    return [];
-  }
-}
-function togglePinFormula(formulaId) {
-  let pinned = getPinnedFormulaIds();
-  if (pinned.includes(formulaId)) {
-    pinned = pinned.filter(id => id !== formulaId);
-  } else {
-    pinned.push(formulaId);
-  }
-  try {
-    localStorage.setItem(STORAGE_PINNED_FORMULAS, JSON.stringify(pinned));
-  } catch (e) {
-    console.warn('Could not save pinned formula:', e);
-  }
-  renderFormulaVaultView();
-}
-function copyFormulaTeX(formulaIdOrTex, btnElement) {
-  let tex = formulaIdOrTex;
-  try {
-    const list = aggregateAllFormulas();
-    const item = list.find(f => f.id === formulaIdOrTex);
-    if (item && item.formula) tex = item.formula;
-  } catch (e) {}
-
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(tex).then(() => {
-      if (btnElement) {
-        const orig = btnElement.innerHTML;
-        btnElement.innerHTML = '<span>&#x2714;</span> <span>Copied!</span>';
-        setTimeout(() => { btnElement.innerHTML = orig; }, 1500);
-      }
-    }).catch(() => {
-      prompt('Copy LaTeX Formula:', tex);
-    });
-  } else {
-    prompt('Copy LaTeX Formula:', tex);
-  }
-}
-function aggregateAllFormulas() {
-  const formulas = [];
-  const seenKeys = new Set();
-
-  function processBlocks(blocks, parentItem, sourceKind) {
-    if (!blocks || !Array.isArray(blocks)) return;
-    blocks.forEach((b, idx) => {
-      if (b.type === 'formula' && b.formula) {
-        const key = `${parentItem.subject}::${b.title || ''}::${b.formula}`;
-        if (!seenKeys.has(key)) {
-          seenKeys.add(key);
-          formulas.push({
-            id: `f_${parentItem.id}_${idx}`,
-            parentId: parentItem.id,
-            sourceKind: sourceKind,
-            parentTitle: parentItem.title || 'Untitled',
-            subject: parentItem.subject || 'STEM',
-            title: b.title || 'Mathematical Formula',
-            formula: b.formula,
-            note: b.note || ''
-          });
-        }
-      }
-    });
-  }
-
-  (STEM_REVIEWERS || []).forEach(r => processBlocks(r.blocks, r, 'Reviewer'));
-  (STUDY_MATERIALS || []).forEach(m => processBlocks(m.blocks, m, 'Study Material'));
-
-  return formulas;
-}
-function setFormulaSubjectFilter(subj) {
-  activeSubjectFilter = subj;
-  renderFormulaVaultView();
-}
-function setFormulaSearchQuery(query) {
-  formulaSearchQuery = (query || '').toLowerCase().trim();
-  renderFormulaVaultView();
-}
-function togglePinnedOnlyFilter() {
-  showOnlyPinned = !showOnlyPinned;
-  renderFormulaVaultView();
-}
-function jumpToFormulaContext(parentId) {
-  openReviewer(parentId);
-}
-function printFormulaSheet() {
-  window.print();
-}
-function renderFormulaVaultView() {
-  const container = document.getElementById('formulaVaultContainer') || document.getElementById('viewSection-formulas');
-  if (!container) return;
-
-  const allFormulas = aggregateAllFormulas();
-  const pinnedIds = getPinnedFormulaIds();
-
-  // Extract unique subjects with formula counts
-  const subjectCounts = {};
-  allFormulas.forEach(f => {
-    subjectCounts[f.subject] = (subjectCounts[f.subject] || 0) + 1;
-  });
-  const subjects = Object.keys(subjectCounts).sort();
-
-  // Apply filters
-  let filtered = allFormulas.filter(f => {
-    if (activeSubjectFilter !== 'all' && f.subject !== activeSubjectFilter) return false;
-    if (showOnlyPinned && !pinnedIds.includes(f.id)) return false;
-    if (formulaSearchQuery) {
-      const matchTitle = (f.title || '').toLowerCase().includes(formulaSearchQuery);
-      const matchFormula = (f.formula || '').toLowerCase().includes(formulaSearchQuery);
-      const matchNote = (f.note || '').toLowerCase().includes(formulaSearchQuery);
-      const matchSource = (f.parentTitle || '').toLowerCase().includes(formulaSearchQuery);
-      const matchSubject = (f.subject || '').toLowerCase().includes(formulaSearchQuery);
-      return matchTitle || matchFormula || matchNote || matchSource || matchSubject;
-    }
-    return true;
-  });
-
-  const pinnedCount = allFormulas.filter(f => pinnedIds.includes(f.id)).length;
-
-  container.innerHTML = `
-    <!-- Header Controls & Search Bar -->
-    <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <span>&#x1F4D0;</span>
-            <span>STEM Formula Vault</span>
-          </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Quick-reference index of equations, laws, and definitions across Grade 11 modules
-          </p>
-        </div>
-
-        <div class="flex items-center gap-2 self-start sm:self-auto">
-          <button onclick="window.App.printFormulaSheet()" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition flex items-center gap-1.5" title="Print a physical formula cheat-sheet">
-            <span>&#x1F5A8;&#xFE0F;</span>
-            <span class="hidden sm:inline">Print Sheet</span>
-          </button>
-          <button onclick="window.App.togglePinnedOnlyFilter()" class="px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${showOnlyPinned ? 'bg-amber-500 text-slate-950' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200'}">
-            <span>&#x2B50;</span>
-            <span>Starred (${pinnedCount})</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Search Input -->
-      <div class="relative">
-        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">&#x1F50D;</span>
-        <input 
-          type="text" 
-          value="${formulaSearchQuery}"
-          oninput="window.App.setFormulaSearchQuery(this.value)"
-          placeholder="Search equations, variables (e.g. torque, tau, nCr, momentum, dipole)..."
-          class="w-full pl-9 pr-4 py-2 text-xs font-medium bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-tagsci-500 text-slate-900 dark:text-white"
-        />
-        ${formulaSearchQuery ? `
-          <button onclick="window.App.setFormulaSearchQuery('')" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-            &#x2715;
-          </button>
-        ` : ''}
-      </div>
-
-      <!-- Subject Filter Pills -->
-      <div class="flex items-center gap-1.5 flex-wrap pt-1 border-t border-slate-100 dark:border-slate-800/80">
-        <button 
-          onclick="window.App.setFormulaSubjectFilter('all')" 
-          class="px-2.5 py-1 rounded-lg text-xs font-bold transition ${activeSubjectFilter === 'all' ? 'bg-tagsci-800 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200'}"
-        >
-          All Subjects (${allFormulas.length})
-        </button>
-        ${subjects.map(s => `
-          <button 
-            onclick="window.App.setFormulaSubjectFilter('${s}')" 
-            class="px-2.5 py-1 rounded-lg text-xs font-bold transition ${activeSubjectFilter === s ? 'bg-tagsci-800 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200'}"
-          >
-            ${s} (${subjectCounts[s]})
-          </button>
-        `).join('')}
-      </div>
-    </div>
-
-    <!-- Formula Cards Grid -->
-    ${filtered.length === 0 ? `
-      <div class="py-12 text-center text-slate-400 dark:text-slate-500 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
-        <span class="text-3xl block mb-2">&#x1F4D0;</span>
-        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-200">No Formulas Match Your Filter</h4>
-        <p class="text-xs text-slate-400 mt-1">Try clearing your search query or switching subject categories.</p>
-      </div>
-    ` : `
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        ${filtered.map(f => {
-          const isPinned = pinnedIds.includes(f.id);
-          const meta = getSubjectMeta(f.subject);
-          return `
-            <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 ${meta.color || 'border-l-4 border-tagsci-600'} shadow-sm flex flex-col justify-between hover:shadow-md transition space-y-3">
-              <div>
-                <div class="flex items-center justify-between gap-2">
-                  <div class="flex items-center gap-1.5 flex-wrap">
-                    <span class="text-[9.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${meta.badgeClass || 'bg-slate-100 text-slate-700'}">
-                      ${f.subject}
-                    </span>
-                    <span class="text-[10px] text-slate-400 truncate max-w-[180px]">
-                      ${f.parentTitle}
-                    </span>
-                  </div>
-                  
-                  <div class="flex items-center gap-1">
-                    <button 
-                      onclick="window.App.togglePinFormula('${f.id}')" 
-                      class="p-1 rounded-lg text-slate-400 hover:text-amber-500 transition ${isPinned ? 'text-amber-500' : ''}" 
-                      title="${isPinned ? 'Unstar formula' : 'Star formula'}"
-                    >
-                      <span>${isPinned ? '&#x2B50;' : '&#x2606;'}</span>
-                    </button>
-                    <button 
-                      onclick="window.App.copyFormulaTeX('${f.id}', this)" 
-                      class="px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] font-bold transition flex items-center gap-1" 
-                      title="Copy raw LaTeX code"
-                    >
-                      <span>&#x1F4CB;</span>
-                      <span>TeX</span>
-                    </button>
-                  </div>
-                </div>
-
-                <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-2">
-                  ${renderMathInHtml(f.title)}
-                </h3>
-
-                <!-- Big Formula Display Box -->
-                <div class="mt-2.5 p-3 sm:p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800/80 text-center overflow-x-auto text-base sm:text-lg font-bold font-mono-math text-slate-900 dark:text-emerald-400">
-                  ${renderMathInHtml(`$$${f.formula}$$`)}
-                </div>
-
-                <!-- Formula Variable Breakdown & Notes -->
-                ${f.note ? `
-                  <div class="mt-2 text-xs text-slate-600 dark:text-slate-400 leading-relaxed bg-amber-50/50 dark:bg-slate-800/40 p-2.5 rounded-lg border border-amber-100/60 dark:border-slate-800">
-                    <span class="font-bold text-[10px] uppercase text-amber-700 dark:text-amber-400 block mb-0.5">Note / Breakdown:</span>
-                    ${renderMathInHtml(f.note)}
-                  </div>
-                ` : ''}
-              </div>
-
-              <!-- Jump to source topic -->
-              <div class="pt-2 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-[11px]">
-                <button 
-                  onclick="window.App.jumpToFormulaContext('${f.parentId}')" 
-                  class="font-semibold text-tagsci-700 dark:text-tagsci-400 hover:underline flex items-center gap-1"
-                >
-                  <span>&#x1F4D6;</span>
-                  <span>View in ${f.sourceKind}</span>
-                </button>
-                <span class="text-slate-400 text-[10px]">TagSci STEM</span>
-              </div>
-            </div>
-          `;
-        }).join('')}
-      </div>
-    `}
-  `;
-}
-
+// Expose public functions to window.App for inline HTML event handlers
 window.App = {
   renderFormulaVaultView,
   setFormulaSubjectFilter,
@@ -5572,6 +5501,7 @@ window.App = {
   copyFormulaTeX,
   jumpToFormulaContext,
   printFormulaSheet,
+  saveSyncedData,
   navigateSection,
   toggleSidebar,
   closeSidebar,
@@ -5588,7 +5518,6 @@ window.App = {
   deleteTask,
   switchMobileTab,
   toggleTheme,
-  saveSyncedData,
   checkOtaUpdates,
   initAutoSyncEngine,
   saveOtaSettings,
@@ -5607,9 +5536,10 @@ window.App = {
   nextFlashcard,
   shuffleCurrentDeck,
   exitFlashcardSession,
-  renderQuizSetsView,
-  startQuiz,
-  exitQuiz,
+  // Backwards compatibility aliases
+  renderQuizSetsView: renderFlashcardsView,
+  startQuiz: (id) => startFlashcardSession(id, 'all'),
+  exitQuiz: exitFlashcardSession,
   triggerPwaInstall,
   dismissPwaPrompt,
   manualTriggerPwaPrompt,

@@ -3,7 +3,9 @@ import base64
 import re
 
 def strip_exports_and_imports(code):
-    code = re.sub(r'import\s+[^;]+;', '', code)
+    # Remove ES import statements (including multiline)
+    code = re.sub(r'import\s+[\s\S]*?;\s*\n?', '', code, flags=re.MULTILINE)
+    # Strip export statements
     code = re.sub(r'export\s+(async\s+)?(function|const|let|var)\s+', r'\1\2 ', code)
     code = re.sub(r'export\s+default\s+', '', code)
     code = re.sub(r'export\s*\{[^}]*\};?', '', code)
@@ -44,6 +46,9 @@ def build_single_file():
     with open(os.path.join(src_dir, 'components', 'quiz_engine.js'), 'r', encoding='utf-8') as f:
         quiz_engine_js = strip_exports_and_imports(f.read())
 
+    with open(os.path.join(src_dir, 'components', 'formula_vault.js'), 'r', encoding='utf-8') as f:
+        formula_vault_js = strip_exports_and_imports(f.read())
+
     with open(os.path.join(src_dir, 'components', 'navigation.js'), 'r', encoding='utf-8') as f:
         navigation_js = strip_exports_and_imports(f.read())
 
@@ -74,6 +79,8 @@ def build_single_file():
     {tasks_js}
 
     {quiz_engine_js}
+
+    {formula_vault_js}
 
     {navigation_js}
 
@@ -124,7 +131,7 @@ def build_single_file():
         with open(src_manifest, 'r', encoding='utf-8') as f_in, open(root_manifest, 'w', encoding='utf-8') as f_out:
             f_out.write(f_in.read())
 
-    print("Successfully built standalone index.html (GitHub Pages) and hompage_test.html with embedded quiz engine & PWA support!")
+    print("Successfully built standalone index.html (GitHub Pages) and hompage_test.html with embedded formula vault & flashcard engines!")
 
 if __name__ == '__main__':
     build_single_file()
