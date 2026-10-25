@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Isolated Runtime Test Runner for TagSci Grade 11 Study WebApp
-=============================================================
+Isolated Runtime Test Runner for TagSci Grade 11 Study WebApp & Content Studio
+=============================================================================
 Safely executes runtime validation in an isolated, sandboxed browser
 worker with zero interference to the user's active browser sessions.
 """
@@ -45,6 +45,28 @@ class TestServerHandler(SimpleHTTPRequestHandler):
 
             injected = f"<script>\n{harness_js}\n</script>\n</body>"
             final_html = index_html.replace("</body>", injected, 1)
+            encoded = final_html.encode("utf-8")
+
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(encoded)))
+            self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+            self.end_headers()
+            self.wfile.write(encoded)
+            return
+
+        if self.path == "/__test_studio_runner" or self.path == "/__test_studio_runner/":
+            studio_path = os.path.join(REPO_ROOT, "Content Studio", "index.html")
+            harness_path = os.path.join(REPO_ROOT, "scripts", "test_studio_harness.js")
+
+            with open(studio_path, "r", encoding="utf-8") as f:
+                studio_html = f.read()
+
+            with open(harness_path, "r", encoding="utf-8") as f:
+                harness_js = f.read()
+
+            injected = f"<script>\n{harness_js}\n</script>\n</body>"
+            final_html = studio_html.replace("</body>", injected, 1)
             encoded = final_html.encode("utf-8")
 
             self.send_response(200)
@@ -123,98 +145,113 @@ def run_isolated_tests(timeout_sec=15):
         print("[FAIL] No supported browser found (msedge.exe not found).")
         return False
 
-    temp_profile_dir = tempfile.mkdtemp(prefix="tagsci_test_sandbox_")
     httpd = None
     server_thread = None
-    browser_proc = None
+
+    test_targets = [
+        {"name": "Student Hub WebApp", "path": "/__test_runner"},
+        {"name": "TagSci Content Studio", "path": "/__test_studio_runner"}
+    ]
+
+    all_passed = True
 
     try:
         # 1. Start local ephemeral test server
         httpd = ThreadingHTTPServer(("127.0.0.1", 0), TestServerHandler)
         port = httpd.server_address[1]
-        httpd.test_results = None
-        httpd.completion_event = threading.Event()
-
         server_thread = threading.Thread(target=httpd.serve_forever, daemon=True)
         server_thread.start()
         print(f"[TEST SERVER] Bound to http://127.0.0.1:{port}")
 
-        # 2. Launch browser worker in full sandbox mode
-        target_url = f"http://127.0.0.1:{port}/__test_runner"
-        flags = [
-            browser_exe,
-            "--headless=new",
-            "--disable-gpu",
-            "--no-sandbox",
-            "--disable-dev-shm-usage",
-            "--disable-extensions",
-            "--no-first-run",
-            "--no-default-browser-check",
-            "--disable-background-networking",
-            "--disable-sync",
-            "--remote-debugging-port=0",
-            f"--user-data-dir={temp_profile_dir}",
-            target_url
-        ]
+        for target in test_targets:
+            print(f"\n============================================================")
+            print(f" >>> RUNNING SUITE: {target['name']}")
+            print(f"============================================================")
+            temp_profile_dir = tempfile.mkdtemp(prefix="tagsci_test_sandbox_")
+            httpd.test_results = None
+            httpd.completion_event = threading.Event()
+            browser_proc = None
 
-        browser_proc = subprocess.Popen(
-            flags,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
-        )
-        print(f"[BROWSER WORKER] Spawned isolated worker (PID: {browser_proc.pid})")
-        print("[SAFETY GUARD] Active browser sessions are completely untouched.")
+            try:
+                # 2. Launch browser worker in full sandbox mode
+                target_url = f"http://127.0.0.1:{port}{target['path']}"
+                flags = [
+                    browser_exe,
+                    "--headless=new",
+                    "--disable-gpu",
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--disable-extensions",
+                    "--no-first-run",
+                    "--no-default-browser-check",
+                    "--disable-background-networking",
+                    "--disable-sync",
+                    "--remote-debugging-port=0",
+                    f"--user-data-dir={temp_profile_dir}",
+                    target_url
+                ]
 
-        # 3. Await test callback
-        completed = httpd.completion_event.wait(timeout=timeout_sec)
+                browser_proc = subprocess.Popen(
+                    flags,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL
+                )
+                print(f"[BROWSER WORKER] Spawned isolated worker (PID: {browser_proc.pid})")
+                print("[SAFETY GUARD] Active browser sessions are completely untouched.")
 
-        if not completed:
-            print(f"[FAIL] Runtime test timed out after {timeout_sec} seconds.")
-            return False
+                # 3. Await test callback
+                completed = httpd.completion_event.wait(timeout=timeout_sec)
 
-        results = httpd.test_results or {}
-        passed = results.get("passed", False)
-        assertions = results.get("assertions", [])
-        errors = results.get("errors", [])
+                if not completed:
+                    print(f"[FAIL] {target['name']} timed out after {timeout_sec} seconds.")
+                    all_passed = False
+                    continue
 
-        print("\n" + "=" * 60)
-        print("          RUNTIME TEST RESULTS SUMMARY")
-        print("=" * 60)
+                results = httpd.test_results or {}
+                passed = results.get("passed", False)
+                assertions = results.get("assertions", [])
+                errors = results.get("errors", [])
 
-        for a in assertions:
-            status = "[PASS]" if a.get("passed") else "[FAIL]"
-            details = f" ({a['details']})" if a.get("details") else ""
-            print(f" {status} {a['name']}{details}")
+                print("\n" + "-" * 60)
+                print(f"          RESULTS: {target['name']}")
+                print("-" * 60)
 
-        if errors:
-            print("\nCaptured Runtime Errors:")
-            for err in errors:
-                print(f"  - {err.get('message', 'Unknown error')}")
+                for a in assertions:
+                    status = "[PASS]" if a.get("passed") else "[FAIL]"
+                    details = f" ({a['details']})" if a.get("details") else ""
+                    print(f" {status} {a['name']}{details}")
 
-        print("=" * 60)
+                if errors:
+                    print("\nCaptured Runtime Errors:")
+                    for err in errors:
+                        print(f"  - {err.get('message', 'Unknown error')}")
 
-        if passed:
-            print("[SUCCESS] All runtime assertions PASSED with ZERO console errors!\n")
-            return True
-        else:
-            print("[FAILURE] One or more runtime assertions failed.\n")
-            return False
+                print("-" * 60)
+
+                if passed:
+                    print(f"[SUCCESS] {target['name']}: All assertions PASSED with ZERO errors!\n")
+                else:
+                    print(f"[FAILURE] {target['name']}: One or more assertions failed.\n")
+                    all_passed = False
+
+            finally:
+                if browser_proc and browser_proc.poll() is None:
+                    terminate_pid_tree(browser_proc.pid)
+                    print(f"[SAFETY GUARD] Terminated isolated worker PID {browser_proc.pid}.")
+                try:
+                    shutil.rmtree(temp_profile_dir, ignore_errors=True)
+                except Exception:
+                    pass
+
+        return all_passed
 
     finally:
-        # 4. Strict Cleanup: Kill ONLY the spawned worker PID
-        if browser_proc and browser_proc.poll() is None:
-            terminate_pid_tree(browser_proc.pid)
-            print(f"[SAFETY GUARD] Terminated isolated worker PID {browser_proc.pid}.")
-
-        # 5. Shut down HTTP server
+        # Shut down HTTP server
         if httpd:
             httpd.shutdown()
             httpd.server_close()
 
-        # 6. Delete ephemeral sandbox directory
-        shutil.rmtree(temp_profile_dir, ignore_errors=True)
-
 
 if __name__ == "__main__":
-    success = run_isolated_tests()
+    success = run_isolated_tests(timeout_sec=15)
     sys.exit(0 if success else 1)
