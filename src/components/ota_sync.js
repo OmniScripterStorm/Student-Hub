@@ -16,6 +16,7 @@ export function refreshAllViews() {
       if (sec === 'materials' && typeof renderMaterialsView === 'function') renderMaterialsView();
       if (sec === 'reviewers' && typeof renderReviewersView === 'function') renderReviewersView();
       if (sec === 'quiz_sets' && typeof renderQuizSetsView === 'function') renderQuizSetsView();
+      if (sec === 'formulas' && typeof renderFormulaVaultView === 'function') renderFormulaVaultView();
     }
   } catch (err) {
     console.warn('Auto-sync live refresh notice:', err);

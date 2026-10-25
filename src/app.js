@@ -40,7 +40,11 @@ import {
 } from './components/background_engine.js';
 
 // Expose public functions to window.App for inline HTML event handlers
+import { saveSyncedData } from './data/study_data.js';
+
+// Expose public functions to window.App for inline HTML event handlers
 window.App = {
+  saveSyncedData,
   navigateSection,
   toggleSidebar,
   closeSidebar,
