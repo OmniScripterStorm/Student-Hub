@@ -1,3 +1,13 @@
+import { 
+  renderFormulaVaultView,
+  setFormulaSubjectFilter,
+  setFormulaSearchQuery,
+  togglePinFormula,
+  togglePinnedOnlyFilter,
+  copyFormulaTeX,
+  jumpToFormulaContext,
+  printFormulaSheet
+} from './components/formula_vault.js';
 /* =========================================================
    TagSci G11 Study WebApp - Main Bootstrap
    ========================================================= */

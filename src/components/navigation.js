@@ -1,6 +1,7 @@
 import { STEM_REVIEWERS, STUDY_MATERIALS, FLASHCARD_DECKS, getCachedCreditsMarkdown, saveCachedCreditsMarkdown, DEFAULT_CREDITS_URL, getSyncUrl, CURRENT_APP_VERSION, getSubjectMeta } from '../data/study_data.js';
 import { renderMathInHtml } from './math_engine.js';
 import { renderFlashcardsView as renderQuizSetsView } from './quiz_engine.js';
+import { renderFormulaVaultView } from './formula_vault.js';
 import { updateSettingsPwaStatus } from './pwa_installer.js';
 
 let currentSection = 'overview'; // overview, materials, reviewers, quiz_sets, credits, settings
@@ -13,7 +14,7 @@ export function navigateSection(sectionId) {
   currentSection = sectionId;
 
   // Update Sidebar active indicators
-  const navItems = ['overview', 'materials', 'reviewers', 'quiz_sets', 'guidebook', 'credits', 'settings'];
+  const navItems = ['overview', 'materials', 'reviewers', 'quiz_sets', 'formulas', 'guidebook', 'credits', 'settings'];
   navItems.forEach(item => {
     const el = document.getElementById(`navItem-${item}`);
     if (el) {
@@ -41,6 +42,7 @@ export function navigateSection(sectionId) {
   if (sectionId === 'materials') renderMaterialsView();
   if (sectionId === 'reviewers') renderReviewersView();
   if (sectionId === 'quiz_sets') renderQuizSetsView();
+  if (sectionId === 'formulas') renderFormulaVaultView();
   if (sectionId === 'credits') renderCreditsView();
   if (sectionId === 'settings') renderSettingsView();
 
