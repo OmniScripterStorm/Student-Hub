@@ -26,6 +26,12 @@ class TestServerHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=REPO_ROOT, **kwargs)
 
+    def handle_one_request(self):
+        try:
+            super().handle_one_request()
+        except (ConnectionResetError, BrokenPipeError, ConnectionAbortedError):
+            pass
+
     def do_GET(self):
         if self.path == "/__test_runner" or self.path == "/__test_runner/":
             index_path = os.path.join(REPO_ROOT, "index.html")
@@ -57,6 +63,8 @@ class TestServerHandler(SimpleHTTPRequestHandler):
             msg = self.rfile.read(content_len).decode("utf-8", errors="replace")
             print(f"[BROWSER LOG] {msg}")
             self.send_response(200)
+            self.send_header("Content-Length", "0")
+            self.send_header("Connection", "close")
             self.end_headers()
             return
 
@@ -69,10 +77,13 @@ class TestServerHandler(SimpleHTTPRequestHandler):
             except Exception as e:
                 self.server.test_results = {"passed": False, "error": str(e)}
 
+            resp = b'{"status":"received"}'
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(resp)))
+            self.send_header("Connection", "close")
             self.end_headers()
-            self.wfile.write(b'{"status":"received"}')
+            self.wfile.write(resp)
 
             # Signal test completion
             self.server.completion_event.set()

@@ -142,6 +142,32 @@
       const flashcardsList = document.getElementById('quizSetsListContainer') || document.getElementById('flashcardsListContainer');
       assert('Flashcard decks container rendered', flashcardsList && flashcardsList.innerHTML.trim().length > 0);
 
+      // Test Flashcard Player session start & 3D Flip
+      const firstDeckBtn = flashcardsList.querySelector('button[onclick*="startFlashcardSession"]');
+      if (firstDeckBtn) {
+        firstDeckBtn.click();
+        const playerContainer = document.getElementById('flashcardPlayerContainer') || document.getElementById('quizPlayerContainer');
+        assert('Flashcard player container rendered', playerContainer && !playerContainer.classList.contains('hidden'));
+        
+        const cardFlipper = document.getElementById('flashcard-flipper');
+        assert('Flashcard flipper card element exists', !!cardFlipper);
+        
+        // Flip the card
+        if (typeof window.App.flipFlashcard === 'function') {
+          window.App.flipFlashcard();
+          assert('Flashcard flips and receives .flipped class', cardFlipper && cardFlipper.classList.contains('flipped'));
+          
+          const ratingControls = document.getElementById('flashcard-rating-controls');
+          assert('Flashcard rating controls visible on flip', ratingControls && !ratingControls.classList.contains('hidden'));
+        }
+        
+        // Exit session back to deck list
+        if (typeof window.App.exitFlashcardSession === 'function') {
+          window.App.exitFlashcardSession();
+          assert('Exited flashcard session back to deck list', playerContainer.classList.contains('hidden'));
+        }
+      }
+
       // 9. Test Navigation: Credits & Guidebook & Settings
       ['guidebook', 'credits', 'settings'].forEach(sec => {
         window.App.navigateSection(sec);
