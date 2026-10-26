@@ -1,6 +1,6 @@
 {
   "version": "1.9.0",
-  "updatedAt": "2026-10-26T14:05:35.457222+00:00",
+  "updatedAt": "2026-10-26T15:58:03.699438+00:00",
   "announcement": "Replaced Quiz Engine with Flashcards & Active Recall Decks.",
   "calendarEvents": [
     {
@@ -5459,6 +5459,472 @@
             "**(a) Probability the card is a red number card:**<br>There are 9 red number cards in Hearts and 9 in Diamonds $\\implies n(E_a) = 18$ cards.<br>$$P(E_a) = \\frac{18}{52} = \\frac{9}{26} \\approx 0.3462 \\text{ (34.62%)}$$",
             "**(b) Probability the card is either black OR a red letter card:**<br>• Black cards: 26 cards.<br>• Red letter cards: 4 in Hearts (A, K, Q, J) + 4 in Diamonds (A, K, Q, J) = 8 cards.<br>• Because black cards and red letter cards are mutually exclusive (a card cannot be black and red):<br>$$P = \\frac{26 + 8}{52} = \\frac{34}{52} = \\frac{17}{26} \\approx 0.6538 \\text{ (65.38%)}$$",
             "**(c) Probability the card is a number card strictly less than 9:**<br>The valid number card values are $\\{2, 3, 4, 5, 6, 7, 8\\}$ (7 ranks per suit across 4 suits) $\\implies 7 \\times 4 = 28$ cards.<br>$$P(E_c) = \\frac{28}{52} = \\frac{7}{13} \\approx 0.5385 \\text{ (53.85%)}$$"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "material_physics_simple_harmonic_motion_springs",
+      "subject": "Physics",
+      "tag": "Study Material",
+      "color": "border-l-4 border-tagsci-600",
+      "title": "Simple Harmonic Motion: Hooke's Law, Spring Oscillators & Energy Conservation",
+      "summary": "Comprehensive physics guide covering Simple Harmonic Motion (SHM), Hooke's Law, kinematic position-velocity-acceleration equations, total mechanical energy conservation in spring oscillators, vertical static equilibrium, small-angle pendulums, and resonance.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "1. Understanding Periodic & Simple Harmonic Motion"
+        },
+        {
+          "type": "paragraph",
+          "text": "In mechanics, any movement that regularly repeats along a fixed spatial path is an **oscillation**. Simple Harmonic Motion (SHM) is a special, fundamental class of oscillatory motion characterized by a linear restoring force."
+        },
+        {
+          "type": "table",
+          "title": "Classification of Oscillatory Systems",
+          "headers": [
+            "Type of Motion",
+            "Core Physical Mechanism",
+            "Distinguishing Criterion",
+            "Physical Real-World Examples"
+          ],
+          "rows": [
+            [
+              "General Oscillation",
+              "Repeated back-and-forth movement around a stable equilibrium position.",
+              "Any periodic cycle, regardless of whether restoring force is linear.",
+              "Heartbeat pulses, ocean waves, swaying trees in the wind."
+            ],
+            [
+              "Simple Harmonic Motion (SHM)",
+              "Periodic oscillation where the restoring force (and acceleration) is **directly proportional** to displacement and always directed toward equilibrium.",
+              "Restoring force obeys $F_s \\propto -x$ and acceleration satisfies $a = -\\omega^2 x$.",
+              "Ideal mass-spring oscillators, small-amplitude simple pendulums, vibrating tuning forks."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "2. Essential Kinematic Parameters of Oscillation"
+        },
+        {
+          "type": "paragraph",
+          "text": "To describe the geometry and timing of an oscillating particle, we define five fundamental scalar and angular parameters:"
+        },
+        {
+          "type": "table",
+          "title": "SHM Kinematic Parameters",
+          "headers": [
+            "Parameter",
+            "Symbol & Unit",
+            "Physical Definition",
+            "Mathematical Formulation"
+          ],
+          "rows": [
+            [
+              "Equilibrium Position",
+              "$x = 0$ (m)",
+              "The neutral rest position where the spring is unstretched and net restoring force is zero.",
+              "$\\Sigma F_{\\text{restoring}} = 0$"
+            ],
+            [
+              "Amplitude",
+              "$A$ (m)",
+              "The maximum linear displacement from the equilibrium position to the turning point.",
+              "$x_{\\max} = +A, \\quad x_{\\min} = -A$"
+            ],
+            [
+              "Period",
+              "$T$ (seconds, s)",
+              "The time required for an oscillating body to complete one full, closed round-trip cycle.",
+              "$T = \\frac{1}{f} = \\frac{2\\pi}{\\omega}$"
+            ],
+            [
+              "Frequency",
+              "$f$ (Hertz, $\\text{Hz} = \\text{s}^{-1}$)",
+              "The number of complete oscillation cycles executed per second.",
+              "$f = \\frac{1}{T} = \\frac{\\omega}{2\\pi}$"
+            ],
+            [
+              "Angular Frequency",
+              "$\\omega$ (rad/s)",
+              "The rate of phase change with respect to time; connects linear oscillation to circular reference frames.",
+              "$\\omega = 2\\pi f = \\sqrt{\\frac{k}{m}}$"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Isochronous Property of Ideal Oscillators",
+          "text": "A defining hallmark of Simple Harmonic Motion is that the **period $T$ is completely independent of amplitude $A$**. Whether a mass-spring system is pulled back by $2\\text{ cm}$ or $10\\text{ cm}$, it executes one full cycle in the exact same duration, provided the spring stays within its linear elastic limit."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "3. Hooke's Law & The Restoring Spring Force"
+        },
+        {
+          "type": "paragraph",
+          "text": "An ideal spring exerts an elastic restoring force that attempts to restore the attached mass back to its unstretched equilibrium position ($x = 0$):"
+        },
+        {
+          "type": "formula",
+          "title": "Hooke's Law Equation",
+          "formula": "F_s = -kx",
+          "note": "F_s is restoring force in Newtons (N); k is spring stiffness constant in N/m (or kg/s^2); x is linear displacement in meters (m)."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**The Minus Sign:** Indicates that the restoring force always acts in the **opposite direction** of displacement. If the mass is displaced to the right ($+x$), the spring pulls to the left ($-F$). If compressed to the left ($-x$), the spring pushes to the right ($+F$).",
+            "**Spring Constant ($k$):** Measures the stiffness of the spring. A high $k$ represents a rigid, stiff spring (e.g., vehicle suspension), requiring large forces for small extensions. A small $k$ represents a flexible, soft spring (e.g., toy slinky).",
+            "**Elastic Limit Warning:** Hooke's law is strictly valid only while deformation remains within the spring's **elastic limit**. Over-stretching causes permanent plastic deformation where the linear relationship collapses."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "4. Mathematical Derivation of SHM from Newton's Second Law"
+        },
+        {
+          "type": "paragraph",
+          "text": "Applying Newton's Second Law ($\\Sigma F = ma$) to a frictionless horizontal mass-spring oscillator yields the classical equation of motion:"
+        },
+        {
+          "type": "formula",
+          "title": "Equation of Motion for SHM",
+          "formula": "\\Sigma F = ma \\implies -kx = ma \\implies a = -\\left(\\frac{k}{m}\\right)x = -\\omega^2 x",
+          "note": "The defining mathematical condition for SHM: Acceleration is directly proportional to displacement and oriented in the opposite direction."
+        },
+        {
+          "type": "paragraph",
+          "text": "Setting $\\omega^2 = \\frac{k}{m}$ gives the natural angular frequency and period formulas for any mass $m$ attached to an ideal spring of stiffness $k$:"
+        },
+        {
+          "type": "formula",
+          "title": "Period and Frequency of a Mass-Spring Oscillator",
+          "formula": "T = 2\\pi \\sqrt{\\frac{m}{k}}, \\qquad f = \\frac{1}{2\\pi}\\sqrt{\\frac{k}{m}}",
+          "note": "Increasing mass m lengthens period (T \\propto \\sqrt{m}); increasing spring stiffness k shortens period (T \\propto 1/\\sqrt{k})."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "5. Kinematic Wave Equations: Position, Velocity, and Acceleration"
+        },
+        {
+          "type": "paragraph",
+          "text": "The differential equation $\\frac{d^2 x}{dt^2} + \\omega^2 x = 0$ has sinusoidal solutions describing position, velocity, and acceleration as continuous functions of time:"
+        },
+        {
+          "type": "table",
+          "title": "Kinematic Functions of SHM",
+          "headers": [
+            "Kinematic State",
+            "Time Function Equation",
+            "Peak Maximum Value",
+            "Locations of Maximum & Zero Values"
+          ],
+          "rows": [
+            [
+              "Position $x(t)$",
+              "$$x(t) = A \\cos(\\omega t + \\phi)$$",
+              "$x_{\\max} = A$",
+              "Maximum at turning points ($x = \\pm A$); Zero at equilibrium ($x = 0$)."
+            ],
+            [
+              "Velocity $v(t)$",
+              "$$v(t) = -A\\omega \\sin(\\omega t + \\phi)$$",
+              "$v_{\\max} = A\\omega = A\\sqrt{\\frac{k}{m}}$",
+              "**Maximum at equilibrium ($x = 0$)**; **Zero at turning points ($x = \\pm A$)**."
+            ],
+            [
+              "Acceleration $a(t)$",
+              "$$a(t) = -A\\omega^2 \\cos(\\omega t + \\phi) = -\\omega^2 x(t)$$",
+              "$a_{\\max} = A\\omega^2 = \\frac{kA}{m}$",
+              "**Maximum at turning points ($x = \\pm A$)**; **Zero at equilibrium ($x = 0$)**."
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Crucial Exam Insight: Phase Relationships",
+          "text": "Notice the $90^\\circ$ ($\\pi/2\\text{ rad}$) phase difference between displacement and velocity, and the $180^\\circ$ ($\\pi\\text{ rad}$) inversion between displacement and acceleration. When displacement is maximum, speed is zero! When speed is maximum, displacement and acceleration are zero!"
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "6. Conservation of Mechanical Energy in SHM"
+        },
+        {
+          "type": "paragraph",
+          "text": "Assuming a frictionless surface with no external dissipative forces, the total mechanical energy $E$ remains strictly constant, perpetually interchanging between **kinetic energy ($K$)** and **elastic potential energy ($U_s$)**:"
+        },
+        {
+          "type": "formula",
+          "title": "Total Mechanical Energy Conservation",
+          "formula": "E = K + U_s = \\frac{1}{2}mv^2 + \\frac{1}{2}kx^2 = \\frac{1}{2}kA^2 = \\frac{1}{2}m v_{\\max}^2 = \\text{constant}",
+          "note": "Total energy is directly proportional to the square of the amplitude (E \\propto A^2) and spring constant (E \\propto k)."
+        },
+        {
+          "type": "table",
+          "title": "Energy Partitioning across the Oscillation Cycle",
+          "headers": [
+            "Oscillator Position",
+            "Displacement $x$",
+            "Velocity $v$",
+            "Kinetic Energy $K$",
+            "Elastic Potential Energy $U_s$",
+            "Total Energy $E$"
+          ],
+          "rows": [
+            [
+              "Positive Turning Point",
+              "$x = +A$",
+              "$v = 0$",
+              "$K = 0$ (Minimum)",
+              "$$U_s = \\frac{1}{2}kA^2$$ (Maximum)",
+              "$$E = \\frac{1}{2}kA^2$$"
+            ],
+            [
+              "Equilibrium Point",
+              "$x = 0$",
+              "$v = \\pm v_{\\max}$",
+              "$$K = \\frac{1}{2}mv_{\\max}^2$$ (Maximum)",
+              "$U_s = 0$ (Minimum)",
+              "$$E = \\frac{1}{2}kA^2$$"
+            ],
+            [
+              "Negative Turning Point",
+              "$x = -A$",
+              "$v = 0$",
+              "$K = 0$ (Minimum)",
+              "$$U_s = \\frac{1}{2}kA^2$$ (Maximum)",
+              "$$E = \\frac{1}{2}kA^2$$"
+            ],
+            [
+              "Arbitrary Point",
+              "$-A < x < +A$",
+              "$\\pm v$",
+              "$$\\frac{1}{2}mv^2$$",
+              "$$\\frac{1}{2}kx^2$$",
+              "$$\\frac{1}{2}mv^2 + \\frac{1}{2}kx^2 = \\frac{1}{2}kA^2$$"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "7. Vertical Springs: Static Equilibrium Shift"
+        },
+        {
+          "type": "paragraph",
+          "text": "When an ideal spring hangs vertically, gravity stretches the spring by an initial extension $x_0$ to establish a new rest point where the upward elastic force balances downward weight:"
+        },
+        {
+          "type": "formula",
+          "title": "Static Equilibrium Condition",
+          "formula": "\\Sigma F_y = kx_0 - mg = 0 \\implies x_0 = \\frac{mg}{k}",
+          "note": "x_0 is the equilibrium extension from the natural unstretched spring length."
+        },
+        {
+          "type": "paragraph",
+          "text": "When the mass is pulled further away from this new static equilibrium and released, the mass oscillates in simple harmonic motion **centered around $x_0$**. Gravity simply shifts the center of oscillation without altering the period formula: $T = 2\\pi\\sqrt{\\frac{m}{k}}$."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "8. Comparison with Small-Angle Simple Pendulums"
+        },
+        {
+          "type": "paragraph",
+          "text": "A simple pendulum consisting of a point mass (bob) suspended from a light string of length $L$ also approximates Simple Harmonic Motion, provided the angular displacement remains small (typically $\\theta \\le 15^\\circ$ where $\\sin\\theta \\approx \\theta$ in radians):"
+        },
+        {
+          "type": "formula",
+          "title": "Period of a Simple Pendulum (Small-Angle Approximation)",
+          "formula": "T \\approx 2\\pi \\sqrt{\\frac{L}{g}}, \\qquad f \\approx \\frac{1}{2\\pi}\\sqrt{\\frac{g}{L}}",
+          "note": "Notice that pendulum period depends ONLY on length L and gravitational field g—it is completely independent of bob mass m."
+        },
+        {
+          "type": "table",
+          "title": "Mass-Spring Oscillator vs. Simple Pendulum",
+          "headers": [
+            "Attribute / Dimension",
+            "Mass-Spring Oscillator",
+            "Simple Pendulum (Small Angle)"
+          ],
+          "rows": [
+            [
+              "Restoring Mechanism",
+              "Elastic tension/compression in spring: $F_s = -kx$",
+              "Tangential gravity component: $F_{\\text{restoring}} = -mg\\sin\\theta$"
+            ],
+            [
+              "Period Formula",
+              "$$T = 2\\pi\\sqrt{\\frac{m}{k}}$$",
+              "$$T = 2\\pi\\sqrt{\\frac{L}{g}}$$"
+            ],
+            [
+              "Dependence on Mass",
+              "Yes: Period increases with mass ($T \\propto \\sqrt{m}$)",
+              "**No:** Period is completely independent of bob mass"
+            ],
+            [
+              "Dependence on Gravity",
+              "No: Independent of $g$ (identical on Moon as Earth)",
+              "Yes: Inversely proportional to root of gravity ($T \\propto 1/\\sqrt{g}$)"
+            ],
+            [
+              "Dependence on Length",
+              "Independent of spring coil length",
+              "Directly proportional to root of string length ($T \\propto \\sqrt{L}$)"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "9. Real-World Dynamics: Damping, Forcing, and Resonance"
+        },
+        {
+          "type": "paragraph",
+          "text": "In physical reality, non-conservative forces and external inputs modify the persistent oscillations of simple harmonic motion:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Damped Oscillation:** Friction, viscous fluid drag, or internal mechanical resistance dissipates mechanical energy into thermal energy and sound. Consequently, the amplitude decays exponentially over time ($A(t) = A_0 e^{-\\gamma t}$). Practical application: Automobile shock absorbers dampen chassis bounce after hitting a bump.",
+            "**Forced Oscillation:** An external periodic driving force supplies energy to sustain oscillations against damping forces.",
+            "**Resonance:** When the driving frequency $\\omega_d$ matches the natural frequency $\\omega_0 = \\sqrt{k/m}$ of the oscillator, energy transfer is maximized, resulting in massive amplification of displacement amplitude. Applications: Microwave ovens, MRI scanning, acoustic tuning; Hazard: Structural bridge collapse under synchronized wind shear."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "10. Step-by-Step Worked Textbook Examples"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Example 1: Calculating Restoring Spring Force"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Problem:** A spring with stiffness $k = 200\\text{ N/m}$ is stretched by $x = 0.05\\text{ m}$ away from equilibrium. Determine the restoring force exerted by the spring."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Given:** $k = 200\\text{ N/m}$, displacement $x = +0.05\\text{ m}$.",
+            "**Formula:** $F_s = -kx$",
+            "**Calculation:** $F_s = -(200\\text{ N/m})(0.05\\text{ m}) = -10\\text{ N}$",
+            "**Physical Interpretation:** The negative sign indicates the force has a magnitude of **$10\\text{ N}$** and acts in the direction pointing back toward the equilibrium position."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Example 2: Calculating Period and Frequency"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Problem:** A $0.50\\text{-kg}$ mass is attached to a horizontal spring with $k = 200\\text{ N/m}$. Find the period and frequency of oscillation."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Given:** $m = 0.50\\text{ kg}$, $k = 200\\text{ N/m}$.",
+            "**Formula:** $T = 2\\pi \\sqrt{\\frac{m}{k}}$ and $f = \\frac{1}{T}$",
+            "**Period Calculation:** $$T = 2\\pi\\sqrt{\\frac{0.50}{200}} = 2\\pi\\sqrt{0.0025} = 2\\pi(0.05) = 0.10\\pi \\approx 0.314\\text{ s}$$",
+            "**Frequency Calculation:** $$f = \\frac{1}{T} = \\frac{1}{0.314\\text{ s}} \\approx 3.18\\text{ Hz}$$",
+            "**Physical Interpretation:** The mass completes approximately **$3.18$ full cycles per second**, taking $0.314\\text{ s}$ for each round trip."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Example 3: Determining Spring Constant from Observed Period"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Problem:** An experimental body of mass $m = 0.40\\text{ kg}$ oscillates with a measured period $T = 0.80\\text{ s}$. Determine the spring constant $k$."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Given:** $m = 0.40\\text{ kg}$, $T = 0.80\\text{ s}$.",
+            "**Algebraic Rearrangement:** $$T = 2\\pi\\sqrt{\\frac{m}{k}} \\implies T^2 = \\frac{4\\pi^2 m}{k} \\implies k = \\frac{4\\pi^2 m}{T^2}$$",
+            "**Calculation:** $$k = \\frac{4\\pi^2 (0.40\\text{ kg})}{(0.80\\text{ s})^2} = \\frac{1.60\\pi^2}{0.64} = 2.5\\pi^2 \\approx 24.67\\text{ N/m} \\approx 24.7\\text{ N/m}$$",
+            "**Unit Dimensional Verification:** $$\\frac{\\text{kg}}{\\text{s}^2} = \\frac{\\text{kg}\\cdot\\text{m}/\\text{s}^2}{\\text{m}} = \\frac{\\text{N}}{\\text{m}} \\quad \\text{(Consistent!)}$$"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "11. Comprehensive Practice Activity & Exit Ticket (Fully Solved)"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Practice Activity: Problems & Solutions"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Problem 1: A spring has $k = 150\\text{ N/m}$ and is compressed by $0.08\\text{ m}$. Find the restoring force magnitude.**<br>$$|F| = k|x| = (150\\text{ N/m})(0.08\\text{ m}) = \\mathbf{12.0\\text{ N}}$$",
+            "**Problem 2: A $0.25\\text{-kg}$ mass is attached to a $100\\text{ N/m}$ spring. Find $T$ and $f$.**<br>$$T = 2\\pi\\sqrt{\\frac{0.25}{100}} = 2\\pi\\sqrt{0.0025} = 2\\pi(0.05) \\approx \\mathbf{0.314\\text{ s}}$$<br>$$f = \\frac{1}{T} = \\frac{1}{0.314\\text{ s}} \\approx \\mathbf{3.18\\text{ Hz}}$$",
+            "**Problem 3: A spring-mass system has period $T = 1.2\\text{ s}$ and mass $m = 0.50\\text{ kg}$. Find $k$.**<br>$$k = \\frac{4\\pi^2 m}{T^2} = \\frac{4\\pi^2(0.50)}{(1.2)^2} = \\frac{2\\pi^2}{1.44} \\approx \\mathbf{13.7\\text{ N/m}}$$",
+            "**Problem 4: An oscillator has amplitude $A = 0.10\\text{ m}$ and $k = 80\\text{ N/m}$. Find its total mechanical energy.**<br>$$E = \\frac{1}{2}kA^2 = \\frac{1}{2}(80\\text{ N/m})(0.10\\text{ m})^2 = 40(0.01) = \\mathbf{0.40\\text{ J}}$$",
+            "**Problem 5: At what point in the motion is the speed greatest? Explain.**<br>The speed is greatest at the **equilibrium position ($x = 0$)**. At this point, the spring is unstretched ($U_s = 0$), so by conservation of mechanical energy, all energy is converted into maximum kinetic energy ($K_{\\max} = \\frac{1}{2}mv_{\\max}^2$)."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Exit Ticket Synthesis Problem"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Scenario:** A $0.60\\text{-kg}$ mass is attached to an ideal horizontal spring with stiffness $k = 150\\text{ N/m}$ and set oscillating with an amplitude $A = 0.12\\text{ m}$."
+        },
+        {
+          "type": "table",
+          "title": "Exit Ticket Analytical Solutions",
+          "headers": [
+            "Prompt Question",
+            "Governing Equation",
+            "Substitution & Numerical Evaluation",
+            "Final Stated Result"
+          ],
+          "rows": [
+            [
+              "A. Calculate the period ($T$)",
+              "$$T = 2\\pi\\sqrt{\\frac{m}{k}}$$",
+              "$$2\\pi\\sqrt{\\frac{0.60}{150}} = 2\\pi\\sqrt{0.004} \\approx 2\\pi(0.06325)$$",
+              "**$T \\approx 0.397\\text{ s}$**"
+            ],
+            [
+              "B. Calculate the frequency ($f$)",
+              "$$f = \\frac{1}{T}$$",
+              "$$f = \\frac{1}{0.397\\text{ s}} \\approx 2.516\\text{ Hz}$$",
+              "**$f \\approx 2.52\\text{ Hz}$**"
+            ],
+            [
+              "C. Calculate total mechanical energy ($E$)",
+              "$$E = \\frac{1}{2}kA^2$$",
+              "$$E = \\frac{1}{2}(150\\text{ N/m})(0.12\\text{ m})^2 = 75(0.0144)$$",
+              "**$E = 1.08\\text{ J}$**"
+            ],
+            [
+              "D. Describe motion when passing through equilibrium",
+              "$$\\Sigma F = 0, \\quad v = v_{\\max}$$",
+              "Spring has zero net stretch ($x = 0$); therefore, acceleration is zero ($a = 0$), while velocity is at its maximum absolute magnitude: $v_{\\max} = A\\sqrt{k/m} = 0.12\\sqrt{250} \\approx 1.90\\text{ m/s}$.",
+              "**Speed is maximum, acceleration is zero.**"
+            ]
           ]
         }
       ]
