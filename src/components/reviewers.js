@@ -320,11 +320,12 @@ export function renderMaterials() {
   }
 
   // Filter by subject pill if active
-  if (dashboardSubjectFilter && activeSubjectFilter !== 'all') {
+  if (dashboardSubjectFilter && dashboardSubjectFilter !== 'all') {
     filtered = filtered.filter(item => {
       const s = (item.subject || '').toLowerCase();
       if (dashboardSubjectFilter === 'chem') return s.includes('chem');
-      if (dashboardSubjectFilter === 'precal') return s.includes('calc') || s.includes('math');
+      if (dashboardSubjectFilter === 'finite_math') return s.includes('finite');
+      if (dashboardSubjectFilter === 'gen_math') return s.includes('general math') || s.includes('gen math') || (s.includes('math') && !s.includes('finite'));
       if (dashboardSubjectFilter === 'bio') return s.includes('bio');
       if (dashboardSubjectFilter === 'kasaysayan') return s.includes('kasaysayan') || s.includes('kompan') || s.includes('salazar');
       if (dashboardSubjectFilter === 'physics') return s.includes('physic');
