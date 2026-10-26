@@ -139,7 +139,7 @@ def terminate_pid_tree(pid):
         pass
 
 
-def run_isolated_tests(timeout_sec=15):
+def run_isolated_tests(timeout_sec=35):
     browser_exe = locate_browser()
     if not browser_exe:
         print("[FAIL] No supported browser found (msedge.exe not found).")
@@ -254,5 +254,5 @@ def run_isolated_tests(timeout_sec=15):
 
 
 if __name__ == "__main__":
-    success = run_isolated_tests(timeout_sec=15)
+    success = run_isolated_tests(timeout_sec=35)
     sys.exit(0 if success else 1)

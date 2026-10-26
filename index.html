@@ -1790,6 +1790,15 @@ const MATH_OPERATORS = {
   '\\boxtimes': '&#x22A0;',
 
   // Calculus, Del & Infinities
+  '\\oiint': '<span class="text-lg leading-none italic font-serif font-bold">&#x222F;</span>',
+  '\\oiiint': '<span class="text-lg leading-none italic font-serif font-bold">&#x2230;</span>',
+  '\\therefore': '&there4;',
+  '\\because': '&#x2235;',
+  '\\angstrom': '&#x212B;',
+  '\\AA': '&#x212B;',
+  '\\micro': '&mu;',
+  '\\textmu': '&mu;',
+  '\\ohm': '&Omega;',
   '\\infty': '&infin;',
   '\\partial': '&part;',
   '\\nabla': '&nabla;',
@@ -1910,6 +1919,9 @@ function parseMathSyntax(tex) {
   let s = (tex || '').trim();
   s = s.replace(/<br\s*\/?>/gi, ' ');
 
+  // 0. Forward slash tolerance: support /cmd instead of \cmd (e.g. /bar, /min, /max, /frac, /sqrt, /theta, /pi)
+  s = s.replace(/(^|[\s({\[,=+\-*_^\\])\/([a-zA-Z]+)/g, '$1\\$2');
+
   // 1. Strip LaTeX sizing commands for brackets
   s = s.replace(/\\left\s*([(\[{|.]|\\\{)/g, (m, p) => p === '\\{' ? '{' : (p === '.' ? '' : p));
   s = s.replace(/\\right\s*([)\]}|.]|\\\})/g, (m, p) => p === '\\}' ? '}' : (p === '.' ? '' : p));
@@ -1994,12 +2006,14 @@ function parseMathSyntax(tex) {
     return `<span class="inline-flex items-center align-middle font-mono-math"><span class="text-base leading-none">&radic;</span><span class="border-t border-current px-0.5 ml-0.5">${parseMathSyntax(inner)}</span></span>`;
   });
 
-  // 6. Limits, Big Operators with Subscripts: \lim, \max, \min, \sup, \inf
-  s = s.replace(/\\(lim|max|min|sup|inf)_\{([^{}]+)\}/g, (m, op, sub) => {
-    return `<span class="inline-flex flex-col text-center align-middle mx-1 font-mono-math"><span class="font-bold">${op}</span><span class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">${parseMathSyntax(sub)}</span></span>`;
+  // 6. Limits & Extrema with Subscripts: \lim, \max, \min, \sup, \inf, \arg, \argmax, \argmin
+  s = s.replace(/\\(lim|limsup|liminf|max|min|sup|inf|argmax|argmin|arg)_\{([^{}]+)\}/g, (m, op, sub) => {
+    const cleanOp = op.replace('argmax', 'arg&thinsp;max').replace('argmin', 'arg&thinsp;min');
+    return `<span class="inline-flex flex-col text-center align-middle mx-1 font-mono-math"><span class="font-bold">${cleanOp}</span><span class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">${parseMathSyntax(sub)}</span></span>`;
   });
-  s = s.replace(/\\(lim|max|min|sup|inf)_([0-9a-zA-Z])/g, (m, op, sub) => {
-    return `<span class="inline-flex flex-col text-center align-middle mx-1 font-mono-math"><span class="font-bold">${op}</span><span class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">${parseMathSyntax(sub)}</span></span>`;
+  s = s.replace(/\\(lim|limsup|liminf|max|min|sup|inf|argmax|argmin|arg)_([0-9a-zA-Z])/g, (m, op, sub) => {
+    const cleanOp = op.replace('argmax', 'arg&thinsp;max').replace('argmin', 'arg&thinsp;min');
+    return `<span class="inline-flex flex-col text-center align-middle mx-1 font-mono-math"><span class="font-bold">${cleanOp}</span><span class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">${parseMathSyntax(sub)}</span></span>`;
   });
 
   // 7. Modulo & Operators: \pmod{m}, \bmod
@@ -2020,7 +2034,18 @@ function parseMathSyntax(tex) {
     return `<span class="inline-flex flex-col text-center align-middle mx-1 font-mono-math"><span class="border-b-2 border-current px-1">${parseMathSyntax(base)}</span>${label ? `<span class="text-[10px] text-slate-500">${parseMathSyntax(label)}</span>` : ''}</span>`;
   });
 
-  // 9. Vectors, Accents, and Bars
+  // 9. Vectors, Accents, and Bars: \bar, \overline, \vec, \hat, \dot, \ddot, \tilde, \check, \acute, \grave, \breve, \mathring
+  s = s.replace(/\\bar\{([^{}]+)\}/g, '<span class="overline">$1</span>');
+  s = s.replace(/\\bar\s+([a-zA-Z0-9])/g, '<span class="overline">$1</span>');
+  s = s.replace(/\\widebar\{([^{}]+)\}/g, '<span class="overline">$1</span>');
+  s = s.replace(/\\widehat\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[11px] leading-none">^</span><span>$1</span></span>');
+  s = s.replace(/\\widecheck\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[11px] leading-none">&#x02C7;</span><span>$1</span></span>');
+  s = s.replace(/\\check\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&#x02C7;</span><span>$1</span></span>');
+  s = s.replace(/\\acute\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&#x00B4;</span><span>$1</span></span>');
+  s = s.replace(/\\grave\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&#x0060;</span><span>$1</span></span>');
+  s = s.replace(/\\breve\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&#x02D8;</span><span>$1</span></span>');
+  s = s.replace(/\\mathring\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[9px] leading-none">&#x02DA;</span><span>$1</span></span>');
+  s = s.replace(/\\ring\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[9px] leading-none">&#x02DA;</span><span>$1</span></span>');
   s = s.replace(/\\vec\{([^{}]+)\}/g, (match, inner) => `<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">&rarr;</span><span>${inner}</span></span>`);
   s = s.replace(/\\hat\{([^{}]+)\}/g, (match, inner) => `<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">^</span><span>${inner}</span></span>`);
   s = s.replace(/\\tilde\{([^{}]+)\}/g, '<span class="inline-flex flex-col items-center justify-center font-mono-math"><span class="text-[10px] leading-none">~</span><span>$1</span></span>');
@@ -2029,10 +2054,25 @@ function parseMathSyntax(tex) {
   s = s.replace(/\\overline\{([^{}]+)\}/g, '<span class="overline">$1</span>');
   s = s.replace(/\\underline\{([^{}]+)\}/g, '<span class="underline">$1</span>');
 
-  // 10. Floor, Ceil, Absolute values, Norms
+  // 10. Floor, Ceil, Absolute values, Norms & Angle Brackets
+  s = s.replace(/\\langle\s*([^{}]+?)\s*\\rangle/g, (m, inner) => `&lang;${parseMathSyntax(inner)}&rang;`);
   s = s.replace(/\\lfloor\s*([^{}]+?)\s*\\rfloor/g, (m, inner) => `&lfloor;${parseMathSyntax(inner)}&rfloor;`);
   s = s.replace(/\\lceil\s*([^{}]+?)\s*\\rceil/g, (m, inner) => `&lceil;${parseMathSyntax(inner)}&rceil;`);
   s = s.replace(/\\lVert\s*([^{}]+?)\s*\\rVert/g, (m, inner) => `<span class="border-l border-r border-double border-current px-1 mx-0.5">${parseMathSyntax(inner)}</span>`);
+
+  // Extensible Reaction & Transition Arrows: \xrightarrow, \xleftarrow
+  s = s.replace(/\\xrightarrow\[(.*?)\]\{([^{}]+)\}/g, (m, below, above) => {
+    return `<span class="inline-flex flex-col items-center align-middle mx-1.5 font-mono-math"><span class="text-[10px] leading-tight text-slate-600 dark:text-slate-400">${parseMathSyntax(above)}</span><span class="text-base leading-none w-full text-center border-t border-current">&rarr;</span>${below ? `<span class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">${parseMathSyntax(below)}</span>` : ''}</span>`;
+  });
+  s = s.replace(/\\xrightarrow\{([^{}]+)\}/g, (m, above) => {
+    return `<span class="inline-flex flex-col items-center align-middle mx-1.5 font-mono-math"><span class="text-[10px] leading-tight text-slate-600 dark:text-slate-400">${parseMathSyntax(above)}</span><span class="text-base leading-none w-full text-center border-t border-current">&rarr;</span></span>`;
+  });
+  s = s.replace(/\\xleftarrow\[(.*?)\]\{([^{}]+)\}/g, (m, below, above) => {
+    return `<span class="inline-flex flex-col items-center align-middle mx-1.5 font-mono-math"><span class="text-[10px] leading-tight text-slate-600 dark:text-slate-400">${parseMathSyntax(above)}</span><span class="text-base leading-none w-full text-center border-t border-current">&larr;</span>${below ? `<span class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">${parseMathSyntax(below)}</span>` : ''}</span>`;
+  });
+  s = s.replace(/\\xleftarrow\{([^{}]+)\}/g, (m, above) => {
+    return `<span class="inline-flex flex-col items-center align-middle mx-1.5 font-mono-math"><span class="text-[10px] leading-tight text-slate-600 dark:text-slate-400">${parseMathSyntax(above)}</span><span class="text-base leading-none w-full text-center border-t border-current">&larr;</span></span>`;
+  });
 
   // 11. Text & fonts: \text, \mathrm, \operatorname, \mathbf, \mathit, \cancel
   let textPos = 0;
@@ -2096,7 +2136,10 @@ function parseMathSyntax(tex) {
     'sin', 'cos', 'tan', 'sec', 'csc', 'cot',
     'arcsin', 'arccos', 'arctan', 'arcsec', 'arccsc', 'arccot',
     'sinh', 'cosh', 'tanh', 'coth', 'sech', 'csch',
-    'ln', 'log', 'exp', 'det', 'gcd', 'lcm', 'deg', 'dim', 'ker', 'hom'
+    'ln', 'log', 'exp', 'det', 'gcd', 'lcm', 'deg', 'dim', 'ker', 'hom',
+    'min', 'max', 'sup', 'inf', 'lim', 'limsup', 'liminf', 'arg', 'argmax', 'argmin',
+    'var', 'cov', 'corr', 'diag', 'rank', 'tr', 'trace', 'span', 'proj', 'comp', 'cis',
+    'sgn', 'sign', 'erf', 'sinc'
   ];
   for (const fn of STD_FUNCS) {
     const re = new RegExp(`\\\\${fn}\\b`, 'g');
