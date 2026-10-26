@@ -1,6 +1,6 @@
 {
   "version": "1.9.0",
-  "updatedAt": "2026-10-26T02:30:31.508398+00:00",
+  "updatedAt": "2026-10-26T12:14:51.900776+00:00",
   "announcement": "Replaced Quiz Engine with Flashcards & Active Recall Decks.",
   "calendarEvents": [
     {
@@ -4612,6 +4612,418 @@
             "**(b) What is the probability that a defective widget is from either Factory 2 or Factory 3?**<br>Because $F_2$ and $F_3$ are mutually exclusive:<br>$$P(F_2 \\cup F_3 \\mid D) = \\frac{P(D \\cap F_2) + P(D \\cap F_3)}{P(D)} = \\frac{0.0150 + 0.0060}{0.0230} = \\frac{0.0210}{0.0230} = \\frac{21}{23} \\approx 0.9130 \\text{ (91.30%)}$$",
             "**(c) What is the probability that a non-defective widget came from Factory 3?**<br>Using Bayes' theorem on non-defective widgets ($D^c$):<br>$$P(F_3 \\mid D^c) = \\frac{P(D^c \\cap F_3)}{P(D^c)} = \\frac{0.30 \\times (1 - 0.02)}{1 - 0.0230} = \\frac{0.2940}{0.9770} = \\frac{294}{977} \\approx 0.3009 \\text{ (30.09%)}$$"
           ]
+        }
+      ]
+    },
+    {
+      "id": "material_effcomm_critical_comprehension_data_visualization",
+      "subject": "Effective Communications",
+      "tag": "Study Material",
+      "color": "border-l-4 border-blue-500",
+      "title": "Critical Comprehension Strategies & Multimodal Data Visualization",
+      "summary": "Master critical vs. non-critical thinking, the L-V-R comprehension model, Revised Bloom's Taxonomy, reception-to-production strategies, and data visualization formats with a worked Philippine regional internet case study.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "1. Critical Thinking vs. Non-Critical Thinking"
+        },
+        {
+          "type": "paragraph",
+          "text": "Academic and technical communication requires transitioning from passive consumption of information to active intellectual interrogation. Critical thinking provides the analytical discipline needed to evaluate claims, detect cognitive biases, and make evidence-based decisions."
+        },
+        {
+          "type": "table",
+          "title": "Comparative Analysis: Modes of Thinking",
+          "headers": [
+            "Dimension",
+            "Critical Thinking",
+            "Non-Critical Thinking",
+            "Academic & Practical Impact"
+          ],
+          "rows": [
+            [
+              "Cognitive Stance",
+              "Active, analytical, and questioning.",
+              "Passive, superficial, and compliant.",
+              "Determines whether a student independently constructs knowledge or merely copies input."
+            ],
+            [
+              "Information Processing",
+              "Deconstructs claims, probes underlying logic, and verifies evidence credibility.",
+              "Accepts claims at face value without verification or scrutiny.",
+              "Shields against misinformation, unsubstantiated rumors, and confirmation bias."
+            ],
+            [
+              "Handling Assumptions",
+              "Explicitly identifies assumptions, checking for validity and cultural or systemic biases.",
+              "Ignores assumptions, confusing correlation with causation or tradition with truth.",
+              "Prevents flawed conclusions in scientific research and technical reporting."
+            ],
+            [
+              "Perspective & Openness",
+              "Weighs diverse perspectives and alternative explanations before arriving at a judgment.",
+              "Fixates on a single viewpoint; resists contrary data.",
+              "Fosters intellectual humility and robust argumentative discourse."
+            ],
+            [
+              "Basis for Decision",
+              "Well-reasoned, evidence-backed judgments arrived at through rigorous evaluation.",
+              "Decisions guided by hearsay, intuition, peer pressure, or habit.",
+              "Yields reliable, defensible technical outcomes and ethical debate stances."
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Real-World Case Study: Evaluating Cultural Assertions",
+          "text": "Consider the widespread traditional belief: *\"Don't bathe a child when they have colds.\"* A **non-critical thinker** obeys immediately without question. In contrast, a **critical thinker** evaluates the claim: *What is the medical rationale? Does lukewarm water exacerbate or soothe fever and congestion? What do peer-reviewed pediatric guidelines recommend? What are the hygiene risks of withholding bathing?* This analytical habit empowers students to replace superstition with evidence-based reasoning."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "2. Core Traits & Skills of an Effective Critical Thinker"
+        },
+        {
+          "type": "paragraph",
+          "text": "According to communication scholarship (*Diwa Learning Systems*), effective critical thinkers consistently practice six foundational cognitive operations:"
+        },
+        {
+          "type": "table",
+          "title": "The Six Essential Critical Thinking Competencies",
+          "headers": [
+            "Competency",
+            "Core Cognitive Definition",
+            "Practical Application in Academic Work"
+          ],
+          "rows": [
+            [
+              "1. Questioning",
+              "Asking probing, purposeful questions to uncover the root causes, assumptions, and scope of an issue.",
+              "Moving beyond simple factual 'what' questions to deep 'why', 'how', and 'under what conditions' inquiries."
+            ],
+            [
+              "2. Evidence Evaluation",
+              "Scrutinizing the credibility, relevance, sufficiency, and currency of data supporting any claim.",
+              "Checking author credentials, research methodologies, statistical sample sizes, and source publication dates."
+            ],
+            [
+              "3. Analysis",
+              "Deconstructing complex ideas, arguments, or datasets into smaller components to expose relationships.",
+              "Dissecting technical reports into premise, evidence, methodological limitations, and final conclusions."
+            ],
+            [
+              "4. Inference",
+              "Drawing logical conclusions and predicting outcomes based strictly on verified evidence.",
+              "Extrapolating plausible future trends from data charts without over-generalizing beyond what facts justify."
+            ],
+            [
+              "5. Perspective-Taking",
+              "Consciously examining multiple viewpoints, counter-arguments, and stakeholder motivations.",
+              "Anticipating opposing arguments during debates and formulating reasoned, empathetic counter-claims."
+            ],
+            [
+              "6. Reflection (Metacognition)",
+              "Examining one's own internal thought processes, cognitive shortcuts, and potential biases.",
+              "Periodically auditing one's own papers or arguments to eliminate confirmation bias and emotional fallacies."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "3. Cognitive Progression: Revised Bloom's Taxonomy"
+        },
+        {
+          "type": "paragraph",
+          "text": "Effective academic communication operates on hierarchical cognitive levels modeled by Anderson and Krathwohl's **Revised Bloom's Taxonomy**. Moving up the pyramid transforms students from factual repeaters into autonomous creators:"
+        },
+        {
+          "type": "table",
+          "title": "Bloom's Revised Taxonomy in Academic Communication",
+          "headers": [
+            "Level (Order)",
+            "Primary Objective",
+            "Core Action Verbs",
+            "Classroom Communication Task"
+          ],
+          "rows": [
+            [
+              "1. Remembering (Lowest)",
+              "Recall facts, terminology, and baseline concepts without necessarily understanding their meaning.",
+              "Define, list, recall, repeat, state, identify",
+              "Reciting the definition of a bar graph or memorizing communication models."
+            ],
+            [
+              "2. Understanding",
+              "Grasp the meaning, significance, and implications of information; interpret and summarize concepts.",
+              "Classify, describe, discuss, explain, identify, translate",
+              "Explaining in your own words why critical listening must precede verbal debate."
+            ],
+            [
+              "3. Applying",
+              "Use acquired knowledge, rules, or techniques to solve problems or execute procedures in novel situations.",
+              "Execute, implement, solve, use, demonstrate, sketch",
+              "Using the L-V-R framework to evaluate an unfamiliar op-ed article."
+            ],
+            [
+              "4. Analyzing",
+              "Break material into parts and determine how parts relate to one another and an overall structure.",
+              "Differentiate, organize, relate, compare, contrast, examine",
+              "Contrasting two opposing editorial viewpoints to expose subtle biases and rhetorical fallacies."
+            ],
+            [
+              "5. Evaluating",
+              "Make and justify judgments based on criteria, standards, and evidence validity.",
+              "Appraise, argue, defend, judge, select, critique, weigh",
+              "Critiquing the methodology of a published survey to determine if its conclusion is valid."
+            ],
+            [
+              "6. Creating (Highest)",
+              "Synthesize diverse elements to generate a novel product, original argument, or multimodal structure.",
+              "Design, assemble, construct, formulate, author, investigate",
+              "Designing an original data infographic that communicates national census trends to the public."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "4. The Three Receptive Critical Modes"
+        },
+        {
+          "type": "paragraph",
+          "text": "Comprehension in modern academic environments relies on three distinct sensory and cognitive channels:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**1. Critical Listening:** The rigorous mental process of interpreting, evaluating, and assessing spoken language during lectures, panel discussions, and debates. It requires attending to vocal inflection, rhetorical pacing, evidence quality, and logical coherence while filtering out emotional manipulation.",
+            "**2. Critical Reading:** An active, interrogative interaction with written texts. Rather than passively absorbing words, a critical reader dissects organizational structure, tests the author's warrants, identifies gaps in citations, and differentiates factual observations from subjective interpretations.",
+            "**3. Critical Viewing:** The visual literacy skill of decoding, analyzing, and appraising visual media, graphics, charts, and video. Critical viewers analyze color choices, scale proportion, graphical integrity, and visual rhetoric to evaluate whether imagery informs or misleads."
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Fundamental Rule: Comprehension Precedes Production",
+          "text": "Students often struggle with writing essays, delivering presentations, or designing infographics because they attempt to **produce** before they can properly **comprehend**. Mastering critical listening, reading, and viewing builds the academic vocabulary, conceptual clarity, and pattern recognition needed to articulate persuasive technical arguments."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "5. The L-V-R Critical Comprehension Framework"
+        },
+        {
+          "type": "paragraph",
+          "text": "The **L-V-R Framework (Locate – Verify – Respond)** provides an actionable, repeatable 3-step protocol for interrogating any academic paper, lecture, speech, or technical diagram:"
+        },
+        {
+          "type": "table",
+          "title": "The L-V-R Framework Breakdown",
+          "headers": [
+            "Stage",
+            "Focus",
+            "Diagnostic Inquiry Questions",
+            "Tangible Expected Outputs"
+          ],
+          "rows": [
+            [
+              "L — Locate",
+              "Identifying essential information and isolating the core thesis.",
+              "• What is the general topic?\\n• What is the author's primary claim or thesis?\\n• What supporting details and statistics are vital?\\n• What is the expected outcome or conclusion?",
+              "Underlined thesis statements, annotated key metrics, and extracted bullet summaries of main ideas."
+            ],
+            [
+              "V — Verify",
+              "Testing the reliability, credibility, and completeness of the data.",
+              "• Who authored the message and what are their qualifications?\\n• Is the publication source impartial and peer-reviewed?\\n• Is empirical evidence provided to support every major claim?\\n• Are technical instructions clear and complete?\\n• Does the content corroborate with other verified authorities?\\n• Is the information current?",
+              "Source credibility scorecard, verification checkmarks, and flagged inaccuracies, fallacies, or outdated data."
+            ],
+            [
+              "R — Respond",
+              "Applying, synthesizing, and taking informed academic action.",
+              "• How can this information be utilized?\\n• How can the concept be explained to others?\\n• What diagrams or workflows capture this knowledge?\\n• What valid counter-arguments or questions arise?",
+              "Concise summary, executed procedure, conceptual diagram, infographic, or debate speech."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "6. Three-Phase Comprehension Strategy: Before, During, and After"
+        },
+        {
+          "type": "paragraph",
+          "text": "To achieve maximum cognitive engagement, strategic communicators divide their listening, reading, and viewing workflows into three chronological stages:"
+        },
+        {
+          "type": "table",
+          "title": "Chronological Strategy Blueprint",
+          "headers": [
+            "Phase",
+            "Strategic Objective",
+            "Actionable Protocols & Checklist"
+          ],
+          "rows": [
+            [
+              "Before Phase (Priming & Framing)",
+              "Prepare cognitive schemas and establish inquiry targets before consuming content.",
+              "1. **Preview Visual Hierarchy:** Survey titles, subheadings, images, captions, and callout boxes.\\n2. **Identify Purpose:** Determine why you are reading/viewing and what key questions you need answered.\\n3. **Activate Prior Knowledge:** Connect current headings to concepts studied in previous modules.\\n4. **Predict Content:** Hypothesize main themes and likely findings based on introductory clues.\\n5. **Identify Unfamiliar Terms:** Scan ahead for specialized vocabulary or jargon and clarify definitions.\\n6. **Prepare Questions:** Draft inquiry prompts that will guide focused note-taking."
+            ],
+            [
+              "During Phase (Active Monitoring & Interrogation)",
+              "Track arguments in real time, monitor comprehension, and distinguish evidentiary tiers.",
+              "1. **Identify Main Ideas:** Note topic sentences and pivotal argumentative transitions.\\n2. **Capture Key Details:** Annotate core figures, evidentiary citations, and definitions.\\n3. **Track Signal Words:** Watch for organizational markers (*however, consequently, in addition, fundamentally*).\\n4. **Determine Sequence:** Map timelines, hierarchical dependencies, or step-by-step algorithms.\\n5. **Examine Evidence:** Verify that claims are backed by solid empirical data or credible sources.\\n6. **Interpret Visuals:** Correlate figures and graphs directly with corresponding paragraphs.\\n7. **Pause & Clarify:** Periodically pause at section boundaries to check mental understanding.\\n8. **Distinguish Fact from Opinion:** Separate verifiable empirical facts from subjective claims."
+            ],
+            [
+              "After Phase (Consolidation & Multimodal Production)",
+              "Synthesize takeaways, evaluate outcomes, and convert comprehension into communicative output.",
+              "1. **Summarize Comprehensively:** Express the central message in your own words without copying.\\n2. **Answer Evaluative Questions:** Address high-order analytical and inferential prompts.\\n3. **Check Initial Predictions:** Compare your pre-reading predictions with actual conclusions.\\n4. **Verify Key Data:** Double-check crucial formulas, figures, or historical dates against reliable references.\\n5. **Apply or Follow Procedures:** Execute the technical workflow or lab experiment described.\\n6. **Construct Multimodal Assets:** Design flowcharts, concept maps, or infographics.\\n7. **Evaluate the Outcome:** Critically assess the broader implications, practical relevance, and limitations."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "7. Multimodal Representations & Data Visualization"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Data Visualization** is the discipline of converting complex quantitative or qualitative research findings into graphical formats. Well-designed visualizations reveal trends, proportions, and procedural workflows that would otherwise remain obscured in narrative prose or dense spreadsheets."
+        },
+        {
+          "type": "table",
+          "title": "Taxonomy of Common Data Visualizations",
+          "headers": [
+            "Visualization Format",
+            "Primary Purpose",
+            "Structural Elements",
+            "Best Practical Use Cases"
+          ],
+          "rows": [
+            [
+              "Bar Graph",
+              "Highlights growth, contrasts, and quantitative differences across discrete categories.",
+              "Horizontal or vertical rectangular bars whose lengths are proportional to the numerical values they represent.",
+              "Comparing regional literacy rates, demographic populations, or annual sales across distinct branches."
+            ],
+            [
+              "Line Graph",
+              "Identifies longitudinal trends, rates of acceleration, and continuous patterns over time.",
+              "Continuous line segments connecting discrete data points mapped across an X-axis (time) and Y-axis (metric).",
+              "Tracking national debt over a decade, GDP fluctuations, stock price histories, or patient vitals."
+            ],
+            [
+              "Pie Graph (Pie Chart)",
+              "Shows how a single unified total (100%) breaks down into proportional, mutually exclusive slices.",
+              "A circle divided into radial sectors whose arc lengths and central angles correspond to percentage shares.",
+              "Land-use distributions (e.g., forest cover vs. agricultural land) or institutional budget breakdowns."
+            ],
+            [
+              "Flowchart",
+              "Maps sequential workflow processes from an initial input trigger to a final output decision.",
+              "Standardized geometric shapes (ovals for start/end, rectangles for actions, diamonds for decisions) connected by sequence arrows.",
+              "Emergency response protocols, software algorithms, manufacturing assembly steps, and quarantine authorization."
+            ],
+            [
+              "Venn Diagram",
+              "Visualizes mathematical and conceptual relationships, similarities, and contrasts between sets.",
+              "Two or more overlapping circles where exclusive regions hold unique traits and intersections hold shared attributes.",
+              "Comparing climate change causes vs. biodiversity loss, or contrasting academic vs. technical communication."
+            ],
+            [
+              "Infographic",
+              "Synthesizes concise explanatory text, statistical callouts, iconography, and structured visual narratives.",
+              "Composite, multi-panel design combining multiple graphs, iconography, and color-coded hierarchies into a single poster.",
+              "Public health campaigns, annual industry reviews, organizational summaries, and educational cheat-sheets."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "8. Guided Case Study: Philippine Household Internet Access Analysis"
+        },
+        {
+          "type": "paragraph",
+          "text": "To apply critical viewing and data interpretation strategies to authentic academic research, consider the following data extracted from the 2024 Philippine Statistics Authority (PSA) Functional Literacy, Education and Mass Media Survey:"
+        },
+        {
+          "type": "table",
+          "title": "Percentage of Households with Internet Access at Home (PSA 2024)",
+          "headers": [
+            "Region / Scope",
+            "Households with Internet Access (%)",
+            "Variance vs. National Average",
+            "Infrastructural Context"
+          ],
+          "rows": [
+            [
+              "National Capital Region (NCR)",
+              "68.7%",
+              "+19.9% above national baseline",
+              "Dense metropolitan urban core; extensive fiber-optic infrastructure and cellular towers."
+            ],
+            [
+              "Central Luzon",
+              "61.3%",
+              "+12.5% above national baseline",
+              "Rapidly urbanizing commercial and agricultural corridor with expanding digital connectivity."
+            ],
+            [
+              "**Philippines (National Average)**",
+              "**48.8%**",
+              "**Baseline Benchmark (0.0%)**",
+              "**Overall nationwide household average (nearly one in two households).**"
+            ],
+            [
+              "BARMM",
+              "27.7%",
+              "-21.1% below national baseline",
+              "Historically underserved island and rural communities; emerging telecommunications investments."
+            ],
+            [
+              "Zamboanga Peninsula",
+              "21.2%",
+              "-27.6% below national baseline",
+              "Island and mountainous terrain creating geographic bottlenecks for broadband rollout."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Task A: Direct Data Extraction & Analysis"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**1. Which region has the highest internet access?**<br>**National Capital Region (NCR)** with **68.7%**.",
+            "**2. Which region has the lowest internet access?**<br>**Zamboanga Peninsula** with **21.2%**.",
+            "**3. How big is the disparity between the highest and lowest?**<br>$$\\text{Disparity} = 68.7\\% - 21.2\\% = 47.5\\% \\text{ percentage points}$$<br>A household in the NCR is more than **3.2 times** as likely to have home internet connectivity as a household in the Zamboanga Peninsula.",
+            "**4. What overarching trend is evident in the data?**<br>There is an acute **geographic and socioeconomic digital divide** across the country. Highly urbanized, industrialized centers in Luzon (NCR and Central Luzon) maintain high connectivity rates well above the national median (48.8%), whereas rural and peripheral regions in Mindanao (BARMM at 27.7% and Zamboanga Peninsula at 21.2%) face severe digital deficits."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Task B: Synthesis, Interpretation, and Policy Conclusion"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Critical Interpretation:** While nationwide household internet access has made progress to reach 48.8%, the data exposes deep structural inequality. Connectivity is heavily concentrated in Luzon's economic epicenters, leaving over three out of every four households in Zamboanga Peninsula and BARMM digitally disconnected. Because educational materials, technical job opportunities, and government services are increasingly digital, this divide exacerbates socioeconomic inequality."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Academic Conclusion:** Bridging this digital divide requires deliberate government interventions, including subsidized community broadband networks, off-grid solar-powered cellular towers, and public school digital hubs in peripheral provinces. Without these targeted infrastructure initiatives, digital literacy gaps between urban centers and regional provinces will continue to widen."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Visualization Rule of Thumb",
+          "text": "When presenting this regional dataset in an academic paper or slideshow, choose a **horizontal bar graph** over a line graph. Because the regions represent discrete categorical units rather than a continuous chronological timeline, a line graph would introduce misleading connections between unrelated geographic domains."
         }
       ]
     }
