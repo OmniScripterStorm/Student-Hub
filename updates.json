@@ -1,6 +1,6 @@
 {
   "version": "1.9.0",
-  "updatedAt": "2026-10-26T15:58:03.699438+00:00",
+  "updatedAt": "2026-10-26T16:10:33.518370+00:00",
   "announcement": "Replaced Quiz Engine with Flashcards & Active Recall Decks.",
   "calendarEvents": [
     {
@@ -5926,6 +5926,445 @@
               "**Speed is maximum, acceleration is zero.**"
             ]
           ]
+        }
+      ]
+    },
+    {
+      "id": "material_genmath_statistics_measures_central_tendency_dispersion",
+      "subject": "General Math",
+      "tag": "Study Material",
+      "color": "border-l-4 border-g11pink-500",
+      "title": "Measures of Central Tendency & Dispersion: Ungrouped and Grouped Data",
+      "summary": "Master fundamental statistical analysis: ungrouped mean, median, mode, range, average deviation (MAD), sample and population standard deviation, and grouped frequency distribution formulas.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "1. Overview of Descriptive Statistics: Center vs. Spread"
+        },
+        {
+          "type": "paragraph",
+          "text": "Descriptive statistics summarizes and characterizes the features of a dataset. Two complementary dimensions are required to understand any distribution: **Measures of Central Tendency** (which identify the center, midpoint, or typical value) and **Measures of Dispersion** (which quantify the spread, scatter, or variability around that center)."
+        },
+        {
+          "type": "table",
+          "title": "Two Fundamental Dimensions of Descriptive Statistics",
+          "headers": [
+            "Dimension",
+            "Statistical Purpose",
+            "Core Metrics",
+            "Key Diagnostic Question"
+          ],
+          "rows": [
+            [
+              "Measures of Central Tendency",
+              "Locates a single representative score around which data values cluster.",
+              "Mean (Arithmetic Average), Median (Positional Midpoint), Mode (Most Frequent Score).",
+              "\"What is the typical or central performance in this dataset?\""
+            ],
+            [
+              "Measures of Dispersion / Variability",
+              "Measures how tightly or widely scores are scattered around the central value.",
+              "Range ($R$), Average Deviation (MAD), Variance ($\\sigma^2, s^2$), Standard Deviation ($\\sigma, s$).",
+              "\"How consistent or dispersed are individual observations from the mean?\""
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Data Format Distinction: Ungrouped vs. Grouped Data",
+          "text": "• **Ungrouped (Raw) Data:** An unorganized list of individual, discrete observations (e.g., quiz scores of 8 students: $\\{78, 82, 85, 85, 88, 90, 92, 96\\}$).<br>• **Grouped Data:** Data organized into a **frequency distribution table** with class intervals, class marks, and frequencies, used when analyzing large datasets ($n \\ge 30$)."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "2. Ungrouped Measures of Central Tendency"
+        },
+        {
+          "type": "paragraph",
+          "text": "The three classical measures of central tendency for ungrouped data are defined as follows:"
+        },
+        {
+          "type": "table",
+          "title": "Ungrouped Measures of Central Tendency",
+          "headers": [
+            "Measure",
+            "Mathematical Formula",
+            "Conceptual Definition",
+            "Sensitivity to Outliers / Skewness"
+          ],
+          "rows": [
+            [
+              "Arithmetic Mean",
+              "$$\\bar{x} = \\frac{\\sum x}{n} \\quad \\text{or} \\quad \\mu = \\frac{\\sum x}{N}$$",
+              "The balance point; the quotient of the sum of all observations divided by the total count.",
+              "**Highly Sensitive:** Extreme high or low values (outliers) distort the mean significantly."
+            ],
+            [
+              "Median ($\\tilde{x}$)",
+              "Position: $$\\text{Pos} = \\frac{n + 1}{2}$$ (ordered array)",
+              "The middle value that divides an ordered array into two equal halves (50% above, 50% below).",
+              "**Resistant / Robust:** Not distorted by extreme values or skewed tails."
+            ],
+            [
+              "Mode ($\\hat{x}$)",
+              "$$\\text{Score with maximum frequency } f$$",
+              "The most frequently occurring observation in the dataset.",
+              "**Completely Insensitive** to extreme outliers; can be unimodal, bimodal, multimodal, or have no mode."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Step-by-Step Procedure for Ungrouped Median"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Step 1 (Order the Data):** Always arrange the raw data in ascending order from lowest to highest.",
+            "**Step 2 (Evaluate Sample Size $n$):**",
+            "• **If $n$ is Odd:** The median is the single central element located at position $\\frac{n + 1}{2}$.",
+            "• **If $n$ is Even:** There is no single central number. The median is the arithmetic mean of the two middle values at positions $\\frac{n}{2}$ and $\\frac{n}{2} + 1$."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Worked Example: Ungrouped Central Tendency"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Dataset:** An instructor records the following 8 quiz scores: $92, 85, 78, 88, 96, 85, 90, 82$."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**1. Mean:**<br>$$\\sum x = 78 + 82 + 85 + 85 + 88 + 90 + 92 + 96 = 696$$<br>$$\\bar{x} = \\frac{696}{8} = \\mathbf{87.0}$$",
+            "**2. Median:**<br>Order the data: $\\{78, 82, 85, \\mathbf{85}, \\mathbf{88}, 90, 92, 96\\}$ ($n = 8$, even).<br>Middle positions: $\\frac{8}{2} = 4^{\\text{th}}$ score ($85$) and $5^{\\text{th}}$ score ($88$).<br>$$\\tilde{x} = \\frac{85 + 88}{2} = \\frac{173}{2} = \\mathbf{86.5}$$",
+            "**3. Mode:**<br>The value $85$ appears twice, while all other scores appear once.<br>$$\\hat{x} = \\mathbf{85} \\quad \\text{(Unimodal)}$$"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "3. Ungrouped Measures of Dispersion"
+        },
+        {
+          "type": "paragraph",
+          "text": "Measures of central tendency alone are insufficient; two datasets can have identical means ($87.0$) but radically different spreads. Measures of dispersion quantify consistency, clustering, and risk:"
+        },
+        {
+          "type": "table",
+          "title": "Measures of Dispersion / Variability (Ungrouped)",
+          "headers": [
+            "Measure",
+            "Formula",
+            "Definition",
+            "Statistical Properties"
+          ],
+          "rows": [
+            [
+              "Range ($R$)",
+              "$$R = X_{\\max} - X_{\\min}$$",
+              "The difference between the highest and lowest observed values in the dataset.",
+              "Quickest to compute, but extremely crude because it ignores all intermediate scores and is sensitive to outliers."
+            ],
+            [
+              "Average Deviation (Mean Absolute Deviation - MAD)",
+              "$$\\text{MAD} = \\frac{\\sum |x - \\bar{x}|}{n}$$",
+              "The arithmetic average of the absolute distances between each data point and the mean.",
+              "Uses absolute values $|x - \\bar{x}|$ to prevent deviations from canceling out to zero (since $\\sum(x - \\bar{x}) = 0$ always)."
+            ],
+            [
+              "Population Variance ($\\sigma^2$)",
+              "$$\\sigma^2 = \\frac{\\sum (x - \\mu)^2}{N}$$",
+              "The average squared deviation from the population mean $\\mu$.",
+              "Expresses spread in squared units (e.g., $\\text{points}^2$), making physical interpretation less intuitive."
+            ],
+            [
+              "Sample Variance ($s^2$)",
+              "$$s^2 = \\frac{\\sum (x - \\bar{x})^2}{n - 1}$$",
+              "The sum of squared deviations divided by degrees of freedom $n - 1$.",
+              "Dividing by $n - 1$ (Bessel's correction) corrects for negative bias in sample estimation."
+            ],
+            [
+              "Standard Deviation ($s, \\sigma$)",
+              "$$s = \\sqrt{s^2} = \\sqrt{\\frac{\\sum (x - \\bar{x})^2}{n - 1}}$$",
+              "The positive square root of the variance.",
+              "**The gold standard of variability:** Restores units back to original linear units of the data."
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Exam Trap: Degrees of Freedom ($n - 1$ vs $N$)",
+          "text": "Always check whether the problem specifies a **sample** ($s, s^2$) or a complete **population** ($\\sigma, \\sigma^2$). For samples, always divide by **$n - 1$**. Dividing by $n$ underestimates sample variability and will lose points on exams."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Step-by-Step Worked Example: Calculating Range, MAD, Variance, and Standard Deviation"
+        },
+        {
+          "type": "paragraph",
+          "text": "Using our sample quiz dataset: $X = \\{78, 82, 85, 85, 88, 90, 92, 96\\}$, with sample size $n = 8$ and sample mean $\\bar{x} = 87.0$:"
+        },
+        {
+          "type": "table",
+          "title": "Deviation and Squared Deviation Table",
+          "headers": [
+            "Score $x$",
+            "Mean $\\bar{x}$",
+            "Deviation $(x - \\bar{x})$",
+            "Absolute Deviation $|x - \\bar{x}|$",
+            "Squared Deviation $(x - \\bar{x})^2$"
+          ],
+          "rows": [
+            [
+              "78",
+              "87.0",
+              "$-9.0$",
+              "9.0",
+              "81.00"
+            ],
+            [
+              "82",
+              "87.0",
+              "$-5.0$",
+              "5.0",
+              "25.00"
+            ],
+            [
+              "85",
+              "87.0",
+              "$-2.0$",
+              "2.0",
+              "4.00"
+            ],
+            [
+              "85",
+              "87.0",
+              "$-2.0$",
+              "2.0",
+              "4.00"
+            ],
+            [
+              "88",
+              "87.0",
+              "$+1.0$",
+              "1.0",
+              "1.00"
+            ],
+            [
+              "90",
+              "87.0",
+              "$+3.0$",
+              "3.0",
+              "9.00"
+            ],
+            [
+              "92",
+              "87.0",
+              "$+5.0$",
+              "5.0",
+              "25.00"
+            ],
+            [
+              "96",
+              "87.0",
+              "$+9.0$",
+              "9.0",
+              "81.00"
+            ],
+            [
+              "**Total ($\\sum$)**",
+              "-",
+              "**$\\sum = 0$ (Verification Check)**",
+              "**$\\sum |x - \\bar{x}| = 36.0$**",
+              "**$\\sum (x - \\bar{x})^2 = 230.00$**"
+            ]
+          ]
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**1. Range ($R$):**<br>$$R = X_{\\max} - X_{\\min} = 96 - 78 = \\mathbf{18\\text{ points}}$$",
+            "**2. Average Deviation (MAD):**<br>$$\\text{MAD} = \\frac{\\sum |x - \\bar{x}|}{n} = \\frac{36.0}{8} = \\mathbf{4.50\\text{ points}}$$<br>*(Interpretation: On average, individual student scores deviate by 4.5 points from the mean).* ",
+            "**3. Sample Variance ($s^2$):**<br>$$s^2 = \\frac{\\sum (x - \\bar{x})^2}{n - 1} = \\frac{230.00}{8 - 1} = \\frac{230.00}{7} \\approx \\mathbf{32.857\\text{ points}^2}$$",
+            "**4. Sample Standard Deviation ($s$):**<br>$$s = \\sqrt{s^2} = \\sqrt{32.857} \\approx \\mathbf{5.73\\text{ points}}$$"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "4. Grouped Measures of Central Tendency"
+        },
+        {
+          "type": "paragraph",
+          "text": "When data is compiled into a grouped frequency distribution table, individual raw scores are lost. Instead, each class interval is represented by its **class mark (midpoint $X_m$)** and boundaries."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Grouped Formulas Summary"
+        },
+        {
+          "type": "table",
+          "title": "Grouped Central Tendency Mathematical Formulas",
+          "headers": [
+            "Metric",
+            "Formula",
+            "Component Definitions"
+          ],
+          "rows": [
+            [
+              "Grouped Mean",
+              "$$\\bar{x} = \\frac{\\sum (f \\cdot X_m)}{n}$$",
+              "• $f$ = class frequency<br>• $X_m$ = class mark / midpoint: $\\frac{LL + UL}{2}$<br>• $n = \\sum f$ = total frequency"
+            ],
+            [
+              "Grouped Median",
+              "$$\\tilde{x} = LL_B + \\left( \\frac{\\frac{n}{2} - cf_b}{f_m} \\right) c$$",
+              "• **Median Class:** Class interval containing $\\frac{n}{2}$ cumulative frequency<br>• $LL_B$ = Lower boundary of median class ($LL - 0.5$)<br>• $cf_b$ = Cumulative frequency of class immediately preceding median class<br>• $f_m$ = Frequency of median class<br>• $c$ = Class width / interval size ($c = UL_B - LL_B$)"
+            ],
+            [
+              "Grouped Mode",
+              "$$\\hat{x} = LL_B + \\left( \\frac{\\Delta_1}{\\Delta_1 + \\Delta_2} \\right) c$$",
+              "• **Modal Class:** Class interval with the highest frequency ($f_{\\text{modal}}$)<br>• $LL_B$ = Lower boundary of modal class<br>• $\\Delta_1 = f_{\\text{modal}} - f_{\\text{preceding}}$<br>• $\\Delta_2 = f_{\\text{modal}} - f_{\\text{succeeding}}$<br>• $c$ = Class width"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "5. Comprehensive Grouped Data Master Problem"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Context:** A diagnostic examination was administered to $n = 50$ Senior High School STEM students. The grouped distribution is tabulated below:"
+        },
+        {
+          "type": "table",
+          "title": "Exam Scores Frequency Distribution Table ($n = 50$)",
+          "headers": [
+            "Class Interval (Scores)",
+            "Frequency ($f$)",
+            "Class Mark ($X_m$)",
+            "$f \\cdot X_m$",
+            "Class Boundaries ($LL_B - UL_B$)",
+            "Less-Than Cumulative Frequency ($<cf$)"
+          ],
+          "rows": [
+            [
+              "50 – 59",
+              "4",
+              "54.5",
+              "218.0",
+              "49.5 – 59.5",
+              "4"
+            ],
+            [
+              "60 – 69",
+              "8",
+              "64.5",
+              "516.0",
+              "59.5 – 69.5",
+              "12"
+            ],
+            [
+              "70 – 79",
+              "16",
+              "74.5",
+              "1192.0",
+              "69.5 – 79.5",
+              "28 (Median Class)"
+            ],
+            [
+              "80 – 89",
+              "14",
+              "84.5",
+              "1183.0",
+              "79.5 – 89.5",
+              "42"
+            ],
+            [
+              "90 – 99",
+              "8",
+              "94.5",
+              "756.0",
+              "89.5 – 99.5",
+              "50"
+            ],
+            [
+              "**Total ($\\sum$)**",
+              "**$n = 50$**",
+              "-",
+              "**$\\sum f X_m = 3865.0$**",
+              "-",
+              "-"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Detailed Step-by-Step Solutions for Grouped Data"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**1. Grouped Mean Calculation:**<br>$$\\bar{x} = \\frac{\\sum (f \\cdot X_m)}{n} = \\frac{3865.0}{50} = \\mathbf{77.30}$$<br>*(Interpretation: The overall average score across the 50 students is 77.30 points).* ",
+            "**2. Grouped Median Calculation:**<br>• Target median position: $\\frac{n}{2} = \\frac{50}{2} = 25$.<br>• Looking at the $<cf$ column, the 25th score falls inside class **70 – 79** ($<cf = 28$).<br>• Median Class Parameters:<br>  - $LL_B = 69.5$<br>  - $cf_b = 12$ (cumulative frequency of class 60–69)<br>  - $f_m = 16$ (frequency of class 70–79)<br>  - Class width $c = 79.5 - 69.5 = 10$<br><br>$$\\tilde{x} = LL_B + \\left( \\frac{\\frac{n}{2} - cf_b}{f_m} \\right) c = 69.5 + \\left( \\frac{25 - 12}{16} \\right) (10) = 69.5 + \\left( \\frac{13}{16} \\right) (10) = 69.5 + 8.125 = \\mathbf{77.625} \\approx \\mathbf{77.63}$$",
+            "**3. Grouped Mode Calculation:**<br>• The highest frequency is $f = 16$, located in class **70 – 79** (Modal Class).<br>• Modal Class Parameters:<br>  - $LL_B = 69.5$<br>  - $\\Delta_1 = f_{\\text{modal}} - f_{\\text{preceding}} = 16 - 8 = 8$<br>  - $\\Delta_2 = f_{\\text{modal}} - f_{\\text{succeeding}} = 16 - 14 = 2$<br>  - Class width $c = 10$<br><br>$$\\hat{x} = LL_B + \\left( \\frac{\\Delta_1}{\\Delta_1 + \\Delta_2} \\right) c = 69.5 + \\left( \\frac{8}{8 + 2} \\right) (10) = 69.5 + \\left( \\frac{8}{10} \\right) (10) = 69.5 + 8 = \\mathbf{77.50}$$"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "6. Analytical Synthesis: Distribution Skewness & Selection Guide"
+        },
+        {
+          "type": "paragraph",
+          "text": "Comparing the relative positions of the Mean, Median, and Mode reveals the shape and skewness of any statistical distribution:"
+        },
+        {
+          "type": "table",
+          "title": "Distribution Skewness and Selection Criteria",
+          "headers": [
+            "Distribution Shape",
+            "Relationship between Measures",
+            "Visual Curve Profile",
+            "Optimal Measure of Center to Report"
+          ],
+          "rows": [
+            [
+              "Symmetrical / Normal Distribution",
+              "$$\\text{Mean} \\approx \\text{Median} \\approx \\text{Mode}$$",
+              "Bell-shaped curve; both tails balance equally.",
+              "**Mean:** Incorporates every data point with maximum algebraic efficiency."
+            ],
+            [
+              "Positively Skewed (Right-Skewed)",
+              "$$\\text{Mode} < \\text{Median} < \\text{Mean}$$",
+              "Long tail extends toward high positive values; mean is pulled upward.",
+              "**Median:** Unaffected by high outlier salaries, housing costs, or extreme wealth."
+            ],
+            [
+              "Negatively Skewed (Left-Skewed)",
+              "$$\\text{Mean} < \\text{Median} < \\text{Mode}$$",
+              "Long tail extends toward low negative values; mean is pulled downward.",
+              "**Median:** Resists the downward pull of failing or zero scores."
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Summary of Our Exam Scores Master Problem",
+          "text": "In our grouped master problem:<br>$$\\text{Mean } (77.30) < \\text{Mode } (77.50) < \\text{Median } (77.63)$$<br>All three measures are tightly clustered between $77.30$ and $77.63$, indicating that the test results represent a remarkably balanced, approximately symmetrical distribution centered at $\\approx 77.5$ points!"
         }
       ]
     }
