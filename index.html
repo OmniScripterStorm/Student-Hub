@@ -478,7 +478,7 @@
   <!-- ================= MAIN CONTENT WRAPPER ================= -->
   <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex-1 w-full space-y-4 sm:space-y-6 pb-safe">
 
-    <!-- 1. DASHBOARD OVERVIEW VIEW -->
+        <!-- 1. DASHBOARD OVERVIEW VIEW -->
     <div id="viewSection-overview" class="space-y-4 sm:space-y-6">
       <!-- HERO / BANNER ANNOUNCEMENT -->
       <section class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-tagsci-900 via-tagsci-800 to-emerald-900 text-white p-4 sm:p-7 shadow-lg border border-tagsci-700">
@@ -488,11 +488,22 @@
           </svg>
         </div>
         <div class="relative z-10 max-w-3xl space-y-2.5 sm:space-y-3">
-          <div class="inline-flex items-center space-x-2 bg-g11pink-600/30 text-g11pink-200 border border-g11pink-400/30 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-wider">
-            <span>&#x1F338; G11 Student Bulletin</span>
-            <span>&bull;</span>
-            <span id="currentDateDisplay">September 2026</span>
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="inline-flex items-center space-x-2 bg-g11pink-600/30 text-g11pink-200 border border-g11pink-400/30 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-wider">
+              <span>&#x1F338; G11 Student Bulletin</span>
+              <span>&bull;</span>
+              <span id="currentDateDisplay">September 2026</span>
+            </div>
+
+            <!-- Gamified Study Habit Streak Pill -->
+            <div class="inline-flex items-center space-x-1.5 bg-amber-500/20 text-amber-300 border border-amber-400/30 px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-bold shadow-sm">
+              <span>&#x1F525;</span>
+              <span id="dashboardStudyStreakBadge">Study Streak Active</span>
+              <span class="text-white/40">&bull;</span>
+              <span id="dashboardStreakDueLabel" class="text-white font-normal">Active Recall Ready</span>
+            </div>
           </div>
+
           <h1 class="text-xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
             TagSci G11 Student Hub
           </h1>
@@ -518,7 +529,117 @@
         </div>
       </section>
 
-      <!-- GRID: CALENDAR + VAULT + TASKS -->
+      <!-- SUBJECT QUICK-LAUNCHER CAROUSEL -->
+      <section class="overflow-x-auto pb-1 scrollbar-none">
+        <div id="subjectPills" class="flex items-center space-x-2 min-w-max text-xs font-semibold">
+          <span class="text-slate-400 text-[11px] uppercase tracking-wider font-bold mr-1">Filter Subject:</span>
+          
+          <button onclick="filterSubject('all')" class="subject-pill px-3 py-1.5 rounded-xl bg-tagsci-800 text-white shadow-sm flex items-center space-x-1.5 transition" data-subj="all">
+            <span>&#x1F4DA;</span>
+            <span>All Subjects</span>
+          </button>
+
+          <button onclick="filterSubject('chem')" class="subject-pill px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:border-tagsci-600 transition flex items-center space-x-1.5" data-subj="chem">
+            <span>&#x2697;&#xFE0F;</span>
+            <span>General Chemistry 1</span>
+          </button>
+
+          <button onclick="filterSubject('precal')" class="subject-pill px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:border-tagsci-600 transition flex items-center space-x-1.5" data-subj="precal">
+            <span>&#x1F4D0;</span>
+            <span>Pre-Calculus</span>
+          </button>
+
+          <button onclick="filterSubject('bio')" class="subject-pill px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:border-tagsci-600 transition flex items-center space-x-1.5" data-subj="bio">
+            <span>&#x1F9EC;</span>
+            <span>General Biology 1</span>
+          </button>
+
+          <button onclick="filterSubject('kasaysayan')" class="subject-pill px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:border-tagsci-600 transition flex items-center space-x-1.5" data-subj="kasaysayan">
+            <span>&#x1F3DB;&#xFE0F;</span>
+            <span>Kasaysayan</span>
+          </button>
+
+          <button onclick="filterSubject('physics')" class="subject-pill px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:border-tagsci-600 transition flex items-center space-x-1.5" data-subj="physics">
+            <span>&#x269B;&#xFE0F;</span>
+            <span>General Physics 1</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- TOP ACTION ROW: EXAM COUNTDOWN + ACTIVE RECALL DAILY SPRINT -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6">
+        
+        <!-- LEFT: EXAM COUNTDOWN & PRIORITY TARGET -->
+        <div class="md:col-span-6 bg-gradient-to-br from-rose-500/10 via-amber-500/5 to-transparent dark:from-rose-950/30 dark:via-slate-900 dark:to-slate-900 border border-rose-200/60 dark:border-rose-900/40 rounded-2xl p-4 sm:p-5 flex flex-col justify-between shadow-sm">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="inline-flex items-center space-x-1.5 text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">
+                <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                <span>Upcoming Exam Target</span>
+              </span>
+              <span id="dashboardExamCountdownBadge" class="text-xs font-mono-math font-bold px-2 py-0.5 rounded-md bg-rose-100 dark:bg-rose-900/60 text-rose-700 dark:text-rose-200">
+                T-Minus 3 Days
+              </span>
+            </div>
+
+            <h3 id="dashboardExamTitle" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+              Quarter 1 Summative Test 2
+            </h3>
+            <p id="dashboardExamDesc" class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
+              Covers Zeus Salazar & Pantayong Pananaw, Intermolecular Forces (IMFA), and Vectors.
+            </p>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-rose-100 dark:border-slate-800 flex items-center justify-between">
+            <span id="dashboardExamDate" class="text-[11px] text-slate-500 dark:text-slate-400">Scheduled: Oct 29, 2026</span>
+            <button onclick="navigateSection('reviewers')" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 active:scale-95 text-white text-xs font-bold rounded-lg shadow-sm transition flex items-center space-x-1">
+              <span>Review Target Topics</span>
+              <span>&rarr;</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- RIGHT: ACTIVE RECALL DAILY SPRINT CARD -->
+        <div class="md:col-span-6 bg-gradient-to-br from-tagsci-900/10 via-emerald-500/5 to-transparent dark:from-emerald-950/30 dark:via-slate-900 dark:to-slate-900 border border-tagsci-200/80 dark:border-emerald-900/40 rounded-2xl p-4 sm:p-5 flex flex-col justify-between shadow-sm">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="inline-flex items-center space-x-1.5 text-[11px] font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">
+                <span>&#x1F9E0;</span>
+                <span>Spaced Repetition Daily Deck</span>
+              </span>
+              <span id="dashboardCardsDueBadge" class="text-xs font-bold px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-200 font-mono-math">
+                Cards Ready
+              </span>
+            </div>
+
+            <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+              Daily Memory Retention Drill
+            </h3>
+            
+            <!-- Progress mini-bar -->
+            <div class="mt-2.5">
+              <div class="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 mb-1">
+                <span>Today's Retention Goal</span>
+                <span id="dashboardRetentionGoalText" class="font-bold text-slate-700 dark:text-slate-200">Session Ready</span>
+              </div>
+              <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                <div id="dashboardRetentionBar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 25%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-emerald-100 dark:border-slate-800 flex items-center justify-between">
+            <span id="dashboardEstTimeLabel" class="text-[11px] text-slate-500 dark:text-slate-400">Est. Time: ~3 mins</span>
+            <button onclick="startDailyDrill()" class="px-3 py-1.5 bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white text-xs font-bold rounded-lg shadow-sm transition flex items-center space-x-1">
+              <span>Start 5-Min Drill</span>
+              <span>&#x26A1;</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- GRID: CALENDAR + VAULT + PINNED FORMULAS + TASKS -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
         <!-- CALENDAR -->
         <section id="mobileSection-calendar" class="lg:col-span-7 bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between">
@@ -570,7 +691,7 @@
           </div>
         </section>
 
-        <!-- RIGHT COLUMN: VAULT & TASKS -->
+        <!-- RIGHT COLUMN: VAULT & PINNED FORMULAS & TASKS -->
         <section class="lg:col-span-5 space-y-4 sm:space-y-6">
           <div id="mobileSection-vault" class="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between">
             <div>
@@ -598,8 +719,8 @@
                   <span id="badgeVault-materials" class="text-[9px] sm:text-[9.5px] px-1 sm:px-1.5 py-0.5 rounded-full bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 font-mono-math shrink-0">0</span>
                 </button>
                 <button id="btnVaultTab-quizzes" onclick="switchVaultTab('quizzes')" class="min-w-0 py-1.5 px-1 sm:px-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-semibold overflow-hidden">
-                  <span class="shrink-0 text-xs sm:text-sm">&#x2753;</span>
-                  <span class="truncate">Self-Tests</span>
+                  <span class="shrink-0 text-xs sm:text-sm">&#x1F0CF;</span>
+                  <span class="truncate">Flashcards</span>
                   <span id="badgeVault-quizzes" class="text-[9px] sm:text-[9.5px] px-1 sm:px-1.5 py-0.5 rounded-full bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 font-mono-math shrink-0">0</span>
                 </button>
               </div>
@@ -623,10 +744,27 @@
             </div>
           </div>
 
+          <!-- PINNED FORMULAS QUICK-DOCK -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200/80 dark:border-slate-800">
+            <div class="flex items-center justify-between mb-2.5">
+              <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm flex items-center space-x-1.5">
+                <span>&#x1F4CC;</span>
+                <span>Pinned STEM Formulas</span>
+              </h3>
+              <button onclick="navigateSection('formulas')" class="text-[11px] font-semibold text-tagsci-700 dark:text-tagsci-400 hover:underline">
+                Formula Vault &rarr;
+              </button>
+            </div>
+
+            <!-- Compact Formula Chips List with KaTeX -->
+            <div id="dashboardPinnedFormulasList" class="space-y-1.5"></div>
+          </div>
+
+          <!-- PERSONAL TASK CHECKLIST -->
           <div id="mobileSection-tasks" class="bg-gradient-to-br from-g11pink-50 to-emerald-50 dark:from-slate-900 dark:to-slate-900 rounded-2xl p-4 sm:p-5 border border-g11pink-200/70 dark:border-slate-800">
             <div class="flex items-center justify-between mb-2.5 sm:mb-3">
               <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm flex items-center space-x-1.5">
-                <span>&#x1F4CC;</span>
+                <span>&#x1F4DD;</span>
                 <span>Personal Task Checklist</span>
               </h3>
               <span class="text-[9px] sm:text-[10px] text-slate-500 dark:text-slate-400 font-mono-math">LocalStorage</span>
@@ -2954,6 +3092,8 @@ function renderCalendar() {
     currentBannerDate.textContent = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
   }
 
+  renderDashboardExamCountdown();
+
   const grid = document.getElementById('calendarDaysGrid');
   if (!grid) return;
   grid.innerHTML = '';
@@ -3067,12 +3207,62 @@ function renderEventsList() {
   }).join('');
 }
 
+function renderDashboardExamCountdown() {
+  const badgeEl = document.getElementById('dashboardExamCountdownBadge');
+  const titleEl = document.getElementById('dashboardExamTitle');
+  const descEl = document.getElementById('dashboardExamDesc');
+  const dateEl = document.getElementById('dashboardExamDate');
+
+  if (!titleEl) return;
+
+  const events = CALENDAR_EVENTS || [];
+  const nowDate = new Date();
+  const todayStr = nowDate.toISOString().slice(0, 10);
+
+  const upcomingExams = events.filter(e => {
+    return (e.date >= todayStr) && (e.type === 'exam' || /exam|summative|test/i.test(e.title || ''));
+  }).sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+  const target = upcomingExams[0] || {
+    title: 'Quarter 1 Summative Test 2',
+    date: '2026-10-29',
+    desc: 'Covers Zeus Salazar & Pantayong Pananaw, Intermolecular Forces (IMFA), and Vectors.'
+  };
+
+  const targetDate = new Date(target.date + 'T00:00:00');
+  const diffTime = targetDate.getTime() - nowDate.getTime();
+  const diffDays = Math.max(0, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+
+  if (badgeEl) badgeEl.textContent = `T-Minus ${diffDays} Day${diffDays === 1 ? '' : 's'}`;
+  if (titleEl) titleEl.textContent = target.title;
+  if (descEl) descEl.textContent = target.desc || 'Comprehensive review covering core STEM topics and modules.';
+  if (dateEl) dateEl.textContent = `Scheduled: ${target.date}`;
+}
+
+
 
     /* =========================================================
    TagSci G11 Study WebApp - Study Vault & Reviewers Engine
    ========================================================= */
 
 let currentVaultTab = 'reviewers'; // 'reviewers' | 'materials' | 'quizzes'
+let dashboardSubjectFilter = 'all';
+
+function filterSubject(subj) {
+  dashboardSubjectFilter = subj || 'all';
+
+  // Update subject pills visual selection
+  const pills = document.querySelectorAll('.subject-pill');
+  pills.forEach(btn => {
+    if (btn.dataset.subj === dashboardSubjectFilter) {
+      btn.className = 'subject-pill px-3 py-1.5 rounded-xl bg-tagsci-800 text-white shadow-sm flex items-center space-x-1.5 transition';
+    } else {
+      btn.className = 'subject-pill px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:border-tagsci-600 transition flex items-center space-x-1.5';
+    }
+  });
+
+  renderMaterials();
+}
 
 function renderTableBlock(b) {
   if (!b) return '';
@@ -3368,6 +3558,19 @@ function renderMaterials() {
     });
   }
 
+  // Filter by subject pill if active
+  if (dashboardSubjectFilter && activeSubjectFilter !== 'all') {
+    filtered = filtered.filter(item => {
+      const s = (item.subject || '').toLowerCase();
+      if (dashboardSubjectFilter === 'chem') return s.includes('chem');
+      if (dashboardSubjectFilter === 'precal') return s.includes('calc') || s.includes('math');
+      if (dashboardSubjectFilter === 'bio') return s.includes('bio');
+      if (dashboardSubjectFilter === 'kasaysayan') return s.includes('kasaysayan') || s.includes('kompan') || s.includes('salazar');
+      if (dashboardSubjectFilter === 'physics') return s.includes('physic');
+      return s.includes(dashboardSubjectFilter);
+    });
+  }
+
   // Cap display at a maximum of 3 items
   const displayItems = filtered.slice(0, 3);
 
@@ -3429,7 +3632,7 @@ function renderMaterials() {
       const meta = getSubjectMeta(q.subject);
       const tagLabel = q.tag || meta.type || 'Self-Test';
       const borderClass = q.color || meta.color || 'border-l-4 border-g11pink-500';
-      const qCount = q.questions ? q.questions.length : 0;
+      const qCount = q.cards ? q.cards.length : (q.questions ? q.questions.length : 0);
 
       return `
         <div class="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 ${borderClass} hover:shadow-md active:scale-[0.98] transition flex flex-col justify-between">
@@ -3438,18 +3641,15 @@ function renderMaterials() {
               <span class="text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-g11pink-100 text-g11pink-800 dark:bg-g11pink-950/80 dark:text-g11pink-300 border border-g11pink-200 dark:border-g11pink-900">
                 ${tagLabel}
               </span>
-              <span class="text-xs text-slate-400 font-mono-math">${qCount} Qs</span>
+              <span class="text-xs text-slate-400 font-mono-math">${qCount} Cards</span>
             </div>
             <h3 class="text-xs font-bold text-slate-900 dark:text-white mt-1.5">${q.subject || 'General'}</h3>
-            <p class="text-[11px] font-medium text-slate-700 dark:text-slate-300 mt-0.5">${renderMathInHtml(q.title || 'Untitled Quiz')}</p>
+            <p class="text-[11px] font-medium text-slate-700 dark:text-slate-300 mt-0.5">${renderMathInHtml(q.title || 'Untitled Deck')}</p>
             <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">${renderMathInHtml(q.desc || '')}</p>
           </div>
           <div class="mt-2.5 pt-2 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between gap-1.5">
-            <button onclick="navigateSection('quiz_sets'); startQuiz('${q.id}', true);" class="flex-1 py-1 rounded-lg bg-tagsci-100 dark:bg-tagsci-950 hover:bg-tagsci-200 text-tagsci-800 dark:text-tagsci-300 font-bold text-[10.5px] transition text-center border border-tagsci-300 dark:border-tagsci-800">
-              ⚡ Practice
-            </button>
-            <button onclick="navigateSection('quiz_sets'); startQuiz('${q.id}', false);" class="flex-1 py-1 rounded-lg bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold text-[10.5px] transition shadow-sm text-center">
-              ⏱️ Timed
+            <button onclick="navigateSection('quiz_sets'); startFlashcardSession('${q.id}', 'all');" class="flex-1 py-1 rounded-lg bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold text-[10.5px] transition shadow-sm text-center">
+              ⚡ Study Deck
             </button>
           </div>
         </div>
@@ -3800,6 +4000,7 @@ function rateFlashcard(boxNumber) {
 
   const card = currentDeckCards[currentCardIndex];
   saveLeitnerCard(currentDeck.id, card.id, boxNumber);
+  renderDashboardStudyDrill();
 
   // Advance to next card or finish session
   if (currentCardIndex < currentDeckCards.length - 1) {
@@ -4086,6 +4287,61 @@ const renderQuizSetsView = renderFlashcardsView;
 const startQuiz = (id) => startFlashcardSession(id, 'all');
 const exitQuiz = exitFlashcardSession;
 
+function renderDashboardStudyDrill() {
+  const cardsDueBadge = document.getElementById('dashboardCardsDueBadge');
+  const streakDueLabel = document.getElementById('dashboardStreakDueLabel');
+  const retentionGoalText = document.getElementById('dashboardRetentionGoalText');
+  const retentionBar = document.getElementById('dashboardRetentionBar');
+  const estTimeLabel = document.getElementById('dashboardEstTimeLabel');
+
+  const decks = FLASHCARD_DECKS || [];
+  let totalCards = 0;
+  let unmastered = 0;
+  let reviewedToday = 0;
+  const todayStr = new Date().toISOString().slice(0, 10);
+
+  decks.forEach(deck => {
+    const store = getLeitnerStore(deck.id);
+    const cards = deck.cards || [];
+    totalCards += cards.length;
+    cards.forEach(c => {
+      const item = store[c.id];
+      if (item) {
+        if (item.lastReviewed && item.lastReviewed.startsWith(todayStr)) {
+          reviewedToday++;
+        }
+        if (item.box < 3) {
+          unmastered++;
+        }
+      } else {
+        unmastered++;
+      }
+    });
+  });
+
+  const due = Math.max(unmastered, 0);
+  const doneCount = reviewedToday;
+  const totalPool = doneCount + due || 1;
+  const pct = Math.min(100, Math.round((doneCount / totalPool) * 100));
+
+  if (cardsDueBadge) cardsDueBadge.textContent = `${due} Cards Due`;
+  if (streakDueLabel) streakDueLabel.textContent = `${due} Cards Due`;
+  if (retentionGoalText) retentionGoalText.textContent = `${doneCount} / ${doneCount + due} Done (${pct}%)`;
+  if (retentionBar) retentionBar.style.width = `${Math.max(pct, doneCount > 0 ? 10 : 0)}%`;
+  if (estTimeLabel) estTimeLabel.textContent = `Est. Time: ~${Math.ceil((due * 0.25) || 2)} mins`;
+}
+
+function startDailyDrill() {
+  const decks = FLASHCARD_DECKS || [];
+  if (decks.length > 0) {
+    navigateSection('quiz_sets');
+    startFlashcardSession(decks[0].id, 'all');
+  } else {
+    navigateSection('quiz_sets');
+  }
+}
+
+
 
     /* =========================================================
    TagSci G11 Study WebApp - Formula Vault Component
@@ -4128,6 +4384,7 @@ function togglePinFormula(formulaId) {
     console.warn('Could not save pinned formula:', e);
   }
   renderFormulaVaultView();
+  renderDashboardPinnedFormulas();
 }
 
 function copyFormulaTeX(formulaIdOrTex, btnElement) {
@@ -4381,6 +4638,43 @@ function renderFormulaVaultView() {
     `}
   `;
 }
+
+function renderDashboardPinnedFormulas() {
+  const container = document.getElementById('dashboardPinnedFormulasList');
+  if (!container) return;
+
+  const all = aggregateAllFormulas();
+  const pinnedIds = getPinnedFormulaIds();
+  let displayList = all.filter(f => pinnedIds.includes(f.id));
+
+  if (displayList.length === 0) {
+    displayList = all.slice(0, 3);
+  } else {
+    displayList = displayList.slice(0, 4);
+  }
+
+  if (displayList.length === 0) {
+    container.innerHTML = `<p class="text-xs text-slate-400 italic">No formulas cataloged yet.</p>`;
+    return;
+  }
+
+  container.innerHTML = displayList.map(f => {
+    return `
+      <div class="p-2 sm:p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/80 hover:border-tagsci-500 transition flex items-center justify-between text-xs cursor-pointer group" onclick="navigateSection('formulas')">
+        <div class="min-w-0 pr-2">
+          <div class="flex items-center space-x-1.5">
+            <span class="font-bold text-slate-800 dark:text-slate-100 group-hover:text-tagsci-600 dark:group-hover:text-tagsci-400 truncate">${renderMathInHtml(f.title)}:</span>
+          </div>
+          <div class="font-mono-math text-tagsci-700 dark:text-tagsci-300 text-[11px] mt-0.5 font-bold truncate">
+            ${renderMathInHtml(`$${f.formula}$`)}
+          </div>
+        </div>
+        <span class="text-[10px] text-slate-400 dark:text-slate-500 shrink-0">${f.subject}</span>
+      </div>
+    `;
+  }).join('');
+}
+
 
 
     let currentSection = 'overview'; // overview, materials, reviewers, quiz_sets, credits, settings
@@ -5556,6 +5850,11 @@ window.App = {
   copyFormulaTeX,
   jumpToFormulaContext,
   printFormulaSheet,
+  renderDashboardPinnedFormulas,
+  renderDashboardExamCountdown,
+  renderDashboardStudyDrill,
+  startDailyDrill,
+  filterSubject,
   saveSyncedData,
   navigateSection,
   toggleSidebar,
@@ -5613,6 +5912,9 @@ window.addEventListener('DOMContentLoaded', () => {
   renderCalendar();
   renderMaterials();
   renderTasks();
+  renderDashboardPinnedFormulas();
+  renderDashboardStudyDrill();
+  renderDashboardExamCountdown();
   checkResponsiveLayout();
 
   // 1. Initialize PWA First-Launch Install Prompt

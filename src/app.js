@@ -6,14 +6,15 @@ import {
   togglePinnedOnlyFilter,
   copyFormulaTeX,
   jumpToFormulaContext,
-  printFormulaSheet
+  printFormulaSheet,
+  renderDashboardPinnedFormulas
 } from './components/formula_vault.js';
 /* =========================================================
    TagSci G11 Study WebApp - Main Bootstrap
    ========================================================= */
 
-import { renderCalendar, changeMonth, selectCalendarDate } from './components/calendar.js';
-import { renderMaterials, filterMaterials, switchVaultTab, navigateToCurrentVaultTab, clearMaterialSearch, openReviewer, closeModal } from './components/reviewers.js';
+import { renderCalendar, changeMonth, selectCalendarDate, renderDashboardExamCountdown } from './components/calendar.js';
+import { renderMaterials, filterMaterials, filterSubject, switchVaultTab, navigateToCurrentVaultTab, clearMaterialSearch, openReviewer, closeModal } from './components/reviewers.js';
 import { renderTasks, addTask, toggleTask, deleteTask } from './components/tasks.js';
 import { navigateSection, toggleSidebar, closeSidebar, switchMobileTab, checkResponsiveLayout, toggleTheme, initTheme } from './components/navigation.js';
 import { checkOtaUpdates, initAutoSyncEngine, saveOtaSettings, resetOtaUrl, handleClearCache, submitEditorialApplication } from './components/ota_sync.js';
@@ -27,7 +28,9 @@ import {
   prevFlashcard,
   nextFlashcard,
   shuffleCurrentDeck,
-  exitFlashcardSession
+  exitFlashcardSession,
+  renderDashboardStudyDrill,
+  startDailyDrill
 } from './components/quiz_engine.js';
 import { initPwaInstallPrompt, triggerPwaInstall, dismissPwaPrompt, manualTriggerPwaPrompt, updateSettingsPwaStatus } from './components/pwa_installer.js';
 import { 
@@ -52,6 +55,11 @@ window.App = {
   copyFormulaTeX,
   jumpToFormulaContext,
   printFormulaSheet,
+  renderDashboardPinnedFormulas,
+  renderDashboardExamCountdown,
+  renderDashboardStudyDrill,
+  startDailyDrill,
+  filterSubject,
   saveSyncedData,
   navigateSection,
   toggleSidebar,
@@ -109,6 +117,9 @@ window.addEventListener('DOMContentLoaded', () => {
   renderCalendar();
   renderMaterials();
   renderTasks();
+  renderDashboardPinnedFormulas();
+  renderDashboardStudyDrill();
+  renderDashboardExamCountdown();
   checkResponsiveLayout();
 
   // 1. Initialize PWA First-Launch Install Prompt

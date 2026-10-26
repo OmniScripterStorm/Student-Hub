@@ -10,6 +10,7 @@
 
 import { FLASHCARD_DECKS } from '../data/study_data.js';
 import { renderMathInHtml } from './math_engine.js';
+import { navigateSection } from './navigation.js';
 
 let currentDeck = null;
 let currentDeckCards = [];
@@ -228,6 +229,7 @@ export function rateFlashcard(boxNumber) {
 
   const card = currentDeckCards[currentCardIndex];
   saveLeitnerCard(currentDeck.id, card.id, boxNumber);
+  renderDashboardStudyDrill();
 
   // Advance to next card or finish session
   if (currentCardIndex < currentDeckCards.length - 1) {
@@ -513,3 +515,58 @@ export function exitFlashcardSession() {
 export const renderQuizSetsView = renderFlashcardsView;
 export const startQuiz = (id) => startFlashcardSession(id, 'all');
 export const exitQuiz = exitFlashcardSession;
+
+export function renderDashboardStudyDrill() {
+  const cardsDueBadge = document.getElementById('dashboardCardsDueBadge');
+  const streakDueLabel = document.getElementById('dashboardStreakDueLabel');
+  const retentionGoalText = document.getElementById('dashboardRetentionGoalText');
+  const retentionBar = document.getElementById('dashboardRetentionBar');
+  const estTimeLabel = document.getElementById('dashboardEstTimeLabel');
+
+  const decks = FLASHCARD_DECKS || [];
+  let totalCards = 0;
+  let unmastered = 0;
+  let reviewedToday = 0;
+  const todayStr = new Date().toISOString().slice(0, 10);
+
+  decks.forEach(deck => {
+    const store = getLeitnerStore(deck.id);
+    const cards = deck.cards || [];
+    totalCards += cards.length;
+    cards.forEach(c => {
+      const item = store[c.id];
+      if (item) {
+        if (item.lastReviewed && item.lastReviewed.startsWith(todayStr)) {
+          reviewedToday++;
+        }
+        if (item.box < 3) {
+          unmastered++;
+        }
+      } else {
+        unmastered++;
+      }
+    });
+  });
+
+  const due = Math.max(unmastered, 0);
+  const doneCount = reviewedToday;
+  const totalPool = doneCount + due || 1;
+  const pct = Math.min(100, Math.round((doneCount / totalPool) * 100));
+
+  if (cardsDueBadge) cardsDueBadge.textContent = `${due} Cards Due`;
+  if (streakDueLabel) streakDueLabel.textContent = `${due} Cards Due`;
+  if (retentionGoalText) retentionGoalText.textContent = `${doneCount} / ${doneCount + due} Done (${pct}%)`;
+  if (retentionBar) retentionBar.style.width = `${Math.max(pct, doneCount > 0 ? 10 : 0)}%`;
+  if (estTimeLabel) estTimeLabel.textContent = `Est. Time: ~${Math.ceil((due * 0.25) || 2)} mins`;
+}
+
+export function startDailyDrill() {
+  const decks = FLASHCARD_DECKS || [];
+  if (decks.length > 0) {
+    navigateSection('quiz_sets');
+    startFlashcardSession(decks[0].id, 'all');
+  } else {
+    navigateSection('quiz_sets');
+  }
+}
+

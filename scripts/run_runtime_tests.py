@@ -43,8 +43,8 @@ class TestServerHandler(SimpleHTTPRequestHandler):
             with open(harness_path, "r", encoding="utf-8") as f:
                 harness_js = f.read()
 
-            injected = f"<script>\n{harness_js}\n</script>\n</body>"
-            final_html = index_html.replace("</body>", injected, 1)
+            injected = f"<head>\n<script>\n{harness_js}\n</script>"
+            final_html = index_html.replace("<head>", injected, 1)
             encoded = final_html.encode("utf-8")
 
             self.send_response(200)

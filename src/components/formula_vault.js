@@ -44,6 +44,7 @@ export function togglePinFormula(formulaId) {
     console.warn('Could not save pinned formula:', e);
   }
   renderFormulaVaultView();
+  renderDashboardPinnedFormulas();
 }
 
 export function copyFormulaTeX(formulaIdOrTex, btnElement) {
@@ -297,3 +298,40 @@ export function renderFormulaVaultView() {
     `}
   `;
 }
+
+export function renderDashboardPinnedFormulas() {
+  const container = document.getElementById('dashboardPinnedFormulasList');
+  if (!container) return;
+
+  const all = aggregateAllFormulas();
+  const pinnedIds = getPinnedFormulaIds();
+  let displayList = all.filter(f => pinnedIds.includes(f.id));
+
+  if (displayList.length === 0) {
+    displayList = all.slice(0, 3);
+  } else {
+    displayList = displayList.slice(0, 4);
+  }
+
+  if (displayList.length === 0) {
+    container.innerHTML = `<p class="text-xs text-slate-400 italic">No formulas cataloged yet.</p>`;
+    return;
+  }
+
+  container.innerHTML = displayList.map(f => {
+    return `
+      <div class="p-2 sm:p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/80 hover:border-tagsci-500 transition flex items-center justify-between text-xs cursor-pointer group" onclick="window.App.navigateSection('formulas')">
+        <div class="min-w-0 pr-2">
+          <div class="flex items-center space-x-1.5">
+            <span class="font-bold text-slate-800 dark:text-slate-100 group-hover:text-tagsci-600 dark:group-hover:text-tagsci-400 truncate">${renderMathInHtml(f.title)}:</span>
+          </div>
+          <div class="font-mono-math text-tagsci-700 dark:text-tagsci-300 text-[11px] mt-0.5 font-bold truncate">
+            ${renderMathInHtml(`$${f.formula}$`)}
+          </div>
+        </div>
+        <span class="text-[10px] text-slate-400 dark:text-slate-500 shrink-0">${f.subject}</span>
+      </div>
+    `;
+  }).join('');
+}
+

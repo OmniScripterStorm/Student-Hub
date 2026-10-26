@@ -7,6 +7,23 @@ import { renderMathInHtml, renderCartesianPlaneSvg, renderJsxgraphBlock, renderT
 import { navigateSection } from './navigation.js';
 
 let currentVaultTab = 'reviewers'; // 'reviewers' | 'materials' | 'quizzes'
+let dashboardSubjectFilter = 'all';
+
+export function filterSubject(subj) {
+  dashboardSubjectFilter = subj || 'all';
+
+  // Update subject pills visual selection
+  const pills = document.querySelectorAll('.subject-pill');
+  pills.forEach(btn => {
+    if (btn.dataset.subj === dashboardSubjectFilter) {
+      btn.className = 'subject-pill px-3 py-1.5 rounded-xl bg-tagsci-800 text-white shadow-sm flex items-center space-x-1.5 transition';
+    } else {
+      btn.className = 'subject-pill px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:border-tagsci-600 transition flex items-center space-x-1.5';
+    }
+  });
+
+  renderMaterials();
+}
 
 export function renderTableBlock(b) {
   if (!b) return '';
@@ -302,6 +319,19 @@ export function renderMaterials() {
     });
   }
 
+  // Filter by subject pill if active
+  if (dashboardSubjectFilter && activeSubjectFilter !== 'all') {
+    filtered = filtered.filter(item => {
+      const s = (item.subject || '').toLowerCase();
+      if (dashboardSubjectFilter === 'chem') return s.includes('chem');
+      if (dashboardSubjectFilter === 'precal') return s.includes('calc') || s.includes('math');
+      if (dashboardSubjectFilter === 'bio') return s.includes('bio');
+      if (dashboardSubjectFilter === 'kasaysayan') return s.includes('kasaysayan') || s.includes('kompan') || s.includes('salazar');
+      if (dashboardSubjectFilter === 'physics') return s.includes('physic');
+      return s.includes(dashboardSubjectFilter);
+    });
+  }
+
   // Cap display at a maximum of 3 items
   const displayItems = filtered.slice(0, 3);
 
@@ -363,7 +393,7 @@ export function renderMaterials() {
       const meta = getSubjectMeta(q.subject);
       const tagLabel = q.tag || meta.type || 'Self-Test';
       const borderClass = q.color || meta.color || 'border-l-4 border-g11pink-500';
-      const qCount = q.questions ? q.questions.length : 0;
+      const qCount = q.cards ? q.cards.length : (q.questions ? q.questions.length : 0);
 
       return `
         <div class="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 ${borderClass} hover:shadow-md active:scale-[0.98] transition flex flex-col justify-between">
@@ -372,18 +402,15 @@ export function renderMaterials() {
               <span class="text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-g11pink-100 text-g11pink-800 dark:bg-g11pink-950/80 dark:text-g11pink-300 border border-g11pink-200 dark:border-g11pink-900">
                 ${tagLabel}
               </span>
-              <span class="text-xs text-slate-400 font-mono-math">${qCount} Qs</span>
+              <span class="text-xs text-slate-400 font-mono-math">${qCount} Cards</span>
             </div>
             <h3 class="text-xs font-bold text-slate-900 dark:text-white mt-1.5">${q.subject || 'General'}</h3>
-            <p class="text-[11px] font-medium text-slate-700 dark:text-slate-300 mt-0.5">${renderMathInHtml(q.title || 'Untitled Quiz')}</p>
+            <p class="text-[11px] font-medium text-slate-700 dark:text-slate-300 mt-0.5">${renderMathInHtml(q.title || 'Untitled Deck')}</p>
             <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">${renderMathInHtml(q.desc || '')}</p>
           </div>
           <div class="mt-2.5 pt-2 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between gap-1.5">
-            <button onclick="window.App.navigateSection('quiz_sets'); window.App.startQuiz('${q.id}', true);" class="flex-1 py-1 rounded-lg bg-tagsci-100 dark:bg-tagsci-950 hover:bg-tagsci-200 text-tagsci-800 dark:text-tagsci-300 font-bold text-[10.5px] transition text-center border border-tagsci-300 dark:border-tagsci-800">
-              ⚡ Practice
-            </button>
-            <button onclick="window.App.navigateSection('quiz_sets'); window.App.startQuiz('${q.id}', false);" class="flex-1 py-1 rounded-lg bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold text-[10.5px] transition shadow-sm text-center">
-              ⏱️ Timed
+            <button onclick="window.App.navigateSection('quiz_sets'); window.App.startFlashcardSession('${q.id}', 'all');" class="flex-1 py-1 rounded-lg bg-tagsci-800 hover:bg-tagsci-700 active:scale-95 text-white font-bold text-[10.5px] transition shadow-sm text-center">
+              ⚡ Study Deck
             </button>
           </div>
         </div>

@@ -22,6 +22,8 @@ export function renderCalendar() {
     currentBannerDate.textContent = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
   }
 
+  renderDashboardExamCountdown();
+
   const grid = document.getElementById('calendarDaysGrid');
   if (!grid) return;
   grid.innerHTML = '';
@@ -134,3 +136,36 @@ export function renderEventsList() {
     `;
   }).join('');
 }
+
+export function renderDashboardExamCountdown() {
+  const badgeEl = document.getElementById('dashboardExamCountdownBadge');
+  const titleEl = document.getElementById('dashboardExamTitle');
+  const descEl = document.getElementById('dashboardExamDesc');
+  const dateEl = document.getElementById('dashboardExamDate');
+
+  if (!titleEl) return;
+
+  const events = CALENDAR_EVENTS || [];
+  const nowDate = new Date();
+  const todayStr = nowDate.toISOString().slice(0, 10);
+
+  const upcomingExams = events.filter(e => {
+    return (e.date >= todayStr) && (e.type === 'exam' || /exam|summative|test/i.test(e.title || ''));
+  }).sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+  const target = upcomingExams[0] || {
+    title: 'Quarter 1 Summative Test 2',
+    date: '2026-10-29',
+    desc: 'Covers Zeus Salazar & Pantayong Pananaw, Intermolecular Forces (IMFA), and Vectors.'
+  };
+
+  const targetDate = new Date(target.date + 'T00:00:00');
+  const diffTime = targetDate.getTime() - nowDate.getTime();
+  const diffDays = Math.max(0, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+
+  if (badgeEl) badgeEl.textContent = `T-Minus ${diffDays} Day${diffDays === 1 ? '' : 's'}`;
+  if (titleEl) titleEl.textContent = target.title;
+  if (descEl) descEl.textContent = target.desc || 'Comprehensive review covering core STEM topics and modules.';
+  if (dateEl) dateEl.textContent = `Scheduled: ${target.date}`;
+}
+
