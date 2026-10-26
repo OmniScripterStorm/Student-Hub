@@ -1,6 +1,6 @@
 {
   "version": "1.9.0",
-  "updatedAt": "2026-10-25T09:39:12.482Z",
+  "updatedAt": "2026-10-26T02:30:31.508398+00:00",
   "announcement": "Replaced Quiz Engine with Flashcards & Active Recall Decks.",
   "calendarEvents": [
     {
@@ -4272,6 +4272,345 @@
             "**Rotational Inertia**: $I = \\sum m_i r_i^2$; governs resistance to angular acceleration ($\\tau_{\\text{net}} = I \\alpha$).",
             "**Impulse-Momentum**: $\\vec{J} = \\vec{F}_{\\text{avg}} \\Delta t = \\Delta \\vec{p} = m\\vec{v}_f - m\\vec{v}_i$.",
             "**Conservation of Momentum**: $\\sum \\vec{p}_{\\text{initial}} = \\sum \\vec{p}_{\\text{final}}$ in any isolated system."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "material_finite_math_conditional_probability_bayes",
+      "subject": "Finite Math",
+      "tag": "Study Material",
+      "color": "border-l-4 border-purple-500",
+      "title": "Conditional Probability, Law of Total Probability & Bayes' Theorem",
+      "summary": "Comprehensive guide covering sample space partitions, the Law of Total Probability (intersection and conditional forms), Bayes' Theorem, and step-by-step worked solutions for multi-stage probability problems.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "1. Foundational Recall & Core Definitions"
+        },
+        {
+          "type": "paragraph",
+          "text": "Before exploring conditional probability and Bayesian inference, recall the foundational definitions governing discrete probability spaces:"
+        },
+        {
+          "type": "table",
+          "title": "Core Probability Terminology",
+          "headers": [
+            "Term / Concept",
+            "Notation / Formula",
+            "Definition",
+            "Key Axiom / Property"
+          ],
+          "rows": [
+            [
+              "Sample Space",
+              "$S$",
+              "The set of all possible outcomes under consideration in a random experiment.",
+              "Total probability sums to 1: $P(S) = 1$."
+            ],
+            [
+              "Event",
+              "$E$",
+              "A specific subset of the sample space ($E \\subseteq S$) producing a defined result.",
+              "Bounded by $[0, 1]$: $0 \\le P(E) \\le 1$."
+            ],
+            [
+              "Classical Probability",
+              "$P(E) = \\frac{n(E)}{n(S)}$",
+              "Ratio of favorable outcomes to the total number of equally likely outcomes.",
+              "$P(\\emptyset) = 0$ (impossible event); $P(S) = 1$ (certain event)."
+            ],
+            [
+              "Mutually Exclusive Events (Disjoint)",
+              "$A \\cap B = \\emptyset$",
+              "Events that cannot occur simultaneously; if one occurs, all others cannot.",
+              "Addition Rule: $P(A \\cup B) = P(A) + P(B)$ and $P(A \\cap B) = 0$."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "2. The Law of Total Probability"
+        },
+        {
+          "type": "paragraph",
+          "text": "When a collection of events $E_1, E_2, \\dots, E_n$ forms a complete **partition** of the sample space $S$, the events are pairwise disjoint (mutually exclusive) and their union completely accounts for all possible outcomes:"
+        },
+        {
+          "type": "formula",
+          "title": "Sample Space Partition Rule",
+          "formula": "\\bigcup_{i=1}^{n} E_i = E_1 \\cup E_2 \\cup \\dots \\cup E_n = S",
+          "note": "Requires pairwise exclusivity: E_i \\cap E_j = \\emptyset \\text{ for all } i \\neq j."
+        },
+        {
+          "type": "paragraph",
+          "text": "Summing their cardinalities and dividing by $n(S)$ yields the fundamental Law of Total Probability for a complete partition:"
+        },
+        {
+          "type": "formula",
+          "title": "Law of Total Probability for a Partition",
+          "formula": "\\sum_{i=1}^{n} P(E_i) = P(E_1) + P(E_2) + \\dots + P(E_n) = P(S) = 1",
+          "note": "Formally: For any set of mutually exclusive events whose union is S, the sum of their individual probabilities is exactly 1."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Extension of the Law of Total Probability to Any Arbitrary Event"
+        },
+        {
+          "type": "paragraph",
+          "text": "Any other subset event $A \\subseteq S$ within the sample space can be decomposed entirely into the union of its disjoint intersections with each partition element $B_1, B_2, \\dots, B_n$:"
+        },
+        {
+          "type": "formula",
+          "title": "Law of Total Probability for an Arbitrary Event (Intersection Form)",
+          "formula": "P(A) = P(A \\cap B_1) + P(A \\cap B_2) + \\dots + P(A \\cap B_n) = \\sum_{i=1}^{n} P(A \\cap B_i)",
+          "note": "Since B_1, ..., B_n are mutually exclusive, each slice (A \\cap B_i) is also mutually exclusive."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Geometric Intuition: Slicing the Sample Space",
+          "text": "Envision the sample space $S$ as a large rectangular board divided into vertical columns $B_1, B_2, \\dots, B_n$. An event $A$ resembles a shape spread across multiple columns. The total probability $P(A)$ is simply the sum of each cross-section area: $P(A \\cap B_1) + P(A \\cap B_2) + \\dots + P(A \\cap B_n)$."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "3. Conditional Probability"
+        },
+        {
+          "type": "paragraph",
+          "text": "Events are called **conditional** when the occurrence of one event directly impacts or restricts the probability of subsequent events. When given prior knowledge that event $B$ has occurred, we no longer measure outcomes against the entire sample space $S$. Instead:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Condition $B$** becomes the new **relative sample space** (restricted universe).",
+            "**Intersection $A \\cap B$** becomes the new **relative event** (outcomes where both condition $B$ and event $A$ hold)."
+          ]
+        },
+        {
+          "type": "formula",
+          "title": "Definition of Conditional Probability",
+          "formula": "P(A \\mid B) = \\frac{P(A \\cap B)}{P(B)}, \\quad \\text{where } P(B) > 0",
+          "note": "Read as: 'The probability of A given B'. If P(B) = 0, the conditional probability is undefined."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "The General Multiplication (Product) Rule"
+        },
+        {
+          "type": "paragraph",
+          "text": "Multiplying both sides of the conditional probability definition by $P(B)$ gives the general product rule for finding joint probabilities:"
+        },
+        {
+          "type": "formula",
+          "title": "General Multiplication Rule",
+          "formula": "P(A \\cap B) = P(A \\mid B) \\cdot P(B) = P(B \\mid A) \\cdot P(A)",
+          "note": "Because A \\cap B = B \\cap A, the order of conditioning is symmetric."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Alternative Form of the Law of Total Probability"
+        },
+        {
+          "type": "paragraph",
+          "text": "Substituting the multiplication rule $P(A \\cap B_i) = P(A \\mid B_i) \\cdot P(B_i)$ into the intersection formula gives the most widely used computational form of total probability:"
+        },
+        {
+          "type": "formula",
+          "title": "Law of Total Probability (Conditional Form)",
+          "formula": "P(A) = \\sum_{i=1}^{n} [P(A \\mid B_i) \\cdot P(B_i)] = P(A \\mid B_1)P(B_1) + P(A \\mid B_2)P(B_2) + \\dots + P(A \\mid B_n)P(B_n)",
+          "note": "Used whenever total probability of an outcome A must be computed across multiple mutually exclusive pathways B_i."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "4. Bayes' Theorem"
+        },
+        {
+          "type": "paragraph",
+          "text": "Bayes' Theorem enables probability inversion—calculating the **posterior probability** of an underlying cause or partition $A$ after observing the evidence or condition $B$:"
+        },
+        {
+          "type": "formula",
+          "title": "Bayes' Theorem for Two Events",
+          "formula": "P(A \\mid B) = \\frac{P(A) \\cdot P(B \\mid A)}{P(B)}",
+          "note": "P(A) is prior probability; P(B | A) is likelihood; P(B) is total marginal evidence; P(A | B) is posterior probability."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Generalized Bayes' Theorem"
+        },
+        {
+          "type": "paragraph",
+          "text": "When the sample space is partitioned by $n$ mutually exclusive hypotheses or origins $A_1, A_2, \\dots, A_n$, we expand the marginal denominator $P(B)$ using the Law of Total Probability:"
+        },
+        {
+          "type": "formula",
+          "title": "Generalized Bayes' Theorem Formula",
+          "formula": "P(A_k \\mid B) = \\frac{P(A_k) \\cdot P(B \\mid A_k)}{\\sum_{i=1}^{n} [P(B \\mid A_i) \\cdot P(A_i)]}",
+          "note": "Determines the probability that hypothesis A_k was the true cause given observed test/result B."
+        },
+        {
+          "type": "callout",
+          "style": "warning",
+          "title": "Exam Caution: The Inverse Fallacy",
+          "text": "Never assume $P(A \\mid B) = P(B \\mid A)$! For example, $P(\\text{Positive Test} \\mid \\text{Disease})$ is the test sensitivity, while $P(\\text{Disease} \\mid \\text{Positive Test})$ is the positive predictive value. In rare diseases, even tests with 95% sensitivity often produce positive predictive values below 30% due to false positives from the large healthy population."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "5. Step-by-Step Worked Reference Examples"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Example 1: Partition Overlap Summation"
+        },
+        {
+          "type": "paragraph",
+          "text": "Suppose a sample space $S$ is partitioned into two mutually exclusive events $B_1$ and $B_2$. A subset event $A$ overlaps with them such that $P(A \\cap B_1) = 0.15$ and $P(A \\cap B_2) = 0.35$. What is the total probability of event $A$?"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Given:** $P(A \\cap B_1) = 0.15$ and $P(A \\cap B_2) = 0.35$, where $B_1 \\cup B_2 = S$ and $B_1 \\cap B_2 = \\emptyset$.",
+            "**Formula:** $P(A) = P(A \\cap B_1) + P(A \\cap B_2)$",
+            "**Calculation:** $P(A) = 0.15 + 0.35 = 0.50$",
+            "**Final Answer:** **$P(A) = 0.50$ (or 50%)**"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Example 2: Two-Supplier Quality Control (Total Probability)"
+        },
+        {
+          "type": "paragraph",
+          "text": "An electronics manufacturer sources circuit boards from two suppliers: Supplier 1 ($B_1$) supplies $70\\%$ of boards and Supplier 2 ($B_2$) supplies the remaining $30\\%$. The defect rate is $4\\%$ for Supplier 1 and $9\\%$ for Supplier 2. Calculate the total probability that a randomly chosen board is defective ($A$):"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Define Events:** Let $A = \\text{Defective board}$, $B_1 = \\text{Supplier 1}$, and $B_2 = \\text{Supplier 2}$.",
+            "**Extract Given Values:** Prior market shares: $P(B_1) = 0.70$, $P(B_2) = 0.30$. Conditional defect rates: $P(A \\mid B_1) = 0.04$, $P(A \\mid B_2) = 0.09$.",
+            "**Apply Formula:** $P(A) = P(A \\mid B_1) \\cdot P(B_1) + P(A \\mid B_2) \\cdot P(B_2)$",
+            "**Substitution:** $P(A) = (0.04)(0.70) + (0.09)(0.30) = 0.028 + 0.027 = 0.055$",
+            "**Final Answer:** **$P(A) = 0.055$ (Overall Defect Rate: 5.5%)**"
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Arithmetic Check Note",
+          "text": "Note the decimal place arithmetic: $0.70 \\times 0.04 = 0.028$ and $0.30 \\times 0.09 = 0.027$. Summing these yields $0.055$ (5.5%). Always verify decimal place positions when multiplying percentages."
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Example 3: Multi-Cohort Pass Rate (Three Partitions)"
+        },
+        {
+          "type": "paragraph",
+          "text": "A university course has students split across three lecture sections: Section 1 ($B_1$) holds $30\\%$, Section 2 ($B_2$) holds $50\\%$, and Section 3 ($B_3$) holds $20\\%$. The historical pass rates are $0.80$, $0.70$, and $0.90$ respectively. What is the overall pass rate for the entire course cohort?"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Define Events:** Let $A = \\text{Passing student}$; $B_1, B_2, B_3 = \\text{Section 1, 2, 3 enrollment}$.",
+            "**Given Values:** $P(B_1) = 0.30, P(B_2) = 0.50, P(B_3) = 0.20$. Conditional pass rates: $P(A \\mid B_1) = 0.80, P(A \\mid B_2) = 0.70, P(A \\mid B_3) = 0.90$.",
+            "**Apply Formula:** $P(A) = \\sum_{i=1}^{3} P(A \\mid B_i) \\cdot P(B_i)$",
+            "**Substitution:** $P(A) = (0.80)(0.30) + (0.70)(0.50) + (0.90)(0.20) = 0.24 + 0.35 + 0.18 = 0.77$",
+            "**Final Answer:** **$P(A) = 0.77$ (Overall Cohort Pass Rate: 77%)**"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Example 4: Rare Condition Diagnostic Screening (Bayes' Theorem)"
+        },
+        {
+          "type": "paragraph",
+          "text": "A medical condition affects $1\\%$ of a given population ($P(A) = 0.01$). A diagnostic test yields a positive result ($B$) for an affected person with probability $0.95$ ($P(B \\mid A) = 0.95$). If the overall probability of any given person testing positive in the population is $P(B) = 0.0394$, determine the probability that a person actually has the condition given that they tested positive ($P(A \\mid B)$):"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**Identify Target:** $P(A \\mid B)$ (Condition presence given positive screening).",
+            "**Given Values:** Prior prevalence $P(A) = 0.01$, Sensitivity $P(B \\mid A) = 0.95$, Population positive rate $P(B) = 0.0394$.",
+            "**Apply Bayes' Theorem:** $P(A \\mid B) = \\frac{P(B \\mid A) \\cdot P(A)}{P(B)}$",
+            "**Calculation:** $P(A \\mid B) = \\frac{(0.95)(0.01)}{0.0394} = \\frac{0.0095}{0.0394} \\approx 0.2411$",
+            "**Final Answer:** **$P(A \\mid B) \\approx 0.2411$ (or 24.11%)**"
+          ]
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Clinical Diagnostic Insight",
+          "text": "Even though the diagnostic test has a high sensitivity of 95%, because the condition is relatively rare (1%), only ~24.1% of patients testing positive are actually affected. The remaining ~75.9% of positive results are false positives originating from the vast 99% healthy majority."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "6. Practice Problem Set with Detailed Solutions"
+        },
+        {
+          "type": "paragraph",
+          "text": "Three factories supply widgets to a market: Factory 1 ($F_1$) supplies $20\\%$, Factory 2 ($F_2$) supplies $50\\%$, and Factory 3 ($F_3$) supplies $30\\%$. Their respective defect rates are $1\\%$, $3\\%$, and $2\\%$. A randomly picked widget is inspected:"
+        },
+        {
+          "type": "table",
+          "title": "Factory Production & Defect Breakdown",
+          "headers": [
+            "Factory ($F_i$)",
+            "Market Share $P(F_i)$",
+            "Defect Rate $P(D \\mid F_i)$",
+            "Joint Defective Share $P(D \\cap F_i)$",
+            "Joint Non-Defective Share $P(D^c \\cap F_i)$"
+          ],
+          "rows": [
+            [
+              "Factory 1 ($F_1$)",
+              "0.20 (20%)",
+              "0.01 (1%)",
+              "$0.20 \\times 0.01 = 0.0020$",
+              "$0.20 \\times 0.99 = 0.1980$"
+            ],
+            [
+              "Factory 2 ($F_2$)",
+              "0.50 (50%)",
+              "0.03 (3%)",
+              "$0.50 \\times 0.03 = 0.0150$",
+              "$0.50 \\times 0.97 = 0.4850$"
+            ],
+            [
+              "Factory 3 ($F_3$)",
+              "0.30 (30%)",
+              "0.02 (2%)",
+              "$0.30 \\times 0.02 = 0.0060$",
+              "$0.30 \\times 0.98 = 0.2940$"
+            ],
+            [
+              "**Total / Marginal**",
+              "**1.00 (100%)**",
+              "Weighted Average",
+              "**$P(D) = 0.0230$ (2.3%)**",
+              "**$P(D^c) = 0.9770$ (97.7%)**"
+            ]
+          ]
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**(a) If a randomly picked widget is defective, what is the probability that it originated from Factory 1?**<br>$$P(F_1 \\mid D) = \\frac{P(D \\cap F_1)}{P(D)} = \\frac{0.0020}{0.0230} = \\frac{2}{23} \\approx 0.0870 \\text{ (8.70%)}$$",
+            "**(b) What is the probability that a defective widget is from either Factory 2 or Factory 3?**<br>Because $F_2$ and $F_3$ are mutually exclusive:<br>$$P(F_2 \\cup F_3 \\mid D) = \\frac{P(D \\cap F_2) + P(D \\cap F_3)}{P(D)} = \\frac{0.0150 + 0.0060}{0.0230} = \\frac{0.0210}{0.0230} = \\frac{21}{23} \\approx 0.9130 \\text{ (91.30%)}$$",
+            "**(c) What is the probability that a non-defective widget came from Factory 3?**<br>Using Bayes' theorem on non-defective widgets ($D^c$):<br>$$P(F_3 \\mid D^c) = \\frac{P(D^c \\cap F_3)}{P(D^c)} = \\frac{0.30 \\times (1 - 0.02)}{1 - 0.0230} = \\frac{0.2940}{0.9770} = \\frac{294}{977} \\approx 0.3009 \\text{ (30.09%)}$$"
           ]
         }
       ]
