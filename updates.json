@@ -1,6 +1,6 @@
 {
   "version": "1.9.0",
-  "updatedAt": "2026-10-26T12:14:51.900776+00:00",
+  "updatedAt": "2026-10-26T14:05:35.457222+00:00",
   "announcement": "Replaced Quiz Engine with Flashcards & Active Recall Decks.",
   "calendarEvents": [
     {
@@ -5024,6 +5024,442 @@
           "style": "info",
           "title": "Visualization Rule of Thumb",
           "text": "When presenting this regional dataset in an academic paper or slideshow, choose a **horizontal bar graph** over a line graph. Because the regions represent discrete categorical units rather than a continuous chronological timeline, a line graph would introduce misleading connections between unrelated geographic domains."
+        }
+      ]
+    },
+    {
+      "id": "material_finite_math_introduction_to_probability",
+      "subject": "Finite Math",
+      "tag": "Study Material",
+      "color": "border-l-4 border-purple-500",
+      "title": "Introduction to Probability: Sample Spaces, Addition Rules & Complements",
+      "summary": "Master fundamental probability principles: random experiments, sample spaces, set operations on outcomes, classical probability axioms, mutually exclusive events, the General Addition Rule (Inclusion-Exclusion), and two-way contingency tables.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "1. Random Experiments, Outcomes, and Sample Spaces"
+        },
+        {
+          "type": "paragraph",
+          "text": "Probability theory provides a mathematical language for measuring uncertainty. Any investigation begins with a repeatable observational process known as a **random experiment**:"
+        },
+        {
+          "type": "table",
+          "title": "Fundamental Concepts of Probability",
+          "headers": [
+            "Term / Concept",
+            "Mathematical Notation",
+            "Formal Definition",
+            "Concrete Illustrative Example"
+          ],
+          "rows": [
+            [
+              "Random Experiment",
+              "$\\mathcal{E}$",
+              "An observational activity or trial that can be repeated under identical conditions, producing well-defined observable results.",
+              "Tossing a 20-peso coin four times, rolling an 8-sided die (D8), or selecting a card from a deck."
+            ],
+            [
+              "Outcome",
+              "$\\omega$ or $s$",
+              "The single, indivisible result of a single execution of a random experiment.",
+              "Getting a 'Head' on a coin flip, or rolling a '5' on a die."
+            ],
+            [
+              "Sample Space",
+              "$S$ or $\\Omega$",
+              "The exhaustive set or collection of **all possible outcomes** that can occur in the experiment.",
+              "For a fair coin toss: $S = \\{H, T\\}$, with cardinality $n(S) = 2$."
+            ],
+            [
+              "Event",
+              "$E \\subseteq S$",
+              "Any specific subset of the sample space representing an outcome condition of interest.",
+              "Rolling an even number on a standard die: $E = \\{2, 4, 6\\}$."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "2. Set Operations on Sample Spaces (Worked Example: Octahedral Die D8)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Because events are mathematical sets, we analyze composite events using set-theoretic operations (Union, Intersection, and Complement). Consider rolling a fair octahedral die (D8) with 8 numbered faces: $S = \\{1, 2, 3, 4, 5, 6, 7, 8\\}$, where $n(S) = 8$."
+        },
+        {
+          "type": "table",
+          "title": "Defined Events on D8 Die",
+          "headers": [
+            "Event Name",
+            "Condition Description",
+            "Roster / Element Listing",
+            "Cardinality $n(E)$"
+          ],
+          "rows": [
+            [
+              "Event $A$",
+              "Getting a number strictly less than 4",
+              "$A = \\{1, 2, 3\\}$",
+              "$n(A) = 3$"
+            ],
+            [
+              "Event $B$",
+              "Getting a prime number",
+              "$B = \\{2, 3, 5, 7\\}$ (Note: 1 is neither prime nor composite)",
+              "$n(B) = 4$"
+            ],
+            [
+              "Event $C$",
+              "Getting an odd number",
+              "$C = \\{1, 3, 5, 7\\}$",
+              "$n(C) = 4$"
+            ],
+            [
+              "Event $D$",
+              "Getting 2 or a number greater than 7",
+              "$D = \\{2, 8\\}$",
+              "$n(D) = 2$"
+            ]
+          ]
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**(a) Union $A \\cup D$ (Elements in $A$, $D$, or both):**<br>$$A \\cup D = \\{1, 2, 3\\} \\cup \\{2, 8\\} = \\{1, 2, 3, 8\\} \\implies n(A \\cup D) = 4$$",
+            "**(b) Intersection $B \\cap C$ (Prime AND Odd):**<br>$$B \\cap C = \\{2, 3, 5, 7\\} \\cap \\{1, 3, 5, 7\\} = \\{3, 5, 7\\} \\implies n(B \\cap C) = 3$$*(2 is excluded because it is an even prime).* ",
+            "**(c) Intersection $C \\cap D$ (Odd AND in $\\{2, 8\\}$):**<br>$$C \\cap D = \\{1, 3, 5, 7\\} \\cap \\{2, 8\\} = \\emptyset \\implies n(C \\cap D) = 0$$*(Events $C$ and $D$ share no elements and are mutually exclusive).* ",
+            "**(d) Complement $B^c$ (All numbers in $S$ that are NOT prime):**<br>$$B^c = S - B = \\{1, 4, 6, 8\\} \\implies n(B^c) = 4$$"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "3. Classical Probability & Fundamental Axioms"
+        },
+        {
+          "type": "paragraph",
+          "text": "When all outcomes in a finite sample space $S$ are equally likely, the probability of an event $E$, denoted by $P(E)$, is given by the ratio of favorable outcomes to total possible outcomes:"
+        },
+        {
+          "type": "formula",
+          "title": "Classical Definition of Probability",
+          "formula": "P(E) = \\frac{n(E)}{n(S)} = \\frac{\\text{Number of Favorable Outcomes in Event } E}{\\text{Total Number of Equally Likely Outcomes in Sample Space } S}",
+          "note": "Applicable when each elementary outcome has an identical likelihood of occurrence."
+        },
+        {
+          "type": "table",
+          "title": "Fundamental Axioms and Properties of Probability",
+          "headers": [
+            "Axiom / Property",
+            "Mathematical Statement",
+            "Meaning and Practical Implication"
+          ],
+          "rows": [
+            [
+              "Bounded Range Axiom",
+              "$0 \\le P(E) \\le 1$",
+              "The probability of any event is always between 0 (0% probability) and 1 (100% certainty). Probabilities can never be negative or exceed 1."
+            ],
+            [
+              "Impossible Event",
+              "$P(\\emptyset) = 0$",
+              "An event with zero favorable outcomes has zero chance of occurring (e.g., rolling a 9 on a D8 die)."
+            ],
+            [
+              "Certain / Sure Event",
+              "$P(S) = 1$",
+              "The sample space represents all possible outcomes; therefore, the probability that some outcome in $S$ occurs is guaranteed."
+            ],
+            [
+              "Sum of Elementary Probabilities",
+              "$\\sum_{s \\in S} P(s) = 1$",
+              "The sum of the probabilities of all distinct, mutually exclusive elementary outcomes in $S$ equals exactly 1."
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "4. Multi-Stage Counting & Probability (Worked Example: 3-Digit Numbers)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Combining the Fundamental Counting Principle (FCP) with classical probability allows analyzing complex multi-stage events without listing all outcomes by hand."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Problem Context",
+          "text": "A 3-digit number is formed using digits from the set $\\{0, 1, 2, 3, 4, 5\\}$ **allowing repetitions**. If a formed number is chosen at random, find the probability of various events."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Step 1: Determine the Total Sample Space $n(S)$:**<br>A standard 3-digit number cannot have $0$ in the hundreds place. Therefore:<br>• **Hundreds place:** 5 choices $\\{1, 2, 3, 4, 5\\}$<br>• **Tens place:** 6 choices $\\{0, 1, 2, 3, 4, 5\\}$<br>• **Units place:** 6 choices $\\{0, 1, 2, 3, 4, 5\\}$<br>$$n(S) = 5 \\times 6 \\times 6 = 180 \\text{ possible numbers}$$"
+        },
+        {
+          "type": "table",
+          "title": "Probability Calculations for Formed 3-Digit Numbers",
+          "headers": [
+            "Target Event",
+            "Slot Restrictions & Choices",
+            "Favorable Outcomes $n(E)$",
+            "Probability $P(E) = \\frac{n(E)}{n(S)}$"
+          ],
+          "rows": [
+            [
+              "(a) Getting an even number",
+              "Units digit must be even $\\{0, 2, 4\\}$ (3 choices). Hundreds: 5 choices. Tens: 6 choices.",
+              "$n(E_a) = 5 \\times 6 \\times 3 = 90$",
+              "$$P(E_a) = \\frac{90}{180} = \\frac{1}{2} = 0.50 \\text{ (50%)}$$"
+            ],
+            [
+              "(b) First 2 digits are identical",
+              "Hundreds: 5 choices $\\{1, 2, 3, 4, 5\\}$. Tens: 1 choice (must match hundreds). Units: 6 choices.",
+              "$n(E_b) = 5 \\times 1 \\times 6 = 30$",
+              "$$P(E_b) = \\frac{30}{180} = \\frac{1}{6} \\approx 0.1667 \\text{ (16.67%)}$$"
+            ],
+            [
+              "(c) Number is $\\ge 400$",
+              "Hundreds digit must be 4 or 5 $\\{4, 5\\}$ (2 choices). Tens: 6 choices. Units: 6 choices.",
+              "$n(E_c) = 2 \\times 6 \\times 6 = 72$",
+              "$$P(E_c) = \\frac{72}{180} = \\frac{2}{5} = 0.40 \\text{ (40%)}$$"
+            ],
+            [
+              "(d) Number is $< 200$",
+              "Hundreds digit must be 1 $\\{1\\}$ (1 choice). Tens: 6 choices. Units: 6 choices.",
+              "$n(E_d) = 1 \\times 6 \\times 6 = 36$",
+              "$$P(E_d) = \\frac{36}{180} = \\frac{1}{5} = 0.20 \\text{ (20%)}$$"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "5. Mutually Exclusive Events & The Special Addition Rule"
+        },
+        {
+          "type": "paragraph",
+          "text": "Two events $E$ and $F$ are **mutually exclusive (disjoint)** if they cannot occur simultaneously—their intersection is empty ($E \\cap F = \\emptyset$)."
+        },
+        {
+          "type": "formula",
+          "title": "Special Addition Rule for Mutually Exclusive Events",
+          "formula": "P(E \\cup F) = P(E) + P(F) \\quad \\iff \\quad E \\cap F = \\emptyset",
+          "note": "When events share zero common outcomes, their union probability is the direct sum of their individual probabilities."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Worked Example: Flipping a Coin Three Times",
+          "text": "**Problem:** In flipping a coin three times, what is the probability of getting **all heads** or **all tails**?<br><br>• Sample space: $n(S) = 2^3 = 8$ outcomes: $\\{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\\}$.<br>• Event $A$ (All Heads): $\\{HHH\\} \\implies n(A) = 1, P(A) = \\frac{1}{8}$.<br>• Event $B$ (All Tails): $\\{TTT\\} \\implies n(B) = 1, P(B) = \\frac{1}{8}$.<br>• Because $A \\cap B = \\emptyset$ (a 3-flip sequence cannot be simultaneously all heads and all tails):<br>$$P(A \\cup B) = P(A) + P(B) = \\frac{1}{8} + \\frac{1}{8} = \\frac{2}{8} = \\frac{1}{4} = 0.25 \\text{ (25%)}$$"
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "6. The Law of Total Probability for Partitions"
+        },
+        {
+          "type": "paragraph",
+          "text": "If events $E_1, E_2, \\dots, E_n$ are pairwise mutually exclusive and their union forms the entire sample space ($E_1 \\cup E_2 \\cup \\dots \\cup E_n = S$), they form a **partition** of $S$:"
+        },
+        {
+          "type": "formula",
+          "title": "Law of Total Probability for a Partition",
+          "formula": "\\sum_{i=1}^{n} P(E_i) = P(E_1) + P(E_2) + P(E_3) + \\dots + P(E_n) = 1",
+          "note": "The sum of probabilities across a complete, non-overlapping partition must equal 1."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Example: Finding an Unknown Probability in a Distribution Table**<br>Suppose events $A, B, C, D$ partition $S$ with known probabilities $P(A) = 0.20$, $P(B) = 0.35$, and $P(C) = 0.15$. Because they partition $S$:"
+        },
+        {
+          "type": "table",
+          "title": "Probability Distribution Table with Partition",
+          "headers": [
+            "Event",
+            "$A$",
+            "$B$",
+            "$C$",
+            "$D$ (Unknown)"
+          ],
+          "rows": [
+            [
+              "Probability",
+              "$0.20$",
+              "$0.35$",
+              "$0.15$",
+              "$P(D) = 1 - (0.20 + 0.35 + 0.15) = \\mathbf{0.30}$"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "7. Probability of Non-Mutually Exclusive Events: General Addition Rule"
+        },
+        {
+          "type": "paragraph",
+          "text": "When two events $E$ and $F$ can occur simultaneously ($E \\cap F \\neq \\emptyset$), simply adding their probabilities double-counts their common intersection. To correct for this, we subtract the overlapping probability:"
+        },
+        {
+          "type": "formula",
+          "title": "General Addition Rule (Inclusion-Exclusion Principle)",
+          "formula": "P(E \\cup F) = P(E) + P(F) - P(E \\cap F)",
+          "note": "Valid for ANY two events, whether mutually exclusive or non-mutually exclusive."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Worked Example: Streaming Application Survey",
+          "text": "**Problem:** A student researcher surveys 100 people about streaming platform usage. He records that 78 use Netflix ($N$), 51 use YouTube ($Y$), 34 use both, and 5 use neither. If one person is selected at random, what is the probability they use **Netflix or YouTube**?<br><br>• Total surveyed: $n(S) = 100$.<br>• $P(N) = \\frac{78}{100} = 0.78$<br>• $P(Y) = \\frac{51}{100} = 0.51$<br>• $P(N \\cap Y) = \\frac{34}{100} = 0.34$<br><br>Applying the General Addition Rule:<br>$$P(N \\cup Y) = P(N) + P(Y) - P(N \\cap Y) = 0.78 + 0.51 - 0.34 = 0.95 \\text{ (95%)}$$<br>*(Verification: Notice that $100\\% - 95\\% = 5\\%$, matching the 5 respondents who use neither platform!)*"
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "8. Probability of the Complement of an Event"
+        },
+        {
+          "type": "paragraph",
+          "text": "The complement of an event $E$, denoted by $E^c$ or $E'$, is the set of all outcomes in the sample space $S$ that are not in $E$. Since $E$ and $E^c$ are mutually exclusive and their union is $S$:"
+        },
+        {
+          "type": "formula",
+          "title": "Complement Rule",
+          "formula": "P(E) + P(E^c) = 1 \\quad \\implies \\quad P(E^c) = 1 - P(E)",
+          "note": "Extremely useful when calculating 'at least one' or 'not' probabilities directly is tedious."
+        },
+        {
+          "type": "callout",
+          "style": "info",
+          "title": "Worked Example: Clock Inventory",
+          "text": "**Problem:** A store has 50 clocks in inventory, 12 of which are analog ($A$). If a clock is selected at random, what is the probability that it is **not analog** ($A^c$)?<br><br>$$P(A) = \\frac{12}{50} = 0.24$$<br>$$P(A^c) = 1 - P(A) = 1 - 0.24 = 0.76 = \\frac{38}{50} = \\frac{19}{25} \\text{ (76%)}$$"
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "9. Two-Way Contingency Tables: Joint & Union Probabilities"
+        },
+        {
+          "type": "paragraph",
+          "text": "A two-way contingency table classifies observed units along two categorical variables simultaneously, simplifying the calculation of marginal, joint, and union probabilities."
+        },
+        {
+          "type": "table",
+          "title": "Vehicle Manufacturing Production (June)",
+          "headers": [
+            "Item Type",
+            "Location X",
+            "Location Y",
+            "Row Marginal Total"
+          ],
+          "rows": [
+            [
+              "Bicycle ($B$)",
+              "45",
+              "52",
+              "97"
+            ],
+            [
+              "Scooter ($S_c$)",
+              "28",
+              "24",
+              "52"
+            ],
+            [
+              "**Column Total**",
+              "**73**",
+              "**76**",
+              "**Total Production $n(S) = 149$**"
+            ]
+          ]
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**(a) Probability a randomly chosen item is a bicycle produced in Location X:**<br>This requires the joint intersection of being a Bicycle AND from Location X ($B \\cap X$):<br>$$P(B \\cap X) = \\frac{n(B \\cap X)}{n(S)} = \\frac{45}{149} \\approx 0.3020 \\text{ (30.20%)}$$",
+            "**(b) Probability a scooter OR an item from Location Y was selected ($S_c \\cup Y$):**<br>Using the General Addition Rule:<br>• Marginal probability of Scooter: $P(S_c) = \\frac{52}{149}$<br>• Marginal probability of Location Y: $P(Y) = \\frac{76}{149}$<br>• Joint overlap (Scooter produced in Location Y): $P(S_c \\cap Y) = \\frac{24}{149}$<br><br>$$P(S_c \\cup Y) = P(S_c) + P(Y) - P(S_c \\cap Y) = \\frac{52}{149} + \\frac{76}{149} - \\frac{24}{149} = \\frac{104}{149} \\approx 0.6980 \\text{ (69.80%)}$$"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "10. Comprehensive Practice Problem Set & Complete Solutions"
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Problem 1: Four-Coin Toss Experiment"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Experiment:** A 20-peso coin is tossed 4 times. Total sample space: $n(S) = 2^4 = 16$ equally likely outcomes."
+        },
+        {
+          "type": "table",
+          "title": "Outcomes and Probabilities for 4 Coin Tosses",
+          "headers": [
+            "Target Outcome",
+            "Combinatorial Formula $\\binom{n}{k}$",
+            "Outcome Listing",
+            "Probability"
+          ],
+          "rows": [
+            [
+              "(a) Exactly 2 Heads & 2 Tails",
+              "$\\binom{4}{2} = \\frac{4 \\times 3}{2 \\times 1} = 6$",
+              "$\\{HHTT, HTHT, HTTH, THHT, THTH, TTHH\\}$",
+              "$$P = \\frac{6}{16} = \\frac{3}{8} = 0.375 \\text{ (37.5%)}$$"
+            ],
+            [
+              "(b) Exactly 1 Head & 3 Tails",
+              "$\\binom{4}{1} = 4$",
+              "$\\{HTTT, THTT, TTHT, TTTH\\}$",
+              "$$P = \\frac{4}{16} = \\frac{1}{4} = 0.25 \\text{ (25.0%)}$$"
+            ],
+            [
+              "(c) Exactly 3 Heads & 1 Tail",
+              "$\\binom{4}{3} = 4$",
+              "$\\{HHHT, HHTH, HTHH, THHH\\}$",
+              "$$P = \\frac{4}{16} = \\frac{1}{4} = 0.25 \\text{ (25.0%)}$$"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Problem 2: Three Fair Dice Roll Experiment"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Experiment:** A fair 6-sided die is rolled 3 times. Total sample space: $n(S) = 6^3 = 216$. Sums range from 3 ($1+1+1$) to 18 ($6+6+6$)."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**(a) Probability the sum is greater than 10:**<br>By distribution symmetry, the sums from 3 to 10 have exactly the same number of outcomes as sums from 11 to 18. Each symmetric half contains exactly $\\frac{216}{2} = 108$ outcomes.<br>$$P(\\text{Sum} > 10) = \\frac{108}{216} = \\frac{1}{2} = 0.50 \\text{ (50%)}$$",
+            "**(b) Probability the sum is an even number:**<br>In any multi-die roll, the sum alternates strictly between odd and even, producing exactly $108$ even and $108$ odd sums.<br>$$P(\\text{Even Sum}) = \\frac{108}{216} = \\frac{1}{2} = 0.50 \\text{ (50%)}$$",
+            "**(c) Probability the sum is less than 12:**<br>A sum less than 12 corresponds to sums from 3 through 11. Sums $\\ge 12$ are symmetric to sums $\\le 9$ (which total 81 outcomes). Therefore, outcomes with sum $< 12$ total $216 - 81 = 135$ outcomes.<br>$$P(\\text{Sum} < 12) = \\frac{135}{216} = \\frac{5}{8} = 0.625 \\text{ (62.5%)}$$"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": "h3",
+          "text": "Problem 3: Standard 52-Card Deck Experiment"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Experiment:** A card is drawn from a standard 52-card deck ($n(S) = 52$). The deck contains 26 Red cards (Hearts, Diamonds) and 26 Black cards (Spades, Clubs). Each suit has 9 number cards (2 through 10) and 4 letter/face cards (Ace, Jack, Queen, King)."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "**(a) Probability the card is a red number card:**<br>There are 9 red number cards in Hearts and 9 in Diamonds $\\implies n(E_a) = 18$ cards.<br>$$P(E_a) = \\frac{18}{52} = \\frac{9}{26} \\approx 0.3462 \\text{ (34.62%)}$$",
+            "**(b) Probability the card is either black OR a red letter card:**<br>• Black cards: 26 cards.<br>• Red letter cards: 4 in Hearts (A, K, Q, J) + 4 in Diamonds (A, K, Q, J) = 8 cards.<br>• Because black cards and red letter cards are mutually exclusive (a card cannot be black and red):<br>$$P = \\frac{26 + 8}{52} = \\frac{34}{52} = \\frac{17}{26} \\approx 0.6538 \\text{ (65.38%)}$$",
+            "**(c) Probability the card is a number card strictly less than 9:**<br>The valid number card values are $\\{2, 3, 4, 5, 6, 7, 8\\}$ (7 ranks per suit across 4 suits) $\\implies 7 \\times 4 = 28$ cards.<br>$$P(E_c) = \\frac{28}{52} = \\frac{7}{13} \\approx 0.5385 \\text{ (53.85%)}$$"
+          ]
         }
       ]
     }
